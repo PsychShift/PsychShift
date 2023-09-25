@@ -9,12 +9,12 @@ public class PlayerManager : MonoBehaviour
     private Transform cameraTransform;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
-    public float playerSpeed = 20.0f;
-    private float jumpHeight = 1.0f;
-    private float gravityValue = -9.81f;
+    [SerializeField] private float playerSpeed = 20.0f;
+    [SerializeField] private float jumpHeight = 1.0f;
+    [SerializeField] private float gravityValue = -9.81f;
     private CharacterInfo currentCharacter = new CharacterInfo();
     [SerializeField] GameObject tempCharacter;
-    public float swapDistance = 10f;
+    [SerializeField] public float swapDistance = 10f;
     public LayerMask swapableLayer;
 
 
