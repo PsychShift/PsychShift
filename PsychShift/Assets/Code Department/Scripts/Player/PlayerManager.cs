@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
     private Transform cameraTransform;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
-    private float playerSpeed = 10.0f;
+    public float playerSpeed = 20.0f;
     private float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
     private CharacterInfo currentCharacter = new CharacterInfo();
