@@ -17,7 +17,11 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] public float swapDistance = 10f;
     public LayerMask swapableLayer;
 
+    [SerializeField] private float smoothInputSpeed = 0.2f;
 
+
+    private Vector2 currentInputVector;
+    private Vector2 smoothInputVelocity;
     private void Start()
     {
         InputManager.Instance.OnSlowActionStateChanged += SlowMotion;
@@ -35,8 +39,9 @@ public class PlayerManager : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        Vector2 movement = InputManager.Instance.GetPlayerMovement();
-        Vector3 move = new Vector3(movement.x, 0f, movement.y);
+        Vector2 input = InputManager.Instance.GetPlayerMovement();
+        currentInputVector = Vector2.SmoothDamp(currentInputVector, input, ref smoothInputVelocity, smoothInputSpeed);
+        Vector3 move = new Vector3(currentInputVector.x, 0f, currentInputVector.y);
         move = cameraTransform.forward * move.z + cameraTransform.right * move.x;
         move.y = 0f;
         
