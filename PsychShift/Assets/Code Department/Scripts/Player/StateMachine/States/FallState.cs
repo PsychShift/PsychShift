@@ -4,7 +4,6 @@ using UnityEngine;
 /// </summary> 
 public class FallState : RootState, IState
 {
-    private readonly PlayerStateMachine playerStateMachine;
     private CharacterInfo currentCharacter;
     public FallState(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
     {
@@ -14,6 +13,7 @@ public class FallState : RootState, IState
 
     public void Tick()
     {
+        Look();
         HandleGravity();
         SubStateTick();
     }
@@ -32,7 +32,8 @@ public class FallState : RootState, IState
 
     private void HandleGravity()
     {
-        playerStateMachine.playerVelocity.y += playerStateMachine.gravityValue * Time.deltaTime;
-        currentCharacter.controller.Move(playerStateMachine.playerVelocity * Time.deltaTime);
+        float previousYVelocity = playerStateMachine.CurrentMovementY;
+        playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + playerStateMachine.gravityValue * Time.deltaTime;
+        playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -20f);
     }
 }

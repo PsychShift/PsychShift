@@ -29,10 +29,10 @@ public class WalkState : IState
     {
         Vector2 input = InputManager.Instance.GetPlayerMovement();
         playerStateMachine.currentInputVector = Vector2.SmoothDamp(playerStateMachine.currentInputVector, input, ref playerStateMachine.smoothInputVelocity, playerStateMachine.smoothInputSpeed);
-        playerStateMachine.move = new Vector3(playerStateMachine.currentInputVector.x, 0f, playerStateMachine.currentInputVector.y);
-        playerStateMachine.move = playerStateMachine.cameraTransform.forward * playerStateMachine.move.z + playerStateMachine.cameraTransform.right * playerStateMachine.move.x;
-        //playerStateMachine.move = new Vector3(playerStateMachine.move.x, -1, playerStateMachine.move.z);
-        currentCharacter.controller.Move(playerStateMachine.move * Time.deltaTime * playerStateMachine.walkSpeed);
+        Vector3 movement = new Vector3(playerStateMachine.currentInputVector.x, 0f, playerStateMachine.currentInputVector.y);
+        movement = playerStateMachine.currentCharacter.model.transform.forward * movement.z + playerStateMachine.currentCharacter.model.transform.right * movement.x;
+        playerStateMachine.AppliedMovementX = movement.x * playerStateMachine.WalkSpeed;
+        playerStateMachine.AppliedMovementZ = movement.z * playerStateMachine.WalkSpeed;
     }
 
     /* private void Move()

@@ -5,16 +5,23 @@ using Cinemachine;
 [RequireComponent(typeof(InputManager))]
 public class PlayerStateMachine : MonoBehaviour
 {
+    #region References
     public CinemachineVirtualCamera virtualCamera;
-    [SerializeField] private GameObject tempCharacter;
     private StateMachine.StateMachine stateMachine;
     private InputManager inputManager;
+    [HideInInspector] public Transform cameraTransform;
+    #endregion
 
-    public CharacterInfo currentCharacter { get; set; }
-    public Transform cameraTransform { get; private set; }
-
+    #region Movement Variables
     [Header("Movement Variables")]
-    public float walkSpeed = 20;
+    private Vector3 currentMovement;
+    private Vector3 appliedMovement;
+    public float CurrentMovementY { get { return currentMovement.y; } set { currentMovement.y = value; }}
+    public float AppliedMovementX { get { return appliedMovement.x; } set { appliedMovement.x = value; }}
+    public float AppliedMovementY { get { return appliedMovement.y; } set { appliedMovement.y = value; }}
+    public float AppliedMovementZ { get { return appliedMovement.z; } set { appliedMovement.z = value; }}
+    [SerializeField] private float walkSpeed = 20;
+    public float WalkSpeed { get { return walkSpeed; } }
     public float smoothInputSpeed;
 
     public Vector2 currentInputVector { get; set; }
@@ -25,11 +32,25 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Jump Variables")]
     public float jumpHeight = 4f;
     public float gravityValue = -9.81f;
-    [HideInInspector] public Vector3 playerVelocity;
+    [SerializeField] float maxJumpHeight = 4.0f;
+    [SerializeField] float maxJumpTime = 0.75f;
+    private float initialJumpVelocity;
+    private float initialJumpGravity;
+    public float InitialJumpVelocity { get { return initialJumpVelocity; } }
+    public float InitialJumpGravity { get { return initialJumpGravity; } }
+    #endregion
     
-
+    #region Swap Variables
+    [SerializeField] public float swapDistance = 10f;
+    public float SwapDistance { get { return swapDistance; } set { swapDistance = value; } }
+    [SerializeField] private LayerMask swapableLayer;
+    public LayerMask SwapableLayer { get { return swapableLayer; }}
+    #endregion
+    [SerializeField] private GameObject tempCharacter;
+    public CharacterInfo currentCharacter { get; set; }
     private void Awake()
     {
+        SetJumpVariables();
         cameraTransform = Camera.main.transform;
         SwapCharacter(tempCharacter);
         inputManager = GetComponent<InputManager>();
@@ -97,7 +118,7 @@ public class PlayerStateMachine : MonoBehaviour
 
         // Root State Conditions
         Func<bool> Jumped() => () => inputManager.jumpAction.triggered && currentCharacter.controller.isGrounded;
-        Func<bool> Falling() => () => playerVelocity.y < 0 && !currentCharacter.controller.isGrounded;
+        Func<bool> Falling() => () => AppliedMovementY < 0 && !currentCharacter.controller.isGrounded;
         Func<bool> Grounded() => () => currentCharacter.controller.isGrounded;
 
         // Sub State Conditions
@@ -111,6 +132,8 @@ public class PlayerStateMachine : MonoBehaviour
     void Update()
     {
         stateMachine.Tick();
+//        Debug.Log(appliedMovement);
+        currentCharacter.controller.Move(appliedMovement * Time.deltaTime);
     }
 
     public void SwapCharacter(GameObject newCharacter)
@@ -124,5 +147,13 @@ public class PlayerStateMachine : MonoBehaviour
             controller = newCharacter.GetComponent<CharacterController>()
         };
         virtualCamera.Follow = currentCharacter.cameraRoot;
-    }    
+    }   
+
+
+    private void SetJumpVariables()
+    {
+        float timeToApex = maxJumpTime / 2;
+        initialJumpGravity = -2 * maxJumpHeight / Mathf.Pow(timeToApex, 2);
+        initialJumpVelocity = 2 * maxJumpHeight / timeToApex;
+    } 
 }
