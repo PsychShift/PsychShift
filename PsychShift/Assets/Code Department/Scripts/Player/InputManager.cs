@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour
 
     #region Normal Controls
     public InputAction moveAction { get; private set; }
+    public InputAction runAction { get; private set; }
     public InputAction lookAction { get; private set; }
     public InputAction jumpAction { get; private set; }
     public InputAction slowAction { get; private set; }
@@ -50,6 +51,7 @@ public class InputManager : MonoBehaviour
         
         moveAction = playerInput.actions["Move"];
         lookAction = playerInput.actions["Look"];
+        runAction = playerInput.actions["Run"];
         jumpAction = playerInput.actions["Jump"];
         slowAction = playerInput.actions["Slow"];
         swapAction = playerInput.actions["MindSwap"];

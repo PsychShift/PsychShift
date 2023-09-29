@@ -1,6 +1,4 @@
 using System;
-/* using System.Collections;
-using System.Collections.Generic; */
 using UnityEngine;
 using Cinemachine;
 
@@ -9,7 +7,7 @@ public class PlayerStateMachine : MonoBehaviour
 {
     public CinemachineVirtualCamera virtualCamera;
     [SerializeField] private GameObject tempCharacter;
-    private StateMachine stateMachine;
+    private StateMachine.StateMachine stateMachine;
     private InputManager inputManager;
 
     public CharacterInfo currentCharacter { get; set; }
@@ -21,6 +19,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public Vector2 currentInputVector { get; set; }
     [HideInInspector] public Vector2 smoothInputVelocity;
+    public Vector3 move { get; set; }
     
 
     [Header("Jump Variables")]
@@ -34,38 +33,66 @@ public class PlayerStateMachine : MonoBehaviour
         cameraTransform = Camera.main.transform;
         SwapCharacter(tempCharacter);
         inputManager = GetComponent<InputManager>();
-        stateMachine = new StateMachine();
+        stateMachine = new StateMachine.StateMachine();
 
-        // Create Instances of the states for the script to use
-        // This uses a constructor made in the states script. The argument can be anything set in the script.
+        // Create instances of root states
+        var groundState = new GroundedState(this, stateMachine);
+        var fallState = new FallState(this, stateMachine);
+        var jumpState = new JumpState(this, stateMachine);
+
+        // Create instances of sub-states
         var idleState = new IdleState(this);
         var walkState = new WalkState(this);
         var runState = new RunState(this);
-        var crouchState = new CrouchState(this);
-        var jumpState = new JumpState(this);
-        var fallState = new FallState(this);
-        var groundState = new GroundedState(this);
-        
+        var crouchState = new CrouchState(this);    
 
         // Makes it easier to add transitions (less text per line)
-        void At(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition); // If a condition meets switch from 'from' state to 'to' state
-        void AAt(IState to, Func<bool> condition) => stateMachine.AddAnyTransition(to, condition); // If 
+        void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition); // If a condition meets switch from 'from' state to 'to' state (Root state only)
+        //void AAt(IState to, Func<bool> condition) => stateMachine.AddAnyTransition(to, condition); // If 
 
+        #region Root State Transitions
+        // Leave Ground State
+        AT(groundState, jumpState, Jumped());
+        AT(groundState, fallState, Falling());
+        // Leave Jump State
+        AT(jumpState, groundState, Grounded());
+        AT(jumpState, fallState, Falling());
+        // Leave Fall State
+        AT(fallState, groundState, Grounded());
+        #endregion
 
         #region Idle State Transitions
-        At(idleState, walkState, Moved());
-        At(idleState, jumpState, Jumped());
+        AT(idleState, walkState, Walked());
+        AT(idleState, runState, Running());
         #endregion
         #region Walk State Transitions
-        At(walkState, jumpState, Jumped());
-        At(walkState, idleState, Stopped());
+        AT(walkState, runState, Running());
+        AT(walkState, idleState, Stopped());
         #endregion
-        #region Jump State Transitions
-        At(jumpState, idleState, Grounded());
+        #region Run State Transitions
+        AT(runState, idleState, Stopped());
+        AT(runState, walkState, Walked());
         #endregion
-        #region Fall State Transitions
-        AAt(fallState, Falling());
-        At(fallState, idleState, Grounded());
+        
+        #region Assign Substates to Rootstates
+        groundState.AddSubState(idleState);
+        groundState.AddSubState(walkState);
+        groundState.AddSubState(runState);
+        //groundState.AddSubState(crouchState);
+        groundState.PrepareSubStates();
+        groundState.SetDefaultSubState(idleState);
+
+        jumpState.AddSubState(idleState);
+        jumpState.AddSubState(walkState);
+        jumpState.AddSubState(runState);
+        jumpState.PrepareSubStates();
+        jumpState.SetDefaultSubState(idleState);
+
+        fallState.AddSubState(idleState);
+        fallState.AddSubState(walkState);
+        fallState.AddSubState(runState);
+        fallState.PrepareSubStates();
+        fallState.SetDefaultSubState(idleState);
         #endregion
 
         // Root State Conditions
@@ -74,11 +101,11 @@ public class PlayerStateMachine : MonoBehaviour
         Func<bool> Grounded() => () => currentCharacter.controller.isGrounded;
 
         // Sub State Conditions
-        Func<bool> Moved() => () => inputManager.moveAction.triggered;
+        Func<bool> Walked() => () => inputManager.moveAction.triggered && !inputManager.runAction.triggered;
         Func<bool> Stopped() => () => inputManager.moveAction.ReadValue<Vector2>().magnitude == 0;
-        //Func<bool> Running() => () => inputManager.runAction.triggered;
+        Func<bool> Running() => () => inputManager.moveAction.triggered && inputManager.runAction.triggered;
 
-        stateMachine.SetState(idleState);
+        stateMachine.SetState(groundState);
     }
 
     void Update()

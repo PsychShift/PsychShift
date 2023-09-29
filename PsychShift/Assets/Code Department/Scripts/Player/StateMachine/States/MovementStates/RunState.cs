@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class RunState : IState
 {
+    private IState currentSubState;
     private readonly PlayerStateMachine playerStateMachine;
     private CharacterInfo currentCharacter;
     public RunState(PlayerStateMachine playerStateMachine)
     {
         this.playerStateMachine = playerStateMachine;
     }
+
+    
     public void Tick()
     {
 
@@ -25,9 +28,14 @@ public class RunState : IState
     {
         
     }
-
-    public void InitializeSubState()
+    
+    public void AddSubState(IState subState)
     {
-        
+        currentSubState = subState;
+    }
+
+    public IState GetCurrentSubState()
+    {
+        return currentSubState;
     }
 }

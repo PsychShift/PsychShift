@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class IdleState : IState
@@ -10,6 +8,7 @@ public class IdleState : IState
     {
         this.playerStateMachine = playerStateMachine;
     }
+
     public void Tick()
     {
 
@@ -22,11 +21,6 @@ public class IdleState : IState
     }
 
     public void OnExit()
-    {
-
-    }
-
-    public void InitializeSubState()
     {
 
     }

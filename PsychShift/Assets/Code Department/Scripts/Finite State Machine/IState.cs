@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public interface IState
 {
     /// <summary>
@@ -17,10 +13,7 @@ public interface IState
     /// </summary>
     void OnExit();
     /// <summary>
-    /// InitializeSubState is only to be used if the State in question is a root state. Meaning it's functionality must run on top of a sub states functionality. 
-    /// I.E. Being grounded or falling are root states and walking or idle are sub states.
-    /// </summary> <summary>
-    /// 
+    /// Add a sub-state to this state.
     /// </summary>
-    void InitializeSubState();
+    /// <param name="subState">The sub-state to add.</param>
 }

@@ -80,6 +80,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""061d7c4f-ad53-4193-830d-f31385b6e1bd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -247,6 +256,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b21550d-7ef4-4cfa-8511-19d06a34afb5"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30a515d5-7ac5-4c43-ac63-792a7dfbedbf"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -329,6 +360,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Controls_MindSwap = m_Controls.FindAction("MindSwap", throwIfNotFound: true);
         m_Controls_Slow = m_Controls.FindAction("Slow", throwIfNotFound: true);
         m_Controls_Shoot = m_Controls.FindAction("Shoot", throwIfNotFound: true);
+        m_Controls_Run = m_Controls.FindAction("Run", throwIfNotFound: true);
         // Slow
         m_Slow = asset.FindActionMap("Slow", throwIfNotFound: true);
         m_Slow_MindSwap = m_Slow.FindAction("Mind Swap", throwIfNotFound: true);
@@ -401,6 +433,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Controls_MindSwap;
     private readonly InputAction m_Controls_Slow;
     private readonly InputAction m_Controls_Shoot;
+    private readonly InputAction m_Controls_Run;
     public struct ControlsActions
     {
         private @PlayerControls m_Wrapper;
@@ -411,6 +444,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @MindSwap => m_Wrapper.m_Controls_MindSwap;
         public InputAction @Slow => m_Wrapper.m_Controls_Slow;
         public InputAction @Shoot => m_Wrapper.m_Controls_Shoot;
+        public InputAction @Run => m_Wrapper.m_Controls_Run;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -438,6 +472,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
+            @Run.started += instance.OnRun;
+            @Run.performed += instance.OnRun;
+            @Run.canceled += instance.OnRun;
         }
 
         private void UnregisterCallbacks(IControlsActions instance)
@@ -460,6 +497,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
+            @Run.started -= instance.OnRun;
+            @Run.performed -= instance.OnRun;
+            @Run.canceled -= instance.OnRun;
         }
 
         public void RemoveCallbacks(IControlsActions instance)
@@ -547,6 +587,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnMindSwap(InputAction.CallbackContext context);
         void OnSlow(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
     }
     public interface ISlowActions
     {

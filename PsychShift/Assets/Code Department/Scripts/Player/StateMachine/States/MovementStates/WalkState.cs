@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WalkState : IState
@@ -10,6 +8,7 @@ public class WalkState : IState
     {
         this.playerStateMachine = playerStateMachine;
     }
+    
     public void Tick()
     {
         Move();
@@ -30,14 +29,10 @@ public class WalkState : IState
     {
         Vector2 input = InputManager.Instance.GetPlayerMovement();
         playerStateMachine.currentInputVector = Vector2.SmoothDamp(playerStateMachine.currentInputVector, input, ref playerStateMachine.smoothInputVelocity, playerStateMachine.smoothInputSpeed);
-        Vector3 move = new Vector3(playerStateMachine.currentInputVector.x, 0f, playerStateMachine.currentInputVector.y);
-        move = playerStateMachine.cameraTransform.forward * move.z + playerStateMachine.cameraTransform.right * move.x;
-        move.y = -1f;
-        currentCharacter.controller.Move(move * Time.deltaTime * playerStateMachine.walkSpeed);
-    }
-    public void InitializeSubState()
-    {
-        
+        playerStateMachine.move = new Vector3(playerStateMachine.currentInputVector.x, 0f, playerStateMachine.currentInputVector.y);
+        playerStateMachine.move = playerStateMachine.cameraTransform.forward * playerStateMachine.move.z + playerStateMachine.cameraTransform.right * playerStateMachine.move.x;
+        //playerStateMachine.move = new Vector3(playerStateMachine.move.x, -1, playerStateMachine.move.z);
+        currentCharacter.controller.Move(playerStateMachine.move * Time.deltaTime * playerStateMachine.walkSpeed);
     }
 
     /* private void Move()
