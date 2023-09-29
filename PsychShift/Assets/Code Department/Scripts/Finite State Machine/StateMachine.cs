@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class StateMachine
 {
-    private IState _currentState;
+    public IState _currentState { get; private set; }
     
     private Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>(); // Saves all transitions
     private List<Transition> _currentTransitions = new List<Transition>(); // Switches out what transition is active

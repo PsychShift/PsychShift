@@ -6,7 +6,7 @@ using Cinemachine;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] public CinemachineVirtualCamera virtualCamera;
-    private Transform cameraTransform;
+    public Transform cameraTransform;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     [SerializeField] private float playerSpeed = 20.0f;
@@ -28,6 +28,11 @@ public class PlayerManager : MonoBehaviour
         InputManager.Instance.OnSwapPressed += SwapPressed;
         cameraTransform = Camera.main.transform;
         SwapCharacter(tempCharacter);
+    }
+    private void OnDisable()
+    {
+        InputManager.Instance.OnSlowActionStateChanged -= SlowMotion;
+        InputManager.Instance.OnSwapPressed -= SwapPressed;
     }
 
     void Update()

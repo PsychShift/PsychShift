@@ -15,11 +15,11 @@ public class InputManager : MonoBehaviour
     private PlayerInput playerInput;
 
     #region Normal Controls
-    private InputAction moveAction;
-    private InputAction lookAction;
-    private InputAction jumpAction;
-    private InputAction slowAction;
-    private InputAction swapAction;
+    public InputAction moveAction { get; private set; }
+    public InputAction lookAction { get; private set; }
+    public InputAction jumpAction { get; private set; }
+    public InputAction slowAction { get; private set; }
+    public InputAction swapAction { get; private set; }
     #endregion
 
     #region Slow Controls

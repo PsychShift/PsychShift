@@ -350,6 +350,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+    - target: {fileID: 4017222997629612759, guid: a9f9dc2cd6a17d446b14fbcdde50579d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5822515531579991267, guid: a9f9dc2cd6a17d446b14fbcdde50579d, type: 3}
       propertyPath: m_Name
       value: Character (1)
@@ -1447,12 +1451,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1244412118}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2a5e3d49c24ec6429222033e5a192fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 928002932}
+  cameraTransform: {fileID: 0}
   playerSpeed: 20
   jumpHeight: 1
   gravityValue: -9.81
@@ -1544,6 +1549,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a815d17123dea654ba70be0be0fcbf8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualCamera: {fileID: 928002932}
+  tempCharacter: {fileID: 2063244690}
+  walkSpeed: 20
+  smoothInputSpeed: 0
+  smoothInputVelocity: {x: 0, y: 0}
+  jumpHeight: 4
+  gravityValue: -9.81
+  playerVelocity: {x: 0, y: 0, z: 0}
 --- !u!1 &1503927493
 GameObject:
   m_ObjectHideFlags: 0
@@ -1766,6 +1779,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+    - target: {fileID: 4017222997629612759, guid: a9f9dc2cd6a17d446b14fbcdde50579d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5822515531579991267, guid: a9f9dc2cd6a17d446b14fbcdde50579d, type: 3}
       propertyPath: m_Name
       value: Character (2)
@@ -1895,7 +1912,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1772188097}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.06}
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2314,6 +2331,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4017222997629612759, guid: a9f9dc2cd6a17d446b14fbcdde50579d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5822515531579991267, guid: a9f9dc2cd6a17d446b14fbcdde50579d, type: 3}
       propertyPath: m_Name
       value: Character
