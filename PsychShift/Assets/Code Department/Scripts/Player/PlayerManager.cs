@@ -70,27 +70,28 @@ public class PlayerManager : MonoBehaviour
     }
 
     public GameObject CheckForCharacter()
+    {
+        // Create a BoxCast to check for objects with the "Swapable" tag.
+        Vector3 boxCenter = Camera.main.transform.position + Camera.main.transform.forward * (swapDistance / 2f);
+        Vector3 boxHalfExtents = new Vector3(0.5f, 0.5f, swapDistance / 2f);
+        Quaternion boxRotation = Camera.main.transform.rotation;
+
+        // Store the results of the BoxCast.
+        RaycastHit[] hits = Physics.BoxCastAll(boxCenter, boxHalfExtents, Vector3.forward, boxRotation, swapDistance, swapableLayer);
+
+        // Loop through the hits to find the first object with the "Swapable" tag.
+        foreach (RaycastHit hit in hits)
         {
-            // Create a ray from the camera's position into the scene.
-            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-            
-            // Declare a RaycastHit variable to store information about the raycast hit.
-            RaycastHit hit;
-
-            // Perform the raycast and check if it hits something with the "Swapable" tag.
-            if (Physics.Raycast(ray, out hit, swapDistance, swapableLayer))
+            if (hit.collider.CompareTag("Swapable"))
             {
-                // Check if the hit object has the "Swapable" tag.
-                if (hit.collider.CompareTag("Swapable"))
-                {
-                    // Return the GameObject that was hit.
-                    return hit.collider.gameObject;
-                }
+                // Return the GameObject that was hit.
+                return hit.collider.gameObject;
             }
-
-            // If no "Swapable" object was hit, return null.
-            return null;
         }
+
+        // If no "Swapable" object was hit, return null.
+        return null;
+    }
 
     public void SwapCharacter(GameObject newCharacter)
     {

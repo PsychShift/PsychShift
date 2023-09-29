@@ -5,6 +5,7 @@ using StateMachine;
 public class RootState
 {
     protected StateMachine.StateMachine stateMachine;
+    protected PlayerStateMachine playerStateMachine;
     protected List<IState> subStates = new();
     protected IState defaultSubState;
     protected Dictionary<Type, List<Transition>> subTransitions = new(); // Transitions for sub states
@@ -87,6 +88,21 @@ public class RootState
             return;
         }
         defaultSubState = state;
+    }
+
+    public virtual void Look()
+    {
+        Vector2 mouseDelta = InputManager.Instance.GetMouseDelta();
+        Vector3 currentRotation = playerStateMachine.cameraTransform.localRotation.eulerAngles;
+
+        currentRotation.x -= mouseDelta.y;
+        currentRotation.y += mouseDelta.x;
+
+        currentRotation.x = Mathf.Clamp(currentRotation.x, -90f, 90f);
+
+        playerStateMachine.cameraTransform.localRotation = Quaternion.Euler(currentRotation);
+        playerStateMachine.currentCharacter.model.transform.rotation = Quaternion.Euler(0f, currentRotation.y, 0f);
+
     }
 }    
 

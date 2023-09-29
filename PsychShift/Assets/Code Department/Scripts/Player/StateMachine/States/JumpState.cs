@@ -4,7 +4,6 @@ using UnityEngine;
 /// </summary>
 public class JumpState : RootState, IState
 {
-    private readonly PlayerStateMachine playerStateMachine;
     private CharacterInfo currentCharacter;
     
     public JumpState(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
@@ -15,6 +14,7 @@ public class JumpState : RootState, IState
     
     public void Tick()
     {
+        Look();
         HandleGravity();
         // Call the Tick method of the current sub-state
         SubStateTick();
@@ -24,7 +24,7 @@ public class JumpState : RootState, IState
     {
         Debug.Log("Hello from Jump");
         currentCharacter = playerStateMachine.currentCharacter;
-        playerStateMachine.playerVelocity.y += Mathf.Sqrt(playerStateMachine.jumpHeight * -3.0f * playerStateMachine.gravityValue);
+        HandleJump();
         SetSubState();
     }
 
@@ -33,9 +33,28 @@ public class JumpState : RootState, IState
         stateMachine._currentSubState = currentSubState;
     }
 
+    private void HandleJump()
+    {
+        playerStateMachine.CurrentMovementY = playerStateMachine.InitialJumpVelocity;
+        playerStateMachine.AppliedMovementY = playerStateMachine.InitialJumpVelocity;
+    }
+
     private void HandleGravity()
     {
-        playerStateMachine.playerVelocity.y += playerStateMachine.gravityValue * Time.deltaTime;
-        currentCharacter.controller.Move(playerStateMachine.playerVelocity * Time.deltaTime);
+        bool isFalling = playerStateMachine.CurrentMovementY <= 0f || InputManager.Instance.jumpAction.triggered;
+        float fallMultiplier = 2.0f;
+
+        if(isFalling)
+        {
+            float previousYVelocity = playerStateMachine.CurrentMovementY;
+            playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + (playerStateMachine.InitialJumpGravity * fallMultiplier * Time.deltaTime);
+            playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -20f);
+        }
+        else
+        {
+            float previousYVelocity = playerStateMachine.CurrentMovementY;
+            playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + (playerStateMachine.InitialJumpGravity * Time.deltaTime);
+            playerStateMachine.AppliedMovementY = (previousYVelocity + playerStateMachine.CurrentMovementY) * .5f;
+        }
     }
 }
