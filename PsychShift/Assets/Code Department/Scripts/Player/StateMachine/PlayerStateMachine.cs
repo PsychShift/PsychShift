@@ -33,6 +33,10 @@ public class PlayerStateMachine : MonoBehaviour
     [HideInInspector] public Vector2 smoothInputVelocity;
     public Vector3 move { get; set; }
     
+    [Header("Vaulting Variables")]
+    [SerializeField] private LayerMask vaultLayers;
+    public LayerMask VaultLayers { get { return vaultLayers; } }
+    public bool IsVaulting { get; set; }
 
     [Header("Jump Variables")]
     public float jumpHeight = 4f;
@@ -80,9 +84,11 @@ public class PlayerStateMachine : MonoBehaviour
         // Create instances of root states
         var slowState = new SlowState(this, stateMachine);
         var standardState = new StandardState(this, stateMachine);
+
         var groundState = new GroundedState(this, stateMachine);
         var fallState = new FallState(this, stateMachine);
         var jumpState = new JumpState(this, stateMachine);
+        var vaultState = new VaultState(this);
 
         // Create instances of sub-states
         var idleState = new IdleState(this);
@@ -103,11 +109,17 @@ public class PlayerStateMachine : MonoBehaviour
         // Leave Ground State
         AT(groundState, jumpState, Jumped());
         AT(groundState, fallState, Falling());
+        AT(groundState, vaultState, Vaulting());
         // Leave Jump State
         AT(jumpState, groundState, Grounded());
         AT(jumpState, fallState, Falling());
+        AT(jumpState, vaultState, Vaulting());
         // Leave Fall State
         AT(fallState, groundState, Grounded());
+        AT(fallState, vaultState, Vaulting());
+        // Leave Vault State
+        AT(vaultState, groundState, NotVaulting());
+        AT(vaultState, fallState, NotVaulting());
         #endregion
 
         #region Idle State Transitions
@@ -162,6 +174,8 @@ public class PlayerStateMachine : MonoBehaviour
         Func<bool> Grounded() => () => currentCharacter.controller.isGrounded;
         Func<bool> Slowed() => () => isSlowed;
         Func<bool> NotSlowed() => () => !isSlowed;
+        Func<bool> Vaulting() => () => IsVaulting && CheckForVaultableObject() && CheckForwardMovement();
+        Func<bool> NotVaulting() => () => !IsVaulting || !CheckForwardMovement();
 
         // Sub State Conditions
         Func<bool> Walked() => () => inputManager.moveAction.triggered && !inputManager.runAction.triggered;
@@ -244,5 +258,24 @@ public class PlayerStateMachine : MonoBehaviour
             inputManager.playerInput.SwitchCurrentActionMap(inputManager.slowActionMap.name);
         else
             inputManager.playerInput.SwitchCurrentActionMap(inputManager.standardActionMap.name);
+    }
+
+    private bool CheckForVaultableObject()
+    {
+        float boxWidth = 0.5f;
+        float boxHeight = 1.0f;
+        float boxDepth = 0.5f;
+        Vector3 boxCenter = currentCharacter.model.transform.position + Vector3.up * (boxHeight / 2) + Vector3.up * (boxHeight / 2 - boxDepth / 2);
+        bool isHit = Physics.BoxCast(boxCenter, new Vector3(boxWidth / 2, boxHeight / 2, boxDepth / 2), currentCharacter.model.transform.forward, out RaycastHit hitInfo, currentCharacter.model.transform.rotation, 1f, VaultLayers);
+        return isHit;
+    }
+    private bool CheckForwardMovement()
+    {
+        Vector2 input = inputManager.moveAction.ReadValue<Vector2>();
+        Vector3 forward = currentCharacter.model.transform.forward;
+
+        float dotProduct = Vector3.Dot(forward, new Vector3(input.x, 0, input.y));
+
+        return dotProduct > 0.75f;
     }
 }
