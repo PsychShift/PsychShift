@@ -14,7 +14,6 @@ public class JumpState : RootState, IState
     
     public void Tick()
     {
-        Look();
         HandleGravity();
         // Call the Tick method of the current sub-state
         SubStateTick();
@@ -22,8 +21,10 @@ public class JumpState : RootState, IState
 
     public void OnEnter()
     {
-        Debug.Log("Hello from Jump");
+        //Debug.Log("Hello from Jump");
         currentCharacter = playerStateMachine.currentCharacter;
+        playerStateMachine.InAirForward = currentCharacter.model.transform.forward;
+        playerStateMachine.InAirRight = currentCharacter.model.transform.right;
         HandleJump();
         SetSubState();
     }

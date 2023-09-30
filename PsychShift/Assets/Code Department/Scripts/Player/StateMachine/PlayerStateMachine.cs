@@ -6,6 +6,8 @@ using Cinemachine;
 public class PlayerStateMachine : MonoBehaviour
 {
     #region References
+    [Header("Look Speeds")]
+    //[SerializeField] private float vertLookSpeed = 300, horzLookSpeed = 300, slowVertLookSpeed = 150, slowHorzLookSpeed = 150;
     public CinemachineVirtualCamera virtualCamera;
     private StateMachine.StateMachine stateMachine;
     private InputManager inputManager;
@@ -20,6 +22,9 @@ public class PlayerStateMachine : MonoBehaviour
     public float AppliedMovementX { get { return appliedMovement.x; } set { appliedMovement.x = value; }}
     public float AppliedMovementY { get { return appliedMovement.y; } set { appliedMovement.y = value; }}
     public float AppliedMovementZ { get { return appliedMovement.z; } set { appliedMovement.z = value; }}
+
+    public Vector3 InAirForward { get; set; }
+    public Vector3 InAirRight { get; set; }
     [SerializeField] private float walkSpeed = 20;
     public float WalkSpeed { get { return walkSpeed; } }
     public float smoothInputSpeed;
@@ -41,22 +46,40 @@ public class PlayerStateMachine : MonoBehaviour
     #endregion
     
     #region Swap Variables
-    [SerializeField] public float swapDistance = 10f;
+    [SerializeField] public float swapDistance = 100f;
     public float SwapDistance { get { return swapDistance; } set { swapDistance = value; } }
     [SerializeField] private LayerMask swapableLayer;
     public LayerMask SwapableLayer { get { return swapableLayer; }}
+    #endregion
+    
+    #region  Slow Variables
+    private bool isSlowed = false;
     #endregion
     [SerializeField] private GameObject tempCharacter;
     public CharacterInfo currentCharacter { get; set; }
     private void Awake()
     {
+        
         SetJumpVariables();
         cameraTransform = Camera.main.transform;
-        SwapCharacter(tempCharacter);
+        cameraTransform.GetComponent<CinemachineBrain>().m_IgnoreTimeScale = false;
+        currentCharacter = currentCharacter = new CharacterInfo
+        {
+            characterContainer = tempCharacter,
+            model = tempCharacter.transform.GetChild(1).gameObject,
+            cameraRoot = tempCharacter.transform.GetChild(0),
+            controller = tempCharacter.GetComponent<CharacterController>()
+        };
+        virtualCamera.Follow = currentCharacter.cameraRoot;
         inputManager = GetComponent<InputManager>();
         stateMachine = new StateMachine.StateMachine();
 
+        inputManager.OnSlowActionStateChanged += SlowMotion;
+        inputManager.OnSwapPressed += SwapPressed;
+
         // Create instances of root states
+        var slowState = new SlowState(this, stateMachine);
+        var standardState = new StandardState(this, stateMachine);
         var groundState = new GroundedState(this, stateMachine);
         var fallState = new FallState(this, stateMachine);
         var jumpState = new JumpState(this, stateMachine);
@@ -72,6 +95,11 @@ public class PlayerStateMachine : MonoBehaviour
         //void AAt(IState to, Func<bool> condition) => stateMachine.AddAnyTransition(to, condition); // If 
 
         #region Root State Transitions
+        AT(standardState, slowState, Slowed());
+
+        AT(slowState, standardState, NotSlowed());
+
+
         // Leave Ground State
         AT(groundState, jumpState, Jumped());
         AT(groundState, fallState, Falling());
@@ -96,6 +124,18 @@ public class PlayerStateMachine : MonoBehaviour
         #endregion
         
         #region Assign Substates to Rootstates
+        standardState.AddSubState(groundState);
+        standardState.AddSubState(jumpState);
+        standardState.AddSubState(fallState);
+        standardState.PrepareSubStates();
+        standardState.SetDefaultSubState(groundState);
+
+        slowState.AddSubState(groundState);
+        slowState.AddSubState(jumpState);
+        slowState.AddSubState(fallState);
+        slowState.PrepareSubStates();
+        slowState.SetDefaultSubState(groundState);
+
         groundState.AddSubState(idleState);
         groundState.AddSubState(walkState);
         groundState.AddSubState(runState);
@@ -120,25 +160,62 @@ public class PlayerStateMachine : MonoBehaviour
         Func<bool> Jumped() => () => inputManager.jumpAction.triggered && currentCharacter.controller.isGrounded;
         Func<bool> Falling() => () => AppliedMovementY < 0 && !currentCharacter.controller.isGrounded;
         Func<bool> Grounded() => () => currentCharacter.controller.isGrounded;
+        Func<bool> Slowed() => () => isSlowed;
+        Func<bool> NotSlowed() => () => !isSlowed;
 
         // Sub State Conditions
         Func<bool> Walked() => () => inputManager.moveAction.triggered && !inputManager.runAction.triggered;
         Func<bool> Stopped() => () => inputManager.moveAction.ReadValue<Vector2>().magnitude == 0;
         Func<bool> Running() => () => inputManager.moveAction.triggered && inputManager.runAction.triggered;
 
-        stateMachine.SetState(groundState);
+        stateMachine.SetState(standardState);
     }
-
+    void OnDisable()
+    {
+        inputManager.OnSlowActionStateChanged -= SlowMotion;
+        inputManager.OnSwapPressed -= SwapPressed;
+    }
     void Update()
     {
         stateMachine.Tick();
-//        Debug.Log(appliedMovement);
+    }
+    void FixedUpdate()
+    {
         currentCharacter.controller.Move(appliedMovement * Time.deltaTime);
     }
 
+    private void SwapPressed()
+    {
+        SwapCharacter(CheckForCharacter());
+    }
+    public GameObject CheckForCharacter()
+    {
+        // Create a BoxCast to check for objects with the "Swapable" tag.
+        Vector3 boxCenter = Camera.main.transform.position + Camera.main.transform.forward * (swapDistance / 2f);
+        Vector3 boxHalfExtents = new Vector3(0.5f, 0.5f, swapDistance / 2f);
+        Quaternion boxRotation = Camera.main.transform.rotation;
+
+        // Store the results of the BoxCast.
+        RaycastHit[] hits = Physics.BoxCastAll(boxCenter, boxHalfExtents, Vector3.forward, boxRotation, swapDistance, swapableLayer);
+
+        // Loop through the hits to find the first object with the "Swapable" tag.
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider.CompareTag("Swapable") && hit.collider.gameObject != currentCharacter.characterContainer)
+            {
+                // Return the GameObject that was hit.
+                return hit.collider.gameObject;
+            }
+        }
+
+        // If no "Swapable" object was hit, return null.
+        return null;
+    }
     public void SwapCharacter(GameObject newCharacter)
     {
         if(newCharacter == null) return;
+        isSlowed = false;
+        Debug.Log(currentCharacter);
         currentCharacter = new CharacterInfo
         {
             characterContainer = newCharacter,
@@ -147,8 +224,8 @@ public class PlayerStateMachine : MonoBehaviour
             controller = newCharacter.GetComponent<CharacterController>()
         };
         virtualCamera.Follow = currentCharacter.cameraRoot;
+        Debug.Log(currentCharacter);
     }   
-
 
     private void SetJumpVariables()
     {
@@ -156,4 +233,16 @@ public class PlayerStateMachine : MonoBehaviour
         initialJumpGravity = -2 * maxJumpHeight / Mathf.Pow(timeToApex, 2);
         initialJumpVelocity = 2 * maxJumpHeight / timeToApex;
     } 
+
+    private void SlowMotion(bool timeSlow)
+    {
+        isSlowed = timeSlow;
+    }
+    public void SwapControlMap(bool slow)
+    {
+        if(slow)
+            inputManager.playerInput.SwitchCurrentActionMap(inputManager.slowActionMap.name);
+        else
+            inputManager.playerInput.SwitchCurrentActionMap(inputManager.standardActionMap.name);
+    }
 }

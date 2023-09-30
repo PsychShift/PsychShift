@@ -286,7 +286,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""id"": ""17ad749a-b79b-4c0c-91b4-214b9c9fdbd4"",
             ""actions"": [
                 {
-                    ""name"": ""Mind Swap"",
+                    ""name"": ""MindSwap"",
                     ""type"": ""Button"",
                     ""id"": ""daaa2f70-b226-466b-b0b5-e9cd2d328651"",
                     ""expectedControlType"": ""Button"",
@@ -311,17 +311,37 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Unslow"",
+                    ""type"": ""Button"",
+                    ""id"": ""c52c3ea4-22bf-4467-8ccf-884a7e3358db"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""e10fb38b-3eec-4f71-80e2-c2aac79aef9a"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Mind Swap"",
+                    ""action"": ""MindSwap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06e7e455-4ef8-45fe-8012-ce5bf19db900"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MindSwap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -346,6 +366,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Push"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92c4ac6a-bb3e-4108-88b7-80b1a576d93d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Unslow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""67828b91-4964-4c0a-852b-08d192b190b2"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Unslow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -363,9 +405,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Controls_Run = m_Controls.FindAction("Run", throwIfNotFound: true);
         // Slow
         m_Slow = asset.FindActionMap("Slow", throwIfNotFound: true);
-        m_Slow_MindSwap = m_Slow.FindAction("Mind Swap", throwIfNotFound: true);
+        m_Slow_MindSwap = m_Slow.FindAction("MindSwap", throwIfNotFound: true);
         m_Slow_Pull = m_Slow.FindAction("Pull", throwIfNotFound: true);
         m_Slow_Push = m_Slow.FindAction("Push", throwIfNotFound: true);
+        m_Slow_Unslow = m_Slow.FindAction("Unslow", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -524,6 +567,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Slow_MindSwap;
     private readonly InputAction m_Slow_Pull;
     private readonly InputAction m_Slow_Push;
+    private readonly InputAction m_Slow_Unslow;
     public struct SlowActions
     {
         private @PlayerControls m_Wrapper;
@@ -531,6 +575,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @MindSwap => m_Wrapper.m_Slow_MindSwap;
         public InputAction @Pull => m_Wrapper.m_Slow_Pull;
         public InputAction @Push => m_Wrapper.m_Slow_Push;
+        public InputAction @Unslow => m_Wrapper.m_Slow_Unslow;
         public InputActionMap Get() { return m_Wrapper.m_Slow; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -549,6 +594,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Push.started += instance.OnPush;
             @Push.performed += instance.OnPush;
             @Push.canceled += instance.OnPush;
+            @Unslow.started += instance.OnUnslow;
+            @Unslow.performed += instance.OnUnslow;
+            @Unslow.canceled += instance.OnUnslow;
         }
 
         private void UnregisterCallbacks(ISlowActions instance)
@@ -562,6 +610,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Push.started -= instance.OnPush;
             @Push.performed -= instance.OnPush;
             @Push.canceled -= instance.OnPush;
+            @Unslow.started -= instance.OnUnslow;
+            @Unslow.performed -= instance.OnUnslow;
+            @Unslow.canceled -= instance.OnUnslow;
         }
 
         public void RemoveCallbacks(ISlowActions instance)
@@ -594,5 +645,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnMindSwap(InputAction.CallbackContext context);
         void OnPull(InputAction.CallbackContext context);
         void OnPush(InputAction.CallbackContext context);
+        void OnUnslow(InputAction.CallbackContext context);
     }
 }

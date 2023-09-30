@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
-    public float slowdownLength = 2f;
+    private float fixedDeltaTime;
 
     private static TimeManager instance;
 
@@ -12,7 +12,7 @@ public class TimeManager : MonoBehaviour
     {
         get { return instance; }
     }
-
+    
     private void Awake()
     {
         if (instance == null)
@@ -24,17 +24,19 @@ public class TimeManager : MonoBehaviour
             // If an instance already exists, destroy this duplicate
             Destroy(gameObject);
         }
+
+        this.fixedDeltaTime = Time.fixedDeltaTime;
     }
 
     public void DoSlowmotion(float slowdownFactor = 0.1f)
     {
         Time.timeScale = slowdownFactor;
-        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale * 0.05f;
     }
 
     public void UndoSlowmotion()
     {
         Time.timeScale = 1;
-        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale * 0.05f;
     }
 }

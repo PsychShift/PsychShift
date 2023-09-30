@@ -10,7 +10,6 @@ public class GroundedState : RootState, IState
     
     public void Tick()
     {
-        Look();
         HandleGravity();
         // Call the Tick method of the current sub-state
         SubStateTick();
@@ -18,7 +17,7 @@ public class GroundedState : RootState, IState
 
     public void OnEnter()
     {
-        Debug.Log("Hello from Grounded");
+        //Debug.Log("Hello from Grounded");
         currentCharacter = playerStateMachine.currentCharacter;
         SetSubState();
     }
@@ -26,6 +25,8 @@ public class GroundedState : RootState, IState
     public void OnExit()
     {
         stateMachine._currentSubState = currentSubState;
+        playerStateMachine.InAirForward = Vector3.zero;
+        playerStateMachine.InAirRight = Vector3.zero;
     }
 
     private void HandleGravity()

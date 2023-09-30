@@ -264,7 +264,7 @@
             "id": "17ad749a-b79b-4c0c-91b4-214b9c9fdbd4",
             "actions": [
                 {
-                    "name": "Mind Swap",
+                    "name": "MindSwap",
                     "type": "Button",
                     "id": "daaa2f70-b226-466b-b0b5-e9cd2d328651",
                     "expectedControlType": "Button",
@@ -289,17 +289,37 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Unslow",
+                    "type": "Button",
+                    "id": "c52c3ea4-22bf-4467-8ccf-884a7e3358db",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "e10fb38b-3eec-4f71-80e2-c2aac79aef9a",
-                    "path": "",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Mind Swap",
+                    "action": "MindSwap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "06e7e455-4ef8-45fe-8012-ce5bf19db900",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MindSwap",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -322,6 +342,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Push",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92c4ac6a-bb3e-4108-88b7-80b1a576d93d",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Unslow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "67828b91-4964-4c0a-852b-08d192b190b2",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Unslow",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

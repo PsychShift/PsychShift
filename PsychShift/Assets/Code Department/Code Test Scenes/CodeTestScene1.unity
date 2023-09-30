@@ -521,7 +521,7 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
+  m_UpdateMethod: 0
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
@@ -1494,6 +1494,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50581b4e38f51aa47a17c160399e0f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  standardActionMap:
+    m_Name: Standard
+    m_Id: 415e05e3-5170-4867-85c0-69f929c1c732
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
 --- !u!114 &1244412123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1536,7 +1542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b200a0a4aa1b7845a1e6d14af7d7146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slowdownLength: 2
 --- !u!114 &1244412125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1550,15 +1555,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 928002932}
-  tempCharacter: {fileID: 2063244690}
   cameraTransform: {fileID: 0}
-  walkSpeed: 20
-  smoothInputSpeed: 0.2
+  walkSpeed: 15
+  smoothInputSpeed: 0.1
   smoothInputVelocity: {x: 0, y: 0}
-  jumpHeight: 5
+  jumpHeight: 3
   gravityValue: -9.81
-  maxJumpHeight: 6
-  maxJumpTime: 0.75
+  maxJumpHeight: 4
+  maxJumpTime: 0.5
+  swapDistance: 40
+  swapableLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  tempCharacter: {fileID: 2063244690}
 --- !u!1 &1503927493
 GameObject:
   m_ObjectHideFlags: 0

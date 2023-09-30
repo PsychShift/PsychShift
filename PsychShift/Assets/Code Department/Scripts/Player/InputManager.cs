@@ -12,19 +12,22 @@ public class InputManager : MonoBehaviour
             return _instance;
         }
     }
-    private PlayerInput playerInput;
+    public PlayerInput playerInput { get; private set; }
 
     #region Normal Controls
+    public InputActionMap standardActionMap;
     public InputAction moveAction { get; private set; }
     public InputAction runAction { get; private set; }
     public InputAction lookAction { get; private set; }
     public InputAction jumpAction { get; private set; }
     public InputAction slowAction { get; private set; }
-    public InputAction swapAction { get; private set; }
+    public InputAction shootAction { get; private set; }
     #endregion
 
     #region Slow Controls
-    //private InputAction swapAction;
+    public InputActionMap slowActionMap { get; private set; }
+    public InputAction swapSlowAction { get; private set; }
+    public InputAction unSlowAction { get; private set; }
     #endregion
 
     public event Action OnSwapPressed;
@@ -34,9 +37,6 @@ public class InputManager : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        
-        
-        
     }
 
     private void OnEnable() {
@@ -48,17 +48,26 @@ public class InputManager : MonoBehaviour
         {
             _instance = this;
         }
+        standardActionMap = playerInput.actions.FindActionMap("Controls");
+        slowActionMap = playerInput.actions.FindActionMap("Slow");
+        Debug.Log($"{standardActionMap.name} & {slowActionMap.name}");
+
+        #region Standard Controls
+        moveAction = playerInput.actions[standardActionMap.name + "/Move"];
+        lookAction = playerInput.actions[standardActionMap.name + "/Look"];
+        runAction = playerInput.actions[standardActionMap.name + "/Run"];
+        jumpAction = playerInput.actions[standardActionMap.name + "/Jump"];
+        slowAction = playerInput.actions[standardActionMap.name + "/Slow"];
+        #endregion
         
-        moveAction = playerInput.actions["Move"];
-        lookAction = playerInput.actions["Look"];
-        runAction = playerInput.actions["Run"];
-        jumpAction = playerInput.actions["Jump"];
-        slowAction = playerInput.actions["Slow"];
-        swapAction = playerInput.actions["MindSwap"];
+        #region Slow Controls
+        swapSlowAction = playerInput.actions[slowActionMap.name + "/MindSwap"];
+        unSlowAction = playerInput.actions[slowActionMap.name + "/Unslow"];
+        #endregion
 
         slowAction.started += PressedSlow;
-        slowAction.canceled += ReleasedSlow;
-        swapAction.started += PressedSwap;
+        unSlowAction.started += ReleasedSlow;
+        swapSlowAction.started += PressedSwap;
     }
     private void OnDisable() {
         

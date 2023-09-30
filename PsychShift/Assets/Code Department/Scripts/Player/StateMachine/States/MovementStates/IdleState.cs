@@ -19,14 +19,14 @@ public class IdleState : IState
         Vector2 input = InputManager.Instance.GetPlayerMovement();
         playerStateMachine.currentInputVector = Vector2.SmoothDamp(playerStateMachine.currentInputVector, input, ref playerStateMachine.smoothInputVelocity, playerStateMachine.smoothInputSpeed);
         Vector3 movement = new Vector3(playerStateMachine.currentInputVector.x, 0f, playerStateMachine.currentInputVector.y);
-        movement = playerStateMachine.currentCharacter.model.transform.forward * movement.z + playerStateMachine.currentCharacter.model.transform.right * movement.x;
+        movement = currentCharacter.model.transform.forward * movement.z + currentCharacter.model.transform.right * movement.x;
         playerStateMachine.AppliedMovementX = movement.x * playerStateMachine.WalkSpeed;
         playerStateMachine.AppliedMovementZ = movement.z * playerStateMachine.WalkSpeed;
     }
 
     public void OnEnter()
     {
-        Debug.Log("Hello from Idle");
+        //Debug.Log("Hello from Idle");
         currentCharacter = playerStateMachine.currentCharacter;
     }
 

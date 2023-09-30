@@ -13,15 +13,19 @@ public class FallState : RootState, IState
 
     public void Tick()
     {
-        Look();
         HandleGravity();
         SubStateTick();
     }
 
     public void OnEnter()
     {
-        Debug.Log("Hello from Fall");
+        //Debug.Log("Hello from Fall");
         currentCharacter = playerStateMachine.currentCharacter;
+        if(playerStateMachine.InAirForward == Vector3.zero)
+        {
+            playerStateMachine.InAirForward = currentCharacter.model.transform.forward;
+            playerStateMachine.InAirRight = currentCharacter.model.transform.right;
+        }
         SetSubState();
     }
 

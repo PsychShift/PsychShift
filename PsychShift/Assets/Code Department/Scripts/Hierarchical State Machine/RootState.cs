@@ -27,9 +27,15 @@ public class RootState
     }
     private void SetSubStateTransitions(IState state, List<Transition> transitions)
     {
+        List<Transition> transitionsToRemove = new();
         foreach (var transition in transitions)
             if(!subStates.Contains(transition.To))
+                transitionsToRemove.Add(transition);
+        if(transitionsToRemove.Count > 0)
+        {
+            foreach(var transition in transitionsToRemove)
                 transitions.Remove(transition);
+        }
         subTransitions.Add(state.GetType(), transitions);
     }
     
@@ -75,7 +81,7 @@ public class RootState
             state = stateMachine._currentSubState;
         else
             state = defaultSubState;
-    Debug.Log(state);
+
         SetSubState(state);
     }
 

@@ -16,7 +16,7 @@ public class WalkState : IState
 
     public void OnEnter()
     {
-        Debug.Log("Hello from Walk");
+        //Debug.Log("Hello from Walk");
         currentCharacter = playerStateMachine.currentCharacter;
     }
 
@@ -30,18 +30,27 @@ public class WalkState : IState
         Vector2 input = InputManager.Instance.GetPlayerMovement();
         playerStateMachine.currentInputVector = Vector2.SmoothDamp(playerStateMachine.currentInputVector, input, ref playerStateMachine.smoothInputVelocity, playerStateMachine.smoothInputSpeed);
         Vector3 movement = new Vector3(playerStateMachine.currentInputVector.x, 0f, playerStateMachine.currentInputVector.y);
-        movement = playerStateMachine.currentCharacter.model.transform.forward * movement.z + playerStateMachine.currentCharacter.model.transform.right * movement.x;
+        movement = currentCharacter.model.transform.forward * movement.z + currentCharacter.model.transform.right * movement.x;
         playerStateMachine.AppliedMovementX = movement.x * playerStateMachine.WalkSpeed;
         playerStateMachine.AppliedMovementZ = movement.z * playerStateMachine.WalkSpeed;
     }
-
-    /* private void Move()
+    
+    /* private Vector3 CalculateForwardRight(Vector3 move)
     {
-        Vector2 input = InputManager.Instance.GetPlayerMovement();
-        playerStateMachine.currentInputVector = Vector2.SmoothDamp(playerStateMachine.currentInputVector, input, ref playerStateMachine.smoothInputVelocity, playerStateMachine.smoothInputSpeed);
-        playerStateMachine.playerVelocity = new Vector3(playerStateMachine.currentInputVector.x, playerStateMachine.playerVelocity.y, playerStateMachine.currentInputVector.y);
-        playerStateMachine.playerVelocity = playerStateMachine.cameraTransform.forward * playerStateMachine.playerVelocity.z + playerStateMachine.cameraTransform.right * playerStateMachine.playerVelocity.x;
-
-        currentCharacter.controller.Move(playerStateMachine.playerVelocity * Time.deltaTime * playerStateMachine.walkSpeed);
+        Vector3 forward;
+        Vector3 right;
+        if (currentCharacter.controller.isGrounded)
+        {
+            forward = currentCharacter.model.transform.forward;
+            right = currentCharacter.model.transform.right;
+        }
+        else
+        {
+            forward = playerStateMachine.InAirForward;
+            right = playerStateMachine.InAirRight;
+        }
+        move = move.x * right + move.z * forward;
+        
+        return move;
     } */
 }
