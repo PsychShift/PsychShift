@@ -20,6 +20,7 @@ public class VaultState : RootState, IState
     public void OnEnter()
     {
         Debug.Log("Entered Vault State");
+        SetSubState();
         currentCharacter = playerStateMachine.currentCharacter;
         time = 0f;
         CheckVault();

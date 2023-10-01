@@ -14,14 +14,14 @@ public class JumpState : RootState, IState
     
     public void Tick()
     {
-        HandleGravity();
         // Call the Tick method of the current sub-state
         SubStateTick();
+        HandleGravity();
     }
 
     public void OnEnter()
     {
-        //Debug.Log("Hello from Jump");
+        Debug.Log("Hello from Jump");
         currentCharacter = playerStateMachine.currentCharacter;
         playerStateMachine.InAirForward = currentCharacter.model.transform.forward;
         playerStateMachine.InAirRight = currentCharacter.model.transform.right;
@@ -42,7 +42,7 @@ public class JumpState : RootState, IState
 
     private void HandleGravity()
     {
-        bool isFalling = playerStateMachine.CurrentMovementY <= 0f || InputManager.Instance.jumpAction.triggered;
+        bool isFalling = playerStateMachine.CurrentMovementY <= 0f || !InputManager.Instance.IsJumpPressed;
         float fallMultiplier = 2.0f;
 
         if(isFalling)

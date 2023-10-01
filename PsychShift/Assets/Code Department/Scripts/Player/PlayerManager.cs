@@ -53,7 +53,7 @@ public class PlayerManager : MonoBehaviour
         currentCharacter.controller.Move(move * Time.deltaTime * playerSpeed);
 
         // Changes the height position of the player..
-        if (InputManager.Instance.PlayerJumpedThisFrame() && groundedPlayer)
+        if (InputManager.Instance.IsJumpPressed && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
         }

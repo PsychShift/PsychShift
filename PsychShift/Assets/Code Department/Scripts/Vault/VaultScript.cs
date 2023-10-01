@@ -5,7 +5,7 @@ using UnityEngine;
 public class VaultScript : MonoBehaviour
 {
     private int vaultLayer;
-    public Camera camera;
+    public new Camera camera;
     private float playerHeight = 2f;
     private float playerRadius = 0.5f;
 

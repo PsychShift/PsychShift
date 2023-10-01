@@ -88,7 +88,7 @@ public class PlayerStateMachine : MonoBehaviour
         var groundState = new GroundedState(this, stateMachine);
         var fallState = new FallState(this, stateMachine);
         var jumpState = new JumpState(this, stateMachine);
-        var vaultState = new VaultState(this);
+        //var vaultState = new VaultState(this);
 
         // Create instances of sub-states
         var idleState = new IdleState(this);
@@ -109,17 +109,17 @@ public class PlayerStateMachine : MonoBehaviour
         // Leave Ground State
         AT(groundState, jumpState, Jumped());
         AT(groundState, fallState, Falling());
-        AT(groundState, vaultState, Vaulting());
+        //AT(groundState, vaultState, Vaulting());
         // Leave Jump State
         AT(jumpState, groundState, Grounded());
         AT(jumpState, fallState, Falling());
-        AT(jumpState, vaultState, Vaulting());
+        //AT(jumpState, vaultState, Vaulting());
         // Leave Fall State
         AT(fallState, groundState, Grounded());
-        AT(fallState, vaultState, Vaulting());
+        //AT(fallState, vaultState, Vaulting());
         // Leave Vault State
-        AT(vaultState, groundState, NotVaulting());
-        AT(vaultState, fallState, NotVaulting());
+        //AT(vaultState, groundState, NotVaulting());
+        //AT(vaultState, fallState, NotVaulting());
         #endregion
 
         #region Idle State Transitions
@@ -139,6 +139,7 @@ public class PlayerStateMachine : MonoBehaviour
         standardState.AddSubState(groundState);
         standardState.AddSubState(jumpState);
         standardState.AddSubState(fallState);
+        //standardState.AddSubState(vaultState);
         standardState.PrepareSubStates();
         standardState.SetDefaultSubState(groundState);
 
@@ -169,13 +170,13 @@ public class PlayerStateMachine : MonoBehaviour
         #endregion
 
         // Root State Conditions
-        Func<bool> Jumped() => () => inputManager.jumpAction.triggered && currentCharacter.controller.isGrounded;
+        Func<bool> Jumped() => () => inputManager.IsJumpPressed && currentCharacter.controller.isGrounded;
         Func<bool> Falling() => () => AppliedMovementY < 0 && !currentCharacter.controller.isGrounded;
         Func<bool> Grounded() => () => currentCharacter.controller.isGrounded;
         Func<bool> Slowed() => () => isSlowed;
         Func<bool> NotSlowed() => () => !isSlowed;
-        Func<bool> Vaulting() => () => IsVaulting && CheckForVaultableObject() && CheckForwardMovement();
-        Func<bool> NotVaulting() => () => !IsVaulting || !CheckForwardMovement();
+        /* Func<bool> Vaulting() => () => IsVaulting && CheckForwardMovement();
+        Func<bool> NotVaulting() => () => !IsVaulting || !CheckForwardMovement(); */
 
         // Sub State Conditions
         Func<bool> Walked() => () => inputManager.moveAction.triggered && !inputManager.runAction.triggered;
@@ -191,6 +192,7 @@ public class PlayerStateMachine : MonoBehaviour
     }
     void Update()
     {
+        IsVaulting = CheckForVaultableObject();
         stateMachine.Tick();
     }
     void FixedUpdate()
@@ -244,8 +246,8 @@ public class PlayerStateMachine : MonoBehaviour
     private void SetJumpVariables()
     {
         float timeToApex = maxJumpTime / 2;
-        initialJumpGravity = -2 * maxJumpHeight / Mathf.Pow(timeToApex, 2);
-        initialJumpVelocity = 2 * maxJumpHeight / timeToApex;
+        initialJumpGravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
+        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
     } 
 
     private void SlowMotion(bool timeSlow)
@@ -262,12 +264,9 @@ public class PlayerStateMachine : MonoBehaviour
 
     private bool CheckForVaultableObject()
     {
-        float boxWidth = 0.5f;
-        float boxHeight = 1.0f;
-        float boxDepth = 0.5f;
-        Vector3 boxCenter = currentCharacter.model.transform.position + Vector3.up * (boxHeight / 2) + Vector3.up * (boxHeight / 2 - boxDepth / 2);
-        bool isHit = Physics.BoxCast(boxCenter, new Vector3(boxWidth / 2, boxHeight / 2, boxDepth / 2), currentCharacter.model.transform.forward, out RaycastHit hitInfo, currentCharacter.model.transform.rotation, 1f, VaultLayers);
-        return isHit;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var firstHit, 1f, vaultLayers))
+            return true;
+        return false;
     }
     private bool CheckForwardMovement()
     {
