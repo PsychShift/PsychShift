@@ -101,7 +101,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0.0000076293945, y: 0, z: 0}
@@ -686,8 +686,8 @@ ReflectionProbe:
   m_TimeSlicingMode: 2
   m_Resolution: 2048
   m_UpdateFrequency: 0
-  m_BoxSize: {x: 61.6, y: 41.23, z: 145.6}
-  m_BoxOffset: {x: 0, y: 0, z: 0}
+  m_BoxSize: {x: 7.5, y: 6.68, z: 3.21}
+  m_BoxOffset: {x: 0, y: 1.59, z: 0}
   m_NearClip: 0.01
   m_FarClip: 5714
   m_ShadowDistance: 254.08
@@ -907,6 +907,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 540127681230971351}
     m_Modifications:
+    - target: {fileID: 2122051315581493573, guid: 602a02878535a7840bbcb7321401506b, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2122051315581493573, guid: 602a02878535a7840bbcb7321401506b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
