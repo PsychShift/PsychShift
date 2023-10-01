@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SettingsScript : MonoBehaviour
 {
     public Dropdown resolutionDropdown;
+
     Resolution[] resolutions;
 
     // Start is called before the first frame update
@@ -37,17 +38,13 @@ public class SettingsScript : MonoBehaviour
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
-
-        print("Fullscreen");
-
     }
 
-    //public void SetResolution (int resolutionIndex, bool isFullscreen)
-   // {
-        //Screen.fullScreen = isFullscreen;
-        //Resolution resolution = resolutions[resolutionIndex];
-        //Screen.SetResolution(resolution.width, resolution.height, Screen.fullscreen);
-    //}
+    public void SetResolution (int resolutionIndex)
+    {
+        Resolution resolution = resolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
 
     public void SetQuality(int qualityIndex)
     {
