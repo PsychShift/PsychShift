@@ -30,6 +30,7 @@ public class InputManager : MonoBehaviour
     public InputAction unSlowAction { get; private set; }
     #endregion
 
+    public bool IsJumpPressed { get; private set; }
     public event Action OnSwapPressed;
     public event Action<bool> OnSlowActionStateChanged;
 
@@ -50,7 +51,6 @@ public class InputManager : MonoBehaviour
         }
         standardActionMap = playerInput.actions.FindActionMap("Controls");
         slowActionMap = playerInput.actions.FindActionMap("Slow");
-        Debug.Log($"{standardActionMap.name} & {slowActionMap.name}");
 
         #region Standard Controls
         moveAction = playerInput.actions[standardActionMap.name + "/Move"];
@@ -68,10 +68,17 @@ public class InputManager : MonoBehaviour
         slowAction.started += PressedSlow;
         unSlowAction.started += ReleasedSlow;
         swapSlowAction.started += PressedSwap;
+
+        jumpAction.started += OnJump;
+        jumpAction.canceled += OnJump;
     }
     private void OnDisable() {
-        
-        
+        slowAction.started -= PressedSlow;
+        unSlowAction.started -= ReleasedSlow;
+        swapSlowAction.started -= PressedSwap;
+
+        jumpAction.started -= OnJump;
+        jumpAction.canceled -= OnJump; 
     }
 
     public Vector2 GetPlayerMovement() {
@@ -80,8 +87,9 @@ public class InputManager : MonoBehaviour
     public Vector2 GetMouseDelta() {
         return lookAction.ReadValue<Vector2>();
     }
-    public bool PlayerJumpedThisFrame() {
-        return jumpAction.triggered;
+    private void OnJump(InputAction.CallbackContext context)
+    {
+        IsJumpPressed = context.ReadValueAsButton();
     }
 
     private void PressedSwap(InputAction.CallbackContext context) {

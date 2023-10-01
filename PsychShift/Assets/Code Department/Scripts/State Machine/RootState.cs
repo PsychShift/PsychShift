@@ -19,6 +19,8 @@ public class RootState
     }
     public void PrepareSubStates()
     {
+        if(subStates.Count <= 1)
+            return;
         foreach (var state in subStates)
         {
             //Debug.Log($"{this} is referencing this states {state} transition {stateMachine.FindStateTransitions(state)}");
@@ -77,7 +79,7 @@ public class RootState
     protected void SetSubState()
     {
         IState state;
-        if(subStates.Contains(stateMachine._currentSubState))
+          if(subStates.Contains(stateMachine._currentSubState))
             state = stateMachine._currentSubState;
         else
             state = defaultSubState;

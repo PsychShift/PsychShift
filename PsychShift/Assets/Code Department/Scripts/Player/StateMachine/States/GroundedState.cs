@@ -10,14 +10,14 @@ public class GroundedState : RootState, IState
     
     public void Tick()
     {
-        HandleGravity();
         // Call the Tick method of the current sub-state
         SubStateTick();
+        HandleGravity();
     }
 
     public void OnEnter()
     {
-        //Debug.Log("Hello from Grounded");
+        Debug.Log("Hello from Grounded");
         currentCharacter = playerStateMachine.currentCharacter;
         SetSubState();
     }
