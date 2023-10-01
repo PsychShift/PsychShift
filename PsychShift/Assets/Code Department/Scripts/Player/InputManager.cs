@@ -58,6 +58,7 @@ public class InputManager : MonoBehaviour
         runAction = playerInput.actions[standardActionMap.name + "/Run"];
         jumpAction = playerInput.actions[standardActionMap.name + "/Jump"];
         slowAction = playerInput.actions[standardActionMap.name + "/Slow"];
+        shootAction = playerInput.actions[standardActionMap.name + "/Shoot"];//Kevin added this shooting thing
         #endregion
         
         #region Slow Controls
@@ -102,4 +103,11 @@ public class InputManager : MonoBehaviour
     private void ReleasedSlow(InputAction.CallbackContext context) {
         OnSlowActionStateChanged?.Invoke(false);
     }
+
+
+    //KEVIN ADDED THIS I SORRY IF BROKE
+    public bool PlayerShotThisFrame() {
+        return shootAction.triggered;
+    }
+
 }
