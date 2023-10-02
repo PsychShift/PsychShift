@@ -227,7 +227,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d17a01b1-df5b-400c-a785-9c19f2536450"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -282,7 +282,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""30a515d5-7ac5-4c43-ac63-792a7dfbedbf"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/leftStickPress"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -306,18 +306,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Pull"",
+                    ""name"": ""Manipulate"",
                     ""type"": ""Button"",
                     ""id"": ""010324a3-915f-4dc1-8c65-1087c521199f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Push"",
-                    ""type"": ""Button"",
-                    ""id"": ""4e557698-e793-4a03-aaff-6622df1944f5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -358,30 +349,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4948d8c4-cf6c-4c21-a4b5-5433b1104ed7"",
-                    ""path"": """",
+                    ""id"": ""adfd0103-c098-4a39-ae7f-e331c14cd7e8"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Pull"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""02501a03-9374-40b5-856b-cdb52bcf6a01"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Push"",
+                    ""action"": ""Manipulate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""92c4ac6a-bb3e-4108-88b7-80b1a576d93d"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -397,6 +377,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Unslow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4948d8c4-cf6c-4c21-a4b5-5433b1104ed7"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Manipulate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -417,8 +408,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Slow
         m_Slow = asset.FindActionMap("Slow", throwIfNotFound: true);
         m_Slow_MindSwap = m_Slow.FindAction("MindSwap", throwIfNotFound: true);
-        m_Slow_Pull = m_Slow.FindAction("Pull", throwIfNotFound: true);
-        m_Slow_Push = m_Slow.FindAction("Push", throwIfNotFound: true);
+        m_Slow_Manipulate = m_Slow.FindAction("Manipulate", throwIfNotFound: true);
         m_Slow_Unslow = m_Slow.FindAction("Unslow", throwIfNotFound: true);
     }
 
@@ -576,16 +566,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Slow;
     private List<ISlowActions> m_SlowActionsCallbackInterfaces = new List<ISlowActions>();
     private readonly InputAction m_Slow_MindSwap;
-    private readonly InputAction m_Slow_Pull;
-    private readonly InputAction m_Slow_Push;
+    private readonly InputAction m_Slow_Manipulate;
     private readonly InputAction m_Slow_Unslow;
     public struct SlowActions
     {
         private @PlayerControls m_Wrapper;
         public SlowActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MindSwap => m_Wrapper.m_Slow_MindSwap;
-        public InputAction @Pull => m_Wrapper.m_Slow_Pull;
-        public InputAction @Push => m_Wrapper.m_Slow_Push;
+        public InputAction @Manipulate => m_Wrapper.m_Slow_Manipulate;
         public InputAction @Unslow => m_Wrapper.m_Slow_Unslow;
         public InputActionMap Get() { return m_Wrapper.m_Slow; }
         public void Enable() { Get().Enable(); }
@@ -599,12 +587,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MindSwap.started += instance.OnMindSwap;
             @MindSwap.performed += instance.OnMindSwap;
             @MindSwap.canceled += instance.OnMindSwap;
-            @Pull.started += instance.OnPull;
-            @Pull.performed += instance.OnPull;
-            @Pull.canceled += instance.OnPull;
-            @Push.started += instance.OnPush;
-            @Push.performed += instance.OnPush;
-            @Push.canceled += instance.OnPush;
+            @Manipulate.started += instance.OnManipulate;
+            @Manipulate.performed += instance.OnManipulate;
+            @Manipulate.canceled += instance.OnManipulate;
             @Unslow.started += instance.OnUnslow;
             @Unslow.performed += instance.OnUnslow;
             @Unslow.canceled += instance.OnUnslow;
@@ -615,12 +600,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MindSwap.started -= instance.OnMindSwap;
             @MindSwap.performed -= instance.OnMindSwap;
             @MindSwap.canceled -= instance.OnMindSwap;
-            @Pull.started -= instance.OnPull;
-            @Pull.performed -= instance.OnPull;
-            @Pull.canceled -= instance.OnPull;
-            @Push.started -= instance.OnPush;
-            @Push.performed -= instance.OnPush;
-            @Push.canceled -= instance.OnPush;
+            @Manipulate.started -= instance.OnManipulate;
+            @Manipulate.performed -= instance.OnManipulate;
+            @Manipulate.canceled -= instance.OnManipulate;
             @Unslow.started -= instance.OnUnslow;
             @Unslow.performed -= instance.OnUnslow;
             @Unslow.canceled -= instance.OnUnslow;
@@ -654,8 +636,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface ISlowActions
     {
         void OnMindSwap(InputAction.CallbackContext context);
-        void OnPull(InputAction.CallbackContext context);
-        void OnPush(InputAction.CallbackContext context);
+        void OnManipulate(InputAction.CallbackContext context);
         void OnUnslow(InputAction.CallbackContext context);
     }
 }

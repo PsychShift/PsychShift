@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using Unity.VisualScripting;
 
 public class InputManager : MonoBehaviour
 {
@@ -12,30 +13,32 @@ public class InputManager : MonoBehaviour
             return _instance;
         }
     }
-    public PlayerInput playerInput { get; private set; }
+    public PlayerInput PlayerInput { get; private set; }
 
     #region Normal Controls
-    public InputActionMap standardActionMap;
-    public InputAction moveAction { get; private set; }
-    public InputAction runAction { get; private set; }
-    public InputAction lookAction { get; private set; }
-    public InputAction jumpAction { get; private set; }
-    public InputAction slowAction { get; private set; }
-    public InputAction shootAction { get; private set; }
+    public InputActionMap StandardActionMap { get; private set; }
+    public InputAction MoveAction { get; private set; }
+    public InputAction RunAction { get; private set; }
+    public InputAction LookAction { get; private set; }
+    public InputAction JumpAction { get; private set; }
+    public InputAction SlowAction { get; private set; }
+    public InputAction ShootAction { get; private set; }
     #endregion
 
     #region Slow Controls
-    public InputActionMap slowActionMap { get; private set; }
-    public InputAction swapSlowAction { get; private set; }
-    public InputAction unSlowAction { get; private set; }
+    public InputActionMap SlowActionMap { get; private set; }
+    public InputAction SwapSlowAction { get; private set; }
+    public InputAction UnSlowAction { get; private set; }
+    public InputAction ManipulateAction { get; private set; }
     #endregion
 
     public bool IsJumpPressed { get; private set; }
     public event Action OnSwapPressed;
+    public event Action OnManipulatePressed;
     public event Action<bool> OnSlowActionStateChanged;
 
     private void Awake() {
-        playerInput = GetComponent<PlayerInput>();
+        PlayerInput = GetComponent<PlayerInput>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -49,48 +52,52 @@ public class InputManager : MonoBehaviour
         {
             _instance = this;
         }
-        standardActionMap = playerInput.actions.FindActionMap("Controls");
-        slowActionMap = playerInput.actions.FindActionMap("Slow");
+        StandardActionMap = PlayerInput.actions.FindActionMap("Controls");
+        SlowActionMap = PlayerInput.actions.FindActionMap("Slow");
 
         #region Standard Controls
-        moveAction = playerInput.actions[standardActionMap.name + "/Move"];
-        lookAction = playerInput.actions[standardActionMap.name + "/Look"];
-        runAction = playerInput.actions[standardActionMap.name + "/Run"];
-        jumpAction = playerInput.actions[standardActionMap.name + "/Jump"];
-        slowAction = playerInput.actions[standardActionMap.name + "/Slow"];
-        shootAction = playerInput.actions[standardActionMap.name + "/Shoot"];//Kevin added this shooting thing
+        MoveAction = PlayerInput.actions[StandardActionMap.name + "/Move"];
+        LookAction = PlayerInput.actions[StandardActionMap.name + "/Look"];
+        RunAction = PlayerInput.actions[StandardActionMap.name + "/Run"];
+        JumpAction = PlayerInput.actions[StandardActionMap.name + "/Jump"];
+        ShootAction = PlayerInput.actions[StandardActionMap.name + "/Shoot"];//Kevin added this shooting thing
+        SlowAction = PlayerInput.actions[StandardActionMap.name + "/Slow"];
         #endregion
         
+        JumpAction.performed += OnJump;
+        JumpAction.canceled += OnJump;
+        
         #region Slow Controls
-        swapSlowAction = playerInput.actions[slowActionMap.name + "/MindSwap"];
-        unSlowAction = playerInput.actions[slowActionMap.name + "/Unslow"];
+        SwapSlowAction = PlayerInput.actions[SlowActionMap.name + "/MindSwap"];
+        ManipulateAction = PlayerInput.actions[SlowActionMap.name + "/Manipulate"];
+        UnSlowAction = PlayerInput.actions[SlowActionMap.name + "/Unslow"];
         #endregion
 
-        slowAction.started += PressedSlow;
-        unSlowAction.started += ReleasedSlow;
-        swapSlowAction.started += PressedSwap;
+        SlowAction.started += PressedSlow;
+        UnSlowAction.started += ReleasedSlow;
+        SwapSlowAction.started += PressedSwap;
+        ManipulateAction.started += PressedManipulate;
 
-        jumpAction.started += OnJump;
-        jumpAction.canceled += OnJump;
     }
     private void OnDisable() {
-        slowAction.started -= PressedSlow;
-        unSlowAction.started -= ReleasedSlow;
-        swapSlowAction.started -= PressedSwap;
-
-        jumpAction.started -= OnJump;
-        jumpAction.canceled -= OnJump; 
+        JumpAction.performed -= OnJump;
+        JumpAction.canceled -= OnJump; 
+        SlowAction.started -= PressedSlow;
+        UnSlowAction.started -= ReleasedSlow;
+        SwapSlowAction.started -= PressedSwap;
+        ManipulateAction.started -= PressedManipulate;
     }
 
     public Vector2 GetPlayerMovement() {
-        return moveAction.ReadValue<Vector2>();
+        return MoveAction.ReadValue<Vector2>();
     }
     public Vector2 GetMouseDelta() {
-        return lookAction.ReadValue<Vector2>();
+        return LookAction.ReadValue<Vector2>();
     }
     private void OnJump(InputAction.CallbackContext context)
     {
-        IsJumpPressed = context.ReadValueAsButton();
+        //IsJumpPressed = context.ReadValueAsButton();
+        IsJumpPressed = !IsJumpPressed;
     }
 
     private void PressedSwap(InputAction.CallbackContext context) {
@@ -104,10 +111,15 @@ public class InputManager : MonoBehaviour
         OnSlowActionStateChanged?.Invoke(false);
     }
 
+    private void PressedManipulate(InputAction.CallbackContext context)
+    {
+        OnManipulatePressed?.Invoke();
+    }
+
 
     //KEVIN ADDED THIS I SORRY IF BROKE
     public bool PlayerShotThisFrame() {
-        return shootAction.triggered;
+        return ShootAction.triggered;
     }
 
 }

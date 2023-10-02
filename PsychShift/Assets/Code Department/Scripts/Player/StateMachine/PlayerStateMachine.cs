@@ -48,7 +48,9 @@ public class PlayerStateMachine : MonoBehaviour
     public float InitialJumpVelocity { get { return initialJumpVelocity; } }
     public float InitialJumpGravity { get { return initialJumpGravity; } }
     #endregion
-    
+    #region Manipulate Variables
+    [SerializeField] private LayerMask manipulateLayers;
+    #endregion
     #region Swap Variables
     [SerializeField] public float swapDistance = 100f;
     public float SwapDistance { get { return swapDistance; } set { swapDistance = value; } }
@@ -78,8 +80,11 @@ public class PlayerStateMachine : MonoBehaviour
         inputManager = GetComponent<InputManager>();
         stateMachine = new StateMachine.StateMachine();
 
+        #region Function Events
         inputManager.OnSlowActionStateChanged += SlowMotion;
         inputManager.OnSwapPressed += SwapPressed;
+        inputManager.OnManipulatePressed += Manipulate;
+        #endregion
 
         // Create instances of root states
         var slowState = new SlowState(this, stateMachine);
@@ -179,9 +184,9 @@ public class PlayerStateMachine : MonoBehaviour
         Func<bool> NotVaulting() => () => !IsVaulting || !CheckForwardMovement(); */
 
         // Sub State Conditions
-        Func<bool> Walked() => () => inputManager.moveAction.triggered && !inputManager.runAction.triggered;
-        Func<bool> Stopped() => () => inputManager.moveAction.ReadValue<Vector2>().magnitude == 0;
-        Func<bool> Running() => () => inputManager.moveAction.triggered && inputManager.runAction.triggered;
+        Func<bool> Walked() => () => inputManager.MoveAction.triggered && !inputManager.RunAction.triggered;
+        Func<bool> Stopped() => () => inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
+        Func<bool> Running() => () => inputManager.MoveAction.triggered && inputManager.RunAction.triggered;
 
         stateMachine.SetState(standardState);
     }
@@ -257,9 +262,9 @@ public class PlayerStateMachine : MonoBehaviour
     public void SwapControlMap(bool slow)
     {
         if(slow)
-            inputManager.playerInput.SwitchCurrentActionMap(inputManager.slowActionMap.name);
+            inputManager.PlayerInput.SwitchCurrentActionMap(inputManager.SlowActionMap.name);
         else
-            inputManager.playerInput.SwitchCurrentActionMap(inputManager.standardActionMap.name);
+            inputManager.PlayerInput.SwitchCurrentActionMap(inputManager.StandardActionMap.name);
     }
 
     private bool CheckForVaultableObject()
@@ -270,11 +275,37 @@ public class PlayerStateMachine : MonoBehaviour
     }
     private bool CheckForwardMovement()
     {
-        Vector2 input = inputManager.moveAction.ReadValue<Vector2>();
+        Vector2 input = inputManager.MoveAction.ReadValue<Vector2>();
         Vector3 forward = currentCharacter.model.transform.forward;
 
         float dotProduct = Vector3.Dot(forward, new Vector3(input.x, 0, input.y));
 
         return dotProduct > 0.75f;
+    }
+
+    private void Manipulate()
+    {
+        // Check if player has suffecient brain juice for action here.
+
+
+
+        // Create a BoxCast to check for objects with the "Swapable" tag.
+        Vector3 boxCenter = Camera.main.transform.position + Camera.main.transform.forward * (swapDistance / 2f);
+        Vector3 boxHalfExtents = new Vector3(0.5f, 0.5f, swapDistance / 2f);
+        Quaternion boxRotation = Camera.main.transform.rotation;
+
+        // Store the results of the BoxCast.
+        RaycastHit[] hits = Physics.BoxCastAll(boxCenter, boxHalfExtents, Vector3.forward, boxRotation, swapDistance, manipulateLayers);
+
+        // Loop through the hits to find the first object with the "Swapable" tag.
+        foreach (RaycastHit hit in hits)
+        {
+            IManipulate manipulateScript = hit.collider.gameObject.GetComponent<IManipulate>();
+            if (manipulateScript != null)
+            {
+                manipulateScript.Interacted();
+                return;
+            }
+        }
     }
 }
