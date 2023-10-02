@@ -19,7 +19,7 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
     {
         // Initialize the object's position
         startPosition = transform.position;
-        difference = endPosition - startPosition;
+        //difference = endPosition - startPosition;
     }
 
     public void Interact()
@@ -27,7 +27,7 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
         if (!isMoving)
         {
             IsInteracted = true;
-            StartCoroutine(MoveObject(startPosition + difference, animationTime));
+            StartCoroutine(MoveObject(endPosition, animationTime));
         }
     }
 
@@ -45,11 +45,12 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
         isMoving = true;
         float startTime = Time.time;
         float endTime = startTime + duration;
+        Vector3 currentPosition = transform.position;
 
         while (Time.time < endTime)
         {
             float journeyFraction = (Time.time - startTime) / duration;
-            transform.position = Vector3.Lerp(startPosition, targetPosition, journeyFraction);
+            transform.position = Vector3.Lerp(currentPosition, targetPosition, journeyFraction);
             yield return null;
         }
 

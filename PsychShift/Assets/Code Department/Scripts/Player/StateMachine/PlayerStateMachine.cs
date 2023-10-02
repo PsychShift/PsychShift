@@ -39,7 +39,6 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsVaulting { get; set; }
 
     [Header("Jump Variables")]
-    public float jumpHeight = 4f;
     public float gravityValue = -9.81f;
     [SerializeField] float maxJumpHeight = 4.0f;
     [SerializeField] float maxJumpTime = 0.75f;
