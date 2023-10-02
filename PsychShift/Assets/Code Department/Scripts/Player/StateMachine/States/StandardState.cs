@@ -15,7 +15,7 @@ public class StandardState : RootState, IState
         Debug.Log("Hello From Standard State");
         SetSubState();
         
-        playerStateMachine.SwapControlMap(false);
+        InputManager.Instance.SwapControlMap(ActionMapEnum.standard);
         TimeManager.Instance.UndoSlowmotion();
     }
 

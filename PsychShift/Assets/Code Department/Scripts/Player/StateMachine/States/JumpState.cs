@@ -43,7 +43,7 @@ public class JumpState : RootState, IState
     private void HandleGravity()
     {
         bool isFalling = playerStateMachine.CurrentMovementY <= 0f || !InputManager.Instance.IsJumpPressed;
-        float fallMultiplier = 2.0f;
+        float fallMultiplier = 3.0f;
 
         if(isFalling)
         {

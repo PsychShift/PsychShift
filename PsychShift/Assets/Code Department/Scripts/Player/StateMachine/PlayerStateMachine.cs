@@ -258,13 +258,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         isSlowed = timeSlow;
     }
-    public void SwapControlMap(bool slow)
-    {
-        if(slow)
-            inputManager.PlayerInput.SwitchCurrentActionMap(inputManager.SlowActionMap.name);
-        else
-            inputManager.PlayerInput.SwitchCurrentActionMap(inputManager.StandardActionMap.name);
-    }
+    
 
     private bool CheckForVaultableObject()
     {

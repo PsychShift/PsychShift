@@ -4,27 +4,33 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class ObjectManipulator : MonoBehaviour, IManipulate
 {
+    public bool IsInteracted { get; set; }
+    public bool CanInteract { get; set; }
     [Tooltip("This is set in code, but can be manually entered as well")]
     [SerializeField] private Vector3 startPosition; // Initial position of the object
     [Tooltip("This must be set in the inspector. It is the position the object will end in.")]
     [SerializeField] private Vector3 endPosition; // End Position
-    private Vector3 difference;
     public float animationTime = 2.0f; // Duration of the interaction in seconds
 
-    private bool isMoving = false;
 
-    public bool IsInteracted { get; set; }
 
     private void Start()
     {
-        // Initialize the object's position
+        CanInteract = true;
         startPosition = transform.position;
-        //difference = endPosition - startPosition;
+    }
+
+    public void Interacted()
+    {
+        if (!IsInteracted)
+            Interact();
+        else
+            ReverseInteract();
     }
 
     public void Interact()
     {
-        if (!isMoving)
+        if (CanInteract)
         {
             IsInteracted = true;
             StartCoroutine(MoveObject(endPosition, animationTime));
@@ -33,16 +39,16 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
 
     public void ReverseInteract()
     {
-        if (!isMoving)
+        if (CanInteract)
         {
             IsInteracted = false;
             StartCoroutine(MoveObject(startPosition, animationTime));
         }
     }
 
-    IEnumerator MoveObject(Vector3 targetPosition, float duration)
+    private IEnumerator MoveObject(Vector3 targetPosition, float duration)
     {
-        isMoving = true;
+        CanInteract = false;
         float startTime = Time.time;
         float endTime = startTime + duration;
         Vector3 currentPosition = transform.position;
@@ -55,14 +61,7 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
         }
 
         transform.position = targetPosition;
-        isMoving = false;
+        CanInteract = true;
     }
 
-    public void Interacted()
-    {
-        if (!IsInteracted)
-            Interact();
-        else
-            ReverseInteract();
-    }
 }

@@ -15,18 +15,25 @@ public class InputManager : MonoBehaviour
     }
     public PlayerInput PlayerInput { get; private set; }
 
-    #region Normal Controls
-    public InputActionMap StandardActionMap { get; private set; }
-    public InputAction MoveAction { get; private set; }
-    public InputAction RunAction { get; private set; }
+    public InputAction MoveAction { get; set; }
     public InputAction LookAction { get; private set; }
     public InputAction JumpAction { get; private set; }
+
+    #region Normal Controls
+    public InputActionMap StandardActionMap { get; private set; }
+    public InputAction StandardMoveAction { get; private set; }
+    public InputAction StandardLookAction { get; private set; }
+    public InputAction StandardJumpAction { get; private set; }
+    public InputAction RunAction { get; private set; }
     public InputAction SlowAction { get; private set; }
     public InputAction ShootAction { get; private set; }
     #endregion
 
     #region Slow Controls
     public InputActionMap SlowActionMap { get; private set; }
+    public InputAction SlowMoveAction { get; private set; }
+    public InputAction SlowLookAction { get; private set; }
+    public InputAction SlowJumpAction { get; private set; }
     public InputAction SwapSlowAction { get; private set; }
     public InputAction UnSlowAction { get; private set; }
     public InputAction ManipulateAction { get; private set; }
@@ -56,28 +63,34 @@ public class InputManager : MonoBehaviour
         SlowActionMap = PlayerInput.actions.FindActionMap("Slow");
 
         #region Standard Controls
-        MoveAction = PlayerInput.actions[StandardActionMap.name + "/Move"];
-        LookAction = PlayerInput.actions[StandardActionMap.name + "/Look"];
+        StandardMoveAction = PlayerInput.actions[StandardActionMap.name + "/Move"];
+        StandardLookAction = PlayerInput.actions[StandardActionMap.name + "/Look"];
         RunAction = PlayerInput.actions[StandardActionMap.name + "/Run"];
-        JumpAction = PlayerInput.actions[StandardActionMap.name + "/Jump"];
+        StandardJumpAction = PlayerInput.actions[StandardActionMap.name + "/Jump"];
         ShootAction = PlayerInput.actions[StandardActionMap.name + "/Shoot"];//Kevin added this shooting thing
         SlowAction = PlayerInput.actions[StandardActionMap.name + "/Slow"];
         #endregion
         
-        JumpAction.performed += OnJump;
-        JumpAction.canceled += OnJump;
         
         #region Slow Controls
+        SlowMoveAction = PlayerInput.actions[SlowActionMap.name + "/Move"];
+        SlowLookAction = PlayerInput.actions[SlowActionMap.name + "/Look"];
+        SlowJumpAction = PlayerInput.actions[SlowActionMap.name + "/Jump"];
         SwapSlowAction = PlayerInput.actions[SlowActionMap.name + "/MindSwap"];
         ManipulateAction = PlayerInput.actions[SlowActionMap.name + "/Manipulate"];
         UnSlowAction = PlayerInput.actions[SlowActionMap.name + "/Unslow"];
         #endregion
 
+
+
+        SwapControlMap(ActionMapEnum.standard);
+
+        JumpAction.performed += OnJump;
+        JumpAction.canceled += OnJump;
         SlowAction.started += PressedSlow;
         UnSlowAction.started += ReleasedSlow;
         SwapSlowAction.started += PressedSwap;
         ManipulateAction.started += PressedManipulate;
-
     }
     private void OnDisable() {
         JumpAction.performed -= OnJump;
@@ -96,8 +109,7 @@ public class InputManager : MonoBehaviour
     }
     private void OnJump(InputAction.CallbackContext context)
     {
-        //IsJumpPressed = context.ReadValueAsButton();
-        IsJumpPressed = !IsJumpPressed;
+        IsJumpPressed = context.ReadValueAsButton();
     }
 
     private void PressedSwap(InputAction.CallbackContext context) {
@@ -116,10 +128,42 @@ public class InputManager : MonoBehaviour
         OnManipulatePressed?.Invoke();
     }
 
+    public void SwapControlMap(ActionMapEnum currentMap)
+{
+    switch (currentMap)
+    {
+        case ActionMapEnum.standard:
+            PlayerInput.SwitchCurrentActionMap(StandardActionMap.name);
+            MoveAction = StandardMoveAction;
+            LookAction = StandardLookAction;
+            JumpAction = StandardJumpAction;
+            break;
+        case ActionMapEnum.slow:
+            PlayerInput.SwitchCurrentActionMap(SlowActionMap.name);
+            MoveAction = SlowMoveAction;
+            LookAction = SlowLookAction;
+            JumpAction = SlowJumpAction;
+            break;
+        case ActionMapEnum.ui:
+            // Handle switching to the UI action map if needed.
+            break;
+        default:
+            Debug.LogWarning("Unknown action map: " + currentMap);
+            break;
+    }
+}
+
 
     //KEVIN ADDED THIS I SORRY IF BROKE
     public bool PlayerShotThisFrame() {
         return ShootAction.triggered;
     }
 
+}
+
+public enum ActionMapEnum
+{
+    standard,
+    slow,
+    ui
 }

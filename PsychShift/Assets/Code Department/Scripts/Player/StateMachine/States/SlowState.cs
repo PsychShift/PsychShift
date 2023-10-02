@@ -13,13 +13,13 @@ public class SlowState : RootState, IState
     {
         SetSubState();
         Debug.Log("Hello From Slow State");
-        playerStateMachine.SwapControlMap(true);
+        InputManager.Instance.SwapControlMap(ActionMapEnum.slow);
         TimeManager.Instance.DoSlowmotion(0.1f);
     }
 
     public void OnExit()
     {
-        TimeManager.Instance.UndoSlowmotion();
+        
     }
 
     public void Tick()
