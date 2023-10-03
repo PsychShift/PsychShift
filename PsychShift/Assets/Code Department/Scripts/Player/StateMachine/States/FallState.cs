@@ -37,7 +37,7 @@ public class FallState : RootState, IState
     private void HandleGravity()
     {
         float previousYVelocity = playerStateMachine.CurrentMovementY;
-        playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + playerStateMachine.gravityValue * 3f * Time.deltaTime;
+        playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + playerStateMachine.gravityValue * 8f * Time.deltaTime;
         playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -20f);
     }
 }
