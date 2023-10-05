@@ -12,7 +12,7 @@ public class TestBreakObjectCode : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown("f") && !isDestroyed && Test == true){
+        if (Input.GetKeyDown("g") && !isDestroyed && Test == true){
             BreakTheThing();
             Test = false;
         }
