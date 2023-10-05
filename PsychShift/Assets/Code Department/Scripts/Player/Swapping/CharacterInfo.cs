@@ -1,21 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterInfo
+namespace Player
 {
-    public GameObject characterContainer;
-    public GameObject model;
-    public Transform cameraRoot;
-
-    public CharacterController controller;
-
-    public override string ToString()
+    public class CharacterInfo
     {
-        return $"CharacterInfo:\n" +
-               $"CharacterContainer: {characterContainer}\n" +
-               $"Model: {model.transform.position}\n" +
-               $"CameraRoot: {cameraRoot.position}\n" +
-               $"Controller: {controller}";
+        public GameObject characterContainer;
+        public GameObject model;
+        public Transform cameraRoot;
+
+        public CharacterController controller;
+
+        public override string ToString()
+        {
+            return $"CharacterInfo:\n" +
+                $"CharacterContainer: {characterContainer}\n" +
+                $"Model: {model.transform.position}\n" +
+                $"CameraRoot: {cameraRoot.position}\n" +
+                $"Controller: {controller}";
+        }
     }
 }

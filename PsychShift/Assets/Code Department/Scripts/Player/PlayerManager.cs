@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private float playerSpeed = 20.0f;
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float gravityValue = -9.81f;
-    private CharacterInfo currentCharacter = new CharacterInfo();
+    private Player.CharacterInfo currentCharacter = new Player.CharacterInfo();
     [SerializeField] GameObject tempCharacter;
     [SerializeField] public float swapDistance = 10f;
     public LayerMask swapableLayer;
@@ -78,13 +78,20 @@ public class PlayerManager : MonoBehaviour
 
         // Store the results of the BoxCast.
         RaycastHit[] hits = Physics.BoxCastAll(boxCenter, boxHalfExtents, Vector3.forward, boxRotation, swapDistance, swapableLayer);
-
+        Debug.DrawRay(boxCenter, Camera.main.transform.forward * swapDistance, Color.green, 0.5f);
         // Loop through the hits to find the first object with the "Swapable" tag.
         foreach (RaycastHit hit in hits)
         {
             if (hit.collider.CompareTag("Swapable"))
             {
                 // Return the GameObject that was hit.
+                return hit.collider.gameObject;
+            }
+        }
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider.CompareTag("Manipulatable"))
+            {
                 return hit.collider.gameObject;
             }
         }
@@ -96,7 +103,9 @@ public class PlayerManager : MonoBehaviour
     public void SwapCharacter(GameObject newCharacter)
     {
         if(newCharacter == null) return;
-        currentCharacter = new CharacterInfo
+        newCharacter.SetActive(false);
+        if (currentCharacter != null) currentCharacter.model.SetActive(true);
+        currentCharacter = new Player.CharacterInfo
         {
             characterContainer = newCharacter,
             model = newCharacter.transform.GetChild(1).gameObject,
@@ -117,4 +126,5 @@ public class PlayerManager : MonoBehaviour
             TimeManager.Instance.UndoSlowmotion();
         }
     }
+
 }

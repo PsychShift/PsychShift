@@ -2,40 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunState : IState
+namespace Player
 {
-    private IState currentSubState;
-    private readonly PlayerStateMachine playerStateMachine;
-    private CharacterInfo currentCharacter;
-    public RunState(PlayerStateMachine playerStateMachine)
+    public class RunState : IState
     {
-        this.playerStateMachine = playerStateMachine;
-    }
+        private IState currentSubState;
+        private readonly PlayerStateMachine playerStateMachine;
+        private CharacterInfo currentCharacter;
+        public RunState(PlayerStateMachine playerStateMachine)
+        {
+            this.playerStateMachine = playerStateMachine;
+        }
 
-    
-    public void Tick()
-    {
-
-    }
-
-    public void OnEnter()
-    {
-        Debug.Log("Hello from Run");
-        currentCharacter = playerStateMachine.currentCharacter;
-    }
-
-    public void OnExit()
-    {
         
-    }
-    
-    public void AddSubState(IState subState)
-    {
-        currentSubState = subState;
-    }
+        public void Tick()
+        {
 
-    public IState GetCurrentSubState()
-    {
-        return currentSubState;
+        }
+
+        public void OnEnter()
+        {
+            Debug.Log("Hello from Run");
+            currentCharacter = playerStateMachine.currentCharacter;
+        }
+
+        public void OnExit()
+        {
+            
+        }
+        
+        public void AddSubState(IState subState)
+        {
+            currentSubState = subState;
+        }
+
+        public IState GetCurrentSubState()
+        {
+            return currentSubState;
+        }
     }
 }
