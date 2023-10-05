@@ -22,7 +22,6 @@ namespace Player
 
         public void OnEnter()
         {
-            Debug.Log("Hello from Fall");
             currentCharacter = playerStateMachine.currentCharacter;
     /*         if(playerStateMachine.InAirForward == Vector3.zero)
             {

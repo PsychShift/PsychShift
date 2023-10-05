@@ -14,7 +14,6 @@ namespace Player
         public void OnEnter()
         {
             SetSubState();
-            Debug.Log("Hello From Slow State");
             InputManager.Instance.SwapControlMap(ActionMapEnum.slow);
             TimeManager.Instance.DoSlowmotion(0.1f);
         }

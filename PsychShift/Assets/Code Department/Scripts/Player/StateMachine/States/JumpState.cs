@@ -24,7 +24,6 @@ namespace Player
 
         public void OnEnter()
         {
-            Debug.Log("Hello from Jump");
             currentCharacter = playerStateMachine.currentCharacter;
             playerStateMachine.InAirForward = currentCharacter.model.transform.forward;
             playerStateMachine.InAirRight = currentCharacter.model.transform.right;

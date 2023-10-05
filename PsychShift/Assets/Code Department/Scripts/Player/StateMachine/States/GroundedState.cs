@@ -20,7 +20,6 @@ namespace Player
 
         public void OnEnter()
         {
-            Debug.Log("Hello from Grounded");
             currentCharacter = playerStateMachine.currentCharacter;
             SetSubState();
         }

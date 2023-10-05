@@ -253,7 +253,6 @@ namespace Player
                 model = newCharacter.transform.GetChild(1).gameObject,
                 controller = newCharacter.GetComponent<CharacterController>()
             };
-            Debug.Log(currentCharacter.model);
             currentCharacter.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
         
             virtualCamera.Follow = currentCharacter.cameraRoot;

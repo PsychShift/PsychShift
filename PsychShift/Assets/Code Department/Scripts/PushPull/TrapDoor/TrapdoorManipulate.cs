@@ -72,7 +72,7 @@ public class TrapdoorManipulate : MonoBehaviour, IManipulate
     }
     private void Open()
     {
-        limits.max = -90;
+        limits.max = -100;
         hingeJoint1.limits = limits;
         hingeJoint2.limits = limits;
 
@@ -81,6 +81,8 @@ public class TrapdoorManipulate : MonoBehaviour, IManipulate
     }
     private IEnumerator Close(float duration)
     {
+        hinge1.GetComponent<Collider>().enabled = false;
+        hinge2.GetComponent<Collider>().enabled = false;
         CanInteract = false;
         hingeJoint1.useLimits = false;
         hingeJoint2.useLimits = false;
@@ -111,6 +113,8 @@ public class TrapdoorManipulate : MonoBehaviour, IManipulate
 
             hingeJoint1.useLimits = true;
             hingeJoint2.useLimits = true;
+            hinge1.GetComponent<Collider>().enabled = true;
+            hinge2.GetComponent<Collider>().enabled = true;
         }
     }
 }

@@ -14,7 +14,6 @@ namespace Player
         }
         public void OnEnter()
         {
-            Debug.Log("Hello From Standard State");
             SetSubState();
             
             InputManager.Instance.SwapControlMap(ActionMapEnum.standard);
