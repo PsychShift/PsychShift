@@ -37,18 +37,42 @@ namespace Player
         private void SearchForInteractable()
         {
             GameObject hitObject = playerStateMachine.CheckForCharacter();
+            
             // Check if the hit GameObject has the specified script component
-            if(hitObject == null) return;
-            Outliner outliner = hitObject.GetComponent<Outliner>();
-            if(outliner == null)
+            if (hitObject == null)
             {
-                if(currentOutlinedObject != null)
+                // Player is not looking at any object, deactivate current outline (if any)
+                if (currentOutlinedObject != null)
+                {
                     currentOutlinedObject.ActivateOutline(false);
+                    currentOutlinedObject = null;
+                }
                 return;
             }
+            
+            Outliner outliner = hitObject.GetComponent<Outliner>();
+            
+            if (outliner == null)
+            {
+                // Player is looking at an object without an Outliner component, deactivate current outline (if any)
+                if (currentOutlinedObject != null)
+                {
+                    currentOutlinedObject.ActivateOutline(false);
+                    currentOutlinedObject = null;
+                }
+                return;
+            }
+            
+            // Player is looking at an object with an Outliner component
+            if (currentOutlinedObject != null && currentOutlinedObject != outliner)
+            {
+                // Deactivate the outline of the previously outlined object
+                currentOutlinedObject.ActivateOutline(false);
+            }
+            
+            // Activate the outline of the currently looked at object
             currentOutlinedObject = outliner;
             currentOutlinedObject.ActivateOutline(true);
-
         }
     }
 }
