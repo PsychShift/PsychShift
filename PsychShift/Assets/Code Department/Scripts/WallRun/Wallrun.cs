@@ -1,4 +1,4 @@
-using System.Collections;
+/* using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Player;
@@ -9,7 +9,7 @@ public class WallRun : RootState
 {
     // public float WallRunSpeed; this needs to go into PlayerStateMachine will have to reset walk speed after wallrunning using a copy variable.
     public float wallMaxDistance = 1;
-    public float wallGravityDownForce = 20f;
+    public float wallGravityDownForce = 3f;
     public float minimumHeight = 1.2f;
     public float wallBouncing = 3;
     //public GameObject left;
@@ -181,4 +181,4 @@ public class WallRun : RootState
         return Vector3.zero;
     }
 
-}
+} */

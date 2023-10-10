@@ -291,7 +291,7 @@ namespace Player
         {
             // Check if player has suffecient brain juice for action here.
 
-
+            
 
             // Create a BoxCast to check for objects with the "Swapable" tag.
             Vector3 boxHalfExtents = new Vector3(0.5f, 0.5f, swapDistance / 2f);

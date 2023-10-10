@@ -4,20 +4,17 @@ using UnityEngine;
 
 namespace Player
 {
-    public class WallRunState : IState
+    public class WallRunState : RootState, IState
     {
-        private IState currentSubState;
-        private readonly PlayerStateMachine playerStateMachine;
         private CharacterInfo currentCharacter;
         public WallRunState(PlayerStateMachine playerStateMachine)
         {
             this.playerStateMachine = playerStateMachine;
         }
 
-        
         public void Tick()
         {
-            
+            SubStateTick();
         }
 
         public void OnEnter()
@@ -28,16 +25,6 @@ namespace Player
         public void OnExit()
         {
             
-        }
-
-        public void AddSubState(IState subState)
-        {
-            currentSubState = subState;
-        }
-
-        public IState GetCurrentSubState()
-        {
-            return currentSubState;
         }
     }
 }
