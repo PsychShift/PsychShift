@@ -102,7 +102,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -1848257306747171805}
   - {fileID: -3539432000056432585}
-  m_RendererFeatureMap: 238cd0a1c5ab59e63768fc415969e1ce
+  - {fileID: 9017497840607947235}
+  m_RendererFeatureMap: 238cd0a1c5ab59e63768fc415969e1cee3e949608296247d
   m_UseNativeRenderPass: 1
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -140,3 +141,20 @@ MonoBehaviour:
   m_CopyDepthMode: 1
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
+--- !u!114 &9017497840607947235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
+  m_Name: Outlines
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  passMaterial: {fileID: 2100000, guid: a071e369f5f228145a0f4fd335ea8ae4, type: 2}
+  injectionPoint: 600
+  requirements: 6
+  passIndex: 1
