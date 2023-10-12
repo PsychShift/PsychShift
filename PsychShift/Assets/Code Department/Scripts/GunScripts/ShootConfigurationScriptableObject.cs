@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//ANYTHING HAVING TO DO WITH THE GUN SHOOTING
 
 [CreateAssetMenu(fileName = "Shoot Config", menuName = "Guns/Shoot Configuration", order = 2)]
 public class ShootConfigurationScriptableObject : ScriptableObject 
