@@ -61,12 +61,13 @@ public class GunScriptableObject : ScriptableObject
             }
             else
             {
-                ActiveMonoBehavior.StartCoroutine(PlayTrail(ShootSystem.transform.position, 
-                                                            ShootSystem.transform.position + 
-                                                            (shootDirection * TrailConfig.MissDistance),
-                                                            new RaycastHit()
-                                                            )
-                                                );
+                ActiveMonoBehavior.StartCoroutine
+                    (PlayTrail(ShootSystem.transform.position, 
+                     ShootSystem.transform.position + 
+                     (shootDirection * TrailConfig.MissDistance),
+                     new RaycastHit()
+                     )
+                );
             }
         }
     }

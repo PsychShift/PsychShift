@@ -42,7 +42,7 @@ namespace Player
         [Header("Jump Variables")]
         public float gravityValue = -9.81f;
         [SerializeField] float maxJumpHeight = 4.0f;
-        [SerializeField] float maxJumpTime = 0.75f;
+        public float maxJumpTime = 0.75f;
         private float initialJumpVelocity;
         private float initialJumpGravity;
         public float InitialJumpVelocity { get { return initialJumpVelocity; } }
@@ -66,6 +66,7 @@ namespace Player
         #endregion
         [SerializeField] private GameObject tempCharacter;
         public CharacterInfo currentCharacter { get; set; }
+        #region Monobehaviours
         private void Awake()
         {
             boxHalfExtents = new Vector3(2f, 2f, 2f);
@@ -85,12 +86,11 @@ namespace Player
             #endregion
 
             // Create instances of root states
-            var slowState = new SlowState(this, stateMachine);
-            var standardState = new StandardState(this, stateMachine);
-
             var groundState = new GroundedState(this, stateMachine);
             var fallState = new FallState(this, stateMachine);
             var jumpState = new JumpState(this, stateMachine);
+            var wallrunState = new WallRunState(this, stateMachine);
+
             //var vaultState = new VaultState(this);
 
             // Create instances of sub-states
@@ -104,10 +104,6 @@ namespace Player
             //void AAt(IState to, Func<bool> condition) => stateMachine.AddAnyTransition(to, condition); // If 
 
             #region Root State Transitions
-            AT(standardState, slowState, Slowed());
-
-            AT(slowState, standardState, NotSlowed());
-
 
             // Leave Ground State
             AT(groundState, jumpState, Jumped());
@@ -120,6 +116,8 @@ namespace Player
             // Leave Fall State
             AT(fallState, groundState, Grounded());
             //AT(fallState, vaultState, Vaulting());
+            // Leave Wall Run State
+            AT(wallrunState, groundState, Grounded());
             // Leave Vault State
             //AT(vaultState, groundState, NotVaulting());
             //AT(vaultState, fallState, NotVaulting());
@@ -139,19 +137,6 @@ namespace Player
             #endregion
             
             #region Assign Substates to Rootstates
-            standardState.AddSubState(groundState);
-            standardState.AddSubState(jumpState);
-            standardState.AddSubState(fallState);
-            //standardState.AddSubState(vaultState);
-            standardState.PrepareSubStates();
-            standardState.SetDefaultSubState(groundState);
-
-            slowState.AddSubState(groundState);
-            slowState.AddSubState(jumpState);
-            slowState.AddSubState(fallState);
-            slowState.PrepareSubStates();
-            slowState.SetDefaultSubState(groundState);
-
             groundState.AddSubState(idleState);
             groundState.AddSubState(walkState);
             groundState.AddSubState(runState);
@@ -176,8 +161,6 @@ namespace Player
             Func<bool> Jumped() => () => inputManager.IsJumpPressed && currentCharacter.controller.isGrounded;
             Func<bool> Falling() => () => AppliedMovementY < 0 && !currentCharacter.controller.isGrounded;
             Func<bool> Grounded() => () => currentCharacter.controller.isGrounded;
-            Func<bool> Slowed() => () => isSlowed;
-            Func<bool> NotSlowed() => () => !isSlowed;
             /* Func<bool> Vaulting() => () => IsVaulting && CheckForwardMovement();
             Func<bool> NotVaulting() => () => !IsVaulting || !CheckForwardMovement(); */
 
@@ -186,7 +169,7 @@ namespace Player
             Func<bool> Stopped() => () => inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
             Func<bool> Running() => () => inputManager.MoveAction.triggered && inputManager.RunAction.triggered;
 
-            stateMachine.SetState(standardState);
+            stateMachine.SetState(groundState);
         }
         void OnDisable()
         {
@@ -195,14 +178,19 @@ namespace Player
         }
         void Update()
         {
+            RotatePlayer();
             IsVaulting = CheckForVaultableObject();
             stateMachine.Tick();
+            if (isSlowed)
+                SearchForInteractable();
         }
         void FixedUpdate()
         {
             currentCharacter.controller.Move(appliedMovement * Time.deltaTime);
         }
+        #endregion
 
+        #region Swapping
         private void SwapPressed()
         {
             SwapCharacter(CheckForCharacter());
@@ -244,7 +232,7 @@ namespace Player
         public void SwapCharacter(GameObject newCharacter)
         {
             if(newCharacter == null) return;
-            isSlowed = false;
+            SlowMotion(false);
             if(currentCharacter != null) currentCharacter.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
             currentCharacter = new CharacterInfo
             {
@@ -257,20 +245,89 @@ namespace Player
         
             virtualCamera.Follow = currentCharacter.cameraRoot;
         }
+        #endregion
 
         private void SetJumpVariables()
         {
             float timeToApex = maxJumpTime / 2;
             initialJumpGravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
             initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
-        } 
+        }
 
+        #region Time Management
         private void SlowMotion(bool timeSlow)
         {
+            if(timeSlow)
+            {
+                InputManager.Instance.SwapControlMap(ActionMapEnum.slow);
+                TimeManager.Instance.DoSlowmotion(0.1f);
+            }
+            else
+            {
+                InputManager.Instance.SwapControlMap(ActionMapEnum.standard);
+                TimeManager.Instance.UndoSlowmotion();
+            }
             isSlowed = timeSlow;
         }
-        
+        private Outliner currentOutlinedObject;
+        private void SearchForInteractable()
+        {
+            GameObject hitObject = CheckForCharacter();
 
+            // Check if the hit GameObject has the specified script component
+            if (hitObject == null)
+            {
+                // Player is not looking at any object, deactivate current outline (if any)
+                if (currentOutlinedObject != null)
+                {
+                    currentOutlinedObject.ActivateOutline(false);
+                    currentOutlinedObject = null;
+                }
+                return;
+            }
+
+            Outliner outliner = hitObject.GetComponent<Outliner>();
+
+            if (outliner == null)
+            {
+                // Player is looking at an object without an Outliner component, deactivate current outline (if any)
+                if (currentOutlinedObject != null)
+                {
+                    currentOutlinedObject.ActivateOutline(false);
+                    currentOutlinedObject = null;
+                }
+                return;
+            }
+
+            // Player is looking at an object with an Outliner component
+            if (currentOutlinedObject != null && currentOutlinedObject != outliner)
+            {
+                // Deactivate the outline of the previously outlined object
+                currentOutlinedObject.ActivateOutline(false);
+            }
+
+            // Activate the outline of the currently looked at object
+            currentOutlinedObject = outliner;
+            currentOutlinedObject.ActivateOutline(true);
+        }
+
+        #endregion
+
+
+        public virtual void RotatePlayer()
+        {
+            Vector2 mouseDelta = InputManager.Instance.GetMouseDelta();
+            Vector3 currentRotation = cameraTransform.localRotation.eulerAngles;
+
+            currentRotation.x -= mouseDelta.y;
+            currentRotation.y += mouseDelta.x;
+
+            currentRotation.x = Mathf.Clamp(currentRotation.x, -90f, 90f);
+
+            cameraTransform.localRotation = Quaternion.Euler(currentRotation);
+            currentCharacter.model.transform.rotation = Quaternion.Euler(0f, currentRotation.y, 0f);
+
+        }
         private bool CheckForVaultableObject()
         {
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var firstHit, 1f, vaultLayers))

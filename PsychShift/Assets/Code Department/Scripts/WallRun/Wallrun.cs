@@ -1,9 +1,11 @@
-/* using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class WallRun : RootState
 {
@@ -11,12 +13,14 @@ public class WallRun : RootState
     public float wallMaxDistance = 1;
     public float wallGravityDownForce = 3f;
     public float minimumHeight = 1.2f;
-    public float wallBouncing = 3;
-    //public GameObject left;
-    //public GameObject right;
 
-    CharacterController m_PlayerCharacterController;
-    PlayerInput m_InputHandler;
+    public float jumpDuration;
+    public float wallBouncing = 3;
+    public float maxAngleRoll = 20;
+    [Range(0f, 1f)]
+    public float normalizedAngleThreshold = 0.1f;
+
+    public Volume wallRunVolume;
 
     Vector3[] directions;
     RaycastHit[] hits;
@@ -29,13 +33,23 @@ public class WallRun : RootState
     float elapsedTimeSinceWallDetatch = 0;
     bool jumping;
 
-    bool isPlayergrounded() => m_PlayerCharacterController.isGrounded;
+    float cameraTransitionDuration = 0.5f;
+
+    float lastVolumeValue = 0;
+
+    private PlayerStateMachine playerStateMachine;
+
+    public WallRun(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
+    {
+        this.playerStateMachine = playerStateMachine;
+    }
+    bool isPlayergrounded() => playerStateMachine.currentCharacter.controller.isGrounded;
 
     public bool IsWallRunning() => isWallRunning;
 
     bool CanWallRun()
     {
-        float verticalAxis = Input.GetAxisRaw(GameConstants.k_AxisNameVertical);
+        float verticalAxis = InputManager.Instance.MoveAction.ReadValue<Vector2>().y;
 
         return !isPlayergrounded() && verticalAxis > 0 && VerticalCheck();
         // Start is called before the first frame update
@@ -43,18 +57,18 @@ public class WallRun : RootState
 
     bool VerticalCheck()
     {
-        return !Physics.Raycast(transform.position, Vector3.down, minimumHeight);
+        return !Physics.Raycast(playerStateMachine.currentCharacter.characterContainer.transform.position, Vector3.down, minimumHeight);
     }
     void Start()
     {
-        m_PlayerCharacterController = GetComponent<CharacterController>();
-        m_InputHandler = GetComponent<PlayerInput>();
+        jumpDuration = playerStateMachine.maxJumpTime / 2;
         directions = new Vector3[]{
             Vector3.right,
             Vector3.right + Vector3.forward,
-            Vector3.forward,
+            Vector3.right - Vector3.forward,
+            Vector3.left,
             Vector3.left + Vector3.forward,
-            Vector3.left
+            Vector3.left - Vector3.forward
         };
     }
 
@@ -68,7 +82,7 @@ public class WallRun : RootState
     {
         isWallRunning = false;
 
-        if (m_InputHandler.GetJumpInputDown())
+        if (InputManager.Instance.IsJumpPressed)
         {
             jumping = true;
         }
@@ -79,15 +93,16 @@ public class WallRun : RootState
 
             for (int i = 0; i < directions.Length; i++)
             {
-                Vector3 dir = transform.TransformDirection(directions[i]);
-                Physics.Raycast(transform.position, dir, out hits[i], wallMaxDistance);
+                Transform charTransform = playerStateMachine.currentCharacter.characterContainer.transform;
+                Vector3 dir = charTransform.TransformDirection(directions[i]);
+                Physics.Raycast(charTransform.position, dir, out hits[i], wallMaxDistance);
                 if (hits[i].collider != null)
                 {
-                    Debug.DrawRay(transform.position, dir * hits[i].distance, Color.green);
+                    Debug.DrawRay(charTransform.position, dir * hits[i].distance, Color.green);
                 }
                 else
                 {
-                    Debug.DrawRay(transform.position, dir * wallMaxDistance, Color.red);
+                    Debug.DrawRay(charTransform.position, dir * wallMaxDistance, Color.red);
                 }
             }
 
@@ -106,15 +121,47 @@ public class WallRun : RootState
         if (isWallRunning)
         {
             elapsedTimeSinceWallDetatch = 0;
+            // Turn on camera tilt
+            //if (elapsedTimeSinceWallAttach == 0 && wallRunVolume != null)
+            //    lastVolumeValue = wallRunVolume.weight;
+
             elapsedTimeSinceWallAttach += Time.deltaTime;
-            m_PlayerCharacterController.WalkSpeed += Vector3.down * wallGravityDownForce * Time.deltaTime;
+            // Apply wall run gravity
+            //m_PlayerCharacterController.WalkSpeed += Vector3.down * wallGravityDownForce * Time.deltaTime;
         }
         else
         {
             elapsedTimeSinceWallAttach = 0;
+            // Turn off camera tilt
+            //if (elapsedTimeSinceWallDetatch == 0 && wallRunVolume != null)
+            //    lastVolumeValue = wallRunVolume.weight;
             elapsedTimeSinceWallDetatch += Time.deltaTime;
         }
+
+        if (wallRunVolume != null)
+            HandleVolume();
     }
+
+    private void HandleVolume()
+    {
+        float w = 0;
+        if(isWallRunning)
+        {
+            w = Mathf.Lerp(lastVolumeValue, 1, elapsedTimeSinceWallAttach / cameraTransitionDuration);
+        }
+        else
+        {
+            w = Mathf.Lerp(lastVolumeValue, 0, elapsedTimeSinceWallDetatch / cameraTransitionDuration);
+        }
+
+        SetVolumeWeight(w);
+    }
+
+    private void SetVolumeWeight(float weight)
+    {
+        wallRunVolume.weight = weight;
+    }
+
     bool CanAttach()
     {
         if (jumping)
@@ -137,13 +184,14 @@ public class WallRun : RootState
         if (d >= -normalizedAngleThreshold && d <= normalizedAngleThreshold)
         {
             // Vector3 alongWall = Vector3.Cross(hit.normal, Vector3.up);
-            float vertical = Input.GetAxisRaw(GameConstants.k_AxisNameVertical);
-            Vector3 alongWall = transform.TransformDirection(Vector3.forward);
+            float vertical = InputManager.Instance.MoveAction.ReadValue<Vector2>().y;
+            Vector3 alongWall = playerStateMachine.currentCharacter.characterContainer.transform.TransformDirection(Vector3.forward);
 
-            Debug.DrawRay(transform.position, alongWall.normalized * 10, Color.green);
-            Debug.DrawRay(transform.position, lastWallNormal * 10, Color.magenta);
+            Debug.DrawRay(playerStateMachine.currentCharacter.characterContainer.transform.position, alongWall.normalized * 10, Color.green);
+            Debug.DrawRay(playerStateMachine.currentCharacter.characterContainer.transform.position, lastWallNormal * 10, Color.magenta);
 
-            m_PlayerCharacterController.WalkSpeed = alongWall * vertical * wallSpeedMultiplier;
+            //m_PlayerCharacterController.WalkSpeed = alongWall * vertical * wallSpeedMultiplier;
+            
             isWallRunning = true;
         }
     }
@@ -152,9 +200,9 @@ public class WallRun : RootState
     {
         if (isWallRunning)
         {
-            Vector3 heading = lastWallPosition - transform.position;
-            Vector3 perp = Vector3.Cross(transform.forward, heading);
-            float dir = Vector3.Dot(perp, transform.up);
+            Vector3 heading = lastWallPosition - playerStateMachine.currentCharacter.characterContainer.transform.position;
+            Vector3 perp = Vector3.Cross(playerStateMachine.currentCharacter.characterContainer.transform.forward, heading);
+            float dir = Vector3.Dot(perp, playerStateMachine.currentCharacter.characterContainer.transform.up);
             return dir;
         }
         return 0;
@@ -181,4 +229,4 @@ public class WallRun : RootState
         return Vector3.zero;
     }
 
-} */
+}
