@@ -54,7 +54,6 @@ public class TrapdoorManipulate : MonoBehaviour, IManipulate
 
     public void Interact()
     {
-        Debug.Log("test");
         if(CanInteract)
         {
             Open();
