@@ -89,70 +89,47 @@ namespace Player
             var groundState = new GroundedState(this, stateMachine);
             var fallState = new FallState(this, stateMachine);
             var jumpState = new JumpState(this, stateMachine);
-            var wallrunState = new WallRunState(this, stateMachine);
-
-            //var vaultState = new VaultState(this);
+            var wallState = new WallState(this, stateMachine);
 
             // Create instances of sub-states
             var idleState = new IdleState(this);
             var walkState = new WalkState(this);
-            var runState = new RunState(this);
-            var crouchState = new CrouchState(this);
 
             // Makes it easier to add transitions (less text per line)
             void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition); // If a condition meets switch from 'from' state to 'to' state (Root state only)
             //void AAt(IState to, Func<bool> condition) => stateMachine.AddAnyTransition(to, condition); // If 
 
             #region Root State Transitions
-
             // Leave Ground State
             AT(groundState, jumpState, Jumped());
             AT(groundState, fallState, Falling());
-            //AT(groundState, vaultState, Vaulting());
             // Leave Jump State
             AT(jumpState, groundState, Grounded());
             AT(jumpState, fallState, Falling());
-            //AT(jumpState, vaultState, Vaulting());
             // Leave Fall State
-            AT(fallState, groundState, Grounded());
-            //AT(fallState, vaultState, Vaulting());
-            // Leave Wall Run State
-            AT(wallrunState, groundState, Grounded());
-            // Leave Vault State
-            //AT(vaultState, groundState, NotVaulting());
-            //AT(vaultState, fallState, NotVaulting());
+            AT(fallState, groundState, Grounded());      
             #endregion
 
             #region Idle State Transitions
             AT(idleState, walkState, Walked());
-            AT(idleState, runState, Running());
             #endregion
             #region Walk State Transitions
-            AT(walkState, runState, Running());
             AT(walkState, idleState, Stopped());
             #endregion
-            #region Run State Transitions
-            AT(runState, idleState, Stopped());
-            AT(runState, walkState, Walked());
-            #endregion
-            
+
             #region Assign Substates to Rootstates
             groundState.AddSubState(idleState);
             groundState.AddSubState(walkState);
-            groundState.AddSubState(runState);
-            //groundState.AddSubState(crouchState);
             groundState.PrepareSubStates();
             groundState.SetDefaultSubState(idleState);
 
             jumpState.AddSubState(idleState);
             jumpState.AddSubState(walkState);
-            jumpState.AddSubState(runState);
             jumpState.PrepareSubStates();
             jumpState.SetDefaultSubState(idleState);
 
             fallState.AddSubState(idleState);
             fallState.AddSubState(walkState);
-            fallState.AddSubState(runState);
             fallState.PrepareSubStates();
             fallState.SetDefaultSubState(idleState);
             #endregion
@@ -167,7 +144,6 @@ namespace Player
             // Sub State Conditions
             Func<bool> Walked() => () => inputManager.MoveAction.triggered && !inputManager.RunAction.triggered;
             Func<bool> Stopped() => () => inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
-            Func<bool> Running() => () => inputManager.MoveAction.triggered && inputManager.RunAction.triggered;
 
             stateMachine.SetState(groundState);
         }

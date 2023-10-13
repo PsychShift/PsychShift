@@ -4,32 +4,34 @@ using UnityEngine;
 
 namespace Player
 {
-    public class StandardState : RootState, IState
+    public class WallState : RootState, IState
     {
         private CharacterInfo currentCharacter;
-        public StandardState(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
+
+        public WallState(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
         {
             this.playerStateMachine = playerStateMachine;
             this.stateMachine = stateMachine;
         }
+
         public void OnEnter()
         {
-            SetSubState();
-            
-            InputManager.Instance.SwapControlMap(ActionMapEnum.standard);
-            TimeManager.Instance.UndoSlowmotion();
+            currentCharacter = playerStateMachine.currentCharacter;
         }
 
         public void OnExit()
         {
-            
+            throw new System.NotImplementedException();
         }
 
         public void Tick()
         {
-            Look();
-
-            SubStateTick();
+            throw new System.NotImplementedException();
         }
+    }
+
+    public class WallStateVariables
+    {
+        
     }
 }

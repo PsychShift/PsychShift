@@ -6,7 +6,7 @@ using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
-
+using Player;
 public class WallRun : RootState
 {
     // public float WallRunSpeed; this needs to go into PlayerStateMachine will have to reset walk speed after wallrunning using a copy variable.
