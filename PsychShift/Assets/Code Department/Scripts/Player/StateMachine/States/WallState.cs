@@ -16,7 +16,7 @@ namespace Player
 
         public void OnEnter()
         {
-            throw new System.NotImplementedException();
+            currentCharacter = playerStateMachine.currentCharacter;
         }
 
         public void OnExit()
@@ -28,5 +28,10 @@ namespace Player
         {
             throw new System.NotImplementedException();
         }
+    }
+
+    public class WallStateVariables
+    {
+        
     }
 }
