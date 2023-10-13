@@ -8,6 +8,7 @@ using TMPro;
 public class PauseMenuScript : MonoBehaviour
 {
     public GameObject PauseMenu;
+    public GameObject PauseMenuSettings;
     public static bool GameIsPaused = false;
     // Start is called before the first frame update
     void Start()
@@ -43,5 +44,14 @@ public class PauseMenuScript : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+    public void OpenPauseSettings()
+    {
+        PauseMenuSettings.SetActive(true);
+
+    }
+    public void ClosePauseSettings()
+    {
+        PauseMenuSettings.SetActive(false);
     }
 }
