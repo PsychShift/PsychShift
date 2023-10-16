@@ -38,10 +38,12 @@ public class WallRun : RootState
     float lastVolumeValue = 0;
 
     private PlayerStateMachine playerStateMachine;
+    private WallStateVariables wallVariables;
 
-    public WallRun(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
+    public WallRun(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine, WallStateVariables wallVariables)
     {
         this.playerStateMachine = playerStateMachine;
+        this.wallVariables = wallVariables;
     }
     bool isPlayergrounded() => playerStateMachine.currentCharacter.controller.isGrounded;
 
@@ -63,6 +65,7 @@ public class WallRun : RootState
     {
         jumpDuration = playerStateMachine.maxJumpTime / 2;
         directions = new Vector3[]{
+            Vector3.forward,
             Vector3.right,
             Vector3.right + Vector3.forward,
             Vector3.right - Vector3.forward,

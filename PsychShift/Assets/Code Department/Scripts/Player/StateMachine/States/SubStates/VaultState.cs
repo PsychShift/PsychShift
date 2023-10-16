@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Player
 {
-    public class VaultState : RootState, IState
+    public class VaultState : IState
     {
+        private readonly PlayerStateMachine playerStateMachine;
         private CharacterInfo currentCharacter;
-
         private float playerHeight = 2f;
         private float playerRadius = 0.5f;
         private float time = 0f;
@@ -22,7 +20,6 @@ namespace Player
         public void OnEnter()
         {
             Debug.Log("Entered Vault State");
-            SetSubState();
             currentCharacter = playerStateMachine.currentCharacter;
             time = 0f;
             CheckVault();
@@ -30,7 +27,7 @@ namespace Player
 
         public void OnExit()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public void Tick()
@@ -58,8 +55,5 @@ namespace Player
         {
             targetPosition = targetPos;
         }
-
-
-            // Perform the box cast.
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Cinemachine;
+using System.Threading.Tasks;
 namespace Player
 {
     [RequireComponent(typeof(InputManager))]
@@ -34,7 +35,10 @@ namespace Player
         [HideInInspector] public Vector2 smoothInputVelocity;
         public Vector3 move { get; set; }
         
-        [Header("Vaulting Variables")]
+        [Header("Wall Variables")]
+        public LayerMask wallLayer;
+        private bool isNearWall;
+        private WallStateVariables wallVariables;
         [SerializeField] private LayerMask vaultLayers;
         public LayerMask VaultLayers { get { return vaultLayers; } }
         public bool IsVaulting { get; set; }
@@ -57,7 +61,7 @@ namespace Player
         [SerializeField] private LayerMask swapableLayer;
         public LayerMask SwapableLayer { get { return swapableLayer; }}
         // Create a BoxCast to check for objects with the "Swapable" tag.
-        Vector3 boxHalfExtents;
+        Vector3 boxHalfExtents = new Vector3(2f, 2f, 2f);
         Quaternion boxRotation;
         #endregion
         
@@ -69,13 +73,15 @@ namespace Player
         #region Monobehaviours
         private void Awake()
         {
-            boxHalfExtents = new Vector3(2f, 2f, 2f);
+            WallStateVariables.Instance.wallLayer = wallLayer;
             boxRotation = Camera.main.transform.rotation;
             SetJumpVariables();
             cameraTransform = Camera.main.transform;
             cameraTransform.GetComponent<CinemachineBrain>().m_IgnoreTimeScale = false;
             SwapCharacter(tempCharacter);
             virtualCamera.Follow = currentCharacter.cameraRoot;
+
+
             inputManager = GetComponent<InputManager>();
             stateMachine = new StateMachine.StateMachine();
 
@@ -95,6 +101,10 @@ namespace Player
             var idleState = new IdleState(this);
             var walkState = new WalkState(this);
 
+            var wallRunState = new WallRunState(this);
+            var vaultState = new VaultState(this);
+            var mantleState = new MantleState(this);
+
             // Makes it easier to add transitions (less text per line)
             void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition); // If a condition meets switch from 'from' state to 'to' state (Root state only)
             //void AAt(IState to, Func<bool> condition) => stateMachine.AddAnyTransition(to, condition); // If 
@@ -106,15 +116,24 @@ namespace Player
             // Leave Jump State
             AT(jumpState, groundState, Grounded());
             AT(jumpState, fallState, Falling());
+            AT(jumpState, wallState, OnWall());
             // Leave Fall State
-            AT(fallState, groundState, Grounded());      
+            AT(fallState, groundState, Grounded());    
+            AT(fallState, wallState, OnWall());  
+            // Leave Wall State
+            AT(wallState, groundState, Grounded());
+            AT(wallState, fallState, Stopped());
+            AT(wallState, fallState, NotOnWall());
             #endregion
 
-            #region Idle State Transitions
+            #region Standard Transitions
             AT(idleState, walkState, Walked());
-            #endregion
-            #region Walk State Transitions
             AT(walkState, idleState, Stopped());
+            #endregion
+            #region Wall Sub State Transitions
+            AT(mantleState, wallRunState, SideWall());
+            AT(wallRunState, mantleState, ForwardWall());
+            
             #endregion
 
             #region Assign Substates to Rootstates
@@ -132,18 +151,26 @@ namespace Player
             fallState.AddSubState(walkState);
             fallState.PrepareSubStates();
             fallState.SetDefaultSubState(idleState);
+
+            wallState.AddSubState(wallRunState);
+            wallState.AddSubState(mantleState);
+            wallState.PrepareSubStates();
+            wallState.SetDefaultSubState(wallRunState);
             #endregion
 
             // Root State Conditions
             Func<bool> Jumped() => () => inputManager.IsJumpPressed && currentCharacter.controller.isGrounded;
             Func<bool> Falling() => () => AppliedMovementY < 0 && !currentCharacter.controller.isGrounded;
             Func<bool> Grounded() => () => currentCharacter.controller.isGrounded;
-            /* Func<bool> Vaulting() => () => IsVaulting && CheckForwardMovement();
-            Func<bool> NotVaulting() => () => !IsVaulting || !CheckForwardMovement(); */
+            Func<bool> OnWall() => () => CheckForWall() && !currentCharacter.controller.isGrounded;
+            Func<bool> NotOnWall() => () => !WallStateVariables.Instance.SideWall && !WallStateVariables.Instance.ForwardWall;
 
             // Sub State Conditions
             Func<bool> Walked() => () => inputManager.MoveAction.triggered && !inputManager.RunAction.triggered;
             Func<bool> Stopped() => () => inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
+
+            Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall;
+            Func<bool> SideWall() => () => WallStateVariables.Instance.SideWall && inputManager.MoveAction.ReadValue<Vector2>().y > 0;
 
             stateMachine.SetState(groundState);
         }
@@ -210,6 +237,7 @@ namespace Player
             if(newCharacter == null) return;
             SlowMotion(false);
             if(currentCharacter != null) currentCharacter.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
+
             currentCharacter = new CharacterInfo
             {
                 characterContainer = newCharacter,
@@ -218,8 +246,15 @@ namespace Player
                 controller = newCharacter.GetComponent<CharacterController>()
             };
             currentCharacter.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
-        
+            /* 
+            FIND A WAY TO MAKE THE CAMERA LOOK IN THE DIRECTINO THE NEW BODY IS LOOKING
+            
+            virtualCamera.enabled = false;
+            cameraTransform.rotation = currentCharacter.model.transform.rotation;
+            virtualCamera.enabled = true; */
+            
             virtualCamera.Follow = currentCharacter.cameraRoot;
+
         }
         #endregion
 
@@ -246,6 +281,7 @@ namespace Player
             isSlowed = timeSlow;
         }
         private Outliner currentOutlinedObject;
+
         private void SearchForInteractable()
         {
             GameObject hitObject = CheckForCharacter();
@@ -310,15 +346,6 @@ namespace Player
                 return true;
             return false;
         }
-        private bool CheckForwardMovement()
-        {
-            Vector2 input = inputManager.MoveAction.ReadValue<Vector2>();
-            Vector3 forward = currentCharacter.model.transform.forward;
-
-            float dotProduct = Vector3.Dot(forward, new Vector3(input.x, 0, input.y));
-
-            return dotProduct > 0.75f;
-        }
 
         private void Manipulate()
         {
@@ -345,12 +372,26 @@ namespace Player
             }
         }
 
+        #region Wall
+        Vector3[] wallCheckDirections = new Vector3[] { Vector3.forward, Vector3.right, Vector3.left };
+        private bool CheckForWall()
+        {
+            foreach(Vector3 dir in wallCheckDirections)
+            {
+                Vector3 relativeDir = currentCharacter.model.transform.TransformDirection(dir);
+                if (Physics.Raycast(currentCharacter.model.transform.position, relativeDir, 2f, wallLayer))
+                    return true;
+            }
+            return false;
+        }
+        #endregion
+
         private void OnDrawGizmos()
         {
-            RaycastHit hit;
+            bool isHit;
 
-            bool isHit = Physics.BoxCast(cameraTransform.position, boxHalfExtents, cameraTransform.forward, out hit, boxRotation, swapDistance, swapableLayer);
-            if(isHit)
+            isHit = Physics.BoxCast(cameraTransform.position, boxHalfExtents, cameraTransform.forward, out RaycastHit hit, boxRotation, swapDistance, swapableLayer);
+            if (isHit)
             {
                 Gizmos.color = Color.red;
                 Gizmos.DrawRay(cameraTransform.position, cameraTransform.forward * hit.distance);

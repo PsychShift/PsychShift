@@ -23,11 +23,6 @@ namespace Player
         public void OnEnter()
         {
             currentCharacter = playerStateMachine.currentCharacter;
-    /*         if(playerStateMachine.InAirForward == Vector3.zero)
-            {
-                playerStateMachine.InAirForward = currentCharacter.model.transform.forward;
-                playerStateMachine.InAirRight = currentCharacter.model.transform.right;
-            } */
             SetSubState();
         }
 
