@@ -19,14 +19,14 @@ namespace Player
         {
             // Call the Tick method of the current sub-state
             SubStateTick();
-            HandleGravity();
+           // HandleGravity();
         }
 
         public void OnEnter()
         {
             currentCharacter = playerStateMachine.currentCharacter;
-            playerStateMachine.InAirForward = currentCharacter.model.transform.forward;
-            playerStateMachine.InAirRight = currentCharacter.model.transform.right;
+            /* playerStateMachine.InAirForward = currentCharacter.model.transform.forward;
+            playerStateMachine.InAirRight = currentCharacter.model.transform.right; */
             HandleJump();
             SetSubState();
         }
@@ -38,8 +38,9 @@ namespace Player
 
         private void HandleJump()
         {
-            playerStateMachine.CurrentMovementY = playerStateMachine.InitialJumpVelocity;
-            playerStateMachine.AppliedMovementY = playerStateMachine.InitialJumpVelocity;
+            /* playerStateMachine.CurrentMovementY = playerStateMachine.InitialJumpVelocity;
+            playerStateMachine.AppliedMovementY = playerStateMachine.InitialJumpVelocity; */
+            currentCharacter.rb.AddForce(Vector3.up * 2, ForceMode.Impulse);
         }
 
         private void HandleGravity()

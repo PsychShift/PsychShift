@@ -52,6 +52,7 @@ namespace Player
             }
         }
         public LayerMask wallLayer;
+
         public Dictionary<Vector3, RaycastHit> DirectionHits = new Dictionary<Vector3, RaycastHit>
         {
             { Vector3.forward, new RaycastHit() },

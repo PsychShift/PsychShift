@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1646378165844274489}
   - component: {fileID: 176710509250746110}
   - component: {fileID: 8605567475765216567}
-  - component: {fileID: 6820534515095233370}
+  - component: {fileID: 3789057353487192006}
+  - component: {fileID: 3791218423800610892}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Swapable
@@ -34,7 +35,7 @@ Transform:
   - {fileID: 2709197678432886940}
   - {fileID: 9183464769304687873}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &176710509250746110
 MonoBehaviour:
@@ -58,7 +59,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8115607342825376186}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 1
   m_Speed: 3.5
@@ -73,14 +74,41 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!143 &6820534515095233370
-CharacterController:
+--- !u!54 &3789057353487192006
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8115607342825376186}
-  m_Material: {fileID: 0}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!136 &3791218423800610892
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115607342825376186}
+  m_Material: {fileID: 13400000, guid: 72470b055ddafb04394f93d168ce4c06, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -91,14 +119,11 @@ CharacterController:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 4.5
-  m_Radius: 1
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 2.25, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.75
+  m_Height: 5
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.45, z: 0}
 --- !u!1 &8590118359984887176
 GameObject:
   m_ObjectHideFlags: 0

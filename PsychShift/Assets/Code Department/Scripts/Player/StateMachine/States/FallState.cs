@@ -17,7 +17,7 @@ namespace Player
         public void Tick()
         {
             SubStateTick();
-            HandleGravity();
+            //HandleGravity();
         }
 
         public void OnEnter()

@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 using Cinemachine;
 using System.Threading.Tasks;
+using Unity.Mathematics;
+using Unity.VisualScripting;
+using System.Linq;
 namespace Player
 {
     [RequireComponent(typeof(InputManager))]
@@ -34,6 +37,10 @@ namespace Player
         public Vector2 currentInputVector { get; set; }
         [HideInInspector] public Vector2 smoothInputVelocity;
         public Vector3 move { get; set; }
+
+        [Header("Ground Variables")]
+        [SerializeField] private LayerMask groundLayer;
+
         
         [Header("Wall Variables")]
         public LayerMask wallLayer;
@@ -159,10 +166,10 @@ namespace Player
             #endregion
 
             // Root State Conditions
-            Func<bool> Jumped() => () => inputManager.IsJumpPressed && currentCharacter.controller.isGrounded;
-            Func<bool> Falling() => () => AppliedMovementY < 0 && !currentCharacter.controller.isGrounded;
-            Func<bool> Grounded() => () => currentCharacter.controller.isGrounded;
-            Func<bool> OnWall() => () => CheckForWall() && !currentCharacter.controller.isGrounded;
+            Func<bool> Jumped() => () => inputManager.IsJumpPressed && GroundedCheck();
+            Func<bool> Falling() => () => AppliedMovementY < 0 && !GroundedCheck();
+            Func<bool> Grounded() => () => GroundedCheck();
+            Func<bool> OnWall() => () => CheckForWall() && !GroundedCheck();
             Func<bool> NotOnWall() => () => !WallStateVariables.Instance.SideWall && !WallStateVariables.Instance.ForwardWall;
 
             // Sub State Conditions
@@ -189,7 +196,7 @@ namespace Player
         }
         void FixedUpdate()
         {
-            currentCharacter.controller.Move(appliedMovement * Time.deltaTime);
+            currentCharacter.rb.velocity = Vector3.Lerp(currentCharacter.rb.velocity, appliedMovement * 2, Time.deltaTime);
         }
         #endregion
 
@@ -243,7 +250,7 @@ namespace Player
                 characterContainer = newCharacter,
                 cameraRoot = newCharacter.transform.GetChild(0),
                 model = newCharacter.transform.GetChild(1).gameObject,
-                controller = newCharacter.GetComponent<CharacterController>()
+                rb = newCharacter.GetComponent<Rigidbody>()
             };
             currentCharacter.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
             /* 
@@ -386,10 +393,39 @@ namespace Player
         }
         #endregion
 
+        #region Ground Check
+
+        Vector3 castDirection = Vector3.down;
+        float castDistance = 0.0f;
+        Vector3 boxSize = new Vector3(1f, 1f, 1f);
+        private bool GroundedCheck()
+        {
+            RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer);
+            if(hits.Any(hit => hit.collider != null))
+                return true;
+            
+            return false;
+        }
+        #endregion
+
         private void OnDrawGizmos()
         {
             bool isHit;
+            if(currentCharacter != null)
+            {
+                RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer);
+                if(hits.Any(hit => hit.collider != null))
+                {
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawWireCube(currentCharacter.characterContainer.transform.position, boxSize);
+                }
+                else
+                {
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawWireCube(currentCharacter.characterContainer.transform.position, boxSize);
+                }
 
+            }
             isHit = Physics.BoxCast(cameraTransform.position, boxHalfExtents, cameraTransform.forward, out RaycastHit hit, boxRotation, swapDistance, swapableLayer);
             if (isHit)
             {

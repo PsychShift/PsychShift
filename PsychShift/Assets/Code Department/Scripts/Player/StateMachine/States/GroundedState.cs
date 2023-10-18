@@ -15,7 +15,7 @@ namespace Player
         {
             // Call the Tick method of the current sub-state
             SubStateTick();
-            HandleGravity();
+            //HandleGravity();
         }
 
         public void OnEnter()

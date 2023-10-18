@@ -29,6 +29,8 @@ namespace Player
         {
             currentCharacter = playerStateMachine.currentCharacter;
             Debug.Log("WallRunState");
+            playerStateMachine.CurrentMovementY = 0;
+            playerStateMachine.AppliedMovementY = 0;
         }
 
         public void OnExit()
