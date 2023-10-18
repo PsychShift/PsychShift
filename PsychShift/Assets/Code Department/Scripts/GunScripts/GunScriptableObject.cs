@@ -15,6 +15,7 @@ public class GunScriptableObject : ScriptableObject
     public Vector3 SpawnPoint;
     public Vector3 SpawnRotation;
     //Refs to all the configs
+    public DamageConfigScriptableObject DamageConfig;
     public ShootConfigurationScriptableObject ShootConfig;
     public TrailConfigScriptableObject TrailConfig;
     private MonoBehaviour ActiveMonoBehavior;
@@ -91,10 +92,14 @@ public class GunScriptableObject : ScriptableObject
             yield return null;
         }
         instance.transform.position = EndPoint;
-        /*if(Hit.collider != null)
+        if(Hit.collider != null)
         {
-            SurfaceManager.instance.HandleImpact(Hit.transform.gameObject,EndPoint,Hit.normal, ImpactType, 0);
-        }*/ //WATCH TUTORIAL ON IMPLEMENTING SURFACE MANAGER
+            //SurfaceManager.instance.HandleImpact(Hit.transform.gameObject,EndPoint,Hit.normal, ImpactType, 0);
+            if(Hit.collider.TryGetComponent<IDamageable>(out IDamageable damageable))
+            {
+                damageable.TakeDamage(DamageConfig.GetDamage(distance));
+            }
+        } //WATCH TUTORIAL ON IMPLEMENTING SURFACE MANAGER
         yield return new WaitForSeconds(TrailConfig.Duration);
         yield return null;
         instance.emitting = false;
