@@ -1,6 +1,11 @@
 using System.Linq;
 using UnityEngine;
 
+/*
+Stops when player stops moving or jumps
+if the player looks in a different direction, they continue in the original direction.
+clamp the player to the wall
+*/
 namespace Player
 {
     public class WallRunState : IState
@@ -20,17 +25,28 @@ namespace Player
             wallVariables = WallStateVariables.Instance;
         }
 
+
+        private Vector3 wallNormal;
+        private Vector3 wallForward;
+        private float speed = 100f;
         public void Tick()
-        {
-            HandleMovement();
+        {            
+            if((currentCharacter.model.transform.forward - wallForward).magnitude > (currentCharacter.model.transform.forward - -wallForward).magnitude)
+                wallForward = -wallForward;
+            // forward force
+            playerStateMachine.AppliedMovementX = wallForward.x * speed;
+            //playerStateMachine.AppliedMovementY = wallForward.y;
+            playerStateMachine.AppliedMovementZ = wallForward.z * speed;
+            //HandleMovement();
         }
 
         public void OnEnter()
         {
             currentCharacter = playerStateMachine.currentCharacter;
-            Debug.Log("WallRunState");
-            playerStateMachine.CurrentMovementY = 0;
-            playerStateMachine.AppliedMovementY = 0;
+            wallNormal = WallStateVariables.Instance.LastWallNormal;
+            Debug.Log(wallNormal);
+            wallForward = Vector3.Cross(wallNormal, currentCharacter.characterContainer.transform.up);
+            Debug.Log(wallForward);
         }
 
         public void OnExit()
@@ -66,11 +82,6 @@ namespace Player
                 playerStateMachine.AppliedMovementY = 0;
                 
             }
-        }
-        private void HandleGravity()
-        {
-            playerStateMachine.CurrentMovementY = playerStateMachine.gravityValue;
-            playerStateMachine.AppliedMovementY = playerStateMachine.gravityValue;
         }
     }
 }

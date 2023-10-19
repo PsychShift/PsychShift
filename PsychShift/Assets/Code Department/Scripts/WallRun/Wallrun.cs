@@ -1,9 +1,23 @@
-/* using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Wallrun : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-     //Wall
+    //Ground
+    float groundSpeed = 4f;
+    float runSpeed = 6f;
+    float grAccel = 20f;
+
+    //Air
+    float airSpeed = 3f;
+    float airAccel = 20f;
+
+    //Jump
+    float jumpUpSpeed = 9.2f;
+    float dashSpeed = 6f;
+
+    //Wall
     float wallSpeed = 10f;
     float wallClimbSpeed = 4f;
     float wallAccel = 20f;
@@ -14,10 +28,49 @@ public class Wallrun : MonoBehaviour
     float wallBanTime = 4f;
     Vector3 bannedGroundNormal;
 
-
-     float wallBan = 0f;
+    //Cooldowns
+    bool canJump = true;
+    bool canDJump = true;
+    float wallBan = 0f;
     float wrTimer = 0f;
     float wallStickTimer = 0f;
+
+    //States
+    bool running;
+    bool jump;
+    bool crouched;
+    bool grounded;
+
+    Collider ground;
+
+    Vector3 groundNormal = Vector3.up;
+
+    CapsuleCollider col;
+
+    enum Mode
+    {
+        Walking,
+        Flying,
+        Wallruning
+    }
+    Mode mode = Mode.Flying;
+
+    CameraController camCon;
+    Rigidbody rb;
+    Vector3 dir = Vector3.zero;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        camCon = GetComponentInChildren<CameraController>();
+        col = GetComponent<CapsuleCollider>();
+    }
+
+    void OnGUI()
+    {
+        GUILayout.Label("Spid: " + new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude);
+        GUILayout.Label("SpidUp: " + rb.velocity.y);
+    }
 
     void Update()
     {
@@ -96,6 +149,7 @@ public class Wallrun : MonoBehaviour
 
 
     #region Collisions
+    
     void OnCollisionStay(Collision collision)
     {
         if (collision.contactCount > 0)
@@ -463,5 +517,3 @@ public class Wallrun : MonoBehaviour
     }
     #endregion
 }
-
- */
