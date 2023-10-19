@@ -19,7 +19,6 @@ namespace Player
         public void OnEnter()
         {
             currentCharacter = playerStateMachine.currentCharacter;
-            currentCharacter.rb.useGravity = false;
             currentSubState = stateMachine._currentSubState;
             SetSubState();
         }
@@ -27,7 +26,6 @@ namespace Player
         public void OnExit()
         {
             stateMachine._currentSubState = currentSubState;
-            currentCharacter.rb.useGravity = true;
         }
 
         public void Tick()

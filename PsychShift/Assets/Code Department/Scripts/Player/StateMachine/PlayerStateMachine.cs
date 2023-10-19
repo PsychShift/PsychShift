@@ -219,9 +219,18 @@ namespace Player
         }
         void FixedUpdate()
         {
-            AppliedMovementY -= 0.8f;
-            AppliedMovementY = Mathf.Max(AppliedMovementY, -20f);
-            currentCharacter.rb.velocity = appliedMovement;
+            if(stateMachine._currentState is not WallState)
+            {
+                CurrentMovementY -= 0.05f;
+                AppliedMovementY -= 0.05f;
+                AppliedMovementY = Mathf.Max(AppliedMovementY, -20f);
+                if(stateMachine._currentState is GroundedState)
+                {
+                    CurrentMovementY = 0;
+                    AppliedMovementY = 0;
+                }
+            }
+            currentCharacter.controller.Move(appliedMovement * Time.deltaTime);
             //currentCharacter.rb.AddForce(appliedMovement * 2, ForceMode.Force);
         }
         #endregion
@@ -276,9 +285,8 @@ namespace Player
                 characterContainer = newCharacter,
                 cameraRoot = newCharacter.transform.GetChild(0),
                 model = newCharacter.transform.GetChild(1).gameObject,
-                rb = newCharacter.GetComponent<Rigidbody>()
+                controller = newCharacter.GetComponent<CharacterController>()
             };
-            currentCharacter.rb.useGravity = false;
             currentCharacter.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
             /* 
             FIND A WAY TO MAKE THE CAMERA LOOK IN THE DIRECTINO THE NEW BODY IS LOOKING

@@ -40,7 +40,7 @@ namespace Player
         private void HandleJump()
         {
             Vector3 dir = Vector3.Cross(Vector3.up, WallStateVariables.Instance.LastWallNormal);
-            currentCharacter.rb.AddForce(dir * playerStateMachine.JumpForce, ForceMode.Force);
+            
         }
     }
 }

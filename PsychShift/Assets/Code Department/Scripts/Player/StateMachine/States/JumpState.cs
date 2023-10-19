@@ -19,7 +19,7 @@ namespace Player
         {
             // Call the Tick method of the current sub-state
             SubStateTick();
-            //HandleGravity();
+            HandleGravity();
         }
 
         public void OnEnter()
@@ -48,12 +48,12 @@ namespace Player
 
         private void HandleGravity()
         {
-            timer += Time.deltaTime;
-            bool isFalling = playerStateMachine.CurrentMovementY <= 0f || !InputManager.Instance.IsJumpPressed || timer >= 0.5f;
+            bool isFalling = playerStateMachine.CurrentMovementY <= 0f || !InputManager.Instance.IsJumpPressed;
             float fallMultiplier = 3.0f;
-            Debug.Log(playerStateMachine.AppliedMovementY);
+
             if(isFalling)
             {
+                Debug.Log("hi?");
                 float previousYVelocity = playerStateMachine.CurrentMovementY;
                 playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + (playerStateMachine.InitialJumpGravity * fallMultiplier * Time.deltaTime);
                 playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -20f);

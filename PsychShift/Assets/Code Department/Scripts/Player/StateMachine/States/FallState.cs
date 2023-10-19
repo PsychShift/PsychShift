@@ -22,6 +22,7 @@ namespace Player
 
         public void OnEnter()
         {
+            Debug.Log("Enter fall");
             currentCharacter = playerStateMachine.currentCharacter;
             currentSubState = stateMachine._currentSubState;
             SetSubState();
@@ -29,15 +30,16 @@ namespace Player
 
         public void OnExit()
         {
+            Debug.Log("exit fall");
             stateMachine._currentSubState = currentSubState;
         }
 
         private void HandleGravity()
         {
-            //Debug.Log(playerStateMachine.AppliedMovementY);
             float previousYVelocity = playerStateMachine.CurrentMovementY;
             playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + playerStateMachine.gravityValue * 8f * Time.deltaTime;
             playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -20f);
+            Debug.Log(playerStateMachine.AppliedMovementY);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Player
         public GameObject model;
         public Transform cameraRoot;
 
-        public Rigidbody rb;
+        public CharacterController controller;
 
         public override string ToString()
         {
@@ -16,7 +16,7 @@ namespace Player
                 $"CharacterContainer: {characterContainer}\n" +
                 $"Model: {model.transform.position}\n" +
                 $"CameraRoot: {cameraRoot.position}\n" +
-                $"Rigidbody: {rb}";
+                $"Controller: {controller}";
         }
     }
 }
