@@ -122,6 +122,7 @@ namespace Player
             var wallRunState = new WallRunState(this, this);
             var vaultState = new VaultState(this);
             var mantleState = new MantleState(this);
+            // var wallHangState = new WallHangState(this);
 
             // Makes it easier to add transitions (less text per line)
             void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition); // If a condition meets switch from 'from' state to 'to' state (Root state only)
@@ -154,6 +155,7 @@ namespace Player
             #region Wall Sub State Transitions
             AT(mantleState, wallRunState, WallRun());
             AT(wallRunState, mantleState, ForwardWall());
+            //AT(mallRunState, wallHangState, Ledge)
             
             #endregion
 
@@ -198,6 +200,7 @@ namespace Player
 
             Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
             Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft && inputManager.MoveAction.ReadValue<Vector2>().y > 0;
+            //Func<bool> Ledge() => () => Physics.SphereCast && inputManager.
 
             stateMachine.SetState(groundState);
         }

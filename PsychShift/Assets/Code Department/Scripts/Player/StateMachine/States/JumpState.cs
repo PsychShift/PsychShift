@@ -29,7 +29,7 @@ namespace Player
             currentCharacter = playerStateMachine.currentCharacter;
             currentSubState = stateMachine._currentSubState;
 
-            //HandleJump();
+            HandleJump();
             SetSubState();
         }
 
