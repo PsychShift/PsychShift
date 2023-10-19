@@ -219,6 +219,8 @@ namespace Player
         }
         void FixedUpdate()
         {
+            AppliedMovementY -= 0.8f;
+            AppliedMovementY = Mathf.Max(AppliedMovementY, -20f);
             currentCharacter.rb.velocity = appliedMovement;
             //currentCharacter.rb.AddForce(appliedMovement * 2, ForceMode.Force);
         }
