@@ -17,11 +17,12 @@ namespace Player
             //playerStateMachine.AppliedMovementX = 0;
             //playerStateMachine.AppliedMovementZ = 0;
             SubStateTick();
-            //HandleGravity();
+            HandleGravity();
         }
 
         public void OnEnter()
         {
+            Debug.Log("Enter Ground");
             currentCharacter = playerStateMachine.currentCharacter;
             currentSubState = stateMachine._currentSubState;
             SetSubState();
@@ -29,16 +30,17 @@ namespace Player
 
         public void OnExit()
         {
+            Debug.Log("Exit Ground");
             currentSubState.OnExit();
             stateMachine._currentSubState = currentSubState;
             playerStateMachine.InAirForward = Vector3.zero;
             playerStateMachine.InAirRight = Vector3.zero;
         }
 
-        /*private void HandleGravity()
+        private void HandleGravity()
         {
             playerStateMachine.CurrentMovementY = playerStateMachine.gravityValue;
             playerStateMachine.AppliedMovementY = playerStateMachine.gravityValue;
-        }*/
+        }
     }
 }

@@ -37,9 +37,9 @@ namespace Player
         private void HandleGravity()
         {
             float previousYVelocity = playerStateMachine.CurrentMovementY;
-            playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + playerStateMachine.gravityValue * 8f * Time.deltaTime;
-            playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -20f);
-            Debug.Log(playerStateMachine.AppliedMovementY);
+            playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + playerStateMachine.gravityValue * Time.deltaTime;
+            playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -playerStateMachine.MaxFallSpeed);
+            //Debug.Log(playerStateMachine.AppliedMovementY);
         }
     }
 }

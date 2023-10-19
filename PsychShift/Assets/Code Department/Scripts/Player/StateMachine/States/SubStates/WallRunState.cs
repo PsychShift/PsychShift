@@ -52,8 +52,6 @@ namespace Player
             WallStateVariables.Instance.LastWallNormal = wallNormal;
             wallNormal = Vector3.zero; 
             wallForward = Vector3.zero;
-
-            
         }
 
         private IEnumerator SetNormal()
