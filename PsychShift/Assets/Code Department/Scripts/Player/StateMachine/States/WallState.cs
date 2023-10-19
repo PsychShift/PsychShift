@@ -19,12 +19,14 @@ namespace Player
         public void OnEnter()
         {
             currentCharacter = playerStateMachine.currentCharacter;
+            currentCharacter.rb.useGravity = false;
             SetSubState();
         }
 
         public void OnExit()
         {
             stateMachine._currentSubState = currentSubState;
+            currentCharacter.rb.useGravity = true;
         }
 
         public void Tick()
@@ -61,11 +63,14 @@ namespace Player
             { Vector3.right - Vector3.forward, new RaycastHit() },
             { Vector3.left, new RaycastHit() },
             { Vector3.left + Vector3.forward, new RaycastHit() },
-            { Vector3.left - Vector3.forward, new RaycastHit() }
+            { Vector3.left - Vector3.forward, new RaycastHit() },
+            { Vector3.back, new RaycastHit( )}
         };
         public Vector3 LastWallPosition { get; set; }
         public Vector3 LastWallNormal { get; set; }
 
+        public bool WallLeft { get; set; }
+        public bool WallRight { get; set; }
         public void CheckWalls(Transform charTransform)
         {
             Dictionary<Vector3, RaycastHit> tempDirectionHits = new Dictionary<Vector3, RaycastHit>();
@@ -74,6 +79,29 @@ namespace Player
                 Vector3 dir = charTransform.TransformDirection(item.Key);
                 RaycastHit hit;
                 Physics.Raycast(charTransform.position, dir, out hit, 1.6f, wallLayer);
+                Color c = Color.red;
+                if(hit.normal != Vector3.zero)
+                {
+                    if(LastWallNormal != Vector3.zero) LastWallNormal = hit.normal;
+                    c = Color.green;
+                }
+                Debug.DrawRay(charTransform.position, dir, c, 1);
+
+                #region Wallrun left & right side bools
+                if(item.Key == Vector3.right && hit.collider != null)
+                {
+                    WallRight = true;
+                    LastWallNormal = hit.normal;
+                } 
+                else if (item.Key == Vector3.right && hit.collider == null)WallRight = false;
+                else if(item.Key == Vector3.left && hit.collider != null)
+                {
+                    WallLeft = true;
+                    LastWallNormal = hit.normal;
+                } 
+                else if (item.Key == Vector3.left && hit.collider == null)WallLeft = false;
+                #endregion
+
                 tempDirectionHits.Add(item.Key, hit);
             }
             DirectionHits.Clear();
@@ -90,6 +118,16 @@ namespace Player
 
             WallInForwardDirection();
             WallToSides();
+        }
+
+        public bool CheckOnWall()
+        {
+            foreach(var item in DirectionHits)
+            {
+                if(item.Value.collider != null) return true;
+            }
+
+            return false;
         }
 
         public bool ForwardWall;

@@ -41,7 +41,7 @@ namespace Player
         [Header("Ground Variables")]
         [SerializeField] private LayerMask groundLayer;
 
-        
+        #region  Wall
         [Header("Wall Variables")]
         public LayerMask wallLayer;
         private bool isNearWall;
@@ -49,6 +49,13 @@ namespace Player
         [SerializeField] private LayerMask vaultLayers;
         public LayerMask VaultLayers { get { return vaultLayers; } }
         public bool IsVaulting { get; set; }
+
+
+
+        [SerializeField] float wallCheckDistance;
+        [SerializeField] float minJumpHeight;
+
+        #endregion
 
         [Header("Jump Variables")]
         public float gravityValue = -9.81f;
@@ -129,7 +136,6 @@ namespace Player
             AT(fallState, wallState, OnWall());  
             // Leave Wall State
             AT(wallState, groundState, Grounded());
-            AT(wallState, fallState, Stopped());
             AT(wallState, fallState, NotOnWall());
             #endregion
 
@@ -138,7 +144,7 @@ namespace Player
             AT(walkState, idleState, Stopped());
             #endregion
             #region Wall Sub State Transitions
-            AT(mantleState, wallRunState, SideWall());
+            AT(mantleState, wallRunState, WallRun());
             AT(wallRunState, mantleState, ForwardWall());
             
             #endregion
@@ -169,15 +175,15 @@ namespace Player
             Func<bool> Jumped() => () => inputManager.IsJumpPressed && GroundedCheck();
             Func<bool> Falling() => () => AppliedMovementY < 0 && !GroundedCheck();
             Func<bool> Grounded() => () => GroundedCheck();
-            Func<bool> OnWall() => () => CheckForWall() && !GroundedCheck();
-            Func<bool> NotOnWall() => () => !WallStateVariables.Instance.SideWall && !WallStateVariables.Instance.ForwardWall;
+            Func<bool> OnWall() => () => CheckForWall() && AboveGround() && inputManager.MoveAction.ReadValue<Vector2>().magnitude > 0;
+            Func<bool> NotOnWall() => () => !WallStateVariables.Instance.CheckOnWall() || inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
 
             // Sub State Conditions
             Func<bool> Walked() => () => inputManager.MoveAction.triggered && !inputManager.RunAction.triggered;
             Func<bool> Stopped() => () => inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
 
-            Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall;
-            Func<bool> SideWall() => () => WallStateVariables.Instance.SideWall && inputManager.MoveAction.ReadValue<Vector2>().y > 0;
+            Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
+            Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft && inputManager.MoveAction.ReadValue<Vector2>().y > 0;
 
             stateMachine.SetState(groundState);
         }
@@ -197,6 +203,7 @@ namespace Player
         void FixedUpdate()
         {
             currentCharacter.rb.velocity = Vector3.Lerp(currentCharacter.rb.velocity, appliedMovement * 2, Time.deltaTime);
+            //currentCharacter.rb.AddForce(appliedMovement * 2, ForceMode.Force);
         }
         #endregion
 
@@ -386,7 +393,7 @@ namespace Player
             foreach(Vector3 dir in wallCheckDirections)
             {
                 Vector3 relativeDir = currentCharacter.model.transform.TransformDirection(dir);
-                if (Physics.Raycast(currentCharacter.model.transform.position, relativeDir, 2f, wallLayer))
+                if (Physics.Raycast(currentCharacter.model.transform.position, relativeDir, 2.5f, wallLayer))
                     return true;
             }
             return false;
@@ -397,7 +404,7 @@ namespace Player
 
         Vector3 castDirection = Vector3.down;
         float castDistance = 0.0f;
-        Vector3 boxSize = new Vector3(1f, 1f, 1f);
+        Vector3 boxSize = new Vector3(0.5f, 0.5f, 0.5f);
         private bool GroundedCheck()
         {
             RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer);
@@ -405,6 +412,15 @@ namespace Player
                 return true;
             
             return false;
+        }
+
+        private bool AboveGround()
+        {
+            RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, 0.5f, groundLayer);
+            if(hits.Any(hit => hit.collider != null))
+                return false;
+            
+            return true;
         }
         #endregion
 
