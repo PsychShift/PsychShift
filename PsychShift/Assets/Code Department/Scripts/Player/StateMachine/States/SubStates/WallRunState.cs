@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Collections;
 using UnityEngine;
 
 /*
@@ -17,71 +17,64 @@ namespace Player
 
 
         private readonly PlayerStateMachine playerStateMachine;
+        private MonoBehaviour monoBehaviour;
         private CharacterInfo currentCharacter;
         private WallStateVariables wallVariables;
-        public WallRunState(PlayerStateMachine playerStateMachine)
+        public WallRunState(PlayerStateMachine playerStateMachine, MonoBehaviour monoBehaviour)
         {
             this.playerStateMachine = playerStateMachine;
+            this.monoBehaviour = monoBehaviour;
             wallVariables = WallStateVariables.Instance;
         }
 
 
         private Vector3 wallNormal;
         private Vector3 wallForward;
-        private float speed = 100f;
+        private float WallSpeed;
+
+        private bool wallRight;
         public void Tick()
-        {            
-            if((currentCharacter.model.transform.forward - wallForward).magnitude > (currentCharacter.model.transform.forward - -wallForward).magnitude)
-                wallForward = -wallForward;
-            // forward force
-            playerStateMachine.AppliedMovementX = wallForward.x * speed;
-            //playerStateMachine.AppliedMovementY = wallForward.y;
-            playerStateMachine.AppliedMovementZ = wallForward.z * speed;
-            //HandleMovement();
+        {
+            HandleMovement();
         }
 
         public void OnEnter()
         {
             currentCharacter = playerStateMachine.currentCharacter;
-            wallNormal = WallStateVariables.Instance.LastWallNormal;
-            Debug.Log(wallNormal);
-            wallForward = Vector3.Cross(wallNormal, currentCharacter.characterContainer.transform.up);
-            Debug.Log(wallForward);
+            monoBehaviour.StartCoroutine(SetNormal());
+            this.WallSpeed = playerStateMachine.WallSpeed;
+            Debug.Log("entered wallrun");
         }
 
         public void OnExit()
         {
+            Debug.Log("exit wallrun");
+            wallNormal = Vector3.zero; 
+            wallForward = Vector3.zero;
+
             
+        }
+
+        private IEnumerator SetNormal()
+        {
+            yield return new WaitForSeconds(0.05f);
+
+            wallRight = WallStateVariables.Instance.WallRight;
+            wallNormal = wallRight ? WallStateVariables.Instance.RightWallNormal() : WallStateVariables.Instance.LeftWallNormal();
+            wallForward = Vector3.Cross(wallNormal, currentCharacter.characterContainer.transform.up);
+            Debug.Log(wallNormal);
+            yield return null;
         }
 
         private void HandleMovement()
         {
-            RaycastHit[] Hits = WallStateVariables.Instance.SetUpHitsList();
-            if (Hits.Length > 0)
-            {
-                OnWall(Hits[0]);
-                wallVariables.LastWallPosition = Hits[0].point;
-                wallVariables.LastWallNormal = Hits[0].normal;
-            }
-        }
-        void OnWall(RaycastHit hit)
-        {
-            float d = Vector3.Dot(hit.normal, Vector3.up);
-            if (d >= -normalizedAngleThreshold && d <= normalizedAngleThreshold)
-            {
-                // Vector3 alongWall = Vector3.Cross(hit.normal, Vector3.up);
-                float vertical = InputManager.Instance.MoveAction.ReadValue<Vector2>().y;
-                Vector3 alongWall = playerStateMachine.currentCharacter.characterContainer.transform.TransformDirection(Vector3.forward);
+            if ((currentCharacter.model.transform.forward - wallForward).magnitude > (currentCharacter.model.transform.forward - -wallForward).magnitude)
+                wallForward = -wallForward;
+            
+            playerStateMachine.AppliedMovementX = wallForward.x * WallSpeed;
+            //playerStateMachine.AppliedMovementY = wallForward.y;
+            playerStateMachine.AppliedMovementZ = wallForward.z * WallSpeed;
 
-                Debug.DrawRay(playerStateMachine.currentCharacter.characterContainer.transform.position, alongWall.normalized * 10, Color.green);
-                Debug.DrawRay(playerStateMachine.currentCharacter.characterContainer.transform.position, wallVariables.LastWallNormal * 10, Color.magenta);
-
-                Vector3 movement = alongWall * vertical * 2f;
-                playerStateMachine.AppliedMovementX = movement.x * playerStateMachine.WalkSpeed;
-                playerStateMachine.AppliedMovementZ = movement.z * playerStateMachine.WalkSpeed;
-                playerStateMachine.AppliedMovementY = 0;
-                
-            }
         }
     }
 }

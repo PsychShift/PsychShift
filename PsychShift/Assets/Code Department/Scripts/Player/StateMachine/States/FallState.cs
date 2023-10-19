@@ -23,6 +23,7 @@ namespace Player
         public void OnEnter()
         {
             currentCharacter = playerStateMachine.currentCharacter;
+            currentSubState = stateMachine._currentSubState;
             SetSubState();
         }
 
@@ -31,11 +32,11 @@ namespace Player
             stateMachine._currentSubState = currentSubState;
         }
 
-        private void HandleGravity()
+        /*private void HandleGravity()
         {
             float previousYVelocity = playerStateMachine.CurrentMovementY;
             playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + playerStateMachine.gravityValue * 8f * Time.deltaTime;
             playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -20f);
-        }
+        }*/
     }
 }

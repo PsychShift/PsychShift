@@ -25,6 +25,7 @@ namespace Player
         public void OnEnter()
         {
             currentCharacter = playerStateMachine.currentCharacter;
+            currentSubState = stateMachine._currentSubState;
             /* playerStateMachine.InAirForward = currentCharacter.model.transform.forward;
             playerStateMachine.InAirRight = currentCharacter.model.transform.right; */
             HandleJump();
@@ -38,12 +39,10 @@ namespace Player
 
         private void HandleJump()
         {
-            /* playerStateMachine.CurrentMovementY = playerStateMachine.InitialJumpVelocity;
-            playerStateMachine.AppliedMovementY = playerStateMachine.InitialJumpVelocity; */
-            currentCharacter.rb.AddForce(Vector3.up * 2, ForceMode.Impulse);
+            currentCharacter.rb.AddForce(Vector3.up * playerStateMachine.JumpForce, ForceMode.Impulse);
         }
 
-        private void HandleGravity()
+        /*private void HandleGravity()
         {
             bool isFalling = playerStateMachine.CurrentMovementY <= 0f || !InputManager.Instance.IsJumpPressed;
             float fallMultiplier = 3.0f;
@@ -60,6 +59,6 @@ namespace Player
                 playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + (playerStateMachine.InitialJumpGravity * Time.deltaTime);
                 playerStateMachine.AppliedMovementY = (previousYVelocity + playerStateMachine.CurrentMovementY) * .5f;
             }
-        }
+        }*/
     }
 }

@@ -36,16 +36,16 @@ namespace Player
 
         public Vector2 currentInputVector { get; set; }
         [HideInInspector] public Vector2 smoothInputVelocity;
-        public Vector3 move { get; set; }
+        public Vector3 move { get; set ; }
 
         [Header("Ground Variables")]
         [SerializeField] private LayerMask groundLayer;
 
         #region  Wall
         [Header("Wall Variables")]
+        [SerializeField] private float wallSpeed;
+        public float WallSpeed { get { return wallSpeed;  } }
         public LayerMask wallLayer;
-        private bool isNearWall;
-        private WallStateVariables wallVariables;
         [SerializeField] private LayerMask vaultLayers;
         public LayerMask VaultLayers { get { return vaultLayers; } }
         public bool IsVaulting { get; set; }
@@ -58,13 +58,16 @@ namespace Player
         #endregion
 
         [Header("Jump Variables")]
+        [SerializeField] private float jumpForce = 1f;
+        public float JumpForce { get { return jumpForce; } }
+        /*
         public float gravityValue = -9.81f;
         [SerializeField] float maxJumpHeight = 4.0f;
         public float maxJumpTime = 0.75f;
         private float initialJumpVelocity;
         private float initialJumpGravity;
         public float InitialJumpVelocity { get { return initialJumpVelocity; } }
-        public float InitialJumpGravity { get { return initialJumpGravity; } }
+        public float InitialJumpGravity { get { return initialJumpGravity; } } */
         #endregion
         #region Manipulate Variables
         [SerializeField] private LayerMask manipulateLayers;
@@ -89,7 +92,7 @@ namespace Player
         {
             WallStateVariables.Instance.wallLayer = wallLayer;
             boxRotation = Camera.main.transform.rotation;
-            SetJumpVariables();
+            //SetJumpVariables();
             cameraTransform = Camera.main.transform;
             cameraTransform.GetComponent<CinemachineBrain>().m_IgnoreTimeScale = false;
             SwapCharacter(tempCharacter);
@@ -115,7 +118,7 @@ namespace Player
             var idleState = new IdleState(this);
             var walkState = new WalkState(this);
 
-            var wallRunState = new WallRunState(this);
+            var wallRunState = new WallRunState(this, this);
             var vaultState = new VaultState(this);
             var mantleState = new MantleState(this);
 
@@ -272,13 +275,14 @@ namespace Player
         }
         #endregion
 
+        /*
         private void SetJumpVariables()
         {
             float timeToApex = maxJumpTime / 2;
             initialJumpGravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
             initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
         }
-
+        */
         #region Time Management
         private void SlowMotion(bool timeSlow)
         {
@@ -387,13 +391,14 @@ namespace Player
         }
 
         #region Wall
-        Vector3[] wallCheckDirections = new Vector3[] { Vector3.forward, Vector3.right, Vector3.left };
+        Vector3[] wallCheckDirections = new Vector3[] { Vector3.forward, Vector3.right, Vector3.left, (Vector3.left + Vector3.forward), (Vector3.right + Vector3.forward) };
         private bool CheckForWall()
         {
             foreach(Vector3 dir in wallCheckDirections)
             {
                 Vector3 relativeDir = currentCharacter.model.transform.TransformDirection(dir);
-                if (Physics.Raycast(currentCharacter.model.transform.position, relativeDir, 2.5f, wallLayer))
+                Debug.DrawRay(currentCharacter.model.transform.position + Vector3.up, relativeDir, Color.blue, 0);
+                if (Physics.Raycast(currentCharacter.model.transform.position + Vector3.up, relativeDir, 2.5f, wallLayer))
                     return true;
             }
             return false;
@@ -416,7 +421,7 @@ namespace Player
 
         private bool AboveGround()
         {
-            RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, 0.5f, groundLayer);
+            RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, 0.1f, groundLayer);
             if(hits.Any(hit => hit.collider != null))
                 return false;
             

@@ -20,6 +20,7 @@ namespace Player
         {
             currentCharacter = playerStateMachine.currentCharacter;
             currentCharacter.rb.useGravity = false;
+            currentSubState = stateMachine._currentSubState;
             SetSubState();
         }
 
@@ -31,8 +32,8 @@ namespace Player
 
         public void Tick()
         {
-            //wallVariables.OrganizeHitsList();
             SubStateTick();
+            //wallVariables.OrganizeHitsList();
             WallStateVariables.Instance.CheckWalls(currentCharacter.model.transform);
             //Debug.Log("Forward Wall == " + WallStateVariables.Instance.ForwardWall + " Side Wall == " + WallStateVariables.Instance.SideWall);
         }
@@ -66,11 +67,11 @@ namespace Player
             { Vector3.left - Vector3.forward, new RaycastHit() },
             { Vector3.back, new RaycastHit( )}
         };
-        public Vector3 LastWallPosition { get; set; }
-        public Vector3 LastWallNormal { get; set; }
+        public Vector3 LastWallPosition;
+        public Vector3 LastWallNormal;
 
-        public bool WallLeft { get; set; }
-        public bool WallRight { get; set; }
+        public bool WallLeft;
+        public bool WallRight;
         public void CheckWalls(Transform charTransform)
         {
             Dictionary<Vector3, RaycastHit> tempDirectionHits = new Dictionary<Vector3, RaycastHit>();
@@ -78,52 +79,47 @@ namespace Player
             {
                 Vector3 dir = charTransform.TransformDirection(item.Key);
                 RaycastHit hit;
-                Physics.Raycast(charTransform.position, dir, out hit, 1.6f, wallLayer);
+                Physics.Raycast(charTransform.position + Vector3.up, dir, out hit, 2.5f, wallLayer);
+
                 Color c = Color.red;
                 if(hit.normal != Vector3.zero)
-                {
-                    if(LastWallNormal != Vector3.zero) LastWallNormal = hit.normal;
                     c = Color.green;
-                }
-                Debug.DrawRay(charTransform.position, dir, c, 1);
-
-                #region Wallrun left & right side bools
-                if(item.Key == Vector3.right && hit.collider != null)
-                {
-                    WallRight = true;
-                    LastWallNormal = hit.normal;
-                } 
-                else if (item.Key == Vector3.right && hit.collider == null)WallRight = false;
-                else if(item.Key == Vector3.left && hit.collider != null)
-                {
-                    WallLeft = true;
-                    LastWallNormal = hit.normal;
-                } 
-                else if (item.Key == Vector3.left && hit.collider == null)WallLeft = false;
-                #endregion
-
+                Debug.DrawRay(charTransform.position + Vector3.up, dir, c, 1);
+                
                 tempDirectionHits.Add(item.Key, hit);
             }
             DirectionHits.Clear();
             DirectionHits.AddRange(tempDirectionHits);
-            /* foreach(var item in DirectionHits)
-            {
-                Vector3 dir = charTransform.TransformDirection(item.Key);
-                RaycastHit hit = item.Value;
-                Color c = Color.green;
-                if(hit.collider == null)
-                    c = Color.red;
-                Debug.DrawRay(charTransform.position, dir, c, 1);
-            } */
 
             WallInForwardDirection();
-            WallToSides();
+            LeftRightCheck();
+        }
+
+        public void LeftRightCheck()
+        {
+            WallRight = DirectionHits[Vector3.right].normal.magnitude > 0 || DirectionHits[Vector3.right + Vector3.forward].normal.magnitude > 0 || DirectionHits[Vector3.right - Vector3.forward].normal.magnitude > 0;
+            WallLeft = DirectionHits[Vector3.left].normal.magnitude > 0 || DirectionHits[Vector3.left + Vector3.forward].normal.magnitude > 0 || DirectionHits[Vector3.left - Vector3.forward].normal.magnitude > 0;
+        }
+        public Vector3 RightWallNormal()
+        {
+            return DirectionHits[Vector3.right].normal.magnitude > 0 ? DirectionHits[Vector3.right].normal :
+                   DirectionHits[Vector3.right + Vector3.forward].normal.magnitude > 0 ? DirectionHits[Vector3.right + Vector3.forward].normal :
+                   DirectionHits[Vector3.right - Vector3.forward].normal.magnitude > 0 ? DirectionHits[Vector3.right - Vector3.forward].normal :
+                   Vector3.zero;
+        }
+        public Vector3 LeftWallNormal()
+        {
+            return DirectionHits[Vector3.left].normal.magnitude > 0 ? DirectionHits[Vector3.left].normal :
+                   DirectionHits[Vector3.left + Vector3.forward].normal.magnitude > 0 ? DirectionHits[Vector3.left + Vector3.forward].normal :
+                   DirectionHits[Vector3.left - Vector3.forward].normal.magnitude > 0 ? DirectionHits[Vector3.left - Vector3.forward].normal :
+                   Vector3.zero;
         }
 
         public bool CheckOnWall()
         {
             foreach(var item in DirectionHits)
             {
+                
                 if(item.Value.collider != null) return true;
             }
 
@@ -140,22 +136,6 @@ namespace Player
             }
             ForwardWall = false;
         }
-
-        public bool SideWall;
-        private void WallToSides()
-        {
-            if(ForwardWall) return;
-            foreach (var item in DirectionHits)
-            {
-                if(item.Value.collider != null)
-                {
-                    SideWall = true;
-                    return;
-                }
-            }
-            SideWall = false;
-        }
-
         
 
         public RaycastHit[] SetUpHitsList()

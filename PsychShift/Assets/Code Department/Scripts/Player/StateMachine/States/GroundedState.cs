@@ -21,20 +21,22 @@ namespace Player
         public void OnEnter()
         {
             currentCharacter = playerStateMachine.currentCharacter;
+            currentSubState = stateMachine._currentSubState;
             SetSubState();
         }
 
         public void OnExit()
         {
+            currentSubState.OnExit();
             stateMachine._currentSubState = currentSubState;
             playerStateMachine.InAirForward = Vector3.zero;
             playerStateMachine.InAirRight = Vector3.zero;
         }
 
-        private void HandleGravity()
+        /*private void HandleGravity()
         {
             playerStateMachine.CurrentMovementY = playerStateMachine.gravityValue;
             playerStateMachine.AppliedMovementY = playerStateMachine.gravityValue;
-        }
+        }*/
     }
 }
