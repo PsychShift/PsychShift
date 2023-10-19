@@ -12,10 +12,10 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         //Health.OnTakeDamage += PainResponse.HandlePain;
-        Health.OnDeath += Die;
+        Health.OnDeath += Die;//here goes the death stuff// Talks to enemy script and goes to interface
     }
 
-    private void Die(Vector3 Position)
+    private void Die(Vector3 Position)//death stuff is given to health funct in enemyhealth script
     {
         //Movement.StopMoving();
         //PainResponse.HandleDeath();
