@@ -49,6 +49,7 @@ namespace Player
         public void OnExit()
         {
             Debug.Log("exit wallrun");
+            WallStateVariables.Instance.LastWallNormal = wallNormal;
             wallNormal = Vector3.zero; 
             wallForward = Vector3.zero;
 

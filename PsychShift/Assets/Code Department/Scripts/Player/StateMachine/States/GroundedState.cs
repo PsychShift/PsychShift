@@ -14,6 +14,8 @@ namespace Player
         public void Tick()
         {
             // Call the Tick method of the current sub-state
+            //playerStateMachine.AppliedMovementX = 0;
+            //playerStateMachine.AppliedMovementZ = 0;
             SubStateTick();
             //HandleGravity();
         }

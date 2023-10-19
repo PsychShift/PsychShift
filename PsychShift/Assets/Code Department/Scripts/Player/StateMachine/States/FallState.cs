@@ -32,11 +32,12 @@ namespace Player
             stateMachine._currentSubState = currentSubState;
         }
 
-        /*private void HandleGravity()
+        private void HandleGravity()
         {
+            //Debug.Log(playerStateMachine.AppliedMovementY);
             float previousYVelocity = playerStateMachine.CurrentMovementY;
             playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + playerStateMachine.gravityValue * 8f * Time.deltaTime;
             playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -20f);
-        }*/
+        }
     }
 }

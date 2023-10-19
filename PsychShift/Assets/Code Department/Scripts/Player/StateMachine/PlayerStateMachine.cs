@@ -60,14 +60,14 @@ namespace Player
         [Header("Jump Variables")]
         [SerializeField] private float jumpForce = 1f;
         public float JumpForce { get { return jumpForce; } }
-        /*
+        
         public float gravityValue = -9.81f;
         [SerializeField] float maxJumpHeight = 4.0f;
         public float maxJumpTime = 0.75f;
         private float initialJumpVelocity;
         private float initialJumpGravity;
         public float InitialJumpVelocity { get { return initialJumpVelocity; } }
-        public float InitialJumpGravity { get { return initialJumpGravity; } } */
+        public float InitialJumpGravity { get { return initialJumpGravity; } } 
         #endregion
         #region Manipulate Variables
         [SerializeField] private LayerMask manipulateLayers;
@@ -92,7 +92,7 @@ namespace Player
         {
             WallStateVariables.Instance.wallLayer = wallLayer;
             boxRotation = Camera.main.transform.rotation;
-            //SetJumpVariables();
+            SetJumpVariables();
             cameraTransform = Camera.main.transform;
             cameraTransform.GetComponent<CinemachineBrain>().m_IgnoreTimeScale = false;
             SwapCharacter(tempCharacter);
@@ -113,6 +113,7 @@ namespace Player
             var fallState = new FallState(this, stateMachine);
             var jumpState = new JumpState(this, stateMachine);
             var wallState = new WallState(this, stateMachine);
+            var wallJumpState = new WallJumpState(this, stateMachine);
 
             // Create instances of sub-states
             var idleState = new IdleState(this);
@@ -140,6 +141,10 @@ namespace Player
             // Leave Wall State
             AT(wallState, groundState, Grounded());
             AT(wallState, fallState, NotOnWall());
+            AT(wallState, wallJumpState, WallJump());
+            // Leave Wall Jump State
+            AT(wallJumpState, fallState, Falling());
+            AT(wallJumpState, groundState, Grounded());
             #endregion
 
             #region Standard Transitions
@@ -172,6 +177,11 @@ namespace Player
             wallState.AddSubState(mantleState);
             wallState.PrepareSubStates();
             wallState.SetDefaultSubState(wallRunState);
+
+            wallJumpState.AddSubState(idleState);
+            wallJumpState.AddSubState(walkState);
+            wallJumpState.PrepareSubStates();
+            wallJumpState.SetDefaultSubState(idleState);
             #endregion
 
             // Root State Conditions
@@ -180,6 +190,7 @@ namespace Player
             Func<bool> Grounded() => () => GroundedCheck();
             Func<bool> OnWall() => () => CheckForWall() && AboveGround() && inputManager.MoveAction.ReadValue<Vector2>().magnitude > 0;
             Func<bool> NotOnWall() => () => !WallStateVariables.Instance.CheckOnWall() || inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
+            Func<bool> WallJump() => () => inputManager.IsJumpPressed;
 
             // Sub State Conditions
             Func<bool> Walked() => () => inputManager.MoveAction.triggered && !inputManager.RunAction.triggered;
@@ -205,7 +216,7 @@ namespace Player
         }
         void FixedUpdate()
         {
-            currentCharacter.rb.velocity = Vector3.Lerp(currentCharacter.rb.velocity, appliedMovement * 2, Time.deltaTime);
+            currentCharacter.rb.velocity = appliedMovement;
             //currentCharacter.rb.AddForce(appliedMovement * 2, ForceMode.Force);
         }
         #endregion
@@ -262,6 +273,7 @@ namespace Player
                 model = newCharacter.transform.GetChild(1).gameObject,
                 rb = newCharacter.GetComponent<Rigidbody>()
             };
+            currentCharacter.rb.useGravity = false;
             currentCharacter.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
             /* 
             FIND A WAY TO MAKE THE CAMERA LOOK IN THE DIRECTINO THE NEW BODY IS LOOKING
@@ -275,14 +287,14 @@ namespace Player
         }
         #endregion
 
-        /*
+        
         private void SetJumpVariables()
         {
             float timeToApex = maxJumpTime / 2;
             initialJumpGravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
             initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
         }
-        */
+        
         #region Time Management
         private void SlowMotion(bool timeSlow)
         {

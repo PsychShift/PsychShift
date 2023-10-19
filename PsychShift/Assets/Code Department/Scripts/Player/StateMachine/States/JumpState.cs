@@ -8,7 +8,7 @@ namespace Player
     public class JumpState : RootState, IState
     {
         private CharacterInfo currentCharacter;
-        
+        private float timer;
         public JumpState(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
         {
             this.playerStateMachine = playerStateMachine;
@@ -19,34 +19,39 @@ namespace Player
         {
             // Call the Tick method of the current sub-state
             SubStateTick();
-           // HandleGravity();
+            //HandleGravity();
         }
 
         public void OnEnter()
         {
+            timer = 0;
+            Debug.Log("Enter Jump");
             currentCharacter = playerStateMachine.currentCharacter;
             currentSubState = stateMachine._currentSubState;
-            /* playerStateMachine.InAirForward = currentCharacter.model.transform.forward;
-            playerStateMachine.InAirRight = currentCharacter.model.transform.right; */
-            HandleJump();
+
+            //HandleJump();
             SetSubState();
         }
 
         public void OnExit()
         {
+            Debug.Log("Exit Jump");
             stateMachine._currentSubState = currentSubState;
         }
 
         private void HandleJump()
         {
-            currentCharacter.rb.AddForce(Vector3.up * playerStateMachine.JumpForce, ForceMode.Impulse);
+            playerStateMachine.CurrentMovementY = playerStateMachine.InitialJumpVelocity;
+            playerStateMachine.AppliedMovementY = playerStateMachine.InitialJumpVelocity;
+            //currentCharacter.rb.AddForce(Vector3.up * playerStateMachine.JumpForce, ForceMode.Impulse);
         }
 
-        /*private void HandleGravity()
+        private void HandleGravity()
         {
-            bool isFalling = playerStateMachine.CurrentMovementY <= 0f || !InputManager.Instance.IsJumpPressed;
+            timer += Time.deltaTime;
+            bool isFalling = playerStateMachine.CurrentMovementY <= 0f || !InputManager.Instance.IsJumpPressed || timer >= 0.5f;
             float fallMultiplier = 3.0f;
-
+            Debug.Log(playerStateMachine.AppliedMovementY);
             if(isFalling)
             {
                 float previousYVelocity = playerStateMachine.CurrentMovementY;
@@ -59,6 +64,6 @@ namespace Player
                 playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + (playerStateMachine.InitialJumpGravity * Time.deltaTime);
                 playerStateMachine.AppliedMovementY = (previousYVelocity + playerStateMachine.CurrentMovementY) * .5f;
             }
-        }*/
+        }
     }
 }
