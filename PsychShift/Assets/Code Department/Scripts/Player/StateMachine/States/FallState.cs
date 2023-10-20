@@ -22,7 +22,6 @@ namespace Player
 
         public void OnEnter()
         {
-            Debug.Log("Enter fall");
             currentCharacter = playerStateMachine.currentCharacter;
             currentSubState = stateMachine._currentSubState;
             SetSubState();
@@ -30,7 +29,6 @@ namespace Player
 
         public void OnExit()
         {
-            Debug.Log("exit fall");
             stateMachine._currentSubState = currentSubState;
         }
 

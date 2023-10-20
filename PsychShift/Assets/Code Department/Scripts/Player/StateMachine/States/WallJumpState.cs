@@ -25,7 +25,6 @@ namespace Player
         public void OnEnter()
         {
             WallStateVariables.Instance.TimeOffWall = 0f;
-            Debug.Log("entered wall jump");
             currentCharacter = playerStateMachine.currentCharacter;
             currentSubState = stateMachine._currentSubState;
             /* playerStateMachine.InAirForward = currentCharacter.model.transform.forward;
@@ -36,7 +35,6 @@ namespace Player
 
         public void OnExit()
         {
-            Debug.Log("exited wall jump");
             stateMachine._currentSubState = currentSubState;
         }
 
@@ -57,7 +55,6 @@ namespace Player
 
             if(isFalling)
             {
-                Debug.Log("From Jump - Is Falling == true");
                 float previousYVelocity = playerStateMachine.CurrentMovementY;
                 playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + (playerStateMachine.InitialJumpGravity * fallMultiplier * Time.deltaTime);
                 playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -playerStateMachine.MaxFallSpeed);

@@ -98,6 +98,8 @@ namespace Player
         private void Awake()
         {
             WallStateVariables.Instance.wallLayer = wallLayer;
+            WallStateVariables.Instance.WallholdLayers = wallholdLayers;
+            WallStateVariables.Instance.WallSpeed = wallSpeed;
             boxRotation = Camera.main.transform.rotation;
             SetJumpVariables();
             cameraTransform = Camera.main.transform;
@@ -161,8 +163,8 @@ namespace Player
             #endregion
             #region Wall Sub State Transitions
             AT(mantleState, wallRunState, WallRun());
-            AT(wallRunState, mantleState, ForwardWall());
-            //AT(mallRunState, wallHangState, Ledge)
+            AT(wallRunState, wallHangState, Ledge());
+            AT(wallHangState, wallRunState, WallRun());
             
             #endregion
 
@@ -183,9 +185,9 @@ namespace Player
             fallState.SetDefaultSubState(idleState);
 
             wallState.AddSubState(wallRunState);
-            wallState.AddSubState(mantleState);
+            wallState.AddSubState(wallHangState);
             wallState.PrepareSubStates();
-            wallState.SetDefaultSubState(wallRunState);
+            wallState.SetDefaultSubState(wallHangState);
 
             wallJumpState.AddSubState(idleState);
             wallJumpState.AddSubState(walkState);
@@ -198,7 +200,7 @@ namespace Player
             Func<bool> Falling() => () => AppliedMovementY < 0 && !GroundedCheck();
             Func<bool> Grounded() => () => GroundedCheck();
             Func<bool> OnWall() => () => CheckForWall() && AboveGround() && inputManager.MoveAction.ReadValue<Vector2>().magnitude > 0;
-            Func<bool> NotOnWall() => () => !WallStateVariables.Instance.CheckOnWall() || inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
+            Func<bool> NotOnWall() => () => !WallStateVariables.Instance.CheckOnWall() || StoppedAndNotHanging();
             Func<bool> WallJump() => () => inputManager.IsJumpPressed && WallStateVariables.Instance.TimeOnWall > 0.4f;
             Func<bool> WallFall() => () => AppliedMovementY < 0 && !GroundedCheck() && WallStateVariables.Instance.TimeOffWall > 0.2f;
 
@@ -206,11 +208,15 @@ namespace Player
             Func<bool> Walked() => () => inputManager.MoveAction.triggered && !inputManager.RunAction.triggered;
             Func<bool> Stopped() => () => inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
 
-            Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
-            Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft && inputManager.MoveAction.ReadValue<Vector2>().y > 0;
-            Func<bool> Ledge() => () => LedgeDetection() && WallStateVariables.Instance.ForwardWall;
+            //Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
+            Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft && inputManager.MoveAction.ReadValue<Vector2>().magnitude != 0;
+            Func<bool> Ledge() => () => WallStateVariables.Instance.LedgeDetection(currentCharacter, cameraTransform) && WallStateVariables.Instance.ForwardWall;
 
             stateMachine.SetState(groundState);
+        }
+        private bool StoppedAndNotHanging()
+        {
+            return stateMachine._currentSubState is not WallHangState && inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
         }
         void OnDisable()
         {
@@ -424,19 +430,6 @@ namespace Player
             }
             return false;
         }
-        private float ledgeDetectionLength;
-        private float ledgeSphereCastRadius = 4.0f;
-        private float maxLedgeGrabDistance = 4.0f;
-        private bool LedgeDetection()
-    {
-        bool ledgeDetected = Physics.SphereCast(currentCharacter.characterContainer.transform.position + Vector3.up * 4.5f , ledgeSphereCastRadius, cameraTransform.forward, out RaycastHit ledgeHit, ledgeDetectionLength, wallholdLayers);
-
-        if (!ledgeDetected) return false;
-
-        float distanceToLedge = Vector3.Distance(currentCharacter.characterContainer.transform.position, ledgeHit.transform.position);
-
-        return (distanceToLedge < maxLedgeGrabDistance);
-    }
         #endregion
 
         #region Ground Check

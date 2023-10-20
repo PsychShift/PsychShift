@@ -19,7 +19,6 @@ namespace Player
         public void OnEnter()
         {
             WallStateVariables.Instance.TimeOnWall = 0f;
-            Debug.Log("Enter Wall");
             currentCharacter = playerStateMachine.currentCharacter;
             currentSubState = stateMachine._currentSubState;
             playerStateMachine.CurrentMovementY = 0;
@@ -29,7 +28,6 @@ namespace Player
 
         public void OnExit()
         {
-            Debug.Log("Exit Wall");
             stateMachine._currentSubState = currentSubState;
         }
 
@@ -59,7 +57,8 @@ namespace Player
             }
         }
         public LayerMask wallLayer;
-
+        public LayerMask WallholdLayers;
+        public float WallSpeed { get; set; }
         public float TimeOnWall { get; set; }
         public float TimeOffWall { get; set; }
 
@@ -142,6 +141,20 @@ namespace Player
                 return;
             }
             ForwardWall = false;
+        }
+
+        private float ledgeDetectionLength = 0.3f;
+        private float ledgeSphereCastRadius = 4.0f;
+        private float maxLedgeGrabDistance = 4.0f;
+        public bool LedgeDetection(CharacterInfo currentCharacter, Transform cameraTransform)
+        {
+            bool ledgeDetected = Physics.SphereCast(currentCharacter.characterContainer.transform.position + Vector3.up * 1f , ledgeSphereCastRadius, cameraTransform.forward, out RaycastHit ledgeHit, ledgeDetectionLength, WallholdLayers);
+
+            if (!ledgeDetected) return false;
+
+            float distanceToLedge = Vector3.Distance(currentCharacter.characterContainer.transform.position, ledgeHit.transform.position);
+
+            return distanceToLedge < maxLedgeGrabDistance;
         }
         
 

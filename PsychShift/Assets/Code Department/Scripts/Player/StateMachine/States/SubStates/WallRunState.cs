@@ -44,12 +44,10 @@ namespace Player
             currentCharacter = playerStateMachine.currentCharacter;
             monoBehaviour.StartCoroutine(SetNormal());
             this.WallSpeed = playerStateMachine.WallSpeed;
-            Debug.Log("entered wallrun");
         }
 
         public void OnExit()
         {
-            Debug.Log("exit wallrun");
             WallStateVariables.Instance.LastWallNormal = wallNormal;
             wallNormal = Vector3.zero; 
             wallForward = Vector3.zero;
