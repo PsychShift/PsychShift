@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /*
@@ -56,7 +57,7 @@ namespace Player
 
         private IEnumerator SetNormal()
         {
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForNextFrameUnit();
 
             wallRight = WallStateVariables.Instance.WallRight;
             wallNormal = wallRight ? WallStateVariables.Instance.RightWallNormal() : WallStateVariables.Instance.LeftWallNormal();

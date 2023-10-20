@@ -23,10 +23,12 @@ namespace Player
         [Header("Movement Variables")]
         private Vector3 currentMovement;
         private Vector3 appliedMovement;
-        public float CurrentMovementY { get { return currentMovement.y; } set { currentMovement.y = value; }}
         public float AppliedMovementX { get { return appliedMovement.x; } set { appliedMovement.x = value; }}
+        //public float CurrentMovementX { get { return currentMovement.x; } set { currentMovement.x = value; }}
         public float AppliedMovementY { get { return appliedMovement.y; } set { appliedMovement.y = value; }}
+        public float CurrentMovementY { get { return currentMovement.y; } set { currentMovement.y = value; }}
         public float AppliedMovementZ { get { return appliedMovement.z; } set { appliedMovement.z = value; }}
+        //public float CurrentMovementZ { get { return currentMovement.z; } set { currentMovement.z = value; }}
 
         public Vector3 InAirForward { get; set; }
         public Vector3 InAirRight { get; set; }
