@@ -160,7 +160,8 @@ namespace Player
             #region Wall Sub State Transitions
             AT(mantleState, wallRunState, WallRun());
             AT(wallRunState, mantleState, ForwardWall());
-            //AT(mallRunState, wallHangState, Ledge)
+            AT(wallRunState, wallHangState, Ledge());
+            AT(wallHangState, vaultState, ClimbUpLedge());
             
             #endregion
 
@@ -207,6 +208,7 @@ namespace Player
             Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
             Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft && inputManager.MoveAction.ReadValue<Vector2>().y > 0;
             Func<bool> Ledge() => () => LedgeDetection() && WallStateVariables.Instance.ForwardWall;
+            Func<bool> ClimbUpLedge() => () => inputManager.MoveAction.ReadValue<Vector2>().magnitude > 0;
 
             stateMachine.SetState(groundState);
         }
