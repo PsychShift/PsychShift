@@ -47,6 +47,7 @@ namespace Player
         public float WallSpeed { get { return wallSpeed;  } }
         public LayerMask wallLayer;
         [SerializeField] private LayerMask vaultLayers;
+        [SerializeField] private LayerMask wallholdLayers;
         public LayerMask VaultLayers { get { return vaultLayers; } }
         public bool IsVaulting { get; set; }
 
@@ -122,7 +123,7 @@ namespace Player
             var wallRunState = new WallRunState(this, this);
             var vaultState = new VaultState(this);
             var mantleState = new MantleState(this);
-            // var wallHangState = new WallHangState(this);
+            var wallHangState = new WallHangState(this);
 
             // Makes it easier to add transitions (less text per line)
             void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition); // If a condition meets switch from 'from' state to 'to' state (Root state only)
@@ -200,7 +201,7 @@ namespace Player
 
             Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
             Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft && inputManager.MoveAction.ReadValue<Vector2>().y > 0;
-            //Func<bool> Ledge() => () => Physics.SphereCast && inputManager.
+            Func<bool> Ledge() => () => LedgeDetection() && WallStateVariables.Instance.ForwardWall;
 
             stateMachine.SetState(groundState);
         }
@@ -428,6 +429,19 @@ namespace Player
             }
             return false;
         }
+        private float ledgeDetectionLength;
+        private float ledgeSphereCastRadius = 4.0f;
+        private float maxLedgeGrabDistance = 4.0f;
+        private bool LedgeDetection()
+    {
+        bool ledgeDetected = Physics.SphereCast(currentCharacter.characterContainer.transform.position + Vector3.up * 4.5f , ledgeSphereCastRadius, cameraTransform.forward, out RaycastHit ledgeHit, ledgeDetectionLength, wallholdLayers);
+
+        if (!ledgeDetected) return false;
+
+        float distanceToLedge = Vector3.Distance(currentCharacter.characterContainer.transform.position, ledgeHit.transform.position);
+
+        return (distanceToLedge < maxLedgeGrabDistance);
+    }
         #endregion
 
         #region Ground Check
