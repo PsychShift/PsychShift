@@ -53,10 +53,10 @@ namespace Player
 
             if(isFalling)
             {
-                Debug.Log("hi?");
+                Debug.Log("From Jump - Is Falling == true");
                 float previousYVelocity = playerStateMachine.CurrentMovementY;
                 playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + (playerStateMachine.InitialJumpGravity * fallMultiplier * Time.deltaTime);
-                playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -20f);
+                playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -playerStateMachine.MaxFallSpeed);
             }
             else
             {

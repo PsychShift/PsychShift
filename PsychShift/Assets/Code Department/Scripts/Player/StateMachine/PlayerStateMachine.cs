@@ -69,11 +69,15 @@ namespace Player
         private float initialJumpGravity;
         public float InitialJumpVelocity { get { return initialJumpVelocity; } }
         public float InitialJumpGravity { get { return initialJumpGravity; } } 
+        [SerializeField] private float maxFallSpeed = 30f;
+        public float MaxFallSpeed { get { return maxFallSpeed; }}
         #endregion
         #region Manipulate Variables
+        [Header("Manipulation Variables")]
         [SerializeField] private LayerMask manipulateLayers;
         #endregion
         #region Swap Variables
+        [Header("Swapping Variables")]
         [SerializeField] public float swapDistance = 100f;
         public float SwapDistance { get { return swapDistance; } set { swapDistance = value; } }
         [SerializeField] private LayerMask swapableLayer;
@@ -145,7 +149,7 @@ namespace Player
             AT(wallState, fallState, NotOnWall());
             AT(wallState, wallJumpState, WallJump());
             // Leave Wall Jump State
-            AT(wallJumpState, fallState, Falling());
+            AT(wallJumpState, fallState, WallFall());
             AT(wallJumpState, groundState, Grounded());
             #endregion
 
@@ -193,7 +197,8 @@ namespace Player
             Func<bool> Grounded() => () => GroundedCheck();
             Func<bool> OnWall() => () => CheckForWall() && AboveGround() && inputManager.MoveAction.ReadValue<Vector2>().magnitude > 0;
             Func<bool> NotOnWall() => () => !WallStateVariables.Instance.CheckOnWall() || inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
-            Func<bool> WallJump() => () => inputManager.IsJumpPressed;
+            Func<bool> WallJump() => () => inputManager.IsJumpPressed && WallStateVariables.Instance.TimeOnWall > 0.4f;
+            Func<bool> WallFall() => () => AppliedMovementY < 0 && !GroundedCheck() && WallStateVariables.Instance.TimeOffWall > 0.2f;
 
             // Sub State Conditions
             Func<bool> Walked() => () => inputManager.MoveAction.triggered && !inputManager.RunAction.triggered;
@@ -220,19 +225,7 @@ namespace Player
         }
         void FixedUpdate()
         {
-            if(stateMachine._currentState is not WallState)
-            {
-                CurrentMovementY -= 0.05f;
-                AppliedMovementY -= 0.05f;
-                AppliedMovementY = Mathf.Max(AppliedMovementY, -20f);
-                if(stateMachine._currentState is GroundedState)
-                {
-                    CurrentMovementY = 0;
-                    AppliedMovementY = 0;
-                }
-            }
             currentCharacter.controller.Move(appliedMovement * Time.deltaTime);
-            //currentCharacter.rb.AddForce(appliedMovement * 2, ForceMode.Force);
         }
         #endregion
 
@@ -448,7 +441,7 @@ namespace Player
 
         Vector3 castDirection = Vector3.down;
         float castDistance = 0.0f;
-        Vector3 boxSize = new Vector3(0.5f, 0.5f, 0.5f);
+        Vector3 boxSize = new Vector3(0.4f, 0.1f, 0.4f);
         private bool GroundedCheck()
         {
             RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer);
@@ -460,7 +453,7 @@ namespace Player
 
         private bool AboveGround()
         {
-            RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, 0.1f, groundLayer);
+            RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, 0.2f, groundLayer);
             if(hits.Any(hit => hit.collider != null))
                 return false;
             

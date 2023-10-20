@@ -18,18 +18,24 @@ namespace Player
 
         public void OnEnter()
         {
+            WallStateVariables.Instance.TimeOnWall = 0f;
+            Debug.Log("Enter Wall");
             currentCharacter = playerStateMachine.currentCharacter;
             currentSubState = stateMachine._currentSubState;
+            playerStateMachine.CurrentMovementY = 0;
+            playerStateMachine.AppliedMovementY = 0;
             SetSubState();
         }
 
         public void OnExit()
         {
+            Debug.Log("Exit Wall");
             stateMachine._currentSubState = currentSubState;
         }
 
         public void Tick()
         {
+            WallStateVariables.Instance.TimeOnWall += Time.deltaTime;
             SubStateTick();
             //wallVariables.OrganizeHitsList();
             WallStateVariables.Instance.CheckWalls(currentCharacter.model.transform);
@@ -53,6 +59,9 @@ namespace Player
             }
         }
         public LayerMask wallLayer;
+
+        public float TimeOnWall { get; set; }
+        public float TimeOffWall { get; set; }
 
         public Dictionary<Vector3, RaycastHit> DirectionHits = new Dictionary<Vector3, RaycastHit>
         {
