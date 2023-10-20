@@ -163,9 +163,9 @@ namespace Player
             #endregion
             #region Wall Sub State Transitions
             AT(mantleState, wallRunState, WallRun());
-            AT(wallRunState, mantleState, ForwardWall());
             AT(wallRunState, wallHangState, Ledge());
             AT(wallHangState, vaultState, ClimbUpLedge());
+            AT(vaultState, wallRunState, WallRun());
             
             #endregion
 
@@ -187,6 +187,7 @@ namespace Player
 
             wallState.AddSubState(wallRunState);
             wallState.AddSubState(wallHangState);
+            wallState.AddSubState(vaultState);
             wallState.PrepareSubStates();
             wallState.SetDefaultSubState(wallHangState);
 
@@ -212,7 +213,7 @@ namespace Player
             //Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
             Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft && inputManager.MoveAction.ReadValue<Vector2>().magnitude != 0;
             Func<bool> Ledge() => () => WallStateVariables.Instance.LedgeDetection(currentCharacter, cameraTransform) && WallStateVariables.Instance.ForwardWall;
-            Func<bool> ClimbUpLedge() => () => inputManager.MoveAction.ReadValue<Vector2>().magnitude > 0;
+            Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && inputManager.IsJumpPressed;
 
             stateMachine.SetState(groundState);
         }
