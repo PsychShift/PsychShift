@@ -89,6 +89,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Switch"",
+                    ""type"": ""Button"",
+                    ""id"": ""17305420-608c-45ca-a12a-efb800f9ff14"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -287,6 +296,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""823e633e-1498-4785-94f4-3f01ee26a1f2"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Switch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4f508212-0b1e-4b12-a104-5dbe8bc58812"",
+                    ""path"": ""<XInputController>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Switch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -542,6 +573,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Controls_Slow = m_Controls.FindAction("Slow", throwIfNotFound: true);
         m_Controls_Shoot = m_Controls.FindAction("Shoot", throwIfNotFound: true);
         m_Controls_Run = m_Controls.FindAction("Run", throwIfNotFound: true);
+        m_Controls_Switch = m_Controls.FindAction("Switch", throwIfNotFound: true);
         // Slow
         m_Slow = asset.FindActionMap("Slow", throwIfNotFound: true);
         m_Slow_MindSwap = m_Slow.FindAction("MindSwap", throwIfNotFound: true);
@@ -618,6 +650,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Controls_Slow;
     private readonly InputAction m_Controls_Shoot;
     private readonly InputAction m_Controls_Run;
+    private readonly InputAction m_Controls_Switch;
     public struct ControlsActions
     {
         private @PlayerControls m_Wrapper;
@@ -629,6 +662,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Slow => m_Wrapper.m_Controls_Slow;
         public InputAction @Shoot => m_Wrapper.m_Controls_Shoot;
         public InputAction @Run => m_Wrapper.m_Controls_Run;
+        public InputAction @Switch => m_Wrapper.m_Controls_Switch;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -659,6 +693,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
+            @Switch.started += instance.OnSwitch;
+            @Switch.performed += instance.OnSwitch;
+            @Switch.canceled += instance.OnSwitch;
         }
 
         private void UnregisterCallbacks(IControlsActions instance)
@@ -684,6 +721,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
+            @Switch.started -= instance.OnSwitch;
+            @Switch.performed -= instance.OnSwitch;
+            @Switch.canceled -= instance.OnSwitch;
         }
 
         public void RemoveCallbacks(IControlsActions instance)
@@ -796,6 +836,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSlow(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnSwitch(InputAction.CallbackContext context);
     }
     public interface ISlowActions
     {
