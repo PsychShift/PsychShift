@@ -16,6 +16,7 @@ public class GunScriptableObject : ScriptableObject
     public Vector3 SpawnRotation;
     //Refs to all the configs
     public DamageConfigScriptableObject DamageConfig;
+    public AmmoConfigScriptableObject AmmoConfig;
     public ShootConfigurationScriptableObject ShootConfig;
     public TrailConfigScriptableObject TrailConfig;
     private MonoBehaviour ActiveMonoBehavior;
@@ -28,6 +29,8 @@ public class GunScriptableObject : ScriptableObject
     {
         this.ActiveMonoBehavior = ActionMonoBehavior;
         LastShootTime = 0; //not reset in editior, fine in build for some reason.
+        AmmoConfig.CurrentClipAmmo = AmmoConfig.ClipSize;
+        AmmoConfig.CurrentAmmo = AmmoConfig.MaxAmmo;
         TrailPool = new ObjectPool<TrailRenderer>(CreateTrail);
         if(!ShootConfig.IsHitscan)
         {
@@ -57,6 +60,8 @@ public class GunScriptableObject : ScriptableObject
                 );
 
             shootDirection.Normalize();
+            AmmoConfig.CurrentClipAmmo--; //TUTORIAL FOR RECOIL
+
             if(ShootConfig.IsHitscan)
             {
                 DoHitscanShoot(shootDirection);
@@ -67,6 +72,40 @@ public class GunScriptableObject : ScriptableObject
             }
 
         }
+    }
+
+    public bool CanReload()
+    {
+        return AmmoConfig.CanReload();
+    }
+    /*
+    public bool EndReload()
+    {
+        AmmoConfig.Reload();
+    }*/
+    
+    public void Tick(bool WantsToShoot)//TUTORIAL FOR RECOIL
+    {
+        /*Model.transform.localRotation = Quaternion.Lerp(
+            Model.transform.localRotation,
+            Quaternion.Euler(SpawnRotation),
+            Time.deltaTime * ShootConfig.RecoilRecoverSpeed
+        );*/
+
+        if(WantsToShoot)
+        {
+            //LastFrameWantedToShoot = true;
+            if(AmmoConfig.CurrentClipAmmo>0)
+            {
+                Shoot();
+            }
+        }
+
+        /*if(!WantsToShoot && LastFrameWantedToShoot)
+        {
+            StopShootingTime = Time.time;
+            LastFrameWantedToShoot = false;
+        }*/
     }
     private void DoHitscanShoot(Vector3 ShootDirection)
     {
