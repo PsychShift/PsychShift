@@ -25,7 +25,7 @@ namespace Player
             playerStateMachine.AppliedMovementY = 0;
             SetSubState();
         }
-
+        //Kevin added this call public funct from substate that swaps var that changes wallhang substate
         public void OnExit()
         {
             stateMachine._currentSubState = currentSubState;
@@ -33,6 +33,12 @@ namespace Player
 
         public void Tick()
         {
+            //Call public funct here when the button is pressed//Kevin Added this
+            /*if(InputManager.Instance.PlayerSwitchedModeThisFrame())
+            {
+                //Call funct here
+                WallHangState.canHangChange();
+            }*/
             WallStateVariables.Instance.TimeOnWall += Time.deltaTime;
             SubStateTick();
             //wallVariables.OrganizeHitsList();

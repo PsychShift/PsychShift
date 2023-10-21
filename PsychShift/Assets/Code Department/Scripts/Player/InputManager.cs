@@ -27,6 +27,7 @@ public class InputManager : MonoBehaviour
     public InputAction RunAction { get; private set; }
     public InputAction SlowAction { get; private set; }
     public InputAction ShootAction { get; private set; }
+    public InputAction SwitchAction {get; private set;}//Kevin Added this //Action to switch static and flow mode
     #endregion
 
     #region Slow Controls
@@ -69,6 +70,8 @@ public class InputManager : MonoBehaviour
         StandardJumpAction = PlayerInput.actions[StandardActionMap.name + "/Jump"];
         ShootAction = PlayerInput.actions[StandardActionMap.name + "/Shoot"];//Kevin added this shooting thing
         SlowAction = PlayerInput.actions[StandardActionMap.name + "/Slow"];
+        //swap input Kevin added this
+        SwitchAction = PlayerInput.actions[StandardActionMap.name + "/Switch"];
         #endregion
         
         
@@ -155,8 +158,14 @@ public class InputManager : MonoBehaviour
 
 
     //KEVIN ADDED THIS I SORRY IF BROKE
-    public bool PlayerShotThisFrame() {
+    public bool PlayerShotThisFrame() 
+    {
         return ShootAction.triggered;
+    }
+
+    public bool PlayerSwitchedModeThisFrame()//Press L shift or L bump to swap static/flow//Kevin Added this
+    {
+        return SwitchAction.triggered;
     }
 
 }

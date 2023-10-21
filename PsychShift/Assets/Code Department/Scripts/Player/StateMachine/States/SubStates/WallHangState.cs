@@ -17,6 +17,7 @@ namespace Player
         //public bool unlimited;
         
         //Holding
+        public bool canHang = false;//KEVIN ADDED THIS
         public float moveToLedgeSpeed;
         public float maxLedgeGrabDistance;
 
@@ -61,13 +62,23 @@ namespace Player
 
         public void Tick()
         {
+            if(InputManager.Instance.PlayerSwitchedModeThisFrame())
+            {
+                //Call funct here
+                canHangChange();
+            }
             FreezeOnLedge();            
         }
 
-    private void FreezeOnLedge()
+    private void FreezeOnLedge()//KEVIN CHANGED THIS TO NEED A BOOL
     {
-        playerStateMachine.AppliedMovementX = 0;
+        //ONLY ALLOW THIS IF PLAYER IS STATIC
+        if(canHang == true)//KEVIN ADDED THIS
+        {
+            playerStateMachine.AppliedMovementX = 0;
             playerStateMachine.AppliedMovementZ = 0;
+        }
+
         /* Vector3 directionToLedge = currentLedge.position - currentCharacter.characterContainer.transform.position;
         float distanceToLedge = (currentCharacter.characterContainer.transform.position - currentLedge.position).magnitude;
 
@@ -77,6 +88,18 @@ namespace Player
             playerStateMachine.AppliedMovementX = directionToLedge.normalized.x * WallStateVariables.Instance.WallSpeed;
             playerStateMachine.AppliedMovementZ = directionToLedge.normalized.z * WallStateVariables.Instance.WallSpeed;
         } */
+    }
+    //KEVIN ADDED THIS
+    public void canHangChange()
+    {
+        if(canHang == true)
+        {
+            canHang = false;
+        }
+        else if(canHang == false)
+        {
+            canHang = true;
+        }
     }
 }
 }
