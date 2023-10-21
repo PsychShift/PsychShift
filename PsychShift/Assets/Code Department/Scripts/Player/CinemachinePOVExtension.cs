@@ -16,6 +16,7 @@ public class CinemachinePOVExtension : CinemachineExtension
     protected override void Awake()
     {
 
+        inputManager = InputManager.Instance;
         if(startingRotation == null) startingRotation = transform.localRotation.eulerAngles;
         base.Awake();
     }
