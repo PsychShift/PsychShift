@@ -10,6 +10,8 @@ public class PlayerGunSelector : MonoBehaviour
    private Transform GunParent;
    [SerializeField]
    private List<GunScriptableObject> Guns;
+
+   public int currentBullets;
    /*[SerializeField]
    private PlayerIK InverseKinematics;*/ //No clue why this was in the tutorial. Maybe will b explained.
    [Space]
@@ -26,6 +28,7 @@ public class PlayerGunSelector : MonoBehaviour
         }
         ActiveGun = gun;
         gun.Spawn(GunParent, this);
+        //currentBullets = gun.AmmoConfig.CurrentClipAmmo;//Temp fix
 
         //Inverse kinematic stuff should go here but idk if we're doing all that
 
