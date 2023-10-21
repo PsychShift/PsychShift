@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.InputSystem;//Kevin added this
 
 public class CinemachinePOVExtension : CinemachineExtension
 {
@@ -12,8 +13,16 @@ public class CinemachinePOVExtension : CinemachineExtension
     private InputManager inputManager;
     private Vector3 startingRotation;
 
+    //Detect form of input
+    Gamepad gamepad;
+    Keyboard keyboard;
+    Mouse mouse;
+
     protected override void Awake()
     {
+        gamepad = Gamepad.current;
+        keyboard = Keyboard.current;
+        mouse = Mouse.current;
         inputManager = InputManager.Instance;
         if(startingRotation == null) startingRotation = transform.localRotation.eulerAngles;
         base.Awake();
@@ -25,6 +34,11 @@ public class CinemachinePOVExtension : CinemachineExtension
             if(stage == CinemachineCore.Stage.Aim)
             {
                 Vector2 deltaInput = inputManager.GetMouseDelta();
+                if(gamepad!=null)
+                {
+                    horizontalSpeed*= 9;
+                    verticalSpeed*= 9;
+                }
                 startingRotation.x += deltaInput.x * horizontalSpeed * Time.deltaTime;
                 startingRotation.y += deltaInput.y * verticalSpeed * Time.deltaTime;
                 startingRotation.y = Mathf.Clamp(startingRotation.y, -clampAngle, clampAngle);

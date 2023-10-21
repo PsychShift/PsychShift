@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 176710509250746110}
   - component: {fileID: 8605567475765216567}
   - component: {fileID: 1980412459526967793}
+  - component: {fileID: 7292734788665826776}
+  - component: {fileID: 7540109023965677844}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Swapable
@@ -99,6 +101,33 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 2.25, z: 0}
+--- !u!114 &7292734788665826776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115607342825376186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8442cfe316ad834c8e3055f1cf28159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: {fileID: 7540109023965677844}
+--- !u!114 &7540109023965677844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115607342825376186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4126de5ce1d8474448838d2cfa56c542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _MaxHealth: 100
+  _Health: 100
 --- !u!1 &8590118359984887176
 GameObject:
   m_ObjectHideFlags: 0
