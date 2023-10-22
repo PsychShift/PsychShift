@@ -23,7 +23,7 @@ public class PlayerAction : MonoBehaviour
     {
         currentBullets =GunSelector.currentBullets;
     }*/
-    private void FixedUpdate() 
+    private void FixedUpdate() //TURN SHOOTING INTO AN EVENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     {
         /*if(InputManager.Instance.PlayerShotThisFrame() && GunSelector.ActiveGun != null)
         {
