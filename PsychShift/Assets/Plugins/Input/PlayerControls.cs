@@ -98,6 +98,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shader"",
+                    ""type"": ""Button"",
+                    ""id"": ""91784607-7759-456b-9416-7d63027f6a4f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -320,6 +329,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Switch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""29487177-9e90-4d89-a59e-fabc0d23ca89"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shader"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""669e82b5-a61c-4b10-9fdd-941ce995151e"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shader"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -394,6 +425,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Switch"",
                     ""type"": ""Button"",
                     ""id"": ""698bf669-b900-4d19-960f-bb85e68cff58"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shader"",
+                    ""type"": ""Button"",
+                    ""id"": ""56d9d364-9b93-47ad-92a3-add9018878cd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -620,6 +660,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Switch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0b7000f6-aa0d-4f89-a25b-d1d1a085de94"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shader"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""038e4caf-53c6-44c9-9e2a-d7d40372af2b"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shader"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -636,6 +698,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Controls_Shoot = m_Controls.FindAction("Shoot", throwIfNotFound: true);
         m_Controls_Run = m_Controls.FindAction("Run", throwIfNotFound: true);
         m_Controls_Switch = m_Controls.FindAction("Switch", throwIfNotFound: true);
+        m_Controls_Shader = m_Controls.FindAction("Shader", throwIfNotFound: true);
         // Slow
         m_Slow = asset.FindActionMap("Slow", throwIfNotFound: true);
         m_Slow_MindSwap = m_Slow.FindAction("MindSwap", throwIfNotFound: true);
@@ -646,6 +709,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Slow_Jump = m_Slow.FindAction("Jump", throwIfNotFound: true);
         m_Slow_Shoot = m_Slow.FindAction("Shoot", throwIfNotFound: true);
         m_Slow_Switch = m_Slow.FindAction("Switch", throwIfNotFound: true);
+        m_Slow_Shader = m_Slow.FindAction("Shader", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -715,6 +779,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Controls_Shoot;
     private readonly InputAction m_Controls_Run;
     private readonly InputAction m_Controls_Switch;
+    private readonly InputAction m_Controls_Shader;
     public struct ControlsActions
     {
         private @PlayerControls m_Wrapper;
@@ -727,6 +792,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Controls_Shoot;
         public InputAction @Run => m_Wrapper.m_Controls_Run;
         public InputAction @Switch => m_Wrapper.m_Controls_Switch;
+        public InputAction @Shader => m_Wrapper.m_Controls_Shader;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -760,6 +826,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Switch.started += instance.OnSwitch;
             @Switch.performed += instance.OnSwitch;
             @Switch.canceled += instance.OnSwitch;
+            @Shader.started += instance.OnShader;
+            @Shader.performed += instance.OnShader;
+            @Shader.canceled += instance.OnShader;
         }
 
         private void UnregisterCallbacks(IControlsActions instance)
@@ -788,6 +857,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Switch.started -= instance.OnSwitch;
             @Switch.performed -= instance.OnSwitch;
             @Switch.canceled -= instance.OnSwitch;
+            @Shader.started -= instance.OnShader;
+            @Shader.performed -= instance.OnShader;
+            @Shader.canceled -= instance.OnShader;
         }
 
         public void RemoveCallbacks(IControlsActions instance)
@@ -817,6 +889,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Slow_Jump;
     private readonly InputAction m_Slow_Shoot;
     private readonly InputAction m_Slow_Switch;
+    private readonly InputAction m_Slow_Shader;
     public struct SlowActions
     {
         private @PlayerControls m_Wrapper;
@@ -829,6 +902,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Slow_Jump;
         public InputAction @Shoot => m_Wrapper.m_Slow_Shoot;
         public InputAction @Switch => m_Wrapper.m_Slow_Switch;
+        public InputAction @Shader => m_Wrapper.m_Slow_Shader;
         public InputActionMap Get() { return m_Wrapper.m_Slow; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -862,6 +936,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Switch.started += instance.OnSwitch;
             @Switch.performed += instance.OnSwitch;
             @Switch.canceled += instance.OnSwitch;
+            @Shader.started += instance.OnShader;
+            @Shader.performed += instance.OnShader;
+            @Shader.canceled += instance.OnShader;
         }
 
         private void UnregisterCallbacks(ISlowActions instance)
@@ -890,6 +967,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Switch.started -= instance.OnSwitch;
             @Switch.performed -= instance.OnSwitch;
             @Switch.canceled -= instance.OnSwitch;
+            @Shader.started -= instance.OnShader;
+            @Shader.performed -= instance.OnShader;
+            @Shader.canceled -= instance.OnShader;
         }
 
         public void RemoveCallbacks(ISlowActions instance)
@@ -917,6 +997,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnSwitch(InputAction.CallbackContext context);
+        void OnShader(InputAction.CallbackContext context);
     }
     public interface ISlowActions
     {
@@ -928,5 +1009,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnSwitch(InputAction.CallbackContext context);
+        void OnShader(InputAction.CallbackContext context);
     }
 }
