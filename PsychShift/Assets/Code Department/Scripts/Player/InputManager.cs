@@ -93,8 +93,10 @@ public class InputManager : MonoBehaviour
 
         SwapControlMap(ActionMapEnum.standard);
 
-        JumpAction.performed += OnJump;
-        JumpAction.canceled += OnJump;
+        StandardJumpAction.performed += OnJump;
+        StandardJumpAction.canceled += OnJump;
+        SlowJumpAction.performed += OnJump;
+        SlowJumpAction.canceled += OnJump;
         SlowAction.started += PressedSlow;
         UnSlowAction.started += ReleasedSlow;
         SwapSlowAction.started += PressedSwap;
@@ -104,8 +106,10 @@ public class InputManager : MonoBehaviour
         SlowShootAction.started += PressedShoot;
     }
     private void OnDisable() {
-        JumpAction.performed -= OnJump;
-        JumpAction.canceled -= OnJump;
+        StandardJumpAction.performed -= OnJump;
+        StandardJumpAction.canceled -= OnJump;
+        SlowJumpAction.performed -= OnJump;
+        SlowJumpAction.canceled -= OnJump;
         SlowAction.started -= PressedSlow;
         UnSlowAction.started -= ReleasedSlow;
         SwapSlowAction.started -= PressedSwap;
@@ -156,14 +160,12 @@ public class InputManager : MonoBehaviour
             PlayerInput.SwitchCurrentActionMap(StandardActionMap.name);
             MoveAction = StandardMoveAction;
             LookAction = StandardLookAction;
-            JumpAction = StandardJumpAction;
             SwitchAction = StandardSwitchAction;
             break;
         case ActionMapEnum.slow:
             PlayerInput.SwitchCurrentActionMap(SlowActionMap.name);
             MoveAction = SlowMoveAction;
             LookAction = SlowLookAction;
-            JumpAction = SlowJumpAction;
             SwitchAction = SlowSwitchAction;
             break;
         case ActionMapEnum.ui:

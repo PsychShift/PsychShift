@@ -24,6 +24,7 @@ namespace Player
 
         public void OnEnter()
         {
+            Debug.Log("jump");
             currentSubState = stateMachine._currentSubState;
 
             HandleJump();
