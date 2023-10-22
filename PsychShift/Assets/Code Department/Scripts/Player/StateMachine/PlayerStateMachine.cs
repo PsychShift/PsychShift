@@ -52,6 +52,7 @@ namespace Player
         [SerializeField] private LayerMask wallholdLayers;
         public LayerMask VaultLayers { get { return vaultLayers; } }
         public bool IsVaulting { get; set; }
+        public bool StaticMode { get; set; }
 
 
 
@@ -115,13 +116,15 @@ namespace Player
             inputManager.OnSlowActionStateChanged += SlowMotion;
             inputManager.OnSwapPressed += SwapPressed;
             inputManager.OnManipulatePressed += Manipulate;
+            inputManager.OnSwitchPressed += SwitchMode;
             #endregion
 
             // Create instances of root states
             var groundState = new GroundedState(this, stateMachine);
             var fallState = new FallState(this, stateMachine);
             var jumpState = new JumpState(this, stateMachine);
-            var wallState = new WallState(this, stateMachine);
+            var wallFlowState = new WallFlowState(this, stateMachine);
+            var wallStaticState = new WallStaticState(this, stateMachine);
             var wallJumpState = new WallJumpState(this, stateMachine);
 
             // Create instances of sub-states
@@ -144,14 +147,22 @@ namespace Player
             // Leave Jump State
             AT(jumpState, groundState, Grounded());
             AT(jumpState, fallState, Falling());
-            AT(jumpState, wallState, OnWall());
+            AT(jumpState, wallFlowState, OnWallFlow());
+            AT(jumpState, wallStaticState, OnWallStatic());
             // Leave Fall State
             AT(fallState, groundState, Grounded());    
-            AT(fallState, wallState, OnWall());  
-            // Leave Wall State
-            AT(wallState, groundState, Grounded());
-            AT(wallState, fallState, NotOnWall());
-            AT(wallState, wallJumpState, WallJump());
+            AT(fallState, wallFlowState, OnWallFlow());  
+            AT(fallState, wallStaticState, OnWallStatic());  
+            // Leave Wall Flow State
+            AT(wallFlowState, groundState, Grounded());
+            AT(wallFlowState, fallState, NotOnWallFlow());
+            AT(wallFlowState, wallJumpState, WallJump());
+            AT(wallFlowState, wallStaticState, OnWallStatic());
+            // Leave Wall Static State
+            AT(wallStaticState, groundState, Grounded());
+            AT(wallStaticState, fallState, NotOnWallStatic());
+            AT(wallStaticState, wallJumpState, WallJump());
+            AT(wallStaticState, wallFlowState, OnWallFlow());
             // Leave Wall Jump State
             AT(wallJumpState, fallState, WallFall());
             AT(wallJumpState, groundState, Grounded());
@@ -162,8 +173,9 @@ namespace Player
             AT(walkState, idleState, Stopped());
             #endregion
             #region Wall Sub State Transitions
-            AT(mantleState, wallRunState, WallRun());
-            AT(wallRunState, wallHangState, Ledge());
+            AT(wallRunState, idleState, Stopped());
+            AT(idleState, wallRunState, WallRun());
+
             AT(wallHangState, vaultState, ClimbUpLedge());
             AT(vaultState, wallRunState, WallRun());
             
@@ -185,11 +197,16 @@ namespace Player
             fallState.PrepareSubStates();
             fallState.SetDefaultSubState(idleState);
 
-            wallState.AddSubState(wallRunState);
-            wallState.AddSubState(wallHangState);
-            wallState.AddSubState(vaultState);
-            wallState.PrepareSubStates();
-            wallState.SetDefaultSubState(wallHangState);
+            wallFlowState.AddSubState(wallRunState);
+            wallFlowState.AddSubState(idleState);
+            wallFlowState.PrepareSubStates();
+            wallFlowState.SetDefaultSubState(wallRunState);
+
+            wallStaticState.AddSubState(wallHangState);
+            wallStaticState.AddSubState(vaultState);
+            //wallStaticState.AddSubState(idleState);
+            wallStaticState.PrepareSubStates();
+            wallStaticState.SetDefaultSubState(wallHangState);
 
             wallJumpState.AddSubState(idleState);
             wallJumpState.AddSubState(walkState);
@@ -201,25 +218,23 @@ namespace Player
             Func<bool> Jumped() => () => inputManager.IsJumpPressed && GroundedCheck();
             Func<bool> Falling() => () => AppliedMovementY < 0 && !GroundedCheck();
             Func<bool> Grounded() => () => GroundedCheck();
-            Func<bool> OnWall() => () => CheckForWall() && AboveGround() && inputManager.MoveAction.ReadValue<Vector2>().magnitude > 0;
-            Func<bool> NotOnWall() => () => !WallStateVariables.Instance.CheckOnWall() || StoppedAndNotHanging();
+            Func<bool> OnWallStatic() => () => CheckForWall() && AboveGround() && StaticMode;
+            Func<bool> OnWallFlow() => () => CheckForWall() && AboveGround() && inputManager.GetPlayerMovement().magnitude > 0 && !StaticMode;
+            Func<bool> NotOnWallFlow() => () => !WallStateVariables.Instance.CheckOnWall() || inputManager.GetPlayerMovement().magnitude == 0 || StaticMode;
+            Func<bool> NotOnWallStatic() => () => !WallStateVariables.Instance.CheckOnWall() || !StaticMode;
             Func<bool> WallJump() => () => inputManager.IsJumpPressed && WallStateVariables.Instance.TimeOnWall > 0.4f;
             Func<bool> WallFall() => () => AppliedMovementY < 0 && !GroundedCheck() && WallStateVariables.Instance.TimeOffWall > 0.2f;
 
             // Sub State Conditions
             Func<bool> Walked() => () => inputManager.MoveAction.triggered && !inputManager.RunAction.triggered;
-            Func<bool> Stopped() => () => inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
+            Func<bool> Stopped() => () => inputManager.GetPlayerMovement().magnitude == 0;
 
-            //Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
-            Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft && inputManager.MoveAction.ReadValue<Vector2>().magnitude != 0;
-            Func<bool> Ledge() => () => WallStateVariables.Instance.LedgeDetection(currentCharacter, cameraTransform) && WallStateVariables.Instance.ForwardWall;
-            Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && inputManager.IsJumpPressed;
+            //Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && inputManager.GetPlayerMovement().magnitude == 0;
+            Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft;
+            Func<bool> Ledge() => () => WallStateVariables.Instance.LedgeDetection(currentCharacter, cameraTransform) && WallStateVariables.Instance.ForwardWall && StaticMode;
+            Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && inputManager.IsJumpPressed && StaticMode;
 
             stateMachine.SetState(groundState);
-        }
-        private bool StoppedAndNotHanging()
-        {
-            return stateMachine._currentSubState is not WallHangState && inputManager.MoveAction.ReadValue<Vector2>().magnitude == 0;
         }
         void OnDisable()
         {
@@ -458,6 +473,12 @@ namespace Player
             return true;
         }
         #endregion
+
+        private void SwitchMode(bool staticMode)
+        {
+            StaticMode = staticMode;
+            Debug.Log("Static Mode == " + StaticMode);
+        }
 
         private void OnDrawGizmos()
         {

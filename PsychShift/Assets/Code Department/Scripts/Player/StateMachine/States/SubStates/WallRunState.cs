@@ -41,6 +41,7 @@ namespace Player
 
         public void OnEnter()
         {
+            Debug.Log("Enter Wall Run State");
             currentCharacter = playerStateMachine.currentCharacter;
             monoBehaviour.StartCoroutine(SetNormal());
             this.WallSpeed = playerStateMachine.WallSpeed;
@@ -48,6 +49,7 @@ namespace Player
 
         public void OnExit()
         {
+            Debug.Log("Exit Wall Run State");
             WallStateVariables.Instance.LastWallNormal = wallNormal;
             wallNormal = Vector3.zero; 
             wallForward = Vector3.zero;

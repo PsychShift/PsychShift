@@ -44,6 +44,7 @@ public class InputManager : MonoBehaviour
     public event Action OnSwapPressed;
     public event Action OnManipulatePressed;
     public event Action<bool> OnSlowActionStateChanged;
+    public event Action<bool> OnSwitchPressed;
 
     private void Awake() {
         PlayerInput = GetComponent<PlayerInput>();
@@ -94,6 +95,8 @@ public class InputManager : MonoBehaviour
         UnSlowAction.started += ReleasedSlow;
         SwapSlowAction.started += PressedSwap;
         ManipulateAction.started += PressedManipulate;
+
+        SwitchAction.started += OnSwitch;
     }
     private void OnDisable() {
         JumpAction.performed -= OnJump;
@@ -129,6 +132,12 @@ public class InputManager : MonoBehaviour
     private void PressedManipulate(InputAction.CallbackContext context)
     {
         OnManipulatePressed?.Invoke();
+    }
+    private bool _switch = false;
+    private void OnSwitch(InputAction.CallbackContext context)
+    {
+        _switch = !_switch;
+        OnSwitchPressed?.Invoke(_switch);
     }
 
     public void SwapControlMap(ActionMapEnum currentMap)

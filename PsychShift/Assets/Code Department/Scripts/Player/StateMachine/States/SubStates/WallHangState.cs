@@ -57,49 +57,29 @@ namespace Player
 
         public void OnExit()
         {
-            
+            Debug.Log("Exited Wall Hang State");
         }
 
         public void Tick()
         {
-            if(InputManager.Instance.PlayerSwitchedModeThisFrame())
-            {
-                //Call funct here
-                canHangChange();
-            }
             FreezeOnLedge();            
         }
 
-    private void FreezeOnLedge()//KEVIN CHANGED THIS TO NEED A BOOL
-    {
-        //ONLY ALLOW THIS IF PLAYER IS STATIC
-        if(canHang == true)//KEVIN ADDED THIS
+        private void FreezeOnLedge()
         {
-            playerStateMachine.AppliedMovementX = 0;
-            playerStateMachine.AppliedMovementZ = 0;
-        }
 
-        /* Vector3 directionToLedge = currentLedge.position - currentCharacter.characterContainer.transform.position;
-        float distanceToLedge = (currentCharacter.characterContainer.transform.position - currentLedge.position).magnitude;
+                playerStateMachine.AppliedMovementX = 0;
+                playerStateMachine.AppliedMovementZ = 0;
 
-        // Move player towards ledge
-        if(distanceToLedge > 1f)
-        {
-            playerStateMachine.AppliedMovementX = directionToLedge.normalized.x * WallStateVariables.Instance.WallSpeed;
-            playerStateMachine.AppliedMovementZ = directionToLedge.normalized.z * WallStateVariables.Instance.WallSpeed;
-        } */
-    }
-    //KEVIN ADDED THIS
-    public void canHangChange()
-    {
-        if(canHang == true)
-        {
-            canHang = false;
-        }
-        else if(canHang == false)
-        {
-            canHang = true;
+            /* Vector3 directionToLedge = currentLedge.position - currentCharacter.characterContainer.transform.position;
+            float distanceToLedge = (currentCharacter.characterContainer.transform.position - currentLedge.position).magnitude;
+
+            // Move player towards ledge
+            if(distanceToLedge > 1f)
+            {
+                playerStateMachine.AppliedMovementX = directionToLedge.normalized.x * WallStateVariables.Instance.WallSpeed;
+                playerStateMachine.AppliedMovementZ = directionToLedge.normalized.z * WallStateVariables.Instance.WallSpeed;
+            } */
         }
     }
-}
 }
