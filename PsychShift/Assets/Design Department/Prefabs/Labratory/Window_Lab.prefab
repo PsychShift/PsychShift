@@ -327,6 +327,8 @@ GameObject:
   - component: {fileID: 3872755443554843929}
   - component: {fileID: 7975405747565874349}
   - component: {fileID: 8755010038255151642}
+  - component: {fileID: 2484284498336480334}
+  - component: {fileID: 994952003508784304}
   m_Layer: 0
   m_Name: Window_Lab
   m_TagString: Destructable
@@ -427,8 +429,35 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.11722, y: 8.463503, z: 1.783711}
+  m_Center: {x: -0.124291584, y: 0.30803785, z: -0.39185527}
+--- !u!114 &2484284498336480334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4746735784888219954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8442cfe316ad834c8e3055f1cf28159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: {fileID: 994952003508784304}
+--- !u!114 &994952003508784304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4746735784888219954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4126de5ce1d8474448838d2cfa56c542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _MaxHealth: 1
+  _Health: 1
 --- !u!1 &4839154595160072405
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,7 +694,7 @@ Transform:
   m_GameObject: {fileID: 7525471496548683932}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.012, y: -1.74, z: -0.35}
-  m_LocalScale: {x: 0.40240416, y: 1.3174092, z: 0.098439}
+  m_LocalScale: {x: 0.40240416, y: 1.3174092, z: 0.14149621}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 540127681230971351}
@@ -686,7 +715,7 @@ ReflectionProbe:
   m_TimeSlicingMode: 2
   m_Resolution: 2048
   m_UpdateFrequency: 0
-  m_BoxSize: {x: 7.5, y: 6.68, z: 3.21}
+  m_BoxSize: {x: 7.5, y: 7.5, z: 7.5}
   m_BoxOffset: {x: 0, y: 1.59, z: 0}
   m_NearClip: 0.01
   m_FarClip: 5714
