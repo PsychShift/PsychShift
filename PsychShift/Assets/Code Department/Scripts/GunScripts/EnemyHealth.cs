@@ -23,7 +23,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private void OnEnable()
     {
         CurrenHealth = MaxHealth;
-        if(gameObject.tag == "Destructable")
+        if(gameObject.tag == "Destructable")//Seperate script eventually 
         {
             implodeThing = gameObject.GetComponentInChildren<TestBreakObjectCode>();
             isObject = true;

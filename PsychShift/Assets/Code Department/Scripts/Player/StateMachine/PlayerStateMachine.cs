@@ -297,7 +297,13 @@ namespace Player
         {
             if(newCharacter == null) return;
             SlowMotion(false);
-            if(currentCharacter != null) currentCharacter.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
+            if(currentCharacter != null)
+            {
+                currentCharacter.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
+                currentCharacter.characterContainer.tag = "Swappable";
+                currentCharacter.characterContainer.layer = LayerMask.NameToLayer("Character");
+                
+            } 
 
             currentCharacter = new CharacterInfo
             {
@@ -305,9 +311,14 @@ namespace Player
                 cameraRoot = newCharacter.transform.GetChild(0),
                 model = newCharacter.transform.GetChild(1).gameObject,
                 wallCheck = newCharacter.transform.GetChild(2),
-                controller = newCharacter.GetComponent<CharacterController>()
+                controller = newCharacter.GetComponent<CharacterController>(),
+                
+
+                
             };
             currentCharacter.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
+            currentCharacter.characterContainer.layer = LayerMask.NameToLayer("Player");
+            currentCharacter.characterContainer.tag = "Player";
 
             /* 
             FIND A WAY TO MAKE THE CAMERA LOOK IN THE DIRECTINO THE NEW BODY IS LOOKING
