@@ -9,9 +9,9 @@ public class ShaderOnOff : MonoBehaviour
     public Camera postProcessingCamera; // Assign the camera with post-processing here
     public Camera noPostCam;
     private void Update() {
-        if(Input.GetMouseButtonDown(0)|| Input.GetButtonDown("Fire1"))
+        if(Input.GetMouseButtonDown(0)|| Input.GetButtonDown("OnShader"))
             TurnOff();
-        else if(Input.GetMouseButtonDown(1)|| Input.GetButtonDown("Fire2"))
+        else if(Input.GetMouseButtonDown(1)|| Input.GetButtonDown("OffShader"))
             TurnOn();
             
     }
