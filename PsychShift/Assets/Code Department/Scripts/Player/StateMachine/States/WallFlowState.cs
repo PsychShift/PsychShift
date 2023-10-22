@@ -31,7 +31,6 @@ namespace Player
 
         public void Tick()
         {
-            Debug.Log(currentSubState);
             WallStateVariables.Instance.TimeOnWall += Time.deltaTime;
             SubStateTick();
             //wallVariables.OrganizeHitsList();

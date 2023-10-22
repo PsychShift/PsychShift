@@ -7,8 +7,7 @@ namespace Player
     /// </summary>
     public class JumpState : RootState, IState
     {
-        private CharacterInfo currentCharacter;
-        private float timer;
+
         public JumpState(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
         {
             this.playerStateMachine = playerStateMachine;
@@ -18,14 +17,13 @@ namespace Player
         public void Tick()
         {
             // Call the Tick method of the current sub-state
+            //Debug.Log(currentSubState);
             SubStateTick();
             HandleGravity();
         }
 
         public void OnEnter()
         {
-            timer = 0;
-            currentCharacter = playerStateMachine.currentCharacter;
             currentSubState = stateMachine._currentSubState;
 
             HandleJump();

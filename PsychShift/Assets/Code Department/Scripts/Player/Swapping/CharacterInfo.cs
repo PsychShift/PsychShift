@@ -6,6 +6,7 @@ namespace Player
     {
         public GameObject characterContainer;
         public GameObject model;
+        public Transform wallCheck;
         public Transform cameraRoot;
 
         public CharacterController controller;
@@ -15,6 +16,7 @@ namespace Player
             return $"CharacterInfo:\n" +
                 $"CharacterContainer: {characterContainer}\n" +
                 $"Model: {model.transform.position}\n" +
+                $"Wall Check: {wallCheck.position}\n" +
                 $"CameraRoot: {cameraRoot.position}\n" +
                 $"Controller: {controller}";
         }

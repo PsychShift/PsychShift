@@ -28,7 +28,6 @@ namespace Player
 
         public void OnEnter()
         {
-            Debug.Log("Hello from Idle");
             currentCharacter = playerStateMachine.currentCharacter;
         }
 

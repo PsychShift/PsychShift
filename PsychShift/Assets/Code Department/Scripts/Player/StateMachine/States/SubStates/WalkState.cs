@@ -18,7 +18,6 @@ namespace Player
 
         public void OnEnter()
         {
-            //Debug.Log("Hello from Walk");
             currentCharacter = playerStateMachine.currentCharacter;
         }
 
@@ -32,12 +31,12 @@ namespace Player
             Vector2 input = InputManager.Instance.GetPlayerMovement();
             playerStateMachine.currentInputVector = Vector2.SmoothDamp(playerStateMachine.currentInputVector, input, ref playerStateMachine.smoothInputVelocity, playerStateMachine.smoothInputSpeed);
             Vector3 movement = new Vector3(playerStateMachine.currentInputVector.x, 0f, playerStateMachine.currentInputVector.y);
-            movement = currentCharacter.model.transform.forward * movement.z + currentCharacter.model.transform.right * movement.x;
+            movement = playerStateMachine.currentCharacter.characterContainer.transform.forward * movement.z + playerStateMachine.currentCharacter.characterContainer.transform.right * movement.x;
             playerStateMachine.AppliedMovementX = movement.x * playerStateMachine.WalkSpeed;
             playerStateMachine.AppliedMovementZ = movement.z * playerStateMachine.WalkSpeed;
         }
         /* 
-        Trying to smooth out and add acceleration * I can't spell * - Max Jones
+        Trying to smooth out movement
         private void Move()
         {
             Vector2 input = InputManager.Instance.GetPlayerMovement();
@@ -50,7 +49,7 @@ namespace Player
             playerStateMachine.CurrentMovementZ += movement.z * playerStateMachine.WalkSpeed * Time.deltaTime;
 
 
-            movement = currentCharacter.model.transform.forward * movement.z + currentCharacter.model.transform.right * movement.x;
+            movement = playerStateMachine.currentCharacter.model.transform.forward * movement.z + playerStateMachine.currentCharacter.model.transform.right * movement.x;
             playerStateMachine.AppliedMovementX = Mathf.Min((previousVelocityX + playerStateMachine.CurrentMovementX) * 0.5f, 40f);
             playerStateMachine.AppliedMovementZ = Mathf.Min((previousVelocityZ + playerStateMachine.CurrentMovementZ) * 0.5f, 40f);
         } */
@@ -59,10 +58,10 @@ namespace Player
         {
             Vector3 forward;
             Vector3 right;
-            if (currentCharacter.controller.isGrounded)
+            if (playerStateMachine.currentCharacter.controller.isGrounded)
             {
-                forward = currentCharacter.model.transform.forward;
-                right = currentCharacter.model.transform.right;
+                forward = playerStateMachine.currentCharacter.model.transform.forward;
+                right = playerStateMachine.currentCharacter.model.transform.right;
             }
             else
             {

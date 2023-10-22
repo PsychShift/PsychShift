@@ -15,7 +15,6 @@ namespace Player
         //[SerializeField] private float vertLookSpeed = 300, horzLookSpeed = 300, slowVertLookSpeed = 150, slowHorzLookSpeed = 150;
         public CinemachineVirtualCamera virtualCamera;
         private StateMachine.StateMachine stateMachine;
-        private InputManager inputManager;
         public Transform cameraTransform;
         #endregion
 
@@ -109,14 +108,14 @@ namespace Player
             virtualCamera.Follow = currentCharacter.cameraRoot;
 
 
-            inputManager = GetComponent<InputManager>();
+            
             stateMachine = new StateMachine.StateMachine();
 
             #region Function Events
-            inputManager.OnSlowActionStateChanged += SlowMotion;
-            inputManager.OnSwapPressed += SwapPressed;
-            inputManager.OnManipulatePressed += Manipulate;
-            inputManager.OnSwitchPressed += SwitchMode;
+            InputManager.Instance.OnSlowActionStateChanged += SlowMotion;
+            InputManager.Instance.OnSwapPressed += SwapPressed;
+            InputManager.Instance.OnManipulatePressed += Manipulate;
+            InputManager.Instance.OnSwitchPressed += SwitchMode;
             #endregion
 
             // Create instances of root states
@@ -215,31 +214,31 @@ namespace Player
             #endregion
 
             // Root State Conditions
-            Func<bool> Jumped() => () => inputManager.IsJumpPressed && GroundedCheck();
+            Func<bool> Jumped() => () => InputManager.Instance.IsJumpPressed && GroundedCheck();
             Func<bool> Falling() => () => AppliedMovementY < 0 && !GroundedCheck();
             Func<bool> Grounded() => () => GroundedCheck();
             Func<bool> OnWallStatic() => () => CheckForWall() && AboveGround() && StaticMode;
-            Func<bool> OnWallFlow() => () => CheckForWall() && AboveGround() && inputManager.GetPlayerMovement().magnitude > 0 && !StaticMode;
-            Func<bool> NotOnWallFlow() => () => !WallStateVariables.Instance.CheckOnWall() || inputManager.GetPlayerMovement().magnitude == 0 || StaticMode;
+            Func<bool> OnWallFlow() => () => CheckForWall() && AboveGround() && InputManager.Instance.GetPlayerMovement().magnitude > 0 && !StaticMode;
+            Func<bool> NotOnWallFlow() => () => !WallStateVariables.Instance.CheckOnWall() || InputManager.Instance.GetPlayerMovement().magnitude == 0 || StaticMode;
             Func<bool> NotOnWallStatic() => () => !WallStateVariables.Instance.CheckOnWall() || !StaticMode;
-            Func<bool> WallJump() => () => inputManager.IsJumpPressed && WallStateVariables.Instance.TimeOnWall > 0.4f;
+            Func<bool> WallJump() => () => InputManager.Instance.IsJumpPressed && WallStateVariables.Instance.TimeOnWall > 0.4f;
             Func<bool> WallFall() => () => AppliedMovementY < 0 && !GroundedCheck() && WallStateVariables.Instance.TimeOffWall > 0.2f;
 
             // Sub State Conditions
-            Func<bool> Walked() => () => inputManager.MoveAction.triggered && !inputManager.RunAction.triggered;
-            Func<bool> Stopped() => () => inputManager.GetPlayerMovement().magnitude == 0;
+            Func<bool> Walked() => () => InputManager.Instance.GetPlayerMovement().magnitude != 0;
+            Func<bool> Stopped() => () => InputManager.Instance.GetPlayerMovement().magnitude == 0;
 
-            //Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && inputManager.GetPlayerMovement().magnitude == 0;
+            //Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.GetPlayerMovement().magnitude == 0;
             Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft;
             Func<bool> Ledge() => () => WallStateVariables.Instance.LedgeDetection(currentCharacter, cameraTransform) && WallStateVariables.Instance.ForwardWall && StaticMode;
-            Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && inputManager.IsJumpPressed && StaticMode;
+            Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.IsJumpPressed && StaticMode;
 
             stateMachine.SetState(groundState);
         }
         void OnDisable()
         {
-            inputManager.OnSlowActionStateChanged -= SlowMotion;
-            inputManager.OnSwapPressed -= SwapPressed;
+            InputManager.Instance.OnSlowActionStateChanged -= SlowMotion;
+            InputManager.Instance.OnSwapPressed -= SwapPressed;
         }
         void Update()
         {
@@ -305,9 +304,11 @@ namespace Player
                 characterContainer = newCharacter,
                 cameraRoot = newCharacter.transform.GetChild(0),
                 model = newCharacter.transform.GetChild(1).gameObject,
+                wallCheck = newCharacter.transform.GetChild(2),
                 controller = newCharacter.GetComponent<CharacterController>()
             };
             currentCharacter.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
+
             /* 
             FIND A WAY TO MAKE THE CAMERA LOOK IN THE DIRECTINO THE NEW BODY IS LOOKING
             
@@ -400,7 +401,7 @@ namespace Player
             currentRotation.x = Mathf.Clamp(currentRotation.x, -90f, 90f);
 
             cameraTransform.localRotation = Quaternion.Euler(currentRotation);
-            currentCharacter.model.transform.rotation = Quaternion.Euler(0f, currentRotation.y, 0f);
+            currentCharacter.characterContainer.transform.rotation = Quaternion.Euler(0f, currentRotation.y, 0f);
 
         }
         private bool CheckForVaultableObject()
@@ -442,8 +443,8 @@ namespace Player
             foreach(Vector3 dir in wallCheckDirections)
             {
                 Vector3 relativeDir = currentCharacter.model.transform.TransformDirection(dir);
-                Debug.DrawRay(currentCharacter.model.transform.position + Vector3.up, relativeDir, Color.blue, 0);
-                if (Physics.Raycast(currentCharacter.model.transform.position + Vector3.up, relativeDir, 2.5f, wallLayer))
+                Debug.DrawRay(currentCharacter.wallCheck.position, relativeDir, Color.blue, 0);
+                if (Physics.Raycast(currentCharacter.wallCheck.position, relativeDir, 2.5f, wallLayer))
                     return true;
             }
             return false;

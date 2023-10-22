@@ -12,8 +12,8 @@ namespace Player
         protected List<IState> subStates = new();
         protected IState defaultSubState;
         protected Dictionary<Type, List<Transition>> subTransitions = new(); // Transitions for sub states
-        protected List<Transition> currentSubTransitions = new();
-        private static readonly List<Transition> EmptyTransitions = new List<Transition>(capacity: 0);
+        protected List<Transition> currentSubTransitions = new(); // Transitions for the current sub state
+        private static readonly List<Transition> EmptyTransitions = new(capacity: 0);
 
         protected IState currentSubState;
         public void AddSubState(IState state)
@@ -32,16 +32,14 @@ namespace Player
         }
         private void SetSubStateTransitions(IState state, List<Transition> transitions)
         {
-            List<Transition> transitionsToRemove = new();
+            Debug.Log($"Root state {this}'s sub state {state}, has {transitions.Count} transitions before SetSubstateTransitions");
+            List<Transition> transitionsToAdd = new();
             foreach (var transition in transitions)
-                if(!subStates.Contains(transition.To))
-                    transitionsToRemove.Add(transition);
-            if(transitionsToRemove.Count > 0)
-            {
-                foreach(var transition in transitionsToRemove)
-                    transitions.Remove(transition);
-            }
-            subTransitions.Add(state.GetType(), transitions);
+                if(subStates.Contains(transition.To))
+                    transitionsToAdd.Add(transition);
+
+            Debug.Log($"Root state {this}'s sub state {state}, has {transitionsToAdd.Count} transitions after SetSubstateTransitions");
+            subTransitions.Add(state.GetType(), transitionsToAdd);
         }
         
         /// <summary>
@@ -59,24 +57,25 @@ namespace Player
         private Transition GetSubTransition()
         {
             foreach(var transition in currentSubTransitions)
+            {
                 if(transition.Condition())
                     return transition;
+            }
             
             return null;
         }
 
         protected void SetSubState(IState state)
         {
-            if (state == currentSubState) // If the new state is the same as the last return
+            //Debug.Log($"Set Sub State ({state})");
+            if (state == currentSubState || !subTransitions.ContainsKey(state.GetType())) // If the new state is the same as the last return
                 return;
 
             currentSubState?.OnExit(); // If we have a previous state, use the state's OnExit function
             currentSubState = state; // Set the new state
 
-            subTransitions.TryGetValue(currentSubState.GetType(), out currentSubTransitions); // Find the list of transitions from the dictionary of a certain type and place the transitions into currentSubTransitions
-            if (currentSubState == null) // If there wasn't a transition
-                currentSubTransitions = EmptyTransitions; // The currentSubTransitions list is empty to prevent allocation of extra memory
-
+            currentSubTransitions = subTransitions[currentSubState.GetType()]; // Find the list of transitions from the dictionary of a certain type and place the transitions into currentSubTransitions
+            //Debug.Log($"Current Sub Transitions Length: {currentSubTransitions.Count}");
             currentSubState.OnEnter(); // Call the OnEnter function for the new state
         }
         protected void SetSubState()

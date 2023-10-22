@@ -13,9 +13,7 @@ namespace Player
         
         public void Tick()
         {
-            // Call the Tick method of the current sub-state
-            //playerStateMachine.AppliedMovementX = 0;
-            //playerStateMachine.AppliedMovementZ = 0;
+//            Debug.Log(InputManager.Instance.GetPlayerMovement());
             SubStateTick();
             HandleGravity();
         }
@@ -25,6 +23,7 @@ namespace Player
             currentCharacter = playerStateMachine.currentCharacter;
             currentSubState = stateMachine._currentSubState;
             SetSubState();
+            //foreach(IState state in subStates) Debug.Log(state);
         }
 
         public void OnExit()

@@ -18,16 +18,16 @@ public class InputManager : MonoBehaviour
     public InputAction MoveAction { get; set; }
     public InputAction LookAction { get; private set; }
     public InputAction JumpAction { get; private set; }
-
+    public InputAction ShootAction { get; private set; }
+    public InputAction SwitchAction { get; private set; }
     #region Normal Controls
     public InputActionMap StandardActionMap { get; private set; }
     public InputAction StandardMoveAction { get; private set; }
     public InputAction StandardLookAction { get; private set; }
     public InputAction StandardJumpAction { get; private set; }
-    public InputAction RunAction { get; private set; }
     public InputAction SlowAction { get; private set; }
-    public InputAction ShootAction { get; private set; }
-    public InputAction SwitchAction {get; private set;}//Kevin Added this //Action to switch static and flow mode
+    public InputAction StandardShootAction { get; private set; }
+    public InputAction StandardSwitchAction {get; private set;}//Kevin Added this //Action to switch static and flow mode
     #endregion
 
     #region Slow Controls
@@ -37,7 +37,9 @@ public class InputManager : MonoBehaviour
     public InputAction SlowJumpAction { get; private set; }
     public InputAction SwapSlowAction { get; private set; }
     public InputAction UnSlowAction { get; private set; }
+    public InputAction SlowShootAction { get; private set; }
     public InputAction ManipulateAction { get; private set; }
+    public InputAction SlowSwitchAction {get; private set;}//Kevin Added this //Action to switch static and flow mode
     #endregion
 
     public bool IsJumpPressed { get; private set; }
@@ -67,12 +69,11 @@ public class InputManager : MonoBehaviour
         #region Standard Controls
         StandardMoveAction = PlayerInput.actions[StandardActionMap.name + "/Move"];
         StandardLookAction = PlayerInput.actions[StandardActionMap.name + "/Look"];
-        RunAction = PlayerInput.actions[StandardActionMap.name + "/Run"];
         StandardJumpAction = PlayerInput.actions[StandardActionMap.name + "/Jump"];
-        ShootAction = PlayerInput.actions[StandardActionMap.name + "/Shoot"];//Kevin added this shooting thing
+        StandardShootAction = PlayerInput.actions[StandardActionMap.name + "/Shoot"];//Kevin added this shooting thing
         SlowAction = PlayerInput.actions[StandardActionMap.name + "/Slow"];
         //swap input Kevin added this
-        SwitchAction = PlayerInput.actions[StandardActionMap.name + "/Switch"];
+        StandardSwitchAction = PlayerInput.actions[StandardActionMap.name + "/Switch"];
         #endregion
         
         
@@ -80,9 +81,11 @@ public class InputManager : MonoBehaviour
         SlowMoveAction = PlayerInput.actions[SlowActionMap.name + "/Move"];
         SlowLookAction = PlayerInput.actions[SlowActionMap.name + "/Look"];
         SlowJumpAction = PlayerInput.actions[SlowActionMap.name + "/Jump"];
+        SlowShootAction = PlayerInput.actions[StandardActionMap.name + "/Shoot"];
         SwapSlowAction = PlayerInput.actions[SlowActionMap.name + "/MindSwap"];
         ManipulateAction = PlayerInput.actions[SlowActionMap.name + "/Manipulate"];
         UnSlowAction = PlayerInput.actions[SlowActionMap.name + "/Unslow"];
+        SlowSwitchAction = PlayerInput.actions[SlowActionMap.name + "/Switch"];
         #endregion
 
 
@@ -149,12 +152,16 @@ public class InputManager : MonoBehaviour
             MoveAction = StandardMoveAction;
             LookAction = StandardLookAction;
             JumpAction = StandardJumpAction;
+            ShootAction = StandardShootAction;
+            SwitchAction = StandardSwitchAction;
             break;
         case ActionMapEnum.slow:
             PlayerInput.SwitchCurrentActionMap(SlowActionMap.name);
             MoveAction = SlowMoveAction;
             LookAction = SlowLookAction;
             JumpAction = SlowJumpAction;
+            ShootAction = SlowShootAction;
+            SwitchAction = SlowSwitchAction;
             break;
         case ActionMapEnum.ui:
             // Handle switching to the UI action map if needed.
