@@ -32,6 +32,14 @@ public class MainMenuScript : MonoBehaviour
     {
         //Here is where the game will continue from where the player last left off
     }
+    public void LoadArtScene()
+    {
+        SceneManager.LoadScene("Art Prototype");
+    }
+    public void GameplayScene()
+    {
+        SceneManager.LoadScene("GameplayTest");
+    }
 
     public void OpenLoad()
     {
