@@ -302,7 +302,7 @@ namespace Player
                 currentCharacter.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
                 currentCharacter.characterContainer.tag = "Swappable";
                 currentCharacter.characterContainer.layer = LayerMask.NameToLayer("Character");
-                
+                currentCharacter.characterContainer.GetComponent<TempGravity>().enabled = true;
             } 
 
             currentCharacter = new CharacterInfo
@@ -316,6 +316,7 @@ namespace Player
 
                 
             };
+            currentCharacter.characterContainer.GetComponent<TempGravity>().enabled = false;
             currentCharacter.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
             currentCharacter.characterContainer.layer = LayerMask.NameToLayer("Player");
             currentCharacter.characterContainer.tag = "Player";
