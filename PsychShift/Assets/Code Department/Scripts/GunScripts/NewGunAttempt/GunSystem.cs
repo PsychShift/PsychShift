@@ -29,8 +29,13 @@ public class GunSystem : MonoBehaviour
     {
         bulletsLeft = magazineSize;
         readyToShoot = true;
+        InputManager.Instance.OnShootPressed += PressedShoot;
     }
-    private void Update()
+    private void OnDisable()
+    {
+        InputManager.Instance.OnShootPressed -= PressedShoot;
+    }
+/*     private void Update()
     {
         MyInput();
         //text.SetText(bulletsLeft +" / " + magazineSize);
@@ -45,6 +50,15 @@ public class GunSystem : MonoBehaviour
 
         //shoot
         if(readyToShoot && shooting && bulletsLeft >0)
+        {
+            bulletsShot = bulletPerTap;
+            Shoot();
+        }
+    } */
+
+    private void PressedShoot()
+    {
+        if(readyToShoot && bulletsLeft > 0)
         {
             bulletsShot = bulletPerTap;
             Shoot();

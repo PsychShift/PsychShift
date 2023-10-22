@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3688,8 +3688,8 @@ MonoBehaviour:
   wallholdLayers:
     serializedVersion: 2
     m_Bits: 1152
-  wallCheckDistance: 0
-  minJumpHeight: 0
+  wallCheckDistance: 4
+  minJumpHeight: 6
   jumpForce: 1
   gravityValue: -40
   maxJumpHeight: 4
@@ -3993,6 +3993,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8849336479934825413, guid: 23c0075fc7499404897f6639e450a652, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1973a3a3c8f945541a18d8dcf8f27a64, type: 2}
+    - target: {fileID: 8849336479934825413, guid: 23c0075fc7499404897f6639e450a652, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: e5dcb276587613647b4caa2814fe96be, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

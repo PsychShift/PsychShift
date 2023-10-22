@@ -32,13 +32,13 @@ namespace Player
         }
         private void SetSubStateTransitions(IState state, List<Transition> transitions)
         {
-            Debug.Log($"Root state {this}'s sub state {state}, has {transitions.Count} transitions before SetSubstateTransitions");
+            //Debug.Log($"Root state {this}'s sub state {state}, has {transitions.Count} transitions before SetSubstateTransitions");
             List<Transition> transitionsToAdd = new();
             foreach (var transition in transitions)
                 if(subStates.Contains(transition.To))
                     transitionsToAdd.Add(transition);
 
-            Debug.Log($"Root state {this}'s sub state {state}, has {transitionsToAdd.Count} transitions after SetSubstateTransitions");
+            //Debug.Log($"Root state {this}'s sub state {state}, has {transitionsToAdd.Count} transitions after SetSubstateTransitions");
             subTransitions.Add(state.GetType(), transitionsToAdd);
         }
         

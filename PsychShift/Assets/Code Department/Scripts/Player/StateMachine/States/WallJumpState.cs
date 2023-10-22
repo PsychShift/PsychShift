@@ -42,8 +42,8 @@ namespace Player
         {
             Vector3 dir = WallStateVariables.Instance.LastWallNormal;
 
-            playerStateMachine.AppliedMovementX = dir.x * playerStateMachine.InitialJumpVelocity * 5;
-            playerStateMachine.AppliedMovementZ = dir.z * playerStateMachine.InitialJumpVelocity * 5;
+            playerStateMachine.AppliedMovementX = dir.x * 100;
+            playerStateMachine.AppliedMovementZ = dir.z * 100;
             playerStateMachine.CurrentMovementY = playerStateMachine.InitialJumpVelocity;
             playerStateMachine.AppliedMovementY = playerStateMachine.InitialJumpVelocity;
         }

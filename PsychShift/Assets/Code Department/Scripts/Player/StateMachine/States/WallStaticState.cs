@@ -42,7 +42,7 @@ namespace Player
             WallStateVariables.Instance.TimeOnWall += Time.deltaTime;
             SubStateTick();
             //wallVariables.OrganizeHitsList();
-            WallStateVariables.Instance.CheckWalls(currentCharacter.model.transform);
+            WallStateVariables.Instance.CheckWalls(playerStateMachine.currentCharacter.wallCheck);
             //Debug.Log("Forward Wall == " + WallStateVariables.Instance.ForwardWall + " Side Wall == " + WallStateVariables.Instance.SideWall);
         }
     }

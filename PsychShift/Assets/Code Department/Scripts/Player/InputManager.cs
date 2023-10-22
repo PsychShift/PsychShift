@@ -16,10 +16,10 @@ public class InputManager : MonoBehaviour
     public PlayerInput PlayerInput { get; private set; }
 
     public InputAction MoveAction { get; set; }
-    public InputAction LookAction { get; private set; }
-    public InputAction JumpAction { get; private set; }
-    public InputAction ShootAction { get; private set; }
-    public InputAction SwitchAction { get; private set; }
+    public InputAction LookAction { get; set; }
+    public InputAction JumpAction { get; set; }
+    public InputAction ShootAction { get; set; }
+    public InputAction SwitchAction { get; set; }
     #region Normal Controls
     public InputActionMap StandardActionMap { get; private set; }
     public InputAction StandardMoveAction { get; private set; }
@@ -45,6 +45,7 @@ public class InputManager : MonoBehaviour
     public bool IsJumpPressed { get; private set; }
     public event Action OnSwapPressed;
     public event Action OnManipulatePressed;
+    public event Action OnShootPressed;
     public event Action<bool> OnSlowActionStateChanged;
     public event Action<bool> OnSwitchPressed;
 
@@ -81,7 +82,7 @@ public class InputManager : MonoBehaviour
         SlowMoveAction = PlayerInput.actions[SlowActionMap.name + "/Move"];
         SlowLookAction = PlayerInput.actions[SlowActionMap.name + "/Look"];
         SlowJumpAction = PlayerInput.actions[SlowActionMap.name + "/Jump"];
-        SlowShootAction = PlayerInput.actions[StandardActionMap.name + "/Shoot"];
+        SlowShootAction = PlayerInput.actions[SlowActionMap.name + "/Shoot"];
         SwapSlowAction = PlayerInput.actions[SlowActionMap.name + "/MindSwap"];
         ManipulateAction = PlayerInput.actions[SlowActionMap.name + "/Manipulate"];
         UnSlowAction = PlayerInput.actions[SlowActionMap.name + "/Unslow"];
@@ -98,16 +99,20 @@ public class InputManager : MonoBehaviour
         UnSlowAction.started += ReleasedSlow;
         SwapSlowAction.started += PressedSwap;
         ManipulateAction.started += PressedManipulate;
-
         SwitchAction.started += OnSwitch;
+        StandardShootAction.started += PressedShoot;
+        SlowShootAction.started += PressedShoot;
     }
     private void OnDisable() {
         JumpAction.performed -= OnJump;
-        JumpAction.canceled -= OnJump; 
+        JumpAction.canceled -= OnJump;
         SlowAction.started -= PressedSlow;
         UnSlowAction.started -= ReleasedSlow;
         SwapSlowAction.started -= PressedSwap;
         ManipulateAction.started -= PressedManipulate;
+        SwitchAction.started -= OnSwitch;
+        StandardShootAction.started -= PressedShoot;
+        SlowShootAction.started -= PressedShoot;
     }
 
     public Vector2 GetPlayerMovement() {
@@ -152,7 +157,6 @@ public class InputManager : MonoBehaviour
             MoveAction = StandardMoveAction;
             LookAction = StandardLookAction;
             JumpAction = StandardJumpAction;
-            ShootAction = StandardShootAction;
             SwitchAction = StandardSwitchAction;
             break;
         case ActionMapEnum.slow:
@@ -160,7 +164,6 @@ public class InputManager : MonoBehaviour
             MoveAction = SlowMoveAction;
             LookAction = SlowLookAction;
             JumpAction = SlowJumpAction;
-            ShootAction = SlowShootAction;
             SwitchAction = SlowSwitchAction;
             break;
         case ActionMapEnum.ui:
@@ -174,9 +177,9 @@ public class InputManager : MonoBehaviour
 
 
     //KEVIN ADDED THIS I SORRY IF BROKE
-    public bool PlayerShotThisFrame() 
+    public void PressedShoot(InputAction.CallbackContext context)
     {
-        return ShootAction.triggered;
+        OnShootPressed?.Invoke();
     }
 
     public bool PlayerSwitchedModeThisFrame()//Press L shift or L bump to swap static/flow//Kevin Added this

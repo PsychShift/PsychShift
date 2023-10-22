@@ -19,18 +19,27 @@ public class PlayerAction : MonoBehaviour
     private bool IsReloading;
     */
 
-    /*private void Awake() 
+    private void OnEnable() 
     {
-        currentBullets =GunSelector.currentBullets;
-    }*/
-    private void FixedUpdate() //TURN SHOOTING INTO AN EVENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        InputManager.Instance.OnShootPressed += Shoot;
+        //currentBullets =GunSelector.currentBullets;
+    }
+    private void OnDisable()
+    {
+        InputManager.Instance.OnShootPressed -= Shoot;
+    }
+    private void Shoot()
+    {
+        GunSelector.ActiveGun.Tick(GunSelector.ActiveGun != null);
+    }
+    private void FixedUpdate() 
     {
         /*if(InputManager.Instance.PlayerShotThisFrame() && GunSelector.ActiveGun != null)
         {
             GunSelector.ActiveGun.Shoot();
         }*/ // Prolly add this to the main player script
 
-        GunSelector.ActiveGun.Tick(InputManager.Instance.PlayerShotThisFrame() && GunSelector.ActiveGun != null);//DO DIS AFTER RECOIL TUTORIAL REPLACE UP
+        //GunSelector.ActiveGun.Tick(InputManager.Instance.PlayerShotThisFrame() && GunSelector.ActiveGun != null);//DO DIS AFTER RECOIL TUTORIAL REPLACE UP
 
         /*if(ShouldManualReload() || ShouldAutoReload())
         {
