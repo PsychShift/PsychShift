@@ -131,7 +131,7 @@ Transform:
   - {fileID: 7108502097683270071}
   - {fileID: 8748860008449135782}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2416061687326124392
 MonoBehaviour:
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UsesSkinnedMeshRenderer: 1
-  outlineMaterial: {fileID: 0}
+  outlineMaterial: {fileID: 2100000, guid: e5dcb276587613647b4caa2814fe96be, type: 2}
   highlightColor: {r: 0, g: 0.098634005, b: 1, a: 1}
 --- !u!195 &2902447261378377748
 NavMeshAgent:
@@ -303,6 +303,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3416506256765415070}
     m_Modifications:
+    - target: {fileID: 6990996432457117698, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6990996432457117698, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a8bfa5868e8a68458ff1839b5d3bd6f, type: 2}
+    - target: {fileID: 6990996432457117698, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: e5dcb276587613647b4caa2814fe96be, type: 2}
     - target: {fileID: 6990996432457117698, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
