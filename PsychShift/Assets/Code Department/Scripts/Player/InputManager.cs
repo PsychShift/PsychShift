@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
 using Unity.VisualScripting;
+using System.Data.Common;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField] private CinemachinePOVExtension cinemachinePOVExtension;
     private static InputManager _instance;
     public static InputManager Instance {
         get {
@@ -58,6 +60,28 @@ public class InputManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    bool switchFromKeyboard = false;
+    bool switchFromController = false;
+    private void Update()
+    {
+        if(PlayerInput.currentControlScheme == "Keyboard" && switchFromController)
+        {
+            // Set to PC sensitivity
+            cinemachinePOVExtension.horizontalSpeed = 10f;
+            cinemachinePOVExtension.verticalSpeed = 10f;
+            switchFromController = false;
+            switchFromKeyboard = true;
+        }
+        else if(PlayerInput.currentControlScheme == "Controller" && switchFromKeyboard)
+        {
+            // Set to Controller sensitivity
+            cinemachinePOVExtension.horizontalSpeed = 180f;
+            cinemachinePOVExtension.verticalSpeed = 140f;
+            switchFromController = true;
+            switchFromKeyboard = false;
+        }
+    }
+
     private void OnEnable() {
         if(_instance != null && _instance != this)
         {
@@ -93,8 +117,9 @@ public class InputManager : MonoBehaviour
         UnSlowAction = PlayerInput.actions[SlowActionMap.name + "/Unslow"];
         SlowSwitchAction = PlayerInput.actions[SlowActionMap.name + "/Switch"];
         #endregion
-
-
+    
+        /* PlayerInput.SwitchCurrentControlScheme("Controller");
+        Debug.Log(PlayerInput.currentControlScheme); */
 
         SwapControlMap(ActionMapEnum.standard);
 
@@ -109,6 +134,11 @@ public class InputManager : MonoBehaviour
         SwitchAction.started += OnSwitch;
         StandardShootAction.started += PressedShoot;
         SlowShootAction.started += PressedShoot;
+
+
+
+        // Camera Sensitivity Stuff
+        switchFromController = true;
     }
     private void OnDisable() {
         StandardJumpAction.performed -= OnJump;

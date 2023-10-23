@@ -4,10 +4,8 @@ using UnityEngine.InputSystem;//Kevin added this
 
 public class CinemachinePOVExtension : CinemachineExtension
 {
-    [SerializeField]
-    private float horizontalSpeed = 10f;
-    [SerializeField]
-    private float verticalSpeed = 10f;
+    public float horizontalSpeed = 10f;
+    public float verticalSpeed = 10f;
     [SerializeField]
     private float clampAngle = 80f;
     private InputManager inputManager;
