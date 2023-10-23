@@ -48,6 +48,9 @@ public class InputManager : MonoBehaviour
     public event Action OnShootPressed;
     public event Action<bool> OnSlowActionStateChanged;
     public event Action<bool> OnSwitchPressed;
+    //ART MUSEUM
+    public InputAction ShaderIsPressed{get; private set;}
+    public InputAction ShaderIsPressedSlow{get; private set;}
 
     private void Awake() {
         PlayerInput = GetComponent<PlayerInput>();
@@ -75,6 +78,8 @@ public class InputManager : MonoBehaviour
         SlowAction = PlayerInput.actions[StandardActionMap.name + "/Slow"];
         //swap input Kevin added this
         StandardSwitchAction = PlayerInput.actions[StandardActionMap.name + "/Switch"];
+        ShaderIsPressed = PlayerInput.actions[StandardActionMap.name + "/Shader"];
+        ShaderIsPressedSlow = PlayerInput.actions[StandardActionMap.name + "/Shader"];
         #endregion
         
         
@@ -187,6 +192,15 @@ public class InputManager : MonoBehaviour
     public bool PlayerSwitchedModeThisFrame()//Press L shift or L bump to swap static/flow//Kevin Added this
     {
         return SwitchAction.triggered;
+    }
+    public bool PlayerSwitcherShader()
+    {
+        if(ShaderIsPressed.triggered)
+            return true;
+        else if(ShaderIsPressedSlow.triggered)
+            return true;
+        else
+            return false;
     }
 
 }

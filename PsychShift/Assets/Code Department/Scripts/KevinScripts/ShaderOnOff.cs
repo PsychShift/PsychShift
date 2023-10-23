@@ -3,17 +3,36 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ShaderOnOff : MonoBehaviour
 {
     public Camera postProcessingCamera; // Assign the camera with post-processing here
     public Camera noPostCam;
+    private bool shaderOnOff;
     private void Update() {
-        if(Input.GetMouseButtonDown(0))
+        /*if(Input.GetMouseButtonDown(0))
             TurnOff();
         else if(Input.GetMouseButtonDown(1))
-            TurnOn();
+            TurnOn();*/
+        if(InputManager.Instance.PlayerSwitcherShader())
+        {
+            BoolOnOff();
+        }
+
             
+    }
+    private void BoolOnOff()
+    {
+        if(shaderOnOff)
+        {
+            TurnOff();
+        }
+        else
+        {
+            TurnOn();
+        }
+        shaderOnOff=!shaderOnOff;
     }
 
     private void TurnOff()

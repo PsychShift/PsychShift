@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Bullet : MonoBehaviour
 {
+    bool isActive= false;
     private Rigidbody bullet_rigidbody;
     [field: SerializeField]
 
@@ -22,19 +23,31 @@ public class Bullet : MonoBehaviour
     {
         bullet_rigidbody = GetComponent<Rigidbody>();   
     }
+    private void Update() 
+    {
+        /*if(isActive== true)
+        {
+            //bullet_rigidbody.velocity= 
+        }*/
+    }
 
     public void Spawn(Vector3 SpawnForce)
     {
+        isActive = true;
         SpawnLocation = transform.position;
         transform.forward = SpawnForce.normalized;
-        bullet_rigidbody.AddForce(SpawnForce);
+        bullet_rigidbody.velocity = SpawnForce;
+        //bullet_rigidbody.AddForce(SpawnForce);
         StartCoroutine(DelayedDisable(DelayedDisableTime));
     }
 
     private IEnumerator DelayedDisable(float Time)
     {
        yield return new WaitForSeconds(Time);
+       isActive = false;
+       bullet_rigidbody.velocity = Vector3.zero;
        OnCollisionEnter(null);
+       
 
     }
     private void OnCollisionEnter(Collision collision) 

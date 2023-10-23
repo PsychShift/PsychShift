@@ -327,9 +327,11 @@ GameObject:
   - component: {fileID: 3872755443554843929}
   - component: {fileID: 7975405747565874349}
   - component: {fileID: 8755010038255151642}
+  - component: {fileID: 6529506268640370410}
+  - component: {fileID: 6983540252553002849}
   m_Layer: 0
   m_Name: Window_Lobby
-  m_TagString: Untagged
+  m_TagString: Destructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -427,8 +429,35 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.021545, y: 9.411716, z: 2.123333}
+  m_Center: {x: -0.063637845, y: 0.40689906, z: -0.5616659}
+--- !u!114 &6529506268640370410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4746735784888219954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8442cfe316ad834c8e3055f1cf28159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: {fileID: 6983540252553002849}
+--- !u!114 &6983540252553002849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4746735784888219954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4126de5ce1d8474448838d2cfa56c542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _MaxHealth: 1
+  _Health: 1
 --- !u!1 &4839154595160072405
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,7 +715,7 @@ ReflectionProbe:
   m_TimeSlicingMode: 2
   m_Resolution: 2048
   m_UpdateFrequency: 0
-  m_BoxSize: {x: 7.5, y: 6.68, z: 7.5}
+  m_BoxSize: {x: 7.5, y: 7.5, z: 7.5}
   m_BoxOffset: {x: 0, y: 1.59, z: 0}
   m_NearClip: 0.01
   m_FarClip: 5714
