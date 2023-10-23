@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using Cinemachine;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using System.Linq;
@@ -300,7 +300,9 @@ namespace Player
             if(currentCharacter != null)
             {
                 currentCharacter.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
-                currentCharacter.characterContainer.tag = "Swappable";
+                Debug.Log("swapped " + currentCharacter.characterContainer.tag);
+                currentCharacter.characterContainer.tag = "Swapable";
+                Debug.Log("swapped " + currentCharacter.characterContainer.tag);
                 currentCharacter.characterContainer.layer = LayerMask.NameToLayer("Character");
                 currentCharacter.characterContainer.GetComponent<TempGravity>().enabled = true;
             } 
