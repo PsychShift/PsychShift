@@ -24,6 +24,7 @@ namespace Player
             playerStateMachine.CurrentMovementY = 0;
             playerStateMachine.AppliedMovementY = 0;
             SetSubState();
+            StaticBar.instance.UseStatic(100);
         }
         //Kevin added this call public funct from substate that swaps var that changes wallhang substate
         public void OnExit()

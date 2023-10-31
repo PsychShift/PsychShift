@@ -183,8 +183,14 @@ public class InputManager : MonoBehaviour
     private bool _switch = false;
     private void OnSwitch(InputAction.CallbackContext context)
     {
-        _switch = !_switch;
-        OnSwitchPressed?.Invoke(_switch);
+        if (context.started)
+        {
+            OnSwitchPressed?.Invoke(true);
+        }
+        else if (context.canceled)
+        {
+            OnSwitchPressed?.Invoke(false);
+        }
     }
 
     public void SwapControlMap(ActionMapEnum currentMap)
