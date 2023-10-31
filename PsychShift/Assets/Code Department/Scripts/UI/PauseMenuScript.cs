@@ -13,6 +13,8 @@ public class PauseMenuScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.fixedDeltaTime = .02f;
+        
         PauseMenu.SetActive(false);
         PauseMenuSettings.SetActive(false);
     }
@@ -44,7 +46,8 @@ public class PauseMenuScript : MonoBehaviour
     }
     public void Quit()
     {
-        SceneManager.LoadScene("Main Menu 0");
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Main Menu");
     }
     public void OpenPauseSettings()
     {
