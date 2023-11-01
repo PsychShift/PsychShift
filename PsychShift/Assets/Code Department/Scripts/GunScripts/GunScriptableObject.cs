@@ -19,8 +19,12 @@ public class GunScriptableObject : ScriptableObject
     public AmmoConfigScriptableObject AmmoConfig;
     public ShootConfigurationScriptableObject ShootConfig;
     public TrailConfigScriptableObject TrailConfig;
+    public AudioConfigScriptableObject AudioConfig;
+
+
     private MonoBehaviour ActiveMonoBehavior;
     private GameObject Model;
+    private AudioSource ShootingAudioSource;
     private float LastShootTime;
     private ParticleSystem ShootSystem;
     private ObjectPool<Bullet> BulletPool;
@@ -43,15 +47,32 @@ public class GunScriptableObject : ScriptableObject
         Model.transform.localRotation = Quaternion.Euler(SpawnRotation);
 
         ShootSystem = Model.GetComponentInChildren<ParticleSystem>();
+        ShootingAudioSource = Model.GetComponent<AudioSource>();//gets weapon audio stuff
 
     }
-    public void Shoot()
+    public void TryToShoot()
     {
         //Last shoot time matches with time.time when shooting// whenever fire rate is added it doesn't allow for shoot system to activate waits until time is greater to fire again
+        /*if(Time.time - LastShootTime - ShootConfig.FireRate > Time.deltaTime)
+        {
+            float lastDuration = Mathf.Clamp(
+                (StopShootingTime- InitialClickTime)
+            );
+            float lerpTime = (ShootConfig.RecoilRecoverySpeed - (Time.time - StopShootingTime)) / ShootConfig.RecoilRecoverySpeed;
+
+            InitialClickTime = Time.time - Mathf.Lerp(0, lastDuration, Mathf.Clamp01(lerpTime));
+        }*/
         if(Time.time > ShootConfig.FireRate +LastShootTime)
         {
+
             LastShootTime = Time.time;
+            if(AmmoConfig.CurrentClipAmmo ==0)
+            {
+                AudioConfig.PlayOutOfAmmoClip(ShootingAudioSource);
+                return;
+            }
             ShootSystem.Play();
+            AudioConfig.PlayShootingClip(ShootingAudioSource, AmmoConfig.CurrentClipAmmo == 1);
 
             Vector3 shootDirection = ShootSystem.transform.forward + new Vector3(
                     Random.Range(-ShootConfig.Spread.x,ShootConfig.Spread.x),
@@ -78,6 +99,10 @@ public class GunScriptableObject : ScriptableObject
     {
         return AmmoConfig.CanReload();
     }
+    public void StartReloading()//Reload sound fx
+    {
+        AudioConfig.PlayReloadClip(ShootingAudioSource);
+    }
     /*
     public bool EndReload()
     {
@@ -95,10 +120,8 @@ public class GunScriptableObject : ScriptableObject
         if(WantsToShoot)
         {
             //LastFrameWantedToShoot = true;
-            if(AmmoConfig.CurrentClipAmmo>0)
-            {
-                Shoot();
-            }
+            TryToShoot();
+
         }
 
         /*if(!WantsToShoot && LastFrameWantedToShoot)

@@ -305,6 +305,7 @@ namespace Player
                 Debug.Log("swapped " + currentCharacter.characterContainer.tag);
                 currentCharacter.characterContainer.layer = LayerMask.NameToLayer("Character");
                 currentCharacter.characterContainer.GetComponent<TempGravity>().enabled = true;
+                BrainJuiceBarTest.instance.UseBrain(15);
             } 
 
             currentCharacter = new CharacterInfo

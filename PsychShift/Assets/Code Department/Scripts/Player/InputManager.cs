@@ -50,6 +50,7 @@ public class InputManager : MonoBehaviour
     public event Action OnShootPressed;
     public event Action<bool> OnSlowActionStateChanged;
     public event Action<bool> OnSwitchPressed;
+    
     //ART MUSEUM
     public InputAction ShaderIsPressed{get; private set;}
     public InputAction ShaderIsPressedSlow{get; private set;}
@@ -183,8 +184,14 @@ public class InputManager : MonoBehaviour
     private bool _switch = false;
     private void OnSwitch(InputAction.CallbackContext context)
     {
-        _switch = !_switch;
-        OnSwitchPressed?.Invoke(_switch);
+        if (context.started)
+        {
+            OnSwitchPressed?.Invoke(true);
+        }
+        else if (context.canceled)
+        {
+            OnSwitchPressed?.Invoke(false);
+        }
     }
 
     public void SwapControlMap(ActionMapEnum currentMap)
@@ -193,12 +200,14 @@ public class InputManager : MonoBehaviour
     {
         case ActionMapEnum.standard:
             PlayerInput.SwitchCurrentActionMap(StandardActionMap.name);
+            ShootAction = StandardShootAction;//added by kevin
             MoveAction = StandardMoveAction;
             LookAction = StandardLookAction;
             SwitchAction = StandardSwitchAction;
             break;
         case ActionMapEnum.slow:
             PlayerInput.SwitchCurrentActionMap(SlowActionMap.name);
+            ShootAction = SlowShootAction;//added by kevin
             MoveAction = SlowMoveAction;
             LookAction = SlowLookAction;
             SwitchAction = SlowSwitchAction;
