@@ -32,25 +32,26 @@ public class PlayerAction : MonoBehaviour
     {
         GunSelector.ActiveGun.Tick(GunSelector.ActiveGun != null);
     }
-    private void FixedUpdate() 
-    {
-        /*if(InputManager.Instance.PlayerShotThisFrame() && GunSelector.ActiveGun != null)
+    // private void FixedUpdate() 
+    //{
+/*         if(InputManager.Instance.ShootAction.triggered && GunSelector.ActiveGun != null)
         {
-            GunSelector.ActiveGun.Shoot();
-        }*/ // Prolly add this to the main player script
+            GunSelector.ActiveGun.TryToShoot();
+        }  */// Prolly add this to the main player script
 
         //GunSelector.ActiveGun.Tick(InputManager.Instance.PlayerShotThisFrame() && GunSelector.ActiveGun != null);//DO DIS AFTER RECOIL TUTORIAL REPLACE UP
 
         /*if(ShouldManualReload() || ShouldAutoReload())
         {
+            GunSelector.ActiveGun.StartReloading();
             IsReloading = true;
             PlayerAnimator.SetTrigger("Reload");
             InverseKinemcatics.HandIKAmount = 0.25;
             InverseKinematics.ElbowIKAmount = 0.25f;
         }*/
-    }
-    /*
-    private void EndReload()
+    //}
+    
+    /*private void EndReload()
     {
        GunSelector.ActiveGun.EndReload();
        InverseKinemcatics.HandIKAmount = 1;

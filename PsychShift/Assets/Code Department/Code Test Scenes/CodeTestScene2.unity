@@ -7499,17 +7499,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2a5e3d49c24ec6429222033e5a192fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 928002932}
-  cameraTransform: {fileID: 458173018}
-  playerSpeed: 20
-  jumpHeight: 1
-  gravityValue: -9.81
-  tempCharacter: {fileID: 2063244690}
-  swapDistance: 10
-  swapableLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  smoothInputSpeed: 0.4
 --- !u!4 &1244412121
 Transform:
   m_ObjectHideFlags: 0
@@ -7537,6 +7526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50581b4e38f51aa47a17c160399e0f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cinemachinePOVExtension: {fileID: 0}
 --- !u!114 &1244412123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7596,12 +7586,26 @@ MonoBehaviour:
   walkSpeed: 20
   smoothInputSpeed: 0
   smoothInputVelocity: {x: 0, y: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  wallSpeed: 0
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
   vaultLayers:
     serializedVersion: 2
     m_Bits: 0
+  wallholdLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  wallCheckDistance: 0
+  minJumpHeight: 0
+  jumpForce: 1
   gravityValue: -9.81
   maxJumpHeight: 4
   maxJumpTime: 0.75
+  maxFallSpeed: 30
   manipulateLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -11649,7 +11653,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1860537835
 RectTransform:
   m_ObjectHideFlags: 0
