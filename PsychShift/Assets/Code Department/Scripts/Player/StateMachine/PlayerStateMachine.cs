@@ -105,8 +105,8 @@ namespace Player
             cameraTransform = Camera.main.transform;
             cameraTransform.GetComponent<CinemachineBrain>().m_IgnoreTimeScale = false;
             SwapCharacter(tempCharacter);
-            virtualCamera.Follow = currentCharacter.cameraRoot;
 
+            virtualCamera.Follow = currentCharacter.cameraRoot;
 
             
             stateMachine = new StateMachine.StateMachine();
@@ -130,7 +130,7 @@ namespace Player
             var idleState = new IdleState(this);
             var walkState = new WalkState(this);
 
-            var wallRunState = new WallRunState(this, this);
+            var wallRunState = new WallRunState(this, this, virtualCamera.GetComponent<CinemachineTiltExtension>());
             var vaultState = new VaultState(this);
             var mantleState = new MantleState(this);
             var wallHangState = new WallHangState(this);
@@ -299,39 +299,21 @@ namespace Player
             SlowMotion(false);
             if(currentCharacter != null)
             {
-                currentCharacter.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
-                Debug.Log("swapped " + currentCharacter.characterContainer.tag);
-                currentCharacter.characterContainer.tag = "Swapable";
-                Debug.Log("swapped " + currentCharacter.characterContainer.tag);
-                currentCharacter.characterContainer.layer = LayerMask.NameToLayer("Character");
-                currentCharacter.characterContainer.GetComponent<TempGravity>().enabled = true;
+                currentCharacter.characterContainer.GetComponent<CharacterInfoReference>().DeactivateCharacter();
             } 
 
-            currentCharacter = new CharacterInfo
-            {
-                characterContainer = newCharacter,
-                cameraRoot = newCharacter.transform.GetChild(0),
-                model = newCharacter.transform.GetChild(1).gameObject,
-                wallCheck = newCharacter.transform.GetChild(2),
-                controller = newCharacter.GetComponent<CharacterController>(),
-                
+            CharacterInfoReference newCharacterInfoReference = newCharacter.GetComponent<CharacterInfoReference>();
+            newCharacterInfoReference.ActivateCharacter();
 
-                
-            };
-            currentCharacter.characterContainer.GetComponent<TempGravity>().enabled = false;
-            currentCharacter.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
-            currentCharacter.characterContainer.layer = LayerMask.NameToLayer("Player");
-            currentCharacter.characterContainer.tag = "Player";
+            currentCharacter = newCharacterInfoReference.characterInfo;
+            virtualCamera.Follow = currentCharacter.cameraRoot;
 
             /* 
             FIND A WAY TO MAKE THE CAMERA LOOK IN THE DIRECTINO THE NEW BODY IS LOOKING
-            
+
             virtualCamera.enabled = false;
             cameraTransform.rotation = currentCharacter.model.transform.rotation;
             virtualCamera.enabled = true; */
-            
-            virtualCamera.Follow = currentCharacter.cameraRoot;
-
         }
         #endregion
 
@@ -497,33 +479,36 @@ namespace Player
 
         private void OnDrawGizmos()
         {
-            bool isHit;
-            if(currentCharacter != null)
+            if(Application.isPlaying)
             {
-                RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer);
-                if(hits.Any(hit => hit.collider != null))
+                bool isHit;
+                if(currentCharacter != null)
                 {
-                    Gizmos.color = Color.green;
-                    Gizmos.DrawWireCube(currentCharacter.characterContainer.transform.position, boxSize);
+                    RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer);
+                    if(hits.Any(hit => hit.collider != null))
+                    {
+                        Gizmos.color = Color.green;
+                        Gizmos.DrawWireCube(currentCharacter.characterContainer.transform.position, boxSize);
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.red;
+                        Gizmos.DrawWireCube(currentCharacter.characterContainer.transform.position, boxSize);
+                    }
+
+                }
+                isHit = Physics.BoxCast(cameraTransform.position, boxHalfExtents, cameraTransform.forward, out RaycastHit hit, boxRotation, swapDistance, swapableLayer);
+                if (isHit)
+                {
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawRay(cameraTransform.position, cameraTransform.forward * hit.distance);
+                    Gizmos.DrawWireCube(cameraTransform.position + cameraTransform.forward * hit.distance, boxHalfExtents);
                 }
                 else
                 {
-                    Gizmos.color = Color.red;
-                    Gizmos.DrawWireCube(currentCharacter.characterContainer.transform.position, boxSize);
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawRay(cameraTransform.position, cameraTransform.forward * swapDistance);
                 }
-
-            }
-            isHit = Physics.BoxCast(cameraTransform.position, boxHalfExtents, cameraTransform.forward, out RaycastHit hit, boxRotation, swapDistance, swapableLayer);
-            if (isHit)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawRay(cameraTransform.position, cameraTransform.forward * hit.distance);
-                Gizmos.DrawWireCube(cameraTransform.position + cameraTransform.forward * hit.distance, boxHalfExtents);
-            }
-            else
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawRay(cameraTransform.position, cameraTransform.forward * swapDistance);
             }
         }
     }

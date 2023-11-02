@@ -21,10 +21,13 @@ namespace Player
         private MonoBehaviour monoBehaviour;
         private CharacterInfo currentCharacter;
         private WallStateVariables wallVariables;
-        public WallRunState(PlayerStateMachine playerStateMachine, MonoBehaviour monoBehaviour)
+        private CinemachineTiltExtension cameraTilt;
+
+        public WallRunState(PlayerStateMachine playerStateMachine, MonoBehaviour monoBehaviour, CinemachineTiltExtension cameraTilt)
         {
             this.playerStateMachine = playerStateMachine;
             this.monoBehaviour = monoBehaviour;
+            this.cameraTilt = cameraTilt;
             wallVariables = WallStateVariables.Instance;
         }
 
@@ -36,12 +39,16 @@ namespace Player
         private bool wallRight;
         public void Tick()
         {
+            if(WallStateVariables.Instance.WallRight)
+                cameraTilt.SetTiltDirection(20f);
+            else if(WallStateVariables.Instance.WallLeft)
+                cameraTilt.SetTiltDirection(-20f);
+    
             HandleMovement();
         }
 
         public void OnEnter()
         {
-            Debug.Log("Enter Wall Run State");
             currentCharacter = playerStateMachine.currentCharacter;
             monoBehaviour.StartCoroutine(SetNormal());
             this.WallSpeed = playerStateMachine.WallSpeed;
@@ -49,10 +56,10 @@ namespace Player
 
         public void OnExit()
         {
-            Debug.Log("Exit Wall Run State");
             WallStateVariables.Instance.LastWallNormal = wallNormal;
             wallNormal = Vector3.zero; 
             wallForward = Vector3.zero;
+            cameraTilt.SetTiltDirection(0f);
         }
 
         private IEnumerator SetNormal()
@@ -62,7 +69,6 @@ namespace Player
             wallRight = WallStateVariables.Instance.WallRight;
             wallNormal = wallRight ? WallStateVariables.Instance.RightWallNormal() : WallStateVariables.Instance.LeftWallNormal();
             wallForward = Vector3.Cross(wallNormal, currentCharacter.characterContainer.transform.up);
-            Debug.Log(wallNormal);
             yield return null;
         }
 
