@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour
 {
     [SerializeField] private CinemachinePOVExtension cinemachinePOVExtension;
     private static InputManager _instance;
+    
     public static InputManager Instance {
         get {
             return _instance;
@@ -45,9 +46,12 @@ public class InputManager : MonoBehaviour
     #endregion
 
     public bool IsJumpPressed { get; private set; }
-    public event Action OnSwapPressed;
-    public event Action OnManipulatePressed;
-    public event Action OnShootPressed;
+    public delegate void SwapPressedHandler();
+    public delegate void ManipulatePressedHandler();
+    public delegate void ShootPressedHandler();
+    public event SwapPressedHandler OnSwapPressed;
+    public event ManipulatePressedHandler OnManipulatePressed;
+    public event ShootPressedHandler OnShootPressed;
     public event Action<bool> OnSlowActionStateChanged;
     public event Action<bool> OnSwitchPressed;
     
