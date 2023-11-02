@@ -8,6 +8,9 @@ using CharacterInfo = Player.CharacterInfo;
 [RequireComponent(typeof(CharacterInfoReference))]
 public abstract class EnemyBrain : MonoBehaviour
 {
+    [Tooltip("If this is true, the enemy will stand in one spot, if false, it will require a patrol path")]
+    [SerializeField] protected bool isGaurd;
+
     public bool isActive = true;
     [SerializeField] protected LayerMask playerLayer;
     protected StateMachine.StateMachine stateMachine;
@@ -15,6 +18,7 @@ public abstract class EnemyBrain : MonoBehaviour
     public CharacterInfo characterInfo;
     public bool isMelee;
     protected float attackRange;
+
 
     [HideInInspector] public GameObject player;
     /// <summary>
@@ -32,8 +36,11 @@ public abstract class EnemyBrain : MonoBehaviour
     public abstract void StateMachineSetup();
 
     protected Func<bool> PlayerInSight() => () => IsPlayerInSight();
+    protected Func<bool> PlayerInSightWide() => () => IsPlayerInSightWideView();
     protected Func<bool> PlayerInAttackRange() => () => IsPlayerInRange();
     protected Func<bool> OutOfRangeForTooLong(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight);
+    protected Func<bool> OutOfRangeForTooLongAndIsGuard(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight) && isGaurd;
+    protected Func<bool> CanGuard() => () => !IsPlayerInSight() && isGaurd;
 
     float time = 0f;
     private bool IsPlayerOutOfRangeForTooLong(float maxTimeOutOfSight)
@@ -65,6 +72,45 @@ public abstract class EnemyBrain : MonoBehaviour
         }
         return false;
     }
+    private bool IsPlayerInSightWideView()
+    {
+        // Cast a sphere slightly to the left of transform.forward
+        Vector3 leftDirection = Quaternion.Euler(0, -20, 0) * transform.forward;
+
+
+        // Cast a sphere slightly to the right of transform.forward
+        Vector3 rightDirection = Quaternion.Euler(0, 20, 0) * transform.forward;
+
+        Physics.SphereCast(characterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
+        characterInfo.cameraRoot.forward, out RaycastHit hit, agression.DetectionRange, layerMask: playerLayer);
+        if (hit.collider == null) return false;
+        if (hit.collider.tag == "Player")
+        {
+            player = hit.collider.gameObject;
+            return true;
+        }
+
+        Physics.SphereCast(characterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
+        leftDirection, out hit, agression.DetectionRange, layerMask: playerLayer);
+        if (hit.collider == null) return false;
+        if (hit.collider.tag == "Player")
+        {
+            player = hit.collider.gameObject;
+            return true;
+        }
+
+        Physics.SphereCast(characterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
+        rightDirection, out hit, agression.DetectionRange, layerMask: playerLayer);
+        if (hit.collider == null) return false;
+        if (hit.collider.tag == "Player")
+        {
+            player = hit.collider.gameObject;
+            return true;
+        }
+
+        return false;
+    }
+
 
     private bool IsPlayerInRange()
     {

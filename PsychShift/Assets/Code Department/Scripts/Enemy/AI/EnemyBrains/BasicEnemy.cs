@@ -35,14 +35,20 @@ public class BasicEnemy : EnemyBrain
         stateMachine = new StateMachine.StateMachine();
 
         var patrolState = new PatrolState(this, agression, patrolPoints);
+        var guardState = new GuardState(this, agression, transform.position);
         var chaseState = new ChaseState(this, agression);
 
         
         AT(patrolState, chaseState, PlayerInSight());
         AT(chaseState, patrolState, OutOfRangeForTooLong(agression.StopChasingTime));
 
+        AT(guardState, chaseState, PlayerInSightWide());
+        AT(chaseState, guardState, OutOfRangeForTooLongAndIsGuard(agression.StopChasingTime));
 
-        stateMachine.SetState(patrolState);
+        if(isGaurd)
+            stateMachine.SetState(guardState);
+        else
+            stateMachine.SetState(patrolState);
     }
     
 }
