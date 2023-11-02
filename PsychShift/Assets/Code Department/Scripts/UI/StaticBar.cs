@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class StaticBar : MonoBehaviour
 {
+    //[SerializeField] private Player.PlayerController
     public Slider staticBar;
 
     public int maxStatic = 100;
@@ -46,7 +47,7 @@ public class StaticBar : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Not enough static meter");
+            //Player.SwitchMode(false);
         }
     }
 

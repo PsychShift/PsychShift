@@ -10,4 +10,10 @@ public class AIAgression : ScriptableObject
     public float StopChasingTime;
     [Tooltip("The higher this number, the more often the AI will fire at the player")]
     public float FireRateTendency;
+
+
+    [Tooltip("When the enemy is chasing the player, it should stop this distance away")]
+    public float PlayerStoppingDistance;
+    [Tooltip("The distance the enemy should stop at when patroling or guarding")]
+    public float DestinationStoppingDistance;
 }
