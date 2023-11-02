@@ -46,7 +46,7 @@ public class StaticBar : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough static meter");
+            //Debug.Log("Not enough static meter");
         }
     }
 

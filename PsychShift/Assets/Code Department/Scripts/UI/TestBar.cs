@@ -13,7 +13,7 @@ public class TestBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.LeftShift))
-            StaticBar.instance.UseStatic(15);
+        if(Input.GetKey(KeyCode.LeftShift))
+            StaticBar.instance.UseStatic(1);
     }
 }

@@ -473,8 +473,20 @@ namespace Player
 
         private void SwitchMode(bool staticMode)
         {
-            StaticMode = staticMode;
-            Debug.Log("Static Mode == " + StaticMode);
+            if(Input.GetKeyDown(KeyCode.LeftShift) && StaticBar.instance.currentStatic >= 1)
+            {
+
+                StaticMode = staticMode;
+            }
+            //Debug.Log("Static Mode == " + StaticMode);
+            else
+            {
+            StaticMode = !staticMode;
+            }
+            if(Input.GetKeyUp(KeyCode.LeftShift))
+            {
+            StaticMode = !staticMode;
+            }
         }
 
         private void OnDrawGizmos()
