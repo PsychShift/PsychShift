@@ -24,14 +24,16 @@ public class GunScriptableObject : ScriptableObject
 
     private MonoBehaviour ActiveMonoBehavior;
     private GameObject Model;
+    private Camera ActiveCamera; 
     private AudioSource ShootingAudioSource;
     private float LastShootTime;
     private ParticleSystem ShootSystem;
     private ObjectPool<Bullet> BulletPool;
     private ObjectPool<TrailRenderer> TrailPool;
-    public void Spawn(Transform Parent, MonoBehaviour ActionMonoBehavior)
+    public void Spawn(Transform Parent, MonoBehaviour ActionMonoBehavior, Camera ActiveCamera = null)
     {
         this.ActiveMonoBehavior = ActionMonoBehavior;
+        this.ActiveCamera =  ActiveCamera;
         LastShootTime = 0; //not reset in editior, fine in build for some reason.
         AmmoConfig.CurrentClipAmmo = AmmoConfig.ClipSize;
         AmmoConfig.CurrentAmmo = AmmoConfig.MaxAmmo;
@@ -47,8 +49,12 @@ public class GunScriptableObject : ScriptableObject
         Model.transform.localRotation = Quaternion.Euler(SpawnRotation);
 
         ShootSystem = Model.GetComponentInChildren<ParticleSystem>();
-        ShootingAudioSource = Model.GetComponent<AudioSource>();//gets weapon audio stuff
+        ShootingAudioSource = Model.GetComponent<AudioSource>();//gets weapon audio stuff   
+    }
 
+    public void UpdateCamera(Camera ActivateCamera)
+    {
+        this.ActiveCamera = ActivateCamera;
     }
     public void TryToShoot()
     {
@@ -71,6 +77,7 @@ public class GunScriptableObject : ScriptableObject
                 AudioConfig.PlayOutOfAmmoClip(ShootingAudioSource);
                 return;
             }
+            //Play shoot animation spin ball fast//get component for animator//mess with var here to ramp up//swap back when no shoot
             ShootSystem.Play();
             AudioConfig.PlayShootingClip(ShootingAudioSource, AmmoConfig.CurrentClipAmmo == 1);
 
@@ -79,6 +86,18 @@ public class GunScriptableObject : ScriptableObject
                     Random.Range(-ShootConfig.Spread.y,ShootConfig.Spread.y),
                     Random.Range(-ShootConfig.Spread.z, ShootConfig.Spread.z)
                 );
+            if(ShootConfig.ShootType == ShootType.FromGun)
+            {
+                shootDirection = ShootSystem.transform.forward + new Vector3(
+                    Random.Range(-ShootConfig.Spread.x,ShootConfig.Spread.x),
+                    Random.Range(-ShootConfig.Spread.y,ShootConfig.Spread.y),
+                    Random.Range(-ShootConfig.Spread.z, ShootConfig.Spread.z)
+                );
+            }
+            else
+            {
+                shootDirection = ActiveCamera.transform.forward + ActiveCamera.transform.TransformDirection(shootDirection);
+            }
 
             shootDirection.Normalize();
             AmmoConfig.CurrentClipAmmo--; //TUTORIAL FOR RECOIL
@@ -132,7 +151,7 @@ public class GunScriptableObject : ScriptableObject
     }
     private void DoHitscanShoot(Vector3 ShootDirection)
     {
-            if(Physics.Raycast(ShootSystem.transform.position, ShootDirection, out RaycastHit hit, float.MaxValue, ShootConfig.HitMask))
+            if(Physics.Raycast(GetRaycastOrigin(), ShootDirection, out RaycastHit hit, float.MaxValue, ShootConfig.HitMask))
             {
                 ActiveMonoBehavior.StartCoroutine(PlayTrail
                 (ShootSystem.transform.position,hit.point,hit));
@@ -154,6 +173,13 @@ public class GunScriptableObject : ScriptableObject
        Bullet bullet = BulletPool.Get();
        bullet.gameObject.SetActive(true);
        bullet.OnCollision += HandleBulletCollision;
+
+       if(ShootConfig.ShootType ==  ShootType.FromCamera && Physics.Raycast(GetRaycastOrigin(),ShootDirection, out RaycastHit hit, float.MaxValue, ShootConfig.HitMask))
+       {
+            Vector3 directionToHit = (hit.point - ShootSystem.transform.position).normalized;
+            Model.transform.forward = directionToHit;
+            ShootDirection = directionToHit;
+       }
        bullet.transform.position = ShootSystem.transform.position;
        bullet.Spawn(ShootDirection * ShootConfig.BulletSpawnForce);
 
@@ -166,6 +192,22 @@ public class GunScriptableObject : ScriptableObject
             trail.gameObject.SetActive(true);
        }
 
+    }
+    public Vector3 GetRaycastOrigin()
+    {
+        Vector3 origin = ShootSystem.transform.position;
+        if(ShootConfig.ShootType == ShootType.FromCamera)
+        {
+            origin =  ActiveCamera.transform.position + ActiveCamera.transform.forward * Vector3.Distance(
+                ActiveCamera.transform.position,
+                ShootSystem.transform.position
+            );
+        }
+        return origin;
+    }
+    public Vector3 GetGunForward()
+    {
+        return Model.transform.forward;
     }
 
     private IEnumerator PlayTrail(Vector3 StartPoint,Vector3 EndPoint, RaycastHit Hit)
