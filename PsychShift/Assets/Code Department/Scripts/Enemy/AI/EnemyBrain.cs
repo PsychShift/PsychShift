@@ -5,7 +5,7 @@ using StateMachine;
 using System;
 
 using CharacterInfo = Player.CharacterInfo;
-[RequireComponent(typeof(CharacterInfoReference))]
+[RequireComponent(typeof(CharacterInfoReference), typeof(TempGravity))]
 public abstract class EnemyBrain : MonoBehaviour
 {
     [Tooltip("If this is true, the enemy will stand in one spot, if false, it will require a patrol path")]
@@ -111,6 +111,34 @@ public abstract class EnemyBrain : MonoBehaviour
         return false;
     }
 
+    protected abstract void SetUp();
+
+    void OnEnable()
+    {
+        SetUp();
+        characterInfo.agent.enabled = true;
+        if(!characterInfo.controller.isGrounded)
+        {
+            Debug.Log("agent disabled");
+            characterInfo.agent.enabled = false;
+            GetComponent<TempGravity>().enabled = true;
+            StartCoroutine(WaitTillGrounded());
+        }
+    }
+    void OnDisable()
+    {
+        characterInfo.agent.enabled = false;
+    }
+    private IEnumerator WaitTillGrounded()
+    {
+        while(!characterInfo.controller.isGrounded)
+        {
+            yield return null;
+        }
+        GetComponent<TempGravity>().enabled = false;
+        characterInfo.agent.enabled = true;
+    }
+
 
     private bool IsPlayerInRange()
     {
@@ -120,14 +148,14 @@ public abstract class EnemyBrain : MonoBehaviour
 
 
 
-    void OnDrawGizmos()
+    /* void OnDrawGizmos()
     {
         if(!Application.isPlaying || !isActive) return;
         Gizmos.color = Color.red;
         Gizmos.DrawLine(characterInfo.cameraRoot.position, characterInfo.cameraRoot.position + (characterInfo.cameraRoot.forward * agression.SphereCastDetectionRadius));
         Gizmos.color = Color.blue;
 
-    }
+    } */
 
     public void CreateDebugSphere()
     {

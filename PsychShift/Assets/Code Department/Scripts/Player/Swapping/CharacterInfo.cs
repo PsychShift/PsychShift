@@ -10,6 +10,7 @@ namespace Player
         public GameObject model;
         public Transform wallCheck;
         public Transform cameraRoot;
+        public Cinemachine.CinemachineVirtualCamera vCam;
 
         public CharacterController controller;
         public NavMeshAgent agent;
@@ -17,14 +18,17 @@ namespace Player
         public CharacterMovementStatsSO movementStats;
         public CharacterStatsSO characterStats;
 
+        [HideInInspector] public EnemyBrain enemyBrain;
+
         public CharacterInfo(GameObject characterContainer)
         {
             this.characterContainer = characterContainer;
             model = characterContainer.transform.Find("Model").gameObject;
             wallCheck = characterContainer.transform.Find("WallCheck");
             cameraRoot = characterContainer.transform.Find("CameraRoot");
+            enemyBrain = characterContainer.GetComponent<EnemyBrain>();
         }
-        public CharacterInfo(GameObject characterContainer, CharacterMovementStatsSO movementStats, CharacterStatsSO characterStats)
+        public CharacterInfo(GameObject characterContainer, Cinemachine.CinemachineVirtualCamera vCam, CharacterMovementStatsSO movementStats, CharacterStatsSO characterStats)
         {
             this.characterContainer = characterContainer;
             model = characterContainer.transform.Find("Model").gameObject;
@@ -35,7 +39,10 @@ namespace Player
             if(cameraRoot == null) Debug.LogError($"CameraRoot is null: Confirm the Character {characterContainer.name} has a child named CameraRoot!");
 
             controller = characterContainer.GetComponent<CharacterController>();
+            enemyBrain = characterContainer.GetComponent<EnemyBrain>();
             agent = characterContainer.GetComponent<NavMeshAgent>();
+
+            this.vCam = vCam;
 
             this.movementStats = movementStats;
             this.characterStats = characterStats;

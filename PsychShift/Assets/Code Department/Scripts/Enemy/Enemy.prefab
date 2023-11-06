@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 176710509250746110}
   - component: {fileID: 8605567475765216567}
   - component: {fileID: 1980412459526967793}
+  - component: {fileID: 1004847536629043803}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Swapable
@@ -53,6 +54,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3652a379cedfb44c88af295d2b3afab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGaurd: 0
+  isActive: 1
   playerLayer:
     serializedVersion: 2
     m_Bits: 32768
@@ -62,10 +65,12 @@ MonoBehaviour:
     model: {fileID: 0}
     wallCheck: {fileID: 0}
     cameraRoot: {fileID: 0}
+    vCam: {fileID: 0}
     controller: {fileID: 0}
     agent: {fileID: 0}
     movementStats: {fileID: 0}
     characterStats: {fileID: 0}
+    enemyBrain: {fileID: 0}
   isMelee: 1
   player: {fileID: 0}
   patrolPoints: []
@@ -81,6 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4eb9612a68d2a7449f9fba599ee454e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vCamPrefab: {fileID: 6664049937413521787, guid: 1fee070a29b7fdb4d8264b94a0a241ee, type: 3}
   movementStats: {fileID: 11400000, guid: 6093f7d923c68114189090b1e5c00027, type: 2}
   characterStats: {fileID: 11400000, guid: 8bc2c5fcc110fcb4984da5a12cb56fb3, type: 2}
   characterInfo:
@@ -88,10 +94,12 @@ MonoBehaviour:
     model: {fileID: 0}
     wallCheck: {fileID: 0}
     cameraRoot: {fileID: 0}
+    vCam: {fileID: 0}
     controller: {fileID: 0}
     agent: {fileID: 0}
     movementStats: {fileID: 0}
     characterStats: {fileID: 0}
+    enemyBrain: {fileID: 0}
 --- !u!114 &7540109023965677844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +190,18 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 2.25, z: 0}
+--- !u!114 &1004847536629043803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115607342825376186}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a486d3e02892b547beb5033b4055f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8478235208069757745
 GameObject:
   m_ObjectHideFlags: 0

@@ -135,7 +135,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""0e4f2a0d-10b4-4b53-9891-a6827d860049"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=18,y=14)"",
                     ""groups"": ""Controller"",
                     ""action"": ""Look"",
                     ""isComposite"": false,

@@ -23,11 +23,10 @@ namespace Player
         private WallStateVariables wallVariables;
         private CinemachineTiltExtension cameraTilt;
 
-        public WallRunState(PlayerStateMachine playerStateMachine, MonoBehaviour monoBehaviour, CinemachineTiltExtension cameraTilt)
+        public WallRunState(PlayerStateMachine playerStateMachine, MonoBehaviour monoBehaviour)
         {
             this.playerStateMachine = playerStateMachine;
             this.monoBehaviour = monoBehaviour;
-            this.cameraTilt = cameraTilt;
             wallVariables = WallStateVariables.Instance;
         }
 
@@ -49,6 +48,7 @@ namespace Player
 
         public void OnEnter()
         {
+            cameraTilt = currentCharacter.vCam.GetComponent<CinemachineTiltExtension>();
             currentCharacter = playerStateMachine.currentCharacter;
             monoBehaviour.StartCoroutine(SetNormal());
             this.WallSpeed = playerStateMachine.WallSpeed;

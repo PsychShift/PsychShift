@@ -13,12 +13,7 @@ public class BasicEnemy : EnemyBrain
     [SerializeField] private List<Vector3> patrolPoints;
     [HideInInspector] public int CurrentPatrolPointIndex { get; set; } = 0;
     
-    void Awake()
-    {
-        if(!isActive) return;
-        SetUp();
-    }
-    private void SetUp()
+    protected override void SetUp()
     {
         characterInfo = GetComponent<CharacterInfoReference>().characterInfo;
         VariableSetup();
@@ -26,8 +21,8 @@ public class BasicEnemy : EnemyBrain
     }
     void Update()
     {
-        if(!isActive) return;
-        stateMachine.Tick();
+        if(characterInfo.agent.enabled)
+            stateMachine.Tick();
     }
 
     public override void StateMachineSetup()
@@ -50,5 +45,6 @@ public class BasicEnemy : EnemyBrain
         else
             stateMachine.SetState(patrolState);
     }
-    
+
+
 }

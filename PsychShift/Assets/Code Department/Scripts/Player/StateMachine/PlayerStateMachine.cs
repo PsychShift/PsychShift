@@ -13,7 +13,7 @@ namespace Player
         #region References
         [Header("Look Speeds")]
         //[SerializeField] private float vertLookSpeed = 300, horzLookSpeed = 300, slowVertLookSpeed = 150, slowHorzLookSpeed = 150;
-        public CinemachineVirtualCamera virtualCamera;
+        //public CinemachineVirtualCamera virtualCamera;
         private StateMachine.StateMachine stateMachine;
         public Transform cameraTransform;
         #endregion
@@ -106,7 +106,7 @@ namespace Player
             cameraTransform.GetComponent<CinemachineBrain>().m_IgnoreTimeScale = false;
             SwapCharacter(tempCharacter);
 
-            virtualCamera.Follow = currentCharacter.cameraRoot;
+            //virtualCamera.Follow = currentCharacter.cameraRoot;
 
             
             stateMachine = new StateMachine.StateMachine();
@@ -130,7 +130,7 @@ namespace Player
             var idleState = new IdleState(this);
             var walkState = new WalkState(this);
 
-            var wallRunState = new WallRunState(this, this, virtualCamera.GetComponent<CinemachineTiltExtension>());
+            var wallRunState = new WallRunState(this, this);
             var vaultState = new VaultState(this);
             var mantleState = new MantleState(this);
             var wallHangState = new WallHangState(this);
@@ -230,7 +230,7 @@ namespace Player
 
             //Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.GetPlayerMovement().magnitude == 0;
             Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft;
-            Func<bool> Ledge() => () => WallStateVariables.Instance.LedgeDetection(currentCharacter, cameraTransform) && WallStateVariables.Instance.ForwardWall && StaticMode;
+            //Func<bool> Ledge() => () => WallStateVariables.Instance.LedgeDetection(currentCharacter, cameraTransform) && WallStateVariables.Instance.ForwardWall && StaticMode;
             Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.IsJumpPressed && StaticMode;
 
             stateMachine.SetState(groundState);
@@ -299,6 +299,7 @@ namespace Player
             SlowMotion(false);
             if(currentCharacter != null)
             {
+                currentCharacter.enemyBrain.enabled = true;
                 currentCharacter.characterContainer.GetComponent<CharacterInfoReference>().DeactivateCharacter();
             } 
 
@@ -306,7 +307,8 @@ namespace Player
             newCharacterInfoReference.ActivateCharacter();
 
             currentCharacter = newCharacterInfoReference.characterInfo;
-            virtualCamera.Follow = currentCharacter.cameraRoot;
+            currentCharacter.enemyBrain.enabled = false;
+            //virtualCamera.Follow = currentCharacter.cameraRoot;
 
             /* 
             FIND A WAY TO MAKE THE CAMERA LOOK IN THE DIRECTINO THE NEW BODY IS LOOKING

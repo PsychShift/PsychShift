@@ -8,7 +8,7 @@ using System.Data.Common;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private CinemachinePOVExtension cinemachinePOVExtension;
+    //[SerializeField] private CinemachinePOVExtension cinemachinePOVExtension;
     private static InputManager _instance;
     
     public static InputManager Instance {
@@ -69,7 +69,7 @@ public class InputManager : MonoBehaviour
     bool switchFromController = false;
     private void Update()
     {
-        if(PlayerInput.currentControlScheme == "Keyboard" && switchFromController)
+        /* if(PlayerInput.currentControlScheme == "Keyboard" && switchFromController)
         {
             // Set to PC sensitivity
             cinemachinePOVExtension.horizontalSpeed = 10f;
@@ -84,7 +84,7 @@ public class InputManager : MonoBehaviour
             cinemachinePOVExtension.verticalSpeed = 140f;
             switchFromController = true;
             switchFromKeyboard = false;
-        }
+        } */
     }
 
     private void OnEnable() {
