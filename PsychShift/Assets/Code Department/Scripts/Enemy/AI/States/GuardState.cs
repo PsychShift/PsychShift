@@ -20,7 +20,7 @@ public class GuardState : IState
 
     public void OnEnter()
     {
-        brain.characterInfo.agent.SetDestination(startPosition);
+        brain.CharacterInfo.agent.SetDestination(startPosition);
     }
 
     public void OnExit()

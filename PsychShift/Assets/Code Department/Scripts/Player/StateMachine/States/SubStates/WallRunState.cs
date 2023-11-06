@@ -48,8 +48,9 @@ namespace Player
 
         public void OnEnter()
         {
-            cameraTilt = currentCharacter.vCam.GetComponent<CinemachineTiltExtension>();
+            Debug.Log("CameraTilt: " + cameraTilt);
             currentCharacter = playerStateMachine.currentCharacter;
+            cameraTilt = currentCharacter.vCam.GetComponent<CinemachineTiltExtension>();
             monoBehaviour.StartCoroutine(SetNormal());
             this.WallSpeed = playerStateMachine.WallSpeed;
         }

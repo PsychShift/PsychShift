@@ -50,11 +50,12 @@ namespace Player
         public override string ToString()
         {
             return $"CharacterInfo:\n" +
-                $"CharacterContainer: {characterContainer}\n" +
-                $"Model: {model.transform.position}\n" +
+                $"CharacterContainer: {characterContainer.name}\n" +
+                $"Model: {model.transform.name}\n" +
                 $"Wall Check: {wallCheck.position}\n" +
                 $"CameraRoot: {cameraRoot.position}\n" +
-                $"Controller: {controller}";
+                $"Controller: {controller}\n" +
+                $"vCam: {vCam}";
         }
     }
 }

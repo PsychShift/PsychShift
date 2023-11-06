@@ -8,13 +8,10 @@ public class CinemachinePOVExtension : CinemachineExtension
     public float verticalSpeed = 10f;
     [SerializeField]
     private float clampAngle = 80f;
-    private InputManager inputManager;
     private Vector3 startingRotation;
 
     protected override void Awake()
     {
-
-        inputManager = InputManager.Instance;
         if(startingRotation == null) startingRotation = transform.localRotation.eulerAngles;
         base.Awake();
     }
@@ -24,7 +21,7 @@ public class CinemachinePOVExtension : CinemachineExtension
         {
             if(stage == CinemachineCore.Stage.Aim)
             {
-                Vector2 deltaInput = inputManager.GetMouseDelta();
+                Vector2 deltaInput = InputManager.Instance.GetMouseDelta();
                 startingRotation.x += deltaInput.x * horizontalSpeed * Time.deltaTime;
                 startingRotation.y += deltaInput.y * verticalSpeed * Time.deltaTime;
                 startingRotation.y = Mathf.Clamp(startingRotation.y, -clampAngle, clampAngle);

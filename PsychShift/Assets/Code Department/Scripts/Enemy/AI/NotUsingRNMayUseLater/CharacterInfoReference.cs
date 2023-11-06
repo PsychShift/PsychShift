@@ -14,27 +14,37 @@ public class CharacterInfoReference : MonoBehaviour
     public CharacterStatsSO characterStats;
 
     [Header("Filled in at runtime")]
-    public CharacterInfo characterInfo;
+    private CharacterInfo _characterInfo;
+    public CharacterInfo characterInfo {
+        get {
+            if(_characterInfo == null)
+            {
+                SetUp();
+            }
+            return _characterInfo;
+        }
+    }
 
     private GameObject vCamParent;
     private CinemachineVirtualCamera vCam;
 
-    void Awake()
+    private void SetUp()
     {
         if(vCamPrefab == null) Debug.LogError("vCamPrefab is null, please fill in in editor. Otherwise the game won't work. Which is bad. Please fix it now. Thank you. Have you done it yet? Ok good. \n It's located at Assets/Code Department/Scripts/Player/Swapping");
-        
-        vCamParent = Instantiate(vCamPrefab);
-        vCamParent.transform.SetParent(transform);
-        vCamParent.SetActive(false);
-        vCam = vCamParent.GetComponent<CinemachineVirtualCamera>();
+        else
+        {
+            vCamParent = Instantiate(vCamPrefab);
+            vCamParent.transform.SetParent(transform);
+            vCamParent.SetActive(false);
+            vCam = vCamParent.GetComponent<CinemachineVirtualCamera>();
+        }
 
-        characterInfo = new CharacterInfo(gameObject, vCam, movementStats, characterStats);
+        _characterInfo = new CharacterInfo(gameObject, vCam, movementStats, characterStats);
         vCam.Follow = characterInfo.cameraRoot;
     }
 
     public void ActivateCharacter()
     {
-        Debug.Log("Activating Character: " + characterInfo.characterContainer.name);
         vCamParent.SetActive(true);
         characterInfo.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
         characterInfo.characterContainer.GetComponent<EnemyBrain>().enabled = false;
@@ -47,7 +57,6 @@ public class CharacterInfoReference : MonoBehaviour
 
     public void DeactivateCharacter()
     {
-        Debug.Log("Deactivating Character: " + characterInfo.characterContainer.name);
         vCamParent.SetActive(false);
         characterInfo.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
         characterInfo.characterContainer.GetComponent<EnemyBrain>().enabled = true;
@@ -56,5 +65,10 @@ public class CharacterInfoReference : MonoBehaviour
 
         characterInfo.characterContainer.tag = "Swapable";
         characterInfo.characterContainer.layer = LayerMask.NameToLayer("Character");
+    }
+
+    public override string ToString()
+    {
+        return characterInfo.ToString();
     }
 }

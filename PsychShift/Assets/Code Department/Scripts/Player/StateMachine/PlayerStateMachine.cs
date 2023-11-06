@@ -93,7 +93,7 @@ namespace Player
         private bool isSlowed = false;
         #endregion
         [SerializeField] private GameObject tempCharacter;
-        public CharacterInfo currentCharacter { get; set; }
+        public CharacterInfo currentCharacter;
         #region Monobehaviours
         private void Awake()
         {
@@ -104,6 +104,7 @@ namespace Player
             SetJumpVariables();
             cameraTransform = Camera.main.transform;
             cameraTransform.GetComponent<CinemachineBrain>().m_IgnoreTimeScale = false;
+            currentCharacter = null;
             SwapCharacter(tempCharacter);
 
             //virtualCamera.Follow = currentCharacter.cameraRoot;
@@ -295,19 +296,27 @@ namespace Player
         }
         public void SwapCharacter(GameObject newCharacter)
         {
+            Debug.Log("Swap Character called");
             if(newCharacter == null) return;
+            Debug.Log("Got past first guard");
             SlowMotion(false);
+            Debug.Log("slow motion isn't doing it");
             if(currentCharacter != null)
             {
+                Debug.Log("in the currentCharacter != null if statement");
                 currentCharacter.enemyBrain.enabled = true;
                 currentCharacter.characterContainer.GetComponent<CharacterInfoReference>().DeactivateCharacter();
+                Debug.Log("reached the end of the if statement");
             } 
-
+            Debug.Log("the != null if statement isn't doing it");
             CharacterInfoReference newCharacterInfoReference = newCharacter.GetComponent<CharacterInfoReference>();
+            
+            Debug.LogWarning("CharacterInfoReference: " + newCharacterInfoReference);
             newCharacterInfoReference.ActivateCharacter();
 
             currentCharacter = newCharacterInfoReference.characterInfo;
             currentCharacter.enemyBrain.enabled = false;
+            Debug.Log("enemy brain turned off");
             //virtualCamera.Follow = currentCharacter.cameraRoot;
 
             /* 

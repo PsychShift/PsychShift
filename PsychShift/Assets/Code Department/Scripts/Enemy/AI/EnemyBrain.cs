@@ -15,7 +15,16 @@ public abstract class EnemyBrain : MonoBehaviour
     [SerializeField] protected LayerMask playerLayer;
     protected StateMachine.StateMachine stateMachine;
     public AIAgression agression;
-    public CharacterInfo characterInfo;
+    private CharacterInfo characterInfo;
+    public CharacterInfo CharacterInfo {
+        get {
+            if(characterInfo == null)
+            {
+                characterInfo = GetComponent<CharacterInfoReference>().characterInfo;
+            }
+            return characterInfo;
+        }
+    }
     public bool isMelee;
     protected float attackRange;
 
@@ -28,7 +37,7 @@ public abstract class EnemyBrain : MonoBehaviour
     protected void VariableSetup()
     {
         attackRange = isMelee ? 1f : 40f;
-        characterInfo.agent.speed = characterInfo.movementStats.moveSpeed;
+        CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
     }
 
     protected void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition);
@@ -62,8 +71,8 @@ public abstract class EnemyBrain : MonoBehaviour
 
     private bool IsPlayerInSight()
     {
-        Physics.SphereCast(characterInfo.cameraRoot.position, agression.SphereCastDetectionRadius, 
-        characterInfo.cameraRoot.forward, out RaycastHit hit, agression.DetectionRange, layerMask: playerLayer);
+        Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius, 
+        CharacterInfo.cameraRoot.forward, out RaycastHit hit, agression.DetectionRange, layerMask: playerLayer);
         if(hit.collider == null) return false;
         if(hit.collider.tag == "Player")
         {
@@ -81,8 +90,8 @@ public abstract class EnemyBrain : MonoBehaviour
         // Cast a sphere slightly to the right of transform.forward
         Vector3 rightDirection = Quaternion.Euler(0, 20, 0) * transform.forward;
 
-        Physics.SphereCast(characterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
-        characterInfo.cameraRoot.forward, out RaycastHit hit, agression.DetectionRange, layerMask: playerLayer);
+        Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
+        CharacterInfo.cameraRoot.forward, out RaycastHit hit, agression.DetectionRange, layerMask: playerLayer);
         if (hit.collider == null) return false;
         if (hit.collider.tag == "Player")
         {
@@ -90,7 +99,7 @@ public abstract class EnemyBrain : MonoBehaviour
             return true;
         }
 
-        Physics.SphereCast(characterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
+        Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
         leftDirection, out hit, agression.DetectionRange, layerMask: playerLayer);
         if (hit.collider == null) return false;
         if (hit.collider.tag == "Player")
@@ -99,7 +108,7 @@ public abstract class EnemyBrain : MonoBehaviour
             return true;
         }
 
-        Physics.SphereCast(characterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
+        Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
         rightDirection, out hit, agression.DetectionRange, layerMask: playerLayer);
         if (hit.collider == null) return false;
         if (hit.collider.tag == "Player")
@@ -116,33 +125,32 @@ public abstract class EnemyBrain : MonoBehaviour
     void OnEnable()
     {
         SetUp();
-        characterInfo.agent.enabled = true;
-        if(!characterInfo.controller.isGrounded)
+        CharacterInfo.agent.enabled = true;
+        if(!CharacterInfo.controller.isGrounded)
         {
-            Debug.Log("agent disabled");
-            characterInfo.agent.enabled = false;
+            CharacterInfo.agent.enabled = false;
             GetComponent<TempGravity>().enabled = true;
             StartCoroutine(WaitTillGrounded());
         }
     }
     void OnDisable()
     {
-        characterInfo.agent.enabled = false;
+        CharacterInfo.agent.enabled = false;
     }
     private IEnumerator WaitTillGrounded()
     {
-        while(!characterInfo.controller.isGrounded)
+        while(!CharacterInfo.controller.isGrounded)
         {
             yield return null;
         }
         GetComponent<TempGravity>().enabled = false;
-        characterInfo.agent.enabled = true;
+        CharacterInfo.agent.enabled = true;
     }
 
 
     private bool IsPlayerInRange()
     {
-        float distance = Vector3.Distance(transform.position, characterInfo.characterContainer.transform.position);
+        float distance = Vector3.Distance(transform.position, CharacterInfo.characterContainer.transform.position);
         return distance <= attackRange;
     }
 

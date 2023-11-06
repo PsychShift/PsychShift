@@ -31,7 +31,7 @@ public class ChaseState : IState
     {
         while (true)
         {
-            brain.characterInfo.agent.SetDestination(brain.player.transform.position);
+            brain.CharacterInfo.agent.SetDestination(brain.player.transform.position);
             yield return new WaitForSeconds(0.5f);
         }
     }

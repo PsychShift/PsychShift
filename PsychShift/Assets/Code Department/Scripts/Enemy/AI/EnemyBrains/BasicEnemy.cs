@@ -15,13 +15,13 @@ public class BasicEnemy : EnemyBrain
     
     protected override void SetUp()
     {
-        characterInfo = GetComponent<CharacterInfoReference>().characterInfo;
         VariableSetup();
         StateMachineSetup();
     }
+
     void Update()
     {
-        if(characterInfo.agent.enabled)
+        if(CharacterInfo.agent.enabled)
             stateMachine.Tick();
     }
 
