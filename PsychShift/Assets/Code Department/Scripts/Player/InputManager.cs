@@ -190,12 +190,19 @@ public class InputManager : MonoBehaviour
     {
         if (context.started)
         {
-            OnSwitchPressed?.Invoke(true);
-        }
-        else if (context.canceled)
-        {
+            if(_switch)
+            {
+                OnSwitchPressed?.Invoke(true);
+            }
+            else
             OnSwitchPressed?.Invoke(false);
+            _switch = !_switch;
         }
+        //else if (context.canceled)
+        //{
+            //OnSwitchPressed?.Invoke(false);
+        //}
+
     }
 
     public void SwapControlMap(ActionMapEnum currentMap)
