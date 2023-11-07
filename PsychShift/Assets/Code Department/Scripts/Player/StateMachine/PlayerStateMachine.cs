@@ -484,11 +484,11 @@ namespace Player
 
         public void SwitchMode(bool trySetStatic)
         {
-            if(StaticBar.instance.currentStatic < 1)
-            {
+            //if(StaticBar.instance.currentStatic < 1)
+            //{
 
-                trySetStatic = false;
-            }
+                //trySetStatic = false;
+            //}
 
 
             StaticMode = trySetStatic;
