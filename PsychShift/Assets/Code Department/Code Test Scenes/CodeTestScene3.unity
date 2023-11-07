@@ -1978,11 +1978,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4988784259003535794, guid: 681d59a0e2492544cb7859b659726fca, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1
+      value: -27
       objectReference: {fileID: 0}
     - target: {fileID: 4988784259003535794, guid: 681d59a0e2492544cb7859b659726fca, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -5
+      value: -105
       objectReference: {fileID: 0}
     - target: {fileID: 4988784259003535794, guid: 681d59a0e2492544cb7859b659726fca, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4719,8 +4719,8 @@ MonoBehaviour:
   godBoxRef: {fileID: 1980982840}
   Notes2: Actions below
   interact: 0
-  pressurePlate: 1
-  shootObj: 0
+  pressurePlate: 0
+  shootObj: 1
   Notes3: Reactions below
   move: 1
   spawn: 0
@@ -6309,7 +6309,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50581b4e38f51aa47a17c160399e0f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cinemachinePOVExtension: {fileID: 89379708}
 --- !u!114 &2001707695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6322,7 +6321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a815d17123dea654ba70be0be0fcbf8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 89379710}
   cameraTransform: {fileID: 76088131}
   walkSpeed: 25
   smoothInputSpeed: 0.1
@@ -6355,6 +6353,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   tempCharacter: {fileID: 2107287137}
+  currentCharacter:
+    characterContainer: {fileID: 0}
+    model: {fileID: 0}
+    wallCheck: {fileID: 0}
+    cameraRoot: {fileID: 0}
+    vCam: {fileID: 0}
+    controller: {fileID: 0}
+    agent: {fileID: 0}
+    movementStats: {fileID: 0}
+    characterStats: {fileID: 0}
+    enemyBrain: {fileID: 0}
 --- !u!4 &2001707696
 Transform:
   m_ObjectHideFlags: 0

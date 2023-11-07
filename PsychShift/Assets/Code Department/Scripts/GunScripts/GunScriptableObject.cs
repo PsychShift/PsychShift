@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+
 //using System.Numerics;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -50,13 +52,18 @@ public class GunScriptableObject : ScriptableObject
 
         ShootSystem = Model.GetComponentInChildren<ParticleSystem>();
         ShootingAudioSource = Model.GetComponent<AudioSource>();//gets weapon audio stuff   
+    } 
+    public void DespawnGun()
+    {
+        Destroy(Model);
+        //throw new System.NotImplementedException();
     }
 
     public void UpdateCamera(Camera ActivateCamera)
     {
         this.ActiveCamera = ActivateCamera;
     }
-    public void TryToShoot()
+    public void TryToShoot(bool isEnemy)//Calls for bool to detect if enemy
     {
         //Last shoot time matches with time.time when shooting// whenever fire rate is added it doesn't allow for shoot system to activate waits until time is greater to fire again
         /*if(Time.time - LastShootTime - ShootConfig.FireRate > Time.deltaTime)
@@ -100,7 +107,8 @@ public class GunScriptableObject : ScriptableObject
             }
 
             shootDirection.Normalize();
-            AmmoConfig.CurrentClipAmmo--; //TUTORIAL FOR RECOIL
+            if(isEnemy == true)
+                AmmoConfig.CurrentClipAmmo--; //TUTORIAL FOR RECOIL
 
             if(ShootConfig.IsHitscan)
             {
@@ -139,7 +147,7 @@ public class GunScriptableObject : ScriptableObject
         if(WantsToShoot)
         {
             //LastFrameWantedToShoot = true;
-            TryToShoot();
+            TryToShoot(false);//Calls false cuz player calls from tick
 
         }
 
@@ -311,5 +319,4 @@ public class GunScriptableObject : ScriptableObject
     {
         return Instantiate(ShootConfig.BullerPrefab);
     }
-
 }

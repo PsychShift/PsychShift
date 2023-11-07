@@ -28,13 +28,37 @@ public class PlayerGunSelector : MonoBehaviour
             return;
         }
         ActiveGun = gun;
+        if(Camera !=null)
+            gun.Spawn(GunParent, this, Camera);
+        else//NEEDS CAMERA??? but might work without idk
+            gun.Spawn(GunParent,this,null);
+        //currentBullets = gun.AmmoConfig.CurrentClipAmmo;//Temp fix
+
+        //Inverse kinematic stuff should go here but idk if we're doing all that
+   }
+
+
+    public void SetGun(GunScriptableObject gun) 
+    {
+        
+        if(gun == null)
+        {
+            Debug.LogError($"No GunScriptableObjec found for GunType: {gun}");
+            return;
+        }
+        if(ActiveGun !=null)
+        {
+            ActiveGun.DespawnGun();
+        }
+        ActiveGun = gun;
         gun.Spawn(GunParent, this, Camera);
         //currentBullets = gun.AmmoConfig.CurrentClipAmmo;//Temp fix
 
         //Inverse kinematic stuff should go here but idk if we're doing all that
 
 
-   }
+    }
+
 
 
 }
