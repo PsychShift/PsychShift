@@ -305,7 +305,6 @@ public class GunScriptableObject : ScriptableObject
         trail.emitting = false;
         trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         return trail;
-
     }
 
     private Bullet CreateBullet()

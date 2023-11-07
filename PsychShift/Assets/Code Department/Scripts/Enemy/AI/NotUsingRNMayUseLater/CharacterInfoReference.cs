@@ -7,6 +7,7 @@ using CharacterInfo = Player.CharacterInfo;
 public class CharacterInfoReference : MonoBehaviour
 {
     [Header("VERY IMPORTANT MUST FILL IN IN EDITOR")]
+    [Tooltip("This is a thing that does stuff")]
     public GameObject vCamPrefab;
 
     [Header("Filled in in editor ATM")]
