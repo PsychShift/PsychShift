@@ -5,6 +5,8 @@ using Cinemachine;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using System.Linq;
+using System.Collections;
+using UnityEngine.Animations;
 namespace Player
 {
     [RequireComponent(typeof(InputManager))]
@@ -87,6 +89,8 @@ namespace Player
         // Create a BoxCast to check for objects with the "Swapable" tag.
         Vector3 boxHalfExtents = new Vector3(2f, 2f, 2f);
         Quaternion boxRotation;
+
+        private ParticleSystem mindSwapTunnel;
         #endregion
         
         #region  Slow Variables
@@ -104,6 +108,9 @@ namespace Player
             SetJumpVariables();
             cameraTransform = Camera.main.transform;
             cameraTransform.GetComponent<CinemachineBrain>().m_IgnoreTimeScale = false;
+            mindSwapTunnel = cameraTransform.GetComponentInChildren<ParticleSystem>();
+            mindSwapTunnel.Stop();
+            
             currentCharacter = null;
             SwapCharacter(tempCharacter);
 
@@ -296,35 +303,67 @@ namespace Player
         }
         public void SwapCharacter(GameObject newCharacter)
         {
-            Debug.Log("Swap Character called");
+            CharacterInfoReference newCharacterInfoReference = newCharacter.GetComponent<CharacterInfoReference>();
+            CharacterInfo newCharInfo = newCharacterInfoReference.characterInfo;
             if(newCharacter == null) return;
-            Debug.Log("Got past first guard");
             SlowMotion(false);
-            Debug.Log("slow motion isn't doing it");
             if(currentCharacter != null)
             {
-                Debug.Log("in the currentCharacter != null if statement");
-                currentCharacter.enemyBrain.enabled = true;
-                currentCharacter.characterContainer.GetComponent<CharacterInfoReference>().DeactivateCharacter();
-                Debug.Log("reached the end of the if statement");
-            } 
-            Debug.Log("the != null if statement isn't doing it");
-            CharacterInfoReference newCharacterInfoReference = newCharacter.GetComponent<CharacterInfoReference>();
+                CharacterInfoReference oldCharacterInfoReference = currentCharacter.characterContainer.GetComponent<CharacterInfoReference>();
+                StartCoroutine(SwapAnimation(currentCharacter.cameraRoot.transform, 
+                newCharacterInfoReference.characterInfo.cameraRoot.transform, 
+                oldCharacterInfoReference, newCharacterInfoReference));
+
+                currentCharacter = newCharInfo;
+            }
+            else
+            {
+                newCharacterInfoReference.vCamParent.SetActive(true);
+                currentCharacter = newCharInfo;
+                currentCharacter.enemyBrain.enabled = false;
+                newCharacterInfoReference.ActivateCharacter();
+            }
+
+        }
+        bool isSwapping = false;
+        // The movement of the camera is handled by Cinemachine, this is mostly for the particle effects and enabling/disabling the enemy ai.
+        private IEnumerator SwapAnimation(Transform startTransform, Transform endTransform, CharacterInfoReference startCharacter, CharacterInfoReference endCharacter)
+        {
+            isSwapping = true;
+
+            // Instantiate the particle system at the camera's position and as a child of the camera
+            mindSwapTunnel.Play();
+            mindSwapTunnel.transform.parent.gameObject.GetComponent<RotationConstraint>().constraintActive = true;
+            // Play the particle system
             
-            Debug.LogWarning("CharacterInfoReference: " + newCharacterInfoReference);
-            newCharacterInfoReference.ActivateCharacter();
+            // Play the shocking particle effect on the heads of both the player and enemy.
+            // Disable both the start and end object ai
+            endCharacter.vCamParent.SetActive(true);
+            startCharacter.vCamParent.SetActive(false);
+            startCharacter.characterInfo.enemyBrain.enabled = false;
+            endCharacter.characterInfo.enemyBrain.enabled = false;
 
-            currentCharacter = newCharacterInfoReference.characterInfo;
-            currentCharacter.enemyBrain.enabled = false;
-            Debug.Log("enemy brain turned off");
-            //virtualCamera.Follow = currentCharacter.cameraRoot;
+            // Wait for the player to be far enough away from the startTransform to re enable its body
+            while(Vector3.Distance(startTransform.position, cameraTransform.position) < 1f)
+            {
+                yield return null;
+            }
+            startCharacter.DeactivateCharacter();
+            // now wait till the player is close enough to the endTransform to disable its body
+            while(Vector3.Distance(endTransform.position, cameraTransform.position) > 0.5f)
+            {
+                yield return null;
+            }
+            endCharacter.ActivateCharacter();
 
-            /* 
-            FIND A WAY TO MAKE THE CAMERA LOOK IN THE DIRECTINO THE NEW BODY IS LOOKING
-
-            virtualCamera.enabled = false;
-            cameraTransform.rotation = currentCharacter.model.transform.rotation;
-            virtualCamera.enabled = true; */
+            // Re enable the startTransforms ai component.
+            startCharacter.characterInfo.enemyBrain.enabled = true;
+            
+            // Destroy the particle system at the end of the swap animation
+            //Destroy(mindSwapTunnelInstance.gameObject);
+            mindSwapTunnel.Stop();
+            mindSwapTunnel.transform.parent.gameObject.GetComponent<RotationConstraint>().constraintActive = false;
+            isSwapping = false;
         }
         #endregion
 
@@ -399,6 +438,7 @@ namespace Player
 
         public virtual void RotatePlayer()
         {
+            if(isSwapping) return;
             Vector2 mouseDelta = InputManager.Instance.GetMouseDelta();
             Vector3 currentRotation = cameraTransform.localRotation.eulerAngles;
 

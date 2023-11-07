@@ -26,7 +26,7 @@ public class CharacterInfoReference : MonoBehaviour
         }
     }
 
-    private GameObject vCamParent;
+    public GameObject vCamParent;
     private CinemachineVirtualCamera vCam;
 
     private void SetUp()
@@ -46,10 +46,10 @@ public class CharacterInfoReference : MonoBehaviour
 
     public void ActivateCharacter()
     {
-        vCamParent.SetActive(true);
+        
         characterInfo.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
-        characterInfo.characterContainer.GetComponent<EnemyBrain>().enabled = false;
-        characterInfo.characterContainer.GetComponent<EnemyBrain>().isActive = false;
+        /* characterInfo.characterContainer.GetComponent<EnemyBrain>().enabled = false;
+        characterInfo.characterContainer.GetComponent<EnemyBrain>().isActive = false; */
         characterInfo.agent.enabled = false;
 
         characterInfo.characterContainer.layer = LayerMask.NameToLayer("Player");
@@ -58,10 +58,9 @@ public class CharacterInfoReference : MonoBehaviour
 
     public void DeactivateCharacter()
     {
-        vCamParent.SetActive(false);
         characterInfo.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
-        characterInfo.characterContainer.GetComponent<EnemyBrain>().enabled = true;
-        characterInfo.characterContainer.GetComponent<EnemyBrain>().isActive = true;
+        /* characterInfo.characterContainer.GetComponent<EnemyBrain>().enabled = true;
+        characterInfo.characterContainer.GetComponent<EnemyBrain>().isActive = true; */
         characterInfo.agent.enabled = true;
 
         characterInfo.characterContainer.tag = "Swapable";
