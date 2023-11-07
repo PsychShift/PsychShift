@@ -19,7 +19,7 @@ public class PuzzleKit : MonoBehaviour
 
 
     [TextArea]
-    public string Notes2 = "Actions below, pressurePlate needs a collider set to trigger to work";
+    public string Notes2 = "Actions below, pressurePlate/shoot needs a collider set to trigger to work, set a count number to tell code how many objects need to be activated before reaction.";
     //Actions
     [SerializeField]
     private bool interact;
@@ -27,6 +27,10 @@ public class PuzzleKit : MonoBehaviour
     private bool pressurePlate;
     [SerializeField]
     private bool shootObj;
+    [SerializeField]//Add this number on god box
+    int amountToActivate;
+    private bool activated;
+    private int activateCount=0;
 
     [TextArea]
     public string Notes3 = "Reactions below";
@@ -35,14 +39,14 @@ public class PuzzleKit : MonoBehaviour
     private bool move;
     [SerializeField]
     private bool spawn;
-    [SerializeField]
-    private bool count;
 
     [TextArea]
     public string moveVariables = "Variables that need to be filled in for move below";
     //Move variables 
-    [SerializeField]
-    Transform targetLocation;
+    //[SerializeField]
+    //Transform targetLocation;
+    //[SerializeField] private Vector3 startPosition; // Initial position of the object
+    [SerializeField] private Vector3 endPosition; 
     [SerializeField]
     float speedOfMove;
     private float startTime;
@@ -50,17 +54,17 @@ public class PuzzleKit : MonoBehaviour
     private bool movingActivated;
 
     [TextArea]
-    public string spawnVariables = "Variables that need to be filled in for Spawn below";
+    public string spawnVariables = "Variables that need to be filled in for Spawn below, set objects and location in godBox";
     //Spawn variables
     [SerializeField]
     GameObject[] spawnObjects;
-    [TextArea]
-    public string countVariables = "Variables that need to be filled in for count below";
-    //count variables
     [SerializeField]
-    int amountToActivate;
-    private bool activated;
-    private int activateCount;//counts how many items are activated
+    Transform locationOfSpawn;
+    [SerializeField]
+    bool isSpawnInf;
+    [SerializeField]
+    int howManySpawn;
+    int spawnCount;
 
 
 
@@ -86,7 +90,7 @@ public class PuzzleKit : MonoBehaviour
         if(godBox)
         {
             startTime = Time.time;
-            journeyLength = Vector3.Distance(transform.position, targetLocation.position);  
+            journeyLength = Vector3.Distance(transform.position, endPosition);  
         }
   
     }
@@ -94,10 +98,10 @@ public class PuzzleKit : MonoBehaviour
     {
         if(movingActivated && godBox)
         {
-            Vector3.Lerp(transform.position, targetLocation.position, speedOfMove);
+            Vector3.Lerp(transform.position, endPosition, speedOfMove);
             float distCovered = (Time.time - startTime) * speedOfMove;
             float fracJourney = distCovered / journeyLength;
-            transform.position = Vector3.Lerp(transform.position, targetLocation.position, fracJourney);
+            transform.position = Vector3.Lerp(transform.position, endPosition, fracJourney);
             if(fracJourney >= 1)
             {
                 movingActivated = false;
@@ -105,7 +109,7 @@ public class PuzzleKit : MonoBehaviour
         }
     }
 
-    public void Interact()
+/*     public void Interact()//Need raycast for this to work 
     {
         if(interact)
         {
@@ -117,12 +121,8 @@ public class PuzzleKit : MonoBehaviour
             {
                 SpawnObject();
             }
-            else if(count)
-            {
-                ThisActivate();
-            }
         }
-    }
+    } */
 /*     public void PressurePlate() //all done in onTriggerEnter
     {
         //detects how long you've been standing on something
@@ -138,14 +138,28 @@ public class PuzzleKit : MonoBehaviour
     public void Move()
     {
         //Moves object forward and back
-        godBoxRef.movingActivated = true;
-
+        movingActivated = true;
     }
 
     public void SpawnObject()
     {
-        //Spawns object after a puzzle is complete 
+        //Spawns object after a puzzle is complete
+        //if(isSpawnInf)
+        //{
+            for(int i = 0; i< spawnObjects.Length; i++) 
+                Instantiate(spawnObjects[i], locationOfSpawn.position, Quaternion.identity);
+        //}
+/*         else
+        {
+            if(spawnCount < howManySpawn)
+            {
+                for(int i = 0; i< spawnObjects.Length; i++) 
+                    Instantiate(spawnObjects[i], locationOfSpawn.position, Quaternion.identity);
+                spawnCount++;
+            }
+        }   */      
     }
+
     public void ThisActivate()
     {
         //activates something when called
@@ -153,57 +167,20 @@ public class PuzzleKit : MonoBehaviour
         //add to counter
         //Call this whenever an item is interacted with. NEEDS REF TO PUZZLE KIT
         if(godBox == false)
-        {
-            
+        {     
             if(activated == false)//activates this object and sends number to godBox.
             {
+                Debug.Log("Activated: " + godBoxRef.activateCount);
                 activated = true;
                 godBoxRef.activateCount++;
                 godBoxRef.ThisActivate();
-
             }
         }
-        else
+        else if(godBox == true)
         {
-
-            if(activateCount == amountToActivate)
+            if(activateCount == amountToActivate)//runs when called to check if everything is activated
             {
                 //Do whatever action is marked 
-                if(move)
-                {
-                    godBoxRef.Move();
-                }
-                else if(spawn)
-                {
-                    godBoxRef.SpawnObject();
-                }
-            }
-
-        }
-    }
-    private void OnTriggerEnter(Collider other)//used for pressure plate
-    {
-
-/*         if(move)
-        {
-            Move();
-        }
-        else if(spawn)
-        {
-            SpawnObject();
-        }
-        else if(count)
-        {
-            //send over to pressure plate 
-            
-            ThisActivate();
-        } */
-
-        if(shootObj)
-        {
-            if(other.GetComponent<Collider>().gameObject.layer == LayerMask.NameToLayer("Bullets"))
-            {
-                Debug.Log("Shot Ow");
                 if(move)
                 {
                     Move();
@@ -212,12 +189,26 @@ public class PuzzleKit : MonoBehaviour
                 {
                     SpawnObject();
                 }
-                else if(count)
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)//used for pressure plate
+    {
+        if(shootObj)
+        {
+            if(other.GetComponent<Collider>().gameObject.layer == LayerMask.NameToLayer("Bullets"))
+            {
+               /*  Debug.Log("Shot Ow");
+                if(move)
                 {
-                    //send over to pressure plate 
-            
-                    ThisActivate();
+                    Move();
                 }
+                else if(spawn)
+                {
+                    godBoxRef.SpawnObject();
+                } */
+                ThisActivate();
             }
             //send to reaction
         }
@@ -227,20 +218,16 @@ public class PuzzleKit : MonoBehaviour
             
             if(other.GetComponent<Collider>().gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                Debug.Log("Stepped on Plate");
+                /* Debug.Log("Stepped on Plate");
                 if(move)
                 {
                     Move();
                 }
                 else if(spawn)
                 {
-                    SpawnObject();
-                }
-                else if(count)
-                {
-                    //send over to pressure plate 
-                    ThisActivate();
-                }
+                    godBoxRef.SpawnObject();
+                } */
+                ThisActivate();
             }
         } 
     }

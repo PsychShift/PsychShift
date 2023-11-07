@@ -33,6 +33,7 @@ public class PlayerAction : MonoBehaviour
     }
     private void Shoot()
     {
+        //GunSelector.ActiveGun.TryToShoot();
         GunSelector.ActiveGun.Tick(GunSelector.ActiveGun != null);
     }
     //private void FixedUpdate() 

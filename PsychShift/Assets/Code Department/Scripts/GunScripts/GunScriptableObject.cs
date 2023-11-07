@@ -107,7 +107,7 @@ public class GunScriptableObject : ScriptableObject
             }
 
             shootDirection.Normalize();
-            if(isEnemy == true)
+            if(isEnemy == false)
                 AmmoConfig.CurrentClipAmmo--; //TUTORIAL FOR RECOIL
 
             if(ShootConfig.IsHitscan)
