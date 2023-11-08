@@ -28,10 +28,7 @@ public class PlayerGunSelector : MonoBehaviour
             return;
         }
         ActiveGun = gun;
-        if(Camera !=null)
-            gun.Spawn(GunParent, this, Camera);
-        else//NEEDS CAMERA??? but might work without idk
-            gun.Spawn(GunParent,this,null);
+        gun.Spawn(GunParent, this);
         //currentBullets = gun.AmmoConfig.CurrentClipAmmo;//Temp fix
 
         //Inverse kinematic stuff should go here but idk if we're doing all that
@@ -51,7 +48,7 @@ public class PlayerGunSelector : MonoBehaviour
             ActiveGun.DespawnGun();
         }
         ActiveGun = gun;
-        gun.Spawn(GunParent, this, Camera);
+        gun.Spawn(GunParent, this);
         //currentBullets = gun.AmmoConfig.CurrentClipAmmo;//Temp fix
 
         //Inverse kinematic stuff should go here but idk if we're doing all that

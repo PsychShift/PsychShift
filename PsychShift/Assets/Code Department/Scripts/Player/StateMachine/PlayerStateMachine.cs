@@ -366,8 +366,8 @@ namespace Player
             
             // Destroy the particle system at the end of the swap animation
             //Destroy(mindSwapTunnelInstance.gameObject);
-            tunnel.Stop();
-            Destroy(tunnel);
+            mindSwapTunnel.Stop();
+            mindSwapTunnel.transform.parent.gameObject.GetComponent<RotationConstraint>().constraintActive = false;
             isSwapping = false;
         }
         #endregion
