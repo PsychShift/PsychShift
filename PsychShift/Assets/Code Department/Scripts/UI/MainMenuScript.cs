@@ -40,6 +40,10 @@ public class MainMenuScript : MonoBehaviour
     {
         SceneManager.LoadScene("GameplayTest");
     }
+    public void VSScene()
+    {
+        SceneManager.LoadScene("Final_VS_Prototype");
+    }
 
     public void OpenLoad()
     {
@@ -65,4 +69,5 @@ public class MainMenuScript : MonoBehaviour
     {
         Application.Quit();
     }
+    
 }
