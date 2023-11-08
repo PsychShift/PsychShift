@@ -39,9 +39,14 @@ public class CharacterInfoReference : MonoBehaviour
             vCamParent.SetActive(false);
             vCam = vCamParent.GetComponent<CinemachineVirtualCamera>();
         }
+        SetUpGun();
 
         _characterInfo = new CharacterInfo(gameObject, vCam, movementStats, characterStats);
         vCam.Follow = characterInfo.cameraRoot;
+    }
+    private void SetUpGun()
+    {
+
     }
 
     public void ActivateCharacter()

@@ -18,6 +18,7 @@ namespace Player
         //public CinemachineVirtualCamera virtualCamera;
         private StateMachine.StateMachine stateMachine;
         public Transform cameraTransform;
+        private ParticleMaster particleMaster;
         #endregion
 
         #region Movement Variables
@@ -108,8 +109,8 @@ namespace Player
             SetJumpVariables();
             cameraTransform = Camera.main.transform;
             cameraTransform.GetComponent<CinemachineBrain>().m_IgnoreTimeScale = false;
-            mindSwapTunnel = cameraTransform.GetComponentInChildren<ParticleSystem>();
-            mindSwapTunnel.Stop();
+            particleMaster = GetComponentInChildren<ParticleMaster>();
+
             
             currentCharacter = null;
             SwapCharacter(tempCharacter);
@@ -269,8 +270,6 @@ namespace Player
         }
         public GameObject CheckForCharacter()
         {
-            
-
             // Store the results of the BoxCast.
             RaycastHit[] hits = Physics.BoxCastAll(cameraTransform.position, boxHalfExtents, cameraTransform.forward, boxRotation, swapDistance, swapableLayer);
             Debug.DrawRay(cameraTransform.position, Camera.main.transform.forward * swapDistance, Color.green, 0.5f);
@@ -332,8 +331,11 @@ namespace Player
             isSwapping = true;
 
             // Instantiate the particle system at the camera's position and as a child of the camera
-            mindSwapTunnel.Play();
-            mindSwapTunnel.transform.parent.gameObject.GetComponent<RotationConstraint>().constraintActive = true;
+            Quaternion camRotation = cameraTransform.rotation;
+            // create an offset 
+            camRotation.y += 180f;
+
+            ParticleSystem tunnel = Instantiate(particleMaster.MindSwapTunnel, cameraTransform.position, camRotation);
             // Play the particle system
             
             // Play the shocking particle effect on the heads of both the player and enemy.
@@ -343,15 +345,18 @@ namespace Player
             startCharacter.characterInfo.enemyBrain.enabled = false;
             endCharacter.characterInfo.enemyBrain.enabled = false;
 
+            
             // Wait for the player to be far enough away from the startTransform to re enable its body
             while(Vector3.Distance(startTransform.position, cameraTransform.position) < 1f)
             {
+                tunnel.transform.position = cameraTransform.position;
                 yield return null;
             }
             startCharacter.DeactivateCharacter();
             // now wait till the player is close enough to the endTransform to disable its body
             while(Vector3.Distance(endTransform.position, cameraTransform.position) > 0.5f)
             {
+                tunnel.transform.position = cameraTransform.position;
                 yield return null;
             }
             endCharacter.ActivateCharacter();
@@ -361,8 +366,8 @@ namespace Player
             
             // Destroy the particle system at the end of the swap animation
             //Destroy(mindSwapTunnelInstance.gameObject);
-            mindSwapTunnel.Stop();
-            mindSwapTunnel.transform.parent.gameObject.GetComponent<RotationConstraint>().constraintActive = false;
+            tunnel.Stop();
+            Destroy(tunnel);
             isSwapping = false;
         }
         #endregion
