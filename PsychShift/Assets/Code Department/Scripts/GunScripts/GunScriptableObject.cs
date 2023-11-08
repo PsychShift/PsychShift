@@ -34,10 +34,10 @@ public class GunScriptableObject : ScriptableObject
     private ObjectPool<Bullet> BulletPool;
     private ObjectPool<TrailRenderer> TrailPool;
 
-    public void Spawn(Transform Parent, MonoBehaviour ActionMonoBehavior)
+    public void Spawn(Transform Parent, MonoBehaviour ActionMonoBehavior, Camera ActiveCamera=null)
     {
-        //this.ActiveMonoBehavior = ActionMonoBehavior;
-        //this.ActiveCamera =  ActiveCamera;
+        this.ActiveMonoBehavior = ActionMonoBehavior;
+        this.ActiveCamera =  ActiveCamera;
         LastShootTime = 0; //not reset in editior, fine in build for some reason.
         AmmoConfig.CurrentClipAmmo = AmmoConfig.ClipSize;
         AmmoConfig.CurrentAmmo = AmmoConfig.MaxAmmo;
@@ -61,10 +61,10 @@ public class GunScriptableObject : ScriptableObject
         //throw new System.NotImplementedException();
     }
 
-/*     public void UpdateCamera(Camera ActivateCamera)
+    public void UpdateCamera(Camera ActivateCamera)
     {
         this.ActiveCamera = ActivateCamera;
-    } */
+    } 
     public void TryToShoot(bool isEnemy)//Calls for bool to detect if enemy
     {
         //Last shoot time matches with time.time when shooting// whenever fire rate is added it doesn't allow for shoot system to activate waits until time is greater to fire again
