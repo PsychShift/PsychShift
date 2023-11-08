@@ -333,7 +333,7 @@ namespace Player
 
             // Instantiate the particle system at the camera's position and as a child of the camera
             mindSwapTunnel.Play();
-            mindSwapTunnel.transform.parent.gameObject.GetComponent<RotationConstraint>().constraintActive = true;
+            //mindSwapTunnel.transform.parent.gameObject.GetComponent<RotationConstraint>().constraintActive = true;
             // Play the particle system
             
             // Play the shocking particle effect on the heads of both the player and enemy.
@@ -362,7 +362,7 @@ namespace Player
             // Destroy the particle system at the end of the swap animation
             //Destroy(mindSwapTunnelInstance.gameObject);
             mindSwapTunnel.Stop();
-            mindSwapTunnel.transform.parent.gameObject.GetComponent<RotationConstraint>().constraintActive = false;
+            //mindSwapTunnel.transform.parent.gameObject.GetComponent<RotationConstraint>().constraintActive = false;
             isSwapping = false;
         }
         #endregion
