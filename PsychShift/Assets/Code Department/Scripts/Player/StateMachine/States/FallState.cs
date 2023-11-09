@@ -39,5 +39,10 @@ namespace Player
             playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -playerStateMachine.MaxFallSpeed);
             //Debug.Log(playerStateMachine.AppliedMovementY);
         }
+
+        public Color GizmoColor()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

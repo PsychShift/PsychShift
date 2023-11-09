@@ -66,5 +66,10 @@ public class PatrolState : IState
             field.SetValue(value, obj);
         }
     }
+
+    public Color GizmoColor()
+    {
+        return Color.green;
+    }
 }
 

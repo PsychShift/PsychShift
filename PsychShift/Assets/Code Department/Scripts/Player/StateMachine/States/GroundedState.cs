@@ -39,5 +39,10 @@ namespace Player
             playerStateMachine.CurrentMovementY = playerStateMachine.gravityValue;
             playerStateMachine.AppliedMovementY = playerStateMachine.gravityValue;
         }
+
+        public Color GizmoColor()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

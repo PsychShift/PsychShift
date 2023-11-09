@@ -10,6 +10,12 @@ namespace Player
         {
             this.playerStateMachine = playerStateMachine;
         }
+
+        public Color GizmoColor()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void OnEnter()
         {
             Debug.Log("MantleState");

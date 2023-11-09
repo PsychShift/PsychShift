@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public interface IState
 {
     /// <summary>
@@ -12,8 +14,6 @@ public interface IState
     /// OnExit is called when leaving a state.
     /// </summary>
     void OnExit();
-    /// <summary>
-    /// Add a sub-state to this state.
-    /// </summary>
-    /// <param name="subState">The sub-state to add.</param>
+
+    Color GizmoColor();
 }

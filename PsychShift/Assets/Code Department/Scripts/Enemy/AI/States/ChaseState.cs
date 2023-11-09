@@ -12,6 +12,11 @@ public class ChaseState : IState
         this.agression = agression;
     }
 
+    public Color GizmoColor()
+    {
+        return Color.red;
+    }
+
     public void OnEnter()
     {
         brain.StartCoroutine(ChasePlayer());

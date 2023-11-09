@@ -13,6 +13,11 @@ namespace Player
 
         }
 
+        public Color GizmoColor()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void OnEnter()
         {
             Debug.Log("WallFlowState entered");

@@ -27,6 +27,7 @@ public abstract class EnemyBrain : MonoBehaviour
     }
     public bool isMelee;
     protected float attackRange;
+    protected Cover currentCover;
 
 
     [HideInInspector] public GameObject player;
@@ -50,8 +51,14 @@ public abstract class EnemyBrain : MonoBehaviour
     protected Func<bool> OutOfRangeForTooLong(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight);
     protected Func<bool> OutOfRangeForTooLongAndIsGuard(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight) && isGaurd;
     protected Func<bool> CanGuard() => () => !IsPlayerInSight() && isGaurd;
+    protected Func<bool> FoundCover() => () => FindCover() != null;
 
     float time = 0f;
+    private Cover FindCover()
+    {
+        currentCover = CoverArea.Instance.GetCover(transform.position, player.transform);
+        return currentCover;
+    }
     private bool IsPlayerOutOfRangeForTooLong(float maxTimeOutOfSight)
     {
         if(!IsPlayerInSight())

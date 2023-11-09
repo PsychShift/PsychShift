@@ -16,6 +16,11 @@ namespace Player
 
         }
 
+        public Color GizmoColor()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void OnEnter()
         {
             WallStateVariables.Instance.TimeOnWall = 0f;
