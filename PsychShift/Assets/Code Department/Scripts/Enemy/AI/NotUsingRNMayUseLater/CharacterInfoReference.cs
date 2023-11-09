@@ -26,7 +26,7 @@ public class CharacterInfoReference : MonoBehaviour
         }
     }
 
-    public GameObject vCamParent;
+    [HideInInspector]public GameObject vCamParent;
     private CinemachineVirtualCamera vCam;
 
     private void SetUp()

@@ -365,9 +365,8 @@ namespace Player
             startCharacter.characterInfo.enemyBrain.enabled = true;
             
             // Destroy the particle system at the end of the swap animation
-            //Destroy(mindSwapTunnelInstance.gameObject);
-            mindSwapTunnel.Stop();
-            mindSwapTunnel.transform.parent.gameObject.GetComponent<RotationConstraint>().constraintActive = false;
+            tunnel.Stop();
+            Destroy(tunnel.gameObject);
             isSwapping = false;
         }
         #endregion
