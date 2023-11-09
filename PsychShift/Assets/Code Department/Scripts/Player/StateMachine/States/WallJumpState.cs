@@ -66,5 +66,10 @@ namespace Player
                 playerStateMachine.AppliedMovementY = (previousYVelocity + playerStateMachine.CurrentMovementY) * .5f;
             }
         }
+
+        public Color GizmoColor()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

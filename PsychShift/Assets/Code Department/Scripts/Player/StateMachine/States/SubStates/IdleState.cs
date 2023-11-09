@@ -35,5 +35,10 @@ namespace Player
         {
 
         }
+
+        public Color GizmoColor()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

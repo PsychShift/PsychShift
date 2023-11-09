@@ -6,6 +6,11 @@ namespace Player
 {
     public class DashState : RootState, IState
     {
+        public Color GizmoColor()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void OnEnter()
         {
             throw new System.NotImplementedException();

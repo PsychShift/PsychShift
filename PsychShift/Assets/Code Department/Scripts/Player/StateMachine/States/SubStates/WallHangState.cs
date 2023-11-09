@@ -81,5 +81,10 @@ namespace Player
                 playerStateMachine.AppliedMovementZ = directionToLedge.normalized.z * WallStateVariables.Instance.WallSpeed;
             } */
         }
+
+        public Color GizmoColor()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -78,6 +78,11 @@ namespace StateMachine
             
             return null;
         }
+
+        public Color GetGizmoColor()
+        {
+            return _currentState?.GizmoColor() ?? Color.clear;
+        }
     }
     public class Transition
         {

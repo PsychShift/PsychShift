@@ -83,5 +83,10 @@ namespace Player
             playerStateMachine.AppliedMovementZ = wallForward.z * WallSpeed;
 
         }
+
+        public Color GizmoColor()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
