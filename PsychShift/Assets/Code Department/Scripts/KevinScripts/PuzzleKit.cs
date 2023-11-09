@@ -22,6 +22,8 @@ public class PuzzleKit : MonoBehaviour
     public string Notes2 = "Actions below, pressurePlate/shoot needs a collider set to trigger to work, set a count number to tell code how many objects need to be activated before reaction.";
     //Actions
     [SerializeField]
+    private bool stopSpawn;
+    [SerializeField]
     private bool interact;
     [SerializeField]
     private bool pressurePlate;
@@ -65,6 +67,10 @@ public class PuzzleKit : MonoBehaviour
     [SerializeField]
     int howManySpawn;
     int spawnCount;
+
+    //shut off spawners after a bit 
+    [SerializeField]
+    GameObject[] spawnPoints;
 
 
 
@@ -135,13 +141,13 @@ public class PuzzleKit : MonoBehaviour
     } */
 
 
-    public void Move()
+    private void Move()
     {
         //Moves object forward and back
         movingActivated = true;
     }
 
-    public void SpawnObject()
+    private void SpawnObject()
     {
         //Spawns object after a puzzle is complete
         //if(isSpawnInf)
@@ -158,6 +164,10 @@ public class PuzzleKit : MonoBehaviour
                 spawnCount++;
             }
         }   */      
+    }
+    private void StopSpawn()
+    {
+        
     }
 
     public void ThisActivate()
@@ -184,10 +194,19 @@ public class PuzzleKit : MonoBehaviour
                 if(move)
                 {
                     Move();
+                    if(stopSpawn)
+                    {
+                        //stop spawner when puzzle is solved 
+                        StopSpawn();
+                    }
                 }
                 else if(spawn)
                 {
                     SpawnObject();
+                    if(stopSpawn)
+                    {
+                        //stop spawner when puzzle is solved
+                    }
                 }
             }
         }
