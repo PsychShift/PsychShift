@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,21 @@ public class AtCoverState : IState
     {
         this.brain = brain;
         this.agression = agression;
-        // TODO: Another state machine
+        // sub state machine
+        stateMachine = new StateMachine.StateMachine();
+        var shootState = new ShootState(brain, agression);
+        var delayState = new DelayState(1f);
+        var reloadState = new ReloadState(brain, agression);
+
+        // Transitions
+        AT(shootState, reloadState,() => brain.CharacterInfo.gunHandler.ShouldReload());
+        AT(reloadState, delayState, () => !brain.CharacterInfo.gunHandler.ShouldReload());
+        AT(delayState, shootState, delayState.IsDone());
+
+        stateMachine.SetState(shootState);
+
+        void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition);
+        void Any(IState from, Func<bool> condition) => stateMachine.AddAnyTransition(from, condition);
     }
     public void OnEnter()
     {

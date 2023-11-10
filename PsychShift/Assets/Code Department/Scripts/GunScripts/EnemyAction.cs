@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 [DisallowMultipleComponent]
-public class EnemyAction : MonoBehaviour
+public class EnemyShootScript : MonoBehaviour
 {
     [SerializeField]
-    private PlayerGunSelector GunSelector;
+    private GunHandler GunSelector;
     [SerializeField]
     private bool AutoReload = true;
-    [SerializeField]
+
     //private float ReloadSpeed = 1f;
     /* ANIMATION FOR RELOAD
     [SerializeField]
@@ -19,8 +19,4 @@ public class EnemyAction : MonoBehaviour
     private PlayerIK InverseKinematics;
     private bool IsReloading;
     */
-    public void EnemyShoot()//THIS IS CALLED WHENEVER THE ENEMY TRIES TO SHOOT
-    {
-        GunSelector.ActiveGun.TryToShoot(true);
-    }
 }

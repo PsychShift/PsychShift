@@ -14,6 +14,8 @@ namespace Player
 
         public CharacterController controller;
         public NavMeshAgent agent;
+        public Animator animator;
+        public GunHandler gunHandler;
 
         public CharacterMovementStatsSO movementStats;
         public CharacterStatsSO characterStats;
@@ -27,6 +29,8 @@ namespace Player
             wallCheck = characterContainer.transform.Find("WallCheck");
             cameraRoot = characterContainer.transform.Find("CameraRoot");
             enemyBrain = characterContainer.GetComponent<EnemyBrain>();
+            gunHandler = characterContainer.GetComponent<GunHandler>();
+            animator = characterContainer.GetComponentInChildren<Animator>();
         }
         public CharacterInfo(GameObject characterContainer, Cinemachine.CinemachineVirtualCamera vCam, CharacterMovementStatsSO movementStats, CharacterStatsSO characterStats)
         {
@@ -41,6 +45,8 @@ namespace Player
             controller = characterContainer.GetComponent<CharacterController>();
             enemyBrain = characterContainer.GetComponent<EnemyBrain>();
             agent = characterContainer.GetComponent<NavMeshAgent>();
+            gunHandler = characterContainer.GetComponent<GunHandler>();
+            animator = characterContainer.GetComponentInChildren<Animator>();
 
             this.vCam = vCam;
 

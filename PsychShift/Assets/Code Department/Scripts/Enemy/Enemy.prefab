@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2530952695652458330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2676859384210451265}
+  m_Layer: 0
+  m_Name: GunParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2676859384210451265
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2530952695652458330}
+  m_LocalRotation: {x: -0, y: -0, z: 2.6193447e-10, w: 1}
+  m_LocalPosition: {x: 1.71, y: 4.54, z: 0.01}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9183464769304687873}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8115607342825376186
 GameObject:
   m_ObjectHideFlags: 0
@@ -17,6 +48,7 @@ GameObject:
   - component: {fileID: 8605567475765216567}
   - component: {fileID: 1980412459526967793}
   - component: {fileID: 1004847536629043803}
+  - component: {fileID: 4772957906549644194}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Swapable
@@ -60,18 +92,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 32768
   agression: {fileID: 11400000, guid: b11693b8e2be01a418452a964a9584b0, type: 2}
-  characterInfo:
-    characterContainer: {fileID: 0}
-    model: {fileID: 0}
-    wallCheck: {fileID: 0}
-    cameraRoot: {fileID: 0}
-    vCam: {fileID: 0}
-    controller: {fileID: 0}
-    agent: {fileID: 0}
-    movementStats: {fileID: 0}
-    characterStats: {fileID: 0}
-    enemyBrain: {fileID: 0}
   isMelee: 1
+  currentCover: {fileID: 0}
   player: {fileID: 0}
   patrolPoints: []
 --- !u!114 &6939670908053585402
@@ -89,17 +111,7 @@ MonoBehaviour:
   vCamPrefab: {fileID: 6664049937413521787, guid: 1fee070a29b7fdb4d8264b94a0a241ee, type: 3}
   movementStats: {fileID: 11400000, guid: 6093f7d923c68114189090b1e5c00027, type: 2}
   characterStats: {fileID: 11400000, guid: 8bc2c5fcc110fcb4984da5a12cb56fb3, type: 2}
-  characterInfo:
-    characterContainer: {fileID: 0}
-    model: {fileID: 0}
-    wallCheck: {fileID: 0}
-    cameraRoot: {fileID: 0}
-    vCam: {fileID: 0}
-    controller: {fileID: 0}
-    agent: {fileID: 0}
-    movementStats: {fileID: 0}
-    characterStats: {fileID: 0}
-    enemyBrain: {fileID: 0}
+  vCamParent: {fileID: 0}
 --- !u!114 &7540109023965677844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +214,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a486d3e02892b547beb5033b4055f65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4772957906549644194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115607342825376186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7d2d8237fab3a94c851bfb6d602215d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 0}
+  GunParent: {fileID: 2676859384210451265}
+  SpawnGun: {fileID: 11400000, guid: 3b0bffeede8b66648b3a1ac39899dc10, type: 2}
+  currentAmmo: 999
+  ActiveGun: {fileID: 0}
 --- !u!1 &8478235208069757745
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,6 +511,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7257570722173847238, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2676859384210451265}
     - targetCorrespondingSourceObject: {fileID: 7257570722173847238, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5277718710736941392}

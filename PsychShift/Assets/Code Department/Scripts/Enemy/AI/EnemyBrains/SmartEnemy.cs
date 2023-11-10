@@ -26,9 +26,6 @@ public class SmartEnemy : EnemyBrain
         var patrolState = new PatrolState(this, agression, patrolPoints);
         var guardState = new GuardState(this, agression, transform.position);
         var chaseState = new ChaseState(this, agression);
-        
-        AT(patrolState, chaseState, PlayerInSight());
-        AT(chaseState, patrolState, OutOfRangeForTooLong(agression.StopChasingTime));
 
         AT(guardState, chaseState, PlayerInSightWide());
         AT(chaseState, guardState, OutOfRangeForTooLongAndIsGuard(agression.StopChasingTime));
@@ -43,10 +40,7 @@ public class SmartEnemy : EnemyBrain
             AT(delayState, coverState, delayState.IsDone());
         }
 
-        if(isGaurd)
-            stateMachine.SetState(guardState);
-        else
-            stateMachine.SetState(patrolState);         
+        stateMachine.SetState(guardState);
     }
 
     void OnDrawGizmos()
