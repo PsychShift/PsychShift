@@ -6,29 +6,31 @@ public class RunToCoverState : IState
 {
     private EnemyBrain brain;
     private AIAgression agression;
-
+    private Player.CharacterInfo currentCharacterInfo;
     public RunToCoverState(EnemyBrain brain, AIAgression agression)
     {
         this.brain = brain;
         this.agression = agression;
     }
-    
+
     public void OnEnter()
     {
-        throw new System.NotImplementedException();
+        currentCharacterInfo = brain.CharacterInfo;
+        brain.currentCover = CoverArea.Instance.GetCover(brain.transform.position);
+        currentCharacterInfo.agent.SetDestination(brain.currentCover.transform.position);
     }
 
     public void OnExit()
     {
-        throw new System.NotImplementedException();
+        brain.currentCover = null;
     }
 
     public void Tick()
     {
-        throw new System.NotImplementedException();
+        
     }
     public Color GizmoColor()
     {
-        throw new System.NotImplementedException();
+        return Color.blue;
     }
 }

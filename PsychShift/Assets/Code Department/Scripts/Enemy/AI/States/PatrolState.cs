@@ -7,6 +7,7 @@ public class PatrolState : IState
 {
     private EnemyBrain brain;
     private AIAgression agression;
+    private Player.CharacterInfo currentCharacterInfo;
     private List<Vector3> patrolPoints;
     private int wpIndex = 0;
 
@@ -20,7 +21,8 @@ public class PatrolState : IState
     public void OnEnter()
     {
         wpIndex = brain as BasicEnemy != null ? (brain as BasicEnemy).CurrentPatrolPointIndex : 0;
-        brain.CharacterInfo.agent.SetDestination(patrolPoints[wpIndex]);
+        currentCharacterInfo = brain.CharacterInfo;
+        currentCharacterInfo.agent.SetDestination(patrolPoints[wpIndex]);
     }
 
     public void OnExit()
@@ -30,10 +32,10 @@ public class PatrolState : IState
 
     public void Tick()
     {
-        if (brain.CharacterInfo.agent.remainingDistance < 0.5f)
+        if (currentCharacterInfo.agent.remainingDistance < 0.5f)
         {
             wpIndex = (wpIndex + 1) % patrolPoints.Count;
-            brain.CharacterInfo.agent.SetDestination(patrolPoints[wpIndex]);
+            currentCharacterInfo.agent.SetDestination(patrolPoints[wpIndex]);
         }
     }
 

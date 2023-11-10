@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoverArea : MonoBehaviour
 {
-    private LayerMask coverMask = LayerMask.NameToLayer("Cover");
+    [SerializeField]private LayerMask coverMask;
     private static CoverArea instance;
     public static CoverArea Instance
     {
@@ -21,22 +21,21 @@ public class CoverArea : MonoBehaviour
 
     void Awake()
     {
+        //coverMask = LayerMask.NameToLayer("Cover");
         allCover.AddRange(FindObjectsOfType<Cover>());
     }
     
-    public Cover GetCover(Vector3 pos, Transform target)
+    public Cover GetCover(Vector3 pos)
     {
         Cover cover = null;
         // perform a sphere cast to find the nearest cover
         // that is not in the line of sight of the target
-        RaycastHit[] hits = Physics.SphereCastAll(pos, 15f, Vector3.up, 0f, coverMask);
+        RaycastHit[] hits = Physics.SphereCastAll(pos, 100f, Vector3.up, 0f, coverMask);
 
         foreach(var hit in hits)
         {
             cover = hit.collider.GetComponent<Cover>();
             if (cover == null)
-                continue;
-            if (Physics.Linecast(cover.transform.position, target.position))
                 continue;
             return cover;
         }

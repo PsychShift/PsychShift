@@ -55,6 +55,7 @@ namespace Player
                 $"Wall Check: {wallCheck.position}\n" +
                 $"CameraRoot: {cameraRoot.position}\n" +
                 $"Controller: {controller}\n" +
+                $"NavMeshAgent: {agent}\n" +
                 $"vCam: {vCam}";
         }
     }

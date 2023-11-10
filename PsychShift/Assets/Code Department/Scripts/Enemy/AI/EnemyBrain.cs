@@ -15,22 +15,24 @@ public abstract class EnemyBrain : MonoBehaviour
     [SerializeField] protected LayerMask playerLayer;
     protected StateMachine.StateMachine stateMachine;
     public AIAgression agression;
-    private CharacterInfo characterInfo;
+    private CharacterInfo characterInfo = null;
     public CharacterInfo CharacterInfo {
         get {
             if(characterInfo == null)
             {
-                characterInfo = GetComponent<CharacterInfoReference>().characterInfo;
+                characterInfo = gameObject.GetComponent<CharacterInfoReference>().characterInfo;
+                Debug.Log(characterInfo);
             }
             return characterInfo;
         }
     }
     public bool isMelee;
     protected float attackRange;
-    protected Cover currentCover;
+    [HideInInspector] public Cover currentCover;
 
 
     [HideInInspector] public GameObject player;
+
     /// <summary>
     /// Any variables that require initialization before a Func<bool> is used should be initialized here.
     /// Call this function in the Awake() method of the inheriting class.
@@ -52,11 +54,14 @@ public abstract class EnemyBrain : MonoBehaviour
     protected Func<bool> OutOfRangeForTooLongAndIsGuard(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight) && isGaurd;
     protected Func<bool> CanGuard() => () => !IsPlayerInSight() && isGaurd;
     protected Func<bool> FoundCover() => () => FindCover() != null;
+    protected Func<bool> HasReachedDestination() => () => CharacterInfo.agent.remainingDistance <= 0.1f;
 
     float time = 0f;
     private Cover FindCover()
     {
-        currentCover = CoverArea.Instance.GetCover(transform.position, player.transform);
+        currentCover = null;
+        if(player = null) player = gameObject;
+        currentCover = CoverArea.Instance.GetCover(transform.position);
         return currentCover;
     }
     private bool IsPlayerOutOfRangeForTooLong(float maxTimeOutOfSight)

@@ -6,6 +6,8 @@ public class ChaseState : IState
 {
     private EnemyBrain brain;
     private AIAgression agression;
+
+    private Player.CharacterInfo currentCharacterInfo;
     public ChaseState(EnemyBrain brain, AIAgression agression)
     {
         this.brain = brain;
@@ -19,6 +21,7 @@ public class ChaseState : IState
 
     public void OnEnter()
     {
+        currentCharacterInfo = brain.CharacterInfo;
         brain.StartCoroutine(ChasePlayer());
     }
 
@@ -36,9 +39,12 @@ public class ChaseState : IState
     {
         while (true)
         {
-            brain.CharacterInfo.agent.SetDestination(brain.player.transform.position);
-            yield return new WaitForSeconds(0.5f);
+            currentCharacterInfo.agent.SetDestination(brain.player.transform.position);
+            yield return new WaitForSeconds(0.1f);
         }
     }
+
+    
+    
 
 }

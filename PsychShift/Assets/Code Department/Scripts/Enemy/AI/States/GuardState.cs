@@ -11,6 +11,7 @@ public class GuardState : IState
     private Vector3 startPosition;
     private float rotationSpeed;
 
+    private Player.CharacterInfo currentCharacterInfo;
     public GuardState(EnemyBrain brain, AIAgression agression, Vector3 startPosition)
     {
         this.brain = brain;
@@ -20,7 +21,8 @@ public class GuardState : IState
 
     public void OnEnter()
     {
-        brain.CharacterInfo.agent.SetDestination(startPosition);
+        currentCharacterInfo = brain.CharacterInfo;
+        currentCharacterInfo.agent.SetDestination(startPosition);
     }
 
     public void OnExit()

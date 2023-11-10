@@ -28,7 +28,6 @@ public class CharacterInfoReference : MonoBehaviour
 
     [HideInInspector]public GameObject vCamParent;
     private CinemachineVirtualCamera vCam;
-
     private void SetUp()
     {
         if(vCamPrefab == null) Debug.LogError("vCamPrefab is null, please fill in in editor. Otherwise the game won't work. Which is bad. Please fix it now. Thank you. Have you done it yet? Ok good. \n It's located at Assets/Code Department/Scripts/Player/Swapping");

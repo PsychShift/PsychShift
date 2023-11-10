@@ -16,4 +16,7 @@ public class AIAgression : ScriptableObject
     public float PlayerStoppingDistance;
     [Tooltip("The distance the enemy should stop at when patroling or guarding")]
     public float DestinationStoppingDistance;
+
+    [Tooltip("If true, the enemy will take cover when it is chasing the player or running away.")]
+    public bool TakesCover;
 }
