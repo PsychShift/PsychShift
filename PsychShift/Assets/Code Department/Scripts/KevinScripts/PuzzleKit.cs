@@ -21,8 +21,8 @@ public class PuzzleKit : MonoBehaviour
     [TextArea]
     public string Notes2 = "Actions below, pressurePlate/shoot needs a collider set to trigger to work, set a count number to tell code how many objects need to be activated before reaction.";
     //Actions
-    [SerializeField]
-    private bool stopSpawn;
+    /* [SerializeField]
+    private bool stopSpawn; */
     [SerializeField]
     private bool interact;
     [SerializeField]
@@ -180,9 +180,10 @@ public class PuzzleKit : MonoBehaviour
         {     
             if(activated == false)//activates this object and sends number to godBox.
             {
-                Debug.Log("Activated: " + godBoxRef.activateCount);
+                
                 activated = true;
                 godBoxRef.activateCount++;
+                Debug.Log("Activated: " + godBoxRef.activateCount);
                 godBoxRef.ThisActivate();
             }
         }
@@ -190,23 +191,25 @@ public class PuzzleKit : MonoBehaviour
         {
             if(activateCount == amountToActivate)//runs when called to check if everything is activated
             {
+                Debug.Log("Time2choose");
                 //Do whatever action is marked 
                 if(move)
                 {
+                    Debug.Log("Move");
                     Move();
-                    if(stopSpawn)
+                    /* if(stopSpawn)
                     {
                         //stop spawner when puzzle is solved 
                         StopSpawn();
-                    }
+                    } */
                 }
                 else if(spawn)
                 {
                     SpawnObject();
-                    if(stopSpawn)
+                    /* if(stopSpawn)
                     {
                         //stop spawner when puzzle is solved
-                    }
+                    } */
                 }
             }
         }
@@ -214,6 +217,7 @@ public class PuzzleKit : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)//used for pressure plate
     {
+        Debug.Log("HERE ON TRIGGER");
         if(shootObj)
         {
             if(other.GetComponent<Collider>().gameObject.layer == LayerMask.NameToLayer("Bullets"))
