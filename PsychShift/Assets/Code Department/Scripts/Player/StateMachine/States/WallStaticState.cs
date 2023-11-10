@@ -23,12 +23,15 @@ namespace Player
 
         public void OnEnter()
         {
+             if(StaticBar.instance.currentStatic >= 1)
+            {
             WallStateVariables.Instance.TimeOnWall = 0f;
             currentCharacter = playerStateMachine.currentCharacter;
             currentSubState = stateMachine._currentSubState;
             playerStateMachine.CurrentMovementY = 0;
             playerStateMachine.AppliedMovementY = 0;
             SetSubState();
+            }
         }
         //Kevin added this call public funct from substate that swaps var that changes wallhang substate
         public void OnExit()

@@ -296,24 +296,31 @@ namespace Player
                     return hit.collider.gameObject;
                 }
             }
-
+             
             // If no "Swapable" object was hit, return null.
             return null;
+           
         }
         public void SwapCharacter(GameObject newCharacter)
         {
+            
             CharacterInfoReference newCharacterInfoReference = newCharacter.GetComponent<CharacterInfoReference>();
             CharacterInfo newCharInfo = newCharacterInfoReference.characterInfo;
             if(newCharacter == null) return;
             SlowMotion(false);
+            
             if(currentCharacter != null)
             {
+                if (BrainJuiceBarTest.instance.currentBrain >= 15)
+                {
                 CharacterInfoReference oldCharacterInfoReference = currentCharacter.characterContainer.GetComponent<CharacterInfoReference>();
                 StartCoroutine(SwapAnimation(currentCharacter.cameraRoot.transform, 
                 newCharacterInfoReference.characterInfo.cameraRoot.transform, 
                 oldCharacterInfoReference, newCharacterInfoReference));
+                BrainJuiceBarTest.instance.UseBrain(15);
 
                 currentCharacter = newCharInfo;
+                }
             }
             else
             {
@@ -322,6 +329,7 @@ namespace Player
                 currentCharacter.enemyBrain.enabled = false;
                 newCharacterInfoReference.ActivateCharacter();
             }
+            
 
         }
         bool isSwapping = false;
@@ -528,15 +536,13 @@ namespace Player
 
         public void SwitchMode(bool trySetStatic)
         {
-            //if(StaticBar.instance.currentStatic < 1)
-            //{
+            if(StaticBar.instance.currentStatic >= 1)
+            {
+                StaticMode = trySetStatic;
+            }
 
-                //trySetStatic = false;
-            //}
 
-
-            StaticMode = trySetStatic;
-
+            trySetStatic = false;
         }
 
         private void OnDrawGizmos()

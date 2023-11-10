@@ -53,7 +53,7 @@ public void UseBrain(int amount)
 
     private IEnumerator RegenBrain()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(10);
 
         while(currentBrain < maxBrain)
         {
