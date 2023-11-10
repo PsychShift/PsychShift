@@ -17,13 +17,14 @@ public class MainMenuScript : MonoBehaviour
 
         // Jonathan plased this in the update state, dont know why. Undo it if I broke something.
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.visible = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     public void NewGame()
