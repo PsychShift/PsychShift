@@ -53,7 +53,7 @@ public class StaticBar : MonoBehaviour
 
     private IEnumerator RegenStatic()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(10);
 
         while(currentStatic < maxStatic)
         {
