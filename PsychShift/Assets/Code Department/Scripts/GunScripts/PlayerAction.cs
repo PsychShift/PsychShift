@@ -36,8 +36,9 @@ public class PlayerAction : MonoBehaviour
         //GunSelector.ActiveGun.TryToShoot();
         GunSelector.ActiveGun.Tick(GunSelector.ActiveGun != null);
     }
-    //private void FixedUpdate() 
-    //{
+    private void Update() 
+    {
+        
          /*if(InputManager.Instance.ShootAction.triggered && GunSelector.ActiveGun != null)
         {
             GunSelector.ActiveGun.TryToShoot();
@@ -55,7 +56,7 @@ public class PlayerAction : MonoBehaviour
             InverseKinemcatics.HandIKAmount = 0.25;
             InverseKinematics.ElbowIKAmount = 0.25f;
         }*/
-    //}
+    }
     private void UpdateCrosshair()
     {
         if(GunSelector.ActiveGun.ShootConfig.ShootType == ShootType.FromGun)
