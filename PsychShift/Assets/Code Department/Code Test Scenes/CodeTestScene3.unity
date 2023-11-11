@@ -2658,6 +2658,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CrossHair
       objectReference: {fileID: 0}
+    - target: {fileID: 4405852634701273480, guid: 681d59a0e2492544cb7859b659726fca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4988784259003535794, guid: 681d59a0e2492544cb7859b659726fca, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2747,6 +2751,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 681d59a0e2492544cb7859b659726fca, type: 3}
+--- !u!1 &601957154 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8115607342825376186, guid: 23c0075fc7499404897f6639e450a652, type: 3}
+  m_PrefabInstance: {fileID: 352727046}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &698108935
 GameObject:
   m_ObjectHideFlags: 0
@@ -3908,11 +3917,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &902177799 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8115607342825376186, guid: 23c0075fc7499404897f6639e450a652, type: 3}
-  m_PrefabInstance: {fileID: 518965853}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &913827381
 GameObject:
   m_ObjectHideFlags: 0
@@ -9383,7 +9387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &2050504288
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9484,14 +9488,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   godBoxRef: {fileID: 895017872}
   enemyType:
-  - {fileID: 902177799}
+  - {fileID: 601957154}
   randomEnemySpawn: 0
   whatEnemytoSpawn: 0
   howManySpawn: 5
   spawnRate: 5
   elimEnemies: 0
   waveSpawn: 1
-  gapBetweenSpawns: {x: 0.5, y: 2}
+  gapBetweenSpawns: {x: 10, y: 15}
 --- !u!1 &2063064233
 GameObject:
   m_ObjectHideFlags: 0
@@ -9867,6 +9871,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4772957906549644194, guid: 23c0075fc7499404897f6639e450a652, type: 3}
+      propertyPath: SpawnGun
+      value: 
+      objectReference: {fileID: 11400000, guid: 0e2c50c67b5bc444d9c2f7a920fb4772, type: 2}
     - target: {fileID: 6939670908053585402, guid: 23c0075fc7499404897f6639e450a652, type: 3}
       propertyPath: vCamParent
       value: 

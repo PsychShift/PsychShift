@@ -30,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start() 
     {
         enemySpawned = new();
-        StartCoroutine(SpawnIn());
+        StartCoroutine(Spawnwait());
 
     }
 
@@ -61,6 +61,11 @@ public class EnemySpawner : MonoBehaviour
                 yield return new WaitForSeconds(Random.Range(gapBetweenSpawns.x, gapBetweenSpawns.y)); 
         } 
 
+    }
+    private IEnumerator Spawnwait()
+    {
+        yield return new WaitForSeconds(2);
+        StartCoroutine(SpawnIn());
     }
 
     /* IEnumerator spawnWave()
