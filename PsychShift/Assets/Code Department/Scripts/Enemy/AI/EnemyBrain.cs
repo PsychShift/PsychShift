@@ -5,7 +5,7 @@ using StateMachine;
 using System;
 
 using CharacterInfo = Player.CharacterInfo;
-[RequireComponent(typeof(CharacterInfoReference), typeof(TempGravity))]
+[RequireComponent(typeof(CharacterInfoReference), typeof(TempGravity), typeof(FieldOfView))]
 public abstract class EnemyBrain : MonoBehaviour
 {
     [Tooltip("If this is true, the enemy will stand in one spot, if false, it will require a patrol path")]
@@ -52,6 +52,8 @@ public abstract class EnemyBrain : MonoBehaviour
     {
         attackRange = isMelee ? 1f : 40f;
         CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
+        fovRef = GetComponent<FieldOfView>();
+
     }
 
     protected void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition);
@@ -59,7 +61,7 @@ public abstract class EnemyBrain : MonoBehaviour
 
     public abstract void StateMachineSetup();
 
-    protected Func<bool> PlayerInSight() => () => IsPlayerInSight();
+    protected Func<bool> PlayerInSight() => () => fovRef.canSeePlayer;
     protected Func<bool> PlayerInSightWide() => () => IsPlayerInSightWideView();
     protected Func<bool> PlayerInAttackRange() => () => IsPlayerInRange();
     protected Func<bool> OutOfRangeForTooLong(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight);
@@ -195,4 +197,16 @@ public abstract class EnemyBrain : MonoBehaviour
         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.transform.position = transform.position;
     }
+
+    public float radius;
+    [Range(0,360)]
+    public float angle;
+
+    public GameObject playerRef;
+
+    public LayerMask targetMask;
+    public LayerMask obstructionMask;
+
+    public bool canSeePlayer;
+    private FieldOfView fovRef;
 }
