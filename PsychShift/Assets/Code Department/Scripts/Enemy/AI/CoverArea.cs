@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CoverArea : MonoBehaviour
@@ -25,20 +26,19 @@ public class CoverArea : MonoBehaviour
         allCover.AddRange(FindObjectsOfType<Cover>());
     }
     
-    public Cover GetCover(Vector3 pos)
+    public Cover GetCover(Transform player)
     {
         Cover cover = null;
         // perform a sphere cast to find the nearest cover
         // that is not in the line of sight of the target
-        RaycastHit[] hits = Physics.SphereCastAll(pos, 100f, Vector3.up, 0f, coverMask);
+        RaycastHit[] hits = Physics.SphereCastAll(player.position, 100f, Vector3.up, 0f, coverMask);
 
-        foreach(var hit in hits)
-        {
-            cover = hit.collider.GetComponent<Cover>();
-            if (cover == null)
-                continue;
-            return cover;
-        }
+        // pick randomly from the list of covers where hit != null && a line check can't hit the player
+        cover = hits.Where(hit => hit.collider.GetComponent<Cover>() != null && !Physics.Linecast(player.position, hit.point, coverMask))
+                    .Select(hit => hit.collider.GetComponent<Cover>())
+                    .OrderBy(_ => Random.value)
+                    .FirstOrDefault().GetComponent<Cover>();
+
         return cover;
     }
 }

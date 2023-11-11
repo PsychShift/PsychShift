@@ -3,49 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AtCoverState : IState
+public class AtCoverState : ShootingSuperState
 {
-    private EnemyBrain brain;
-    private AIAgression agression;
-    private StateMachine.StateMachine stateMachine;
-
     public AtCoverState(EnemyBrain brain, AIAgression agression)
     {
-        this.brain = brain;
-        this.agression = agression;
-        // sub state machine
-        stateMachine = new StateMachine.StateMachine();
-        var shootState = new ShootState(brain, agression);
-        var delayState = new DelayState(1f);
-        var reloadState = new ReloadState(brain, agression);
-
-        // Transitions
-        AT(shootState, reloadState,() => brain.CharacterInfo.gunHandler.ShouldReload());
-        AT(reloadState, delayState, () => !brain.CharacterInfo.gunHandler.ShouldReload());
-        AT(delayState, shootState, delayState.IsDone());
-
-        stateMachine.SetState(shootState);
-
-        void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition);
-        void Any(IState from, Func<bool> condition) => stateMachine.AddAnyTransition(from, condition);
+        SetUp(brain, agression);
     }
-    public void OnEnter()
+    public override void OnEnter()
     {
-        Debug.Log("AtCoverState OnEnter");
+        base.OnEnter();
         // set animator bool "combat" to true
     }
 
-    public void OnExit()
+    public override void OnExit()
     {
+        base.OnExit();
         // set animator bool "combat" to false
     }
 
-    public void Tick()
+    public override void Tick()
     {
-        
+        base.Tick();
+        if(stateMachine._currentState is ActiveShootState)
+        {
+            brain.CharacterInfo.animator.SetFloat("cover", 0);
+        }
+        else
+        {
+            brain.CharacterInfo.animator.SetFloat("cover", 1);
+        }
     }
-    public Color GizmoColor()
-    {
-        return Color.gray;
-    }
+
 }

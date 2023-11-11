@@ -17,8 +17,6 @@ public class RunToCoverState : IState
     public void OnEnter()
     {
         currentCharacterInfo = brain.CharacterInfo;
-        brain.currentCover = CoverArea.Instance.GetCover(brain.transform.position);
-        currentCharacterInfo.agent.SetDestination(brain.currentCover.transform.position);
     }
 
     public void OnExit()

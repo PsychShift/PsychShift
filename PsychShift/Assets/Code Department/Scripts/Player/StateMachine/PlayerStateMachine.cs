@@ -90,6 +90,8 @@ namespace Player
         // Create a BoxCast to check for objects with the "Swapable" tag.
         Vector3 boxHalfExtents = new Vector3(2f, 2f, 2f);
         Quaternion boxRotation;
+        public delegate void SwapEvent(Transform player);
+        public event SwapEvent OnSwap;
 
         private ParticleSystem mindSwapTunnel;
         #endregion
@@ -110,6 +112,8 @@ namespace Player
             cameraTransform = Camera.main.transform;
             cameraTransform.GetComponent<CinemachineBrain>().m_IgnoreTimeScale = false;
             particleMaster = GetComponentInChildren<ParticleMaster>();
+
+            OnSwap += EnemyTargetManager.Instance.SetPlayer;
 
             
             currentCharacter = null;
@@ -248,6 +252,7 @@ namespace Player
         {
             InputManager.Instance.OnSlowActionStateChanged -= SlowMotion;
             InputManager.Instance.OnSwapPressed -= SwapPressed;
+            OnSwap -= EnemyTargetManager.Instance.SetPlayer;
         }
         void Update()
         {
@@ -313,13 +318,13 @@ namespace Player
             {
                 if (BrainJuiceBarTest.instance.currentBrain >= 15)
                 {
-                CharacterInfoReference oldCharacterInfoReference = currentCharacter.characterContainer.GetComponent<CharacterInfoReference>();
-                StartCoroutine(SwapAnimation(currentCharacter.cameraRoot.transform, 
-                newCharacterInfoReference.characterInfo.cameraRoot.transform, 
-                oldCharacterInfoReference, newCharacterInfoReference));
-                BrainJuiceBarTest.instance.UseBrain(15);
+                    CharacterInfoReference oldCharacterInfoReference = currentCharacter.characterContainer.GetComponent<CharacterInfoReference>();
+                    StartCoroutine(SwapAnimation(currentCharacter.cameraRoot.transform, 
+                    newCharacterInfoReference.characterInfo.cameraRoot.transform, 
+                    oldCharacterInfoReference, newCharacterInfoReference));
+                    BrainJuiceBarTest.instance.UseBrain(15);
 
-                currentCharacter = newCharInfo;
+                    currentCharacter = newCharInfo;
                 }
             }
             else
@@ -328,6 +333,7 @@ namespace Player
                 currentCharacter = newCharInfo;
                 currentCharacter.enemyBrain.enabled = false;
                 newCharacterInfoReference.ActivateCharacter();
+                OnSwap?.Invoke(currentCharacter.characterContainer.transform);
             }
             
 
@@ -372,6 +378,7 @@ namespace Player
             // Re enable the startTransforms ai component.
             startCharacter.characterInfo.enemyBrain.enabled = true;
             
+            OnSwap?.Invoke(endCharacter.characterInfo.characterContainer.transform);
             // Destroy the particle system at the end of the swap animation
             tunnel.Stop();
             Destroy(tunnel.gameObject);

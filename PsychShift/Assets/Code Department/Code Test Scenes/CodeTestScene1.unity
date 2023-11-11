@@ -746,7 +746,7 @@ MonoBehaviour:
   currentCover: {fileID: 0}
   player: {fileID: 0}
   patrolPoints: []
-  DebugMode: 1
+  DebugMode: 0
 --- !u!4 &203198927 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3490676263448684550, guid: 1bfc62072aa8b2645bdb02b02e9a0f88, type: 3}
@@ -5231,6 +5231,19 @@ MonoBehaviour:
   coverMask:
     serializedVersion: 2
     m_Bits: 65536
+--- !u!114 &1288061013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288061009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc3c4503a57b7546a14a5d7f87bf253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &1330518994
 GameObject:
   m_ObjectHideFlags: 0
@@ -8382,6 +8395,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4966696826914652551, guid: b27e890ec4c04c340be562795d8179f9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1288061011}
+    - targetCorrespondingSourceObject: {fileID: 4966696826914652551, guid: b27e890ec4c04c340be562795d8179f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1288061013}
   m_SourcePrefab: {fileID: 100100000, guid: b27e890ec4c04c340be562795d8179f9, type: 3}
 --- !u!1001 &4214218000495173160
 PrefabInstance:

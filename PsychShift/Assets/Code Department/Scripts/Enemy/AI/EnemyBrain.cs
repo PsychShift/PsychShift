@@ -30,8 +30,19 @@ public abstract class EnemyBrain : MonoBehaviour
     protected float attackRange;
     [HideInInspector] public Cover currentCover;
 
-
-    [HideInInspector] public GameObject player;
+    [HideInInspector] public Transform gauranteedPlayer => EnemyTargetManager.Instance.player;
+    private Transform _player;
+    public Transform player 
+    { 
+        get 
+        { 
+            if(_player == null)
+                return gauranteedPlayer; 
+            else
+                return _player;
+        } 
+        set { _player = value; } 
+    }
 
     /// <summary>
     /// Any variables that require initialization before a Func<bool> is used should be initialized here.
@@ -61,8 +72,8 @@ public abstract class EnemyBrain : MonoBehaviour
     public Cover FindCover()
     {
         currentCover = null;
-        if(player = null) player = gameObject;
-        currentCover = CoverArea.Instance.GetCover(transform.position);
+
+        currentCover = CoverArea.Instance.GetCover(player);
         return currentCover;
     }
     private bool IsPlayerOutOfRangeForTooLong(float maxTimeOutOfSight)
@@ -89,7 +100,7 @@ public abstract class EnemyBrain : MonoBehaviour
         if(hit.collider == null) return false;
         if(hit.collider.tag == "Player")
         {
-            player = hit.collider.gameObject;
+            player = hit.collider.transform;
             return true;
         }
         return false;
@@ -108,7 +119,7 @@ public abstract class EnemyBrain : MonoBehaviour
         if (hit.collider == null) return false;
         if (hit.collider.tag == "Player")
         {
-            player = hit.collider.gameObject;
+            player = hit.collider.transform;
             return true;
         }
 
@@ -117,7 +128,7 @@ public abstract class EnemyBrain : MonoBehaviour
         if (hit.collider == null) return false;
         if (hit.collider.tag == "Player")
         {
-            player = hit.collider.gameObject;
+            player = hit.collider.transform;
             return true;
         }
 
@@ -126,7 +137,7 @@ public abstract class EnemyBrain : MonoBehaviour
         if (hit.collider == null) return false;
         if (hit.collider.tag == "Player")
         {
-            player = hit.collider.gameObject;
+            player = hit.collider.transform;
             return true;
         }
 
