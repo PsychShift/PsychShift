@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 [DisallowMultipleComponent]//Might have to turn this off for mindswapping. Guns changing on swap could bug cuz of this. Just a theory tho
 public class GunHandler : MonoBehaviour
@@ -10,6 +11,7 @@ public class GunHandler : MonoBehaviour
    private Transform GunParent;
    [SerializeField]
    private GunScriptableObject SpawnGun;
+   public PlayerStateMachine stateMachineRef;
 
    public int currentAmmo;
    /*[SerializeField]
@@ -17,8 +19,13 @@ public class GunHandler : MonoBehaviour
    [Space]
    [Header("Runtime Filled")]//don't know wut this means but tutorial said to put it there
    public GunScriptableObject ActiveGun;
-   private void Start() 
+
+    private void Start() 
    {
+        if(stateMachineRef !=null)
+        {
+            SpawnGun = stateMachineRef.currentCharacter.gunHandler.SpawnGun;
+        }
         if(SpawnGun == null)
         {
             Debug.LogError("No GunScriptableObject found for GunType: " + SpawnGun);
@@ -30,10 +37,11 @@ public class GunHandler : MonoBehaviour
 
         //Inverse kinematic stuff should go here but idk if we're doing all that
    }
-   /* private void Update()
+    private void Update()
    {
-        ActiveGun.TryToShoot(true);
-   } */
+        
+        //ActiveGun.TryToShoot(true);
+   } 
 
 
     public void SetGun(GunScriptableObject gun) 

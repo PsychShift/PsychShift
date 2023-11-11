@@ -47,7 +47,6 @@ namespace Player
             agent = characterContainer.GetComponent<NavMeshAgent>();
             gunHandler = characterContainer.GetComponent<GunHandler>();
             animator = characterContainer.GetComponentInChildren<Animator>();
-
             this.vCam = vCam;
 
             this.movementStats = movementStats;
