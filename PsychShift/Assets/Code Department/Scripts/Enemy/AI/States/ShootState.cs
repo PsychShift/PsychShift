@@ -32,6 +32,7 @@ public class ShootState : IState
         Quaternion rotation = Quaternion.LookRotation(lookPos);
         brain.transform.rotation = Quaternion.Slerp(brain.transform.rotation, rotation, Time.deltaTime * 5f);
 
+        brain.CharacterInfo.gunHandler.EnemyShoot();
         brain.CharacterInfo.animator.SetBool("shooting", true);
     }
     public Color GizmoColor()

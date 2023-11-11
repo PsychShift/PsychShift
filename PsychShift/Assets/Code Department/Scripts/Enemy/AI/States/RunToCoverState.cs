@@ -12,6 +12,7 @@ public class RunToCoverState : IState
         this.brain = brain;
         this.agression = agression;
     }
+    Transform target;
 
     public void OnEnter()
     {
@@ -23,11 +24,19 @@ public class RunToCoverState : IState
     public void OnExit()
     {
         brain.currentCover = null;
+        target = null;
+        brain.CharacterInfo.agent.ResetPath();
     }
 
     public void Tick()
     {
-        
+        if(target == null)
+        {
+            target = brain.FindCover().transform;
+            if(target != null)
+                currentCharacterInfo.agent.SetDestination(target.position);
+        }
+
     }
     public Color GizmoColor()
     {

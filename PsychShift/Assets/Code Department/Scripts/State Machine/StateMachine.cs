@@ -68,13 +68,19 @@ namespace StateMachine
 
         private Transition GetTransition()
         {
-            foreach(var transition in _anyTransitions)
-                if(transition.Condition())
-                    return transition;
+            if (_anyTransitions != null)
+            {
+                foreach(var transition in _anyTransitions)
+                    if(transition.Condition())
+                        return transition;
+            }
             
-            foreach(var transition in _currentTransitions)
-                if(transition.Condition())
-                    return transition;
+            if (_currentTransitions != null)
+            {
+                foreach(var transition in _currentTransitions)
+                    if(transition.Condition())
+                        return transition;
+            }
             
             return null;
         }

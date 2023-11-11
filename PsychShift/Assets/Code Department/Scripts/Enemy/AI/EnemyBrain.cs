@@ -44,6 +44,7 @@ public abstract class EnemyBrain : MonoBehaviour
     }
 
     protected void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition);
+    protected void ANY(IState from, Func<bool> condition) => stateMachine.AddAnyTransition(from, condition);
 
     public abstract void StateMachineSetup();
 
@@ -57,7 +58,7 @@ public abstract class EnemyBrain : MonoBehaviour
     protected Func<bool> HasReachedDestination() => () => CharacterInfo.agent.remainingDistance <= 0.1f;
 
     float time = 0f;
-    private Cover FindCover()
+    public Cover FindCover()
     {
         currentCover = null;
         if(player = null) player = gameObject;
