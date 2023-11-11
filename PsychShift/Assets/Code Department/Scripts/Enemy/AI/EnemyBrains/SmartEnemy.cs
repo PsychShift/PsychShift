@@ -36,7 +36,7 @@ public class SmartEnemy : EnemyBrain
         ANY(debugState, () => DebugMode);
         
 
-        stateMachine.SetState(debugState);
+        stateMachine.SetState(runToCoverState);
     }
 
     void OnDrawGizmos()

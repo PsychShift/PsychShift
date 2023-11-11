@@ -31,7 +31,7 @@ public class CoverArea : MonoBehaviour
         Cover cover = null;
         // perform a sphere cast to find the nearest cover
         // that is not in the line of sight of the target
-        RaycastHit[] hits = Physics.SphereCastAll(player.position, 100f, Vector3.up, 0f, coverMask);
+        RaycastHit[] hits = Physics.SphereCastAll(player.position, 30f, Vector3.up, 0f, coverMask);
 
         // pick randomly from the list of covers where hit != null && a line check can't hit the player
         cover = hits.Where(hit => hit.collider.GetComponent<Cover>() != null && !Physics.Linecast(player.position, hit.point, coverMask))
@@ -40,5 +40,15 @@ public class CoverArea : MonoBehaviour
                     .FirstOrDefault().GetComponent<Cover>();
 
         return cover;
+    }
+
+    public bool CoverIsAvailable()
+    {
+        // Do the same sphere cast as above, but this time check if the cover is available
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position, 300f, Vector3.up, 0f, coverMask);
+        return hits.Where(hit => hit.collider.GetComponent<Cover>() != null && hit.collider.GetComponent<Cover>())
+                    .Select(hit => hit.collider.GetComponent<Cover>())
+                    .OrderBy(_ => Random.value)
+                    .FirstOrDefault() != null;
     }
 }
