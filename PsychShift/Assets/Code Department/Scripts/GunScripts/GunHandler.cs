@@ -30,6 +30,10 @@ public class GunHandler : MonoBehaviour
 
         //Inverse kinematic stuff should go here but idk if we're doing all that
    }
+   /* private void Update()
+   {
+        ActiveGun.TryToShoot(true);
+   } */
 
 
     public void SetGun(GunScriptableObject gun) 

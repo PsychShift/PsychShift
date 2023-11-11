@@ -21,8 +21,8 @@ public class PuzzleKit : MonoBehaviour
     [TextArea]
     public string Notes2 = "Actions below, pressurePlate/shoot needs a collider set to trigger to work, set a count number to tell code how many objects need to be activated before reaction.";
     //Actions
-    /* [SerializeField]
-    private bool stopSpawn; */
+    [SerializeField]
+    private bool stopSpawn;
     [SerializeField]
     private bool interact;
     [SerializeField]
@@ -71,6 +71,10 @@ public class PuzzleKit : MonoBehaviour
     //shut off spawners after a bit 
     [SerializeField]
     GameObject[] spawnPoints;
+
+    public bool puzzleComplete;
+    /* public delegate void OnPuzzleDone();
+    public static event OnPuzzleDone PuzzleDone; */
 
 
 
@@ -145,6 +149,8 @@ public class PuzzleKit : MonoBehaviour
     {
         //Moves object forward and back
         movingActivated = true;
+        puzzleComplete = true;
+        //PuzzleDone?.Invoke();
     }
 
     private void SpawnObject()
@@ -154,6 +160,8 @@ public class PuzzleKit : MonoBehaviour
         //{
             for(int i = 0; i< spawnObjects.Length; i++) 
                 Instantiate(spawnObjects[i], locationOfSpawn.position, Quaternion.identity);
+            //PuzzleDone?.Invoke();
+            puzzleComplete = true;
         //}
 /*         else
         {
@@ -167,7 +175,10 @@ public class PuzzleKit : MonoBehaviour
     }
     private void StopSpawn()
     {
-        
+        for(int i =0; i<spawnPoints.Length;i++)
+        {
+            spawnPoints[i].SetActive(false);
+        }
     }
 
     public void ThisActivate()
@@ -201,15 +212,16 @@ public class PuzzleKit : MonoBehaviour
                     {
                         //stop spawner when puzzle is solved 
                         StopSpawn();
-                    } */
+                    } */ 
                 }
                 else if(spawn)
                 {
                     SpawnObject();
                     /* if(stopSpawn)
                     {
+                        StopSpawn();
                         //stop spawner when puzzle is solved
-                    } */
+                    } */ 
                 }
             }
         }

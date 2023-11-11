@@ -10,7 +10,7 @@ public interface IDamageable
     public delegate void TakeDamageEvent(int Damage);
     public event TakeDamageEvent OnTakeDamage;
 
-    public delegate void DeathEvent(Vector3 Position);
+    public delegate void DeathEvent(Transform Position);
     public event DeathEvent OnDeath;
 
     public void TakeDamage(int Damage);

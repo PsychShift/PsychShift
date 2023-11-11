@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
         Health.OnDeath += Die;//here goes the death stuff// Talks to enemy script and goes to interface
     }
 
-    private void Die(Vector3 Position)//death stuff is given to health funct in enemyhealth script
+    private void Die(Transform Position)//death stuff is given to health funct in enemyhealth script
     {
         //Movement.StopMoving();
         //PainResponse.HandleDeath();

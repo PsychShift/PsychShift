@@ -11,6 +11,7 @@ public class GunScriptableObject : ScriptableObject
 {
     //Types of vars needed
     //public ImpactType ImpactType; IMPLEMENT AFTER WATCHING SURFACE TUTORIAL
+    private bool isdisEnemy;
     public GunType Type;
     public string Name;
     public GameObject ModelPrefab;
@@ -111,6 +112,8 @@ public class GunScriptableObject : ScriptableObject
             shootDirection.Normalize();
             if(isEnemy == false)
                 AmmoConfig.CurrentClipAmmo--; //TUTORIAL FOR RECOIL
+            if(isEnemy == true)
+                isdisEnemy = true;
 
             if(ShootConfig.IsHitscan)
             {
@@ -182,6 +185,8 @@ public class GunScriptableObject : ScriptableObject
     {
        Bullet bullet = BulletPool.Get();
        bullet.gameObject.SetActive(true);
+       if(isdisEnemy == true)
+                bullet.gameObject.layer = 17;
        bullet.OnCollision += HandleBulletCollision;
 
        if(ShootConfig.ShootType ==  ShootType.FromCamera && Physics.Raycast(GetRaycastOrigin(),ShootDirection, out RaycastHit hit, float.MaxValue, ShootConfig.HitMask))

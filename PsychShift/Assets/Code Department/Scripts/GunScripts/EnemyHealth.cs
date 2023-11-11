@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
@@ -44,9 +45,22 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
         if(CurrenHealth == 0 && damageTaken != 0 && isObject == false)
         {
-           OnDeath?.Invoke(transform.position);
-           //CURRENT SOLUTION NOT FINAL
-           Destroy(gameObject); 
+            if(this.gameObject.layer == 6)//EDIT IF LAYER ORDER IS CHANGED
+            {
+                OnDeath?.Invoke(transform);
+                //CURRENT SOLUTION NOT FINAL
+                Destroy(gameObject); 
+            }
+            else if(gameObject.layer == 15)
+            {
+                OnDeath?.Invoke(transform);
+                //CURRENT SOLUTION NOT FINAL
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                Destroy(gameObject);
+            }
+
+
+           
         }
         else if(CurrenHealth == 0 && damageTaken != 0 && isObject == true)
         {
