@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5946811797235988572}
+  - component: {fileID: 9152721073930515160}
+  - component: {fileID: 5899124100418981985}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -31,6 +33,34 @@ Transform:
   m_Father: {fileID: 2178632809385884978}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9152721073930515160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4966696826914652551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1b58da1903d7a44bc5754be81092ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coverMask:
+    serializedVersion: 2
+    m_Bits: 65536
+--- !u!114 &5899124100418981985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4966696826914652551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc3c4503a57b7546a14a5d7f87bf253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &8056168598108683875
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,6 +151,8 @@ MonoBehaviour:
     vCam: {fileID: 0}
     controller: {fileID: 0}
     agent: {fileID: 0}
+    animator: {fileID: 0}
+    gunHandler: {fileID: 0}
     movementStats: {fileID: 0}
     characterStats: {fileID: 0}
     enemyBrain: {fileID: 0}
