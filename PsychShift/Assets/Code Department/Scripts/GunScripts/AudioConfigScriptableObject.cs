@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Audio Config", menuName = "Guns/Audio Config", order = 5)]
+[CreateAssetMenu(fileName = "Audio Config", menuName = "OldGuns/Audio Config", order = 5)]
 
 public class AudioConfigScriptableObject : ScriptableObject
 {

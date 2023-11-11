@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
-[CreateAssetMenu(fileName = "Damage Config", menuName = "Guns/Damage Config", order = 1)]
+[CreateAssetMenu(fileName = "Damage Config", menuName = "OldGuns/Damage Config", order = 1)]
 public class DamageConfigScriptableObject : ScriptableObject
 {
     //public int Damage;

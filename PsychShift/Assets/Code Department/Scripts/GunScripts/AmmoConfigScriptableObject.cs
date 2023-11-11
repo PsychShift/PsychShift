@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Ammo Config", menuName =  "Guns/Ammo Config", order = 3)]
+[CreateAssetMenu(fileName = "Ammo Config", menuName =  "OldGuns/Ammo Config", order = 3)]
 public class AmmoConfigScriptableObject : ScriptableObject
 {
     public int MaxAmmo = 120;

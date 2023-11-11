@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Guns.Demo;
 using TMPro;
 using UnityEngine;
 [DisallowMultipleComponent]
@@ -7,7 +8,7 @@ using UnityEngine;
 public class AmmoDisplayer : MonoBehaviour
 {
     [SerializeField]
-    private GunHandler GunSelector;
+    private EnemyGunSelector GunSelector;
     private TextMeshProUGUI AmmoText;
 
     private void Awake()
