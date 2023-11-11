@@ -4,7 +4,7 @@ using UnityEngine;
 
 //ANYTHING HAVING TO DO WITH THE GUN SHOOTING
 
-[CreateAssetMenu(fileName = "Shoot Config", menuName = "Guns/Shoot Configuration", order = 2)]
+[CreateAssetMenu(fileName = "Shoot Config", menuName = "OldGuns/Shoot Configuration", order = 2)]
 public class ShootConfigurationScriptableObject : ScriptableObject 
 {
     public bool IsHitscan = true;

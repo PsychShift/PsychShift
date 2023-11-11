@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using System.Linq;
 using System.Collections;
 using UnityEngine.Animations;
+
 namespace Player
 {
     [RequireComponent(typeof(InputManager))]
