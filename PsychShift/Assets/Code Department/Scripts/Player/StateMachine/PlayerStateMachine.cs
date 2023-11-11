@@ -346,6 +346,8 @@ namespace Player
         // The movement of the camera is handled by Cinemachine, this is mostly for the particle effects and enabling/disabling the enemy ai.
         private IEnumerator SwapAnimation(Transform startTransform, Transform endTransform, CharacterInfoReference startCharacter, CharacterInfoReference endCharacter)
         {
+            //deactivate input
+            InputManager.Instance.PlayerInput.enabled = false;
             isSwapping = true;
             gunSelector.DespawnActiveGun();
             // Instantiate the particle system at the camera's position and as a child of the camera
@@ -387,6 +389,8 @@ namespace Player
             tunnel.Stop();
             Destroy(tunnel.gameObject);
             isSwapping = false;
+            InputManager.Instance.PlayerInput.enabled = true;
+            //activate input
 
             gunSelector.PickupGun(endCharacter.characterInfo.gunHandler.ActiveGun);
         }
