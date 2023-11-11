@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using System.Linq;
 using System.Collections;
 using UnityEngine.Animations;
+using Guns.Demo;
 
 namespace Player
 {
@@ -18,6 +19,7 @@ namespace Player
         //[SerializeField] private float vertLookSpeed = 300, horzLookSpeed = 300, slowVertLookSpeed = 150, slowHorzLookSpeed = 150;
         //public CinemachineVirtualCamera virtualCamera;
         private StateMachine.StateMachine stateMachine;
+        [SerializeField] private PlayerGunSelector gunSelector;
         public Transform cameraTransform;
         private ParticleMaster particleMaster;
         #endregion
@@ -345,7 +347,7 @@ namespace Player
         private IEnumerator SwapAnimation(Transform startTransform, Transform endTransform, CharacterInfoReference startCharacter, CharacterInfoReference endCharacter)
         {
             isSwapping = true;
-
+            gunSelector.DespawnActiveGun();
             // Instantiate the particle system at the camera's position and as a child of the camera
             Quaternion camRotation = cameraTransform.rotation;
             // create an offset 
@@ -385,6 +387,8 @@ namespace Player
             tunnel.Stop();
             Destroy(tunnel.gameObject);
             isSwapping = false;
+
+            gunSelector.PickupGun(endCharacter.characterInfo.gunHandler.ActiveGun);
         }
         #endregion
 

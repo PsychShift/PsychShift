@@ -150,7 +150,7 @@ namespace Guns
         /// <summary>
         /// Performs the shooting raycast if possible based on gun rate of fire. Also applies bullet spread and plays sound effects based on the AudioConfig.
         /// </summary>
-        private void TryToShoot(bool isEnemy = false)
+        public void TryToShoot(bool isEnemy = false)
         {
             if (Time.time - LastShootTime - ShootConfig.FireRate > Time.deltaTime)
             {

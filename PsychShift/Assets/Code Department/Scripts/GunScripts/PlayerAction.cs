@@ -57,7 +57,7 @@ public class PlayerAction : MonoBehaviour
             InverseKinematics.ElbowIKAmount = 0.25f;
         }*/
     }
-    private void UpdateCrosshair()
+    /* private void UpdateCrosshair()
     {
         if(GunSelector.ActiveGun.ShootConfig.ShootType == ShootType.FromGun)
         {
@@ -87,7 +87,7 @@ public class PlayerAction : MonoBehaviour
             }
             
         }
-    }
+    } */
     
     /*private void EndReload()
     {

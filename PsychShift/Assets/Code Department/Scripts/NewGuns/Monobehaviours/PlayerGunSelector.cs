@@ -9,16 +9,14 @@ namespace Guns.Demo
     public class PlayerGunSelector : MonoBehaviour
     {
         public Camera Camera;
-        [field: SerializeField] public GunType Gun { get; private set; }
+
 
         [SerializeField] private Transform GunParent;
-        [field: SerializeField] public List<GunScriptableObject> Guns { get; private set; }
+
         [SerializeField] private PlayerIK InverseKinematics;
 
         [Space] [Header("Runtime Filled")] public GunScriptableObject ActiveGun;
         [field: SerializeField] public GunScriptableObject ActiveBaseGun { get; private set; }
-
-        [SerializeField] private PlayerStateMachine PlayerStateMachine;
 
         /// <summary>
         /// If you are not using the demo AttachmentController, you may want it to initialize itself on start.
@@ -26,7 +24,7 @@ namespace Guns.Demo
         /// </summary>
         [SerializeField] private bool InitializeOnStart = false;
 
-        private void SetupGun(GunScriptableObject Gun)
+        public void SetupGun(GunScriptableObject Gun)
         {
             ActiveBaseGun = Gun;
             ActiveGun = Gun.Clone() as GunScriptableObject;
@@ -49,7 +47,6 @@ namespace Guns.Demo
         public void PickupGun(GunScriptableObject Gun)
         {
             DespawnActiveGun();
-            this.Gun = Gun.Type;
             SetupGun(Gun);
         }
 
