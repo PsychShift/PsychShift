@@ -57,6 +57,8 @@ GameObject:
   - component: {fileID: 5946811797235988572}
   - component: {fileID: 9152721073930515160}
   - component: {fileID: 5899124100418981985}
+  - component: {fileID: 3717281384302980959}
+  - component: {fileID: 2632155944272623517}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -107,6 +109,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+--- !u!114 &3717281384302980959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4966696826914652551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1b58da1903d7a44bc5754be81092ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coverMask:
+    serializedVersion: 2
+    m_Bits: 65536
+--- !u!114 &2632155944272623517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4966696826914652551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc3c4503a57b7546a14a5d7f87bf253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1 &8056168598108683875
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +152,7 @@ GameObject:
   - component: {fileID: 1200124023047133123}
   - component: {fileID: 7783113505120009626}
   - component: {fileID: 5309087219355432835}
+  - component: {fileID: 4915459179439826330}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -159,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a815d17123dea654ba70be0be0fcbf8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunSelector: {fileID: 0}
+  gunSelector: {fileID: 5309087219355432835}
   cameraTransform: {fileID: 0}
   walkSpeed: 25
   smoothInputSpeed: 0.1
@@ -294,6 +325,23 @@ MonoBehaviour:
   ActiveGun: {fileID: 0}
   <ActiveBaseGun>k__BackingField: {fileID: 0}
   InitializeOnStart: 0
+--- !u!114 &4915459179439826330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8056168598108683875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc0f8ba3b07f5643a7e539935c5b041, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GunSelector: {fileID: 5309087219355432835}
+  AutoReload: 1
+  InverseKinematics: {fileID: 0}
+  PlayerAnimator: {fileID: 0}
+  IsReloading: 0
 --- !u!1001 &2328858885241308174
 PrefabInstance:
   m_ObjectHideFlags: 0
