@@ -42,7 +42,7 @@ namespace ImpactSystem
 
         public void HandleImpact(GameObject HitObject, Vector3 HitPoint, Vector3 HitNormal, ImpactType Impact, int TriangleIndex)
         {
-            if (HitObject.TryGetComponent<Terrain>(out Terrain terrain))
+            /* if (HitObject.TryGetComponent<Terrain>(out Terrain terrain))
             {
                 List<TextureAlpha> activeTextures = GetActiveTexturesFromTerrain(terrain, HitPoint);
                 foreach (TextureAlpha activeTexture in activeTextures)
@@ -94,6 +94,14 @@ namespace ImpactSystem
                             PlayEffects(HitPoint, HitNormal, typeEffect.SurfaceEffect, 1);
                         }
                     }
+                }
+            } */
+            foreach (Surface.SurfaceImpactTypeEffect typeEffect in DefaultSurface.ImpactTypeEffects)
+            {
+                if (typeEffect.ImpactType == Impact)
+                {
+                    PlayEffects(HitPoint, HitNormal, typeEffect.SurfaceEffect, 1);
+                    break;
                 }
             }
         }

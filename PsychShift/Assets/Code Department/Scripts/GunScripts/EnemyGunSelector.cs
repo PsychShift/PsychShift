@@ -1,16 +1,17 @@
-using Guns.Modifiers;
-using Player;
+using System.Collections;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
+using Guns.Modifiers;
 
 namespace Guns.Demo
 {
     [DisallowMultipleComponent]
-    public class PlayerGunSelector : MonoBehaviour
+    public class EnemyGunSelector : MonoBehaviour
     {
         public Camera Camera;
 
-
+        public GunScriptableObject StartGun;
         [SerializeField] private Transform GunParent;
 
         [SerializeField] private PlayerIK InverseKinematics;
@@ -23,10 +24,12 @@ namespace Guns.Demo
         /// If you are configuring this separately using <see cref="SetupGun"/> then set this to false.
         /// </summary>
         [SerializeField] private bool InitializeOnStart = false;
-
+        void Start()
+        {
+            SetupGun(StartGun);
+        }
         public void SetupGun(GunScriptableObject Gun)
         {
-            Debug.Log("SetupGun");
             ActiveBaseGun = Gun;
             ActiveGun = Gun.Clone() as GunScriptableObject;
             ActiveGun.Spawn(GunParent, this, Camera);
@@ -60,6 +63,16 @@ namespace Guns.Demo
             {
                 modifier.Apply(ActiveGun);
             }
+        }
+
+        public bool ShouldReload()
+        {
+            return ActiveGun.AmmoConfig.CurrentClipAmmo <= 0;
+        }
+
+        public void EnemyShoot()
+        {
+            ActiveGun.TryToShoot(true);
         }
     }
 }

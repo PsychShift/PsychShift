@@ -20,6 +20,7 @@ namespace Guns
         private void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
+            Rigidbody.useGravity = false;
         }
 
         public void Spawn(Vector3 SpawnForce)

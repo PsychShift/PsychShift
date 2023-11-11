@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using Guns.Demo;
 [DisallowMultipleComponent]
 public class PlayerAction : MonoBehaviour
 {
     [SerializeField]
-    private GunHandler GunSelector;
+    private EnemyGunSelector GunSelector;
     [SerializeField]
     private bool AutoReload = true;
     [SerializeField]

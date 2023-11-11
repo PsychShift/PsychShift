@@ -94,7 +94,7 @@ namespace Player
         Vector3 boxHalfExtents = new Vector3(2f, 2f, 2f);
         Quaternion boxRotation;
         public delegate void SwapEvent(Transform player);
-        public event SwapEvent OnSwap;
+        public event SwapEvent OnSwapPlayer;
 
         private ParticleSystem mindSwapTunnel;
         #endregion
@@ -116,12 +116,11 @@ namespace Player
             cameraTransform.GetComponent<CinemachineBrain>().m_IgnoreTimeScale = false;
             particleMaster = GetComponentInChildren<ParticleMaster>();
 
-            OnSwap += EnemyTargetManager.Instance.SetPlayer;
+            OnSwapPlayer += EnemyTargetManager.Instance.SetPlayer;
 
             
             currentCharacter = null;
             SwapCharacter(tempCharacter);
-            OnSwap+= GetComponent<GunHandler>().SetGun;
 
             //virtualCamera.Follow = currentCharacter.cameraRoot;
 
@@ -256,7 +255,7 @@ namespace Player
         {
             InputManager.Instance.OnSlowActionStateChanged -= SlowMotion;
             InputManager.Instance.OnSwapPressed -= SwapPressed;
-            OnSwap -= EnemyTargetManager.Instance.SetPlayer;
+            OnSwapPlayer -= EnemyTargetManager.Instance.SetPlayer;
         }
         void Update()
         {
@@ -337,7 +336,8 @@ namespace Player
                 currentCharacter = newCharInfo;
                 currentCharacter.enemyBrain.enabled = false;
                 newCharacterInfoReference.ActivateCharacter();
-                OnSwap?.Invoke(currentCharacter.characterContainer.transform);
+                OnSwapPlayer?.Invoke(currentCharacter.characterContainer.transform);
+                gunSelector.SetupGun(currentCharacter.gunHandler.StartGun);
             }
             
 
@@ -384,7 +384,7 @@ namespace Player
             // Re enable the startTransforms ai component.
             startCharacter.characterInfo.enemyBrain.enabled = true;
             
-            OnSwap?.Invoke(endCharacter.characterInfo.characterContainer.transform);
+            OnSwapPlayer?.Invoke(endCharacter.characterInfo.characterContainer.transform);
             // Destroy the particle system at the end of the swap animation
             tunnel.Stop();
             Destroy(tunnel.gameObject);
@@ -392,7 +392,7 @@ namespace Player
             InputManager.Instance.PlayerInput.enabled = true;
             //activate input
 
-            gunSelector.PickupGun(endCharacter.characterInfo.gunHandler.ActiveGun);
+            gunSelector.SetupGun(endCharacter.characterInfo.gunHandler.StartGun);
         }
         #endregion
 

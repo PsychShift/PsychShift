@@ -1,5 +1,51 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1595589199849639917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8128335859218646655}
+  - component: {fileID: 7917584836329711028}
+  m_Layer: 0
+  m_Name: SurfaceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8128335859218646655
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595589199849639917}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2178632809385884978}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7917584836329711028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595589199849639917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ffacad4bb0f2f42a59894157d688d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Surfaces: []
+  DefaultSurface: {fileID: 11400000, guid: 16627379184aa4340b142b4d1edef388, type: 2}
 --- !u!1 &4966696826914652551
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,6 +143,7 @@ Transform:
   m_Children:
   - {fileID: 7119628607966843759}
   - {fileID: 5946811797235988572}
+  - {fileID: 8128335859218646655}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -112,6 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a815d17123dea654ba70be0be0fcbf8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunSelector: {fileID: 0}
   cameraTransform: {fileID: 0}
   walkSpeed: 25
   smoothInputSpeed: 0.1
@@ -241,9 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 0}
-  <Gun>k__BackingField: 0
   GunParent: {fileID: 0}
-  <Guns>k__BackingField: []
   InverseKinematics: {fileID: 0}
   ActiveGun: {fileID: 0}
   <ActiveBaseGun>k__BackingField: {fileID: 0}
