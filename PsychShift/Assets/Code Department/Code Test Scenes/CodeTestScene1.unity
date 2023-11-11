@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -744,7 +744,6 @@ MonoBehaviour:
   agression: {fileID: 11400000, guid: 68b8a78772ceeef4cb80a3ade2c7c150, type: 2}
   isMelee: 0
   currentCover: {fileID: 0}
-  player: {fileID: 0}
   patrolPoints: []
   DebugMode: 0
 --- !u!4 &203198927 stripped
@@ -1422,7 +1421,6 @@ MonoBehaviour:
   agression: {fileID: 11400000, guid: b11693b8e2be01a418452a964a9584b0, type: 2}
   isMelee: 0
   currentCover: {fileID: 0}
-  player: {fileID: 0}
   patrolPoints: []
   DebugMode: 0
 --- !u!114 &415748787
@@ -8486,6 +8484,10 @@ PrefabInstance:
     - target: {fileID: 8115607342825376186, guid: 23c0075fc7499404897f6639e450a652, type: 3}
       propertyPath: m_Name
       value: Character
+      objectReference: {fileID: 0}
+    - target: {fileID: 8374980213440262075, guid: 23c0075fc7499404897f6639e450a652, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 295163461885681840, guid: 23c0075fc7499404897f6639e450a652, type: 3}

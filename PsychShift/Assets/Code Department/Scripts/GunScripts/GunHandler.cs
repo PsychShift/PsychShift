@@ -44,7 +44,7 @@ public class GunHandler : MonoBehaviour
    } 
 
 
-    public void SetGun(GunScriptableObject gun) 
+    public void SetGun(Player.CharacterInfo swapref, GunScriptableObject gun) 
     {
         
         if(gun == null)
