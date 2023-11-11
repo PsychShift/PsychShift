@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using Guns.Demo;
 [DisallowMultipleComponent]
 public class PlayerAction : MonoBehaviour
 {
     [SerializeField]
-    private GunHandler GunSelector;
+    private EnemyGunSelector GunSelector;
     [SerializeField]
     private bool AutoReload = true;
     [SerializeField]
@@ -57,7 +58,7 @@ public class PlayerAction : MonoBehaviour
             InverseKinematics.ElbowIKAmount = 0.25f;
         }*/
     }
-    private void UpdateCrosshair()
+    /* private void UpdateCrosshair()
     {
         if(GunSelector.ActiveGun.ShootConfig.ShootType == ShootType.FromGun)
         {
@@ -87,7 +88,7 @@ public class PlayerAction : MonoBehaviour
             }
             
         }
-    }
+    } */
     
     /*private void EndReload()
     {

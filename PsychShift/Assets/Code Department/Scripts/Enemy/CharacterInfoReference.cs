@@ -5,8 +5,9 @@ using Cinemachine;
 using Player;
 using CharacterInfo = Player.CharacterInfo;
 using UnityEngine.AI;
+using Guns.Demo;
 
-[RequireComponent(typeof(CharacterController), typeof(GunHandler), typeof(NavMeshAgent))]
+[RequireComponent(typeof(CharacterController), typeof(EnemyGunSelector), typeof(NavMeshAgent))]
 public class CharacterInfoReference : MonoBehaviour
 {
     [Header("VERY IMPORTANT MUST FILL IN IN EDITOR")]
