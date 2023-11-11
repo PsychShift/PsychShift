@@ -536,13 +536,13 @@ namespace Player
 
         public void SwitchMode(bool trySetStatic)
         {
-            if(StaticBar.instance.currentStatic >= 1)
-            {
+            //if(StaticBar.instance.currentStatic >= 1)
+            //{
                 StaticMode = trySetStatic;
-            }
+            //}
 
 
-            trySetStatic = false;
+            //trySetStatic = false;
         }
 
         private void OnDrawGizmos()
