@@ -39,25 +39,29 @@ public class GunHandler : MonoBehaviour
    }
     private void Update()
    {
-        
         //ActiveGun.TryToShoot(true);
+        
    } 
 
 
-    public void SetGun(Player.CharacterInfo swapref, GunScriptableObject gun) 
+    public void SetGun(Transform transform) 
     {
         
-        if(gun == null)
+        /* if(gun == null)
         {
             Debug.LogError($"No GunScriptableObjec found for GunType: {gun}");
             return;
+        } */
+        if(stateMachineRef !=null)
+        {
+            SpawnGun = stateMachineRef.currentCharacter.gunHandler.SpawnGun;
         }
         if(ActiveGun !=null)
         {
             ActiveGun.DespawnGun();
         }
-        ActiveGun = gun;
-        gun.Spawn(GunParent, this, Camera);
+        ActiveGun = SpawnGun;
+        ActiveGun.Spawn(GunParent, this, Camera);
         //currentBullets = gun.AmmoConfig.CurrentClipAmmo;//Temp fix
 
         //Inverse kinematic stuff should go here but idk if we're doing all that

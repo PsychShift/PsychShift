@@ -111,7 +111,11 @@ public class GunScriptableObject : ScriptableObject
 
             shootDirection.Normalize();
             if(isEnemy == false)
-                AmmoConfig.CurrentClipAmmo--; //TUTORIAL FOR RECOIL
+            {
+                AmmoConfig.CurrentClipAmmo--;
+                isdisEnemy = false;
+            }
+            //TUTORIAL FOR RECOIL
             if(isEnemy == true)
                 isdisEnemy = true;
 
@@ -185,8 +189,10 @@ public class GunScriptableObject : ScriptableObject
     {
        Bullet bullet = BulletPool.Get();
        bullet.gameObject.SetActive(true);
-       if(isdisEnemy == true)
+        if(isdisEnemy == true)
                 bullet.gameObject.layer = 17;
+        else if(isdisEnemy == false)
+                bullet.gameObject.layer = 14;
        bullet.OnCollision += HandleBulletCollision;
 
        if(ShootConfig.ShootType ==  ShootType.FromCamera && Physics.Raycast(GetRaycastOrigin(),ShootDirection, out RaycastHit hit, float.MaxValue, ShootConfig.HitMask))

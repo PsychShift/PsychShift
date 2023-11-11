@@ -118,6 +118,7 @@ namespace Player
             
             currentCharacter = null;
             SwapCharacter(tempCharacter);
+            OnSwap+= GetComponent<GunHandler>().SetGun;
 
             //virtualCamera.Follow = currentCharacter.cameraRoot;
 
