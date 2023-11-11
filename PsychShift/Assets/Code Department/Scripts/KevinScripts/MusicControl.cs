@@ -24,6 +24,7 @@ public class MusicControl : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other) 
     {
-        TrackChoice();    
+        if(other.gameObject.tag == "Player")
+            TrackChoice();    
     }
 }

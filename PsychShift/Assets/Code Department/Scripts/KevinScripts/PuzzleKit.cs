@@ -191,9 +191,10 @@ public class PuzzleKit : MonoBehaviour
         {     
             if(activated == false)//activates this object and sends number to godBox.
             {
-                
                 activated = true;
+                Collider turnOff=gameObject.GetComponent<Collider>();
                 godBoxRef.activateCount++;
+                turnOff.enabled = false;
                 Debug.Log("Activated: " + godBoxRef.activateCount);
                 godBoxRef.ThisActivate();
             }
