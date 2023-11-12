@@ -6,12 +6,27 @@ using System;
 
 using CharacterInfo = Player.CharacterInfo;
 [RequireComponent(typeof(CharacterInfoReference), typeof(TempGravity), typeof(FieldOfView))]
+[DisallowMultipleComponent]
 public abstract class EnemyBrain : MonoBehaviour
 {
     [Tooltip("If this is true, the enemy will stand in one spot, if false, it will require a patrol path")]
     [SerializeField] protected bool isGaurd;
 
-    public bool isActive = true;
+    [SerializeField] private bool _isActive = true;
+    public bool isActive {
+        get 
+        { 
+            return _isActive; 
+        }
+        set 
+        { 
+            if(value == false)
+            {
+                StopAllCoroutines();
+            }
+            _isActive = value; 
+        }
+    }
     [SerializeField] protected LayerMask playerLayer;
     protected StateMachine.StateMachine stateMachine;
     public AIAgression agression;
@@ -152,19 +167,19 @@ public abstract class EnemyBrain : MonoBehaviour
     void OnEnable()
     {
         SetUp();
-        CharacterInfo.agent.enabled = true;
+        /*CharacterInfo.agent.enabled = true;
         if(!CharacterInfo.controller.isGrounded)
         {
             CharacterInfo.agent.enabled = false;
             GetComponent<TempGravity>().enabled = true;
             StartCoroutine(WaitTillGrounded());
-        }
+        } */
     }
     void OnDisable()
     {
         CharacterInfo.agent.enabled = false;
     }
-    private IEnumerator WaitTillGrounded()
+/*     private IEnumerator WaitTillGrounded()
     {
         while(!CharacterInfo.controller.isGrounded)
         {
@@ -172,7 +187,7 @@ public abstract class EnemyBrain : MonoBehaviour
         }
         GetComponent<TempGravity>().enabled = false;
         CharacterInfo.agent.enabled = true;
-    }
+    } */
 
 
     private bool IsPlayerInRange()

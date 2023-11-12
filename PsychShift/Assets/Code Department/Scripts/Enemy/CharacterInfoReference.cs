@@ -42,37 +42,40 @@ public class CharacterInfoReference : MonoBehaviour
             vCamParent.SetActive(false);
             vCam = vCamParent.GetComponent<CinemachineVirtualCamera>();
         }
-        SetUpGun();
 
         _characterInfo = new CharacterInfo(gameObject, vCam, movementStats, characterStats);
         vCam.Follow = characterInfo.cameraRoot;
     }
-    private void SetUpGun()
-    {
 
-    }
 
-    public void ActivatePlayer()
+    public void ActivatePlayerAllAtOnce()
     {
-        
+        vCamParent.SetActive(true);
         characterInfo.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
         characterInfo.enemyBrain.isActive = false;
-        //characterInfo.gunHandler.enabled = false;
         characterInfo.agent.enabled = false;
 
         characterInfo.characterContainer.layer = LayerMask.NameToLayer("Player");
         characterInfo.characterContainer.tag = "Player";
     }
 
-    public void DeactivatePlayer()
+    public void DeactivatePlayerAllAtOnce()
     {
         characterInfo.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
         characterInfo.enemyBrain.isActive = true;
-        //characterInfo.gunHandler.enabled = true;
         characterInfo.agent.enabled = true;
 
         characterInfo.characterContainer.tag = "Swapable";
         characterInfo.characterContainer.layer = LayerMask.NameToLayer("Character");
+    }
+
+    public void ActivateFirstPersonModel()
+    {
+        characterInfo.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
+    }
+    public void ActivateThirdPersonModel()
+    {
+        characterInfo.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
     }
 
     public override string ToString()

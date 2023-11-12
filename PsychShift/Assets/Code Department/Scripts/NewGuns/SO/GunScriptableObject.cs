@@ -399,6 +399,7 @@ namespace Guns
         /// <param name="Collision"></param>
         private void HandleBulletCollision(Bullet Bullet, Collision Collision, int ObjectsPenetrated)
         {
+            Bullet.OnCollision -= HandleBulletCollision;
             TrailRenderer trail = Bullet.GetComponentInChildren<TrailRenderer>();
 
             if (Collision != null && BulletPenConfig != null &&

@@ -37,6 +37,6 @@ public class TimeManager : MonoBehaviour
     public void UndoSlowmotion()
     {
         Time.timeScale = 1;
-        Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale * 0.05f;
+        Time.fixedDeltaTime = this.fixedDeltaTime;
     }
 }

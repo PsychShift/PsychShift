@@ -12,7 +12,7 @@ namespace Guns.Demo
         public Camera Camera;
 
         public GunScriptableObject StartGun;
-        [SerializeField] private Transform GunParent;
+        public Transform GunParent;
 
         [SerializeField] private PlayerIK InverseKinematics;
 

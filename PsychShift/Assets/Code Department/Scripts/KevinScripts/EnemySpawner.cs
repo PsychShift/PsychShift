@@ -82,6 +82,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if(godBoxRef.puzzleComplete)
                     puzzleNotDone = false;
+        enemTransform.GetComponent<EnemyHealth>().OnDeath -= EnemyDeath;
         enemySpawned.Remove(enemTransform.gameObject);
         if(puzzleNotDone && enemySpawned.Count<=0)
         {

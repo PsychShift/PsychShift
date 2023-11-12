@@ -253,9 +253,11 @@ namespace Player
         }
         void OnDisable()
         {
+            OnSwapPlayer -= EnemyTargetManager.Instance.SetPlayer;
             InputManager.Instance.OnSlowActionStateChanged -= SlowMotion;
             InputManager.Instance.OnSwapPressed -= SwapPressed;
-            OnSwapPlayer -= EnemyTargetManager.Instance.SetPlayer;
+            InputManager.Instance.OnManipulatePressed -= Manipulate;
+            InputManager.Instance.OnSwitchPressed -= SwitchMode;
         }
         void Update()
         {
@@ -313,9 +315,9 @@ namespace Player
         public void SwapCharacter(GameObject newCharacter)
         {
             
+            if(newCharacter == null) return;
             CharacterInfoReference newCharacterInfoReference = newCharacter.GetComponent<CharacterInfoReference>();
             CharacterInfo newCharInfo = newCharacterInfoReference.characterInfo;
-            if(newCharacter == null) return;
             SlowMotion(false);
             
             if(currentCharacter != null)
@@ -333,10 +335,9 @@ namespace Player
             }
             else
             {
-                newCharacterInfoReference.vCamParent.SetActive(true);
                 currentCharacter = newCharInfo;
-                currentCharacter.enemyBrain.enabled = false;
-                newCharacterInfoReference.ActivatePlayer();
+                newCharacterInfoReference.vCamParent.SetActive(true);
+                newCharacterInfoReference.ActivatePlayerAllAtOnce();
                 OnSwapPlayer?.Invoke(currentCharacter.characterContainer.transform);
                 gunSelector.SetupGun(currentCharacter.gunHandler.StartGun);
             }
@@ -348,8 +349,8 @@ namespace Player
         private IEnumerator SwapAnimation(Transform startTransform, Transform endTransform, CharacterInfoReference startCharacter, CharacterInfoReference endCharacter)
         {
             //deactivate input
-            InputManager.Instance.PlayerInput.enabled = false;
             isSwapping = true;
+            InputManager.Instance.PlayerInput.enabled = false;
             gunSelector.DespawnActiveGun();
             // Instantiate the particle system at the camera's position and as a child of the camera
             Quaternion camRotation = cameraTransform.rotation;
@@ -365,6 +366,8 @@ namespace Player
             startCharacter.vCamParent.SetActive(false);
             startCharacter.characterInfo.enemyBrain.enabled = false;
             endCharacter.characterInfo.enemyBrain.enabled = false;
+            startCharacter.characterInfo.agent.enabled = false;
+            endCharacter.characterInfo.agent.enabled = false;
 
             
             // Wait for the player to be far enough away from the startTransform to re enable its body
@@ -373,27 +376,29 @@ namespace Player
                 tunnel.transform.position = cameraTransform.position;
                 yield return null;
             }
-            startCharacter.DeactivatePlayer();
+            startCharacter.ActivateThirdPersonModel();
             // now wait till the player is close enough to the endTransform to disable its body
             while(Vector3.Distance(endTransform.position, cameraTransform.position) > 0.5f)
             {
                 tunnel.transform.position = cameraTransform.position;
                 yield return null;
             }
-            endCharacter.ActivatePlayer();
 
-            // Re enable the startTransforms ai component.
-            startCharacter.characterInfo.enemyBrain.enabled = true;
+            startCharacter.DeactivatePlayerAllAtOnce();
+            endCharacter.ActivatePlayerAllAtOnce();
+
             
             OnSwapPlayer?.Invoke(endCharacter.characterInfo.characterContainer.transform);
             // Destroy the particle system at the end of the swap animation
+
             tunnel.Stop();
             Destroy(tunnel.gameObject);
-            isSwapping = false;
-            InputManager.Instance.PlayerInput.enabled = true;
+
             //activate input
+            InputManager.Instance.PlayerInput.enabled = true;
 
             gunSelector.SetupGun(endCharacter.characterInfo.gunHandler.StartGun);
+            isSwapping = false;
         }
         #endregion
 
