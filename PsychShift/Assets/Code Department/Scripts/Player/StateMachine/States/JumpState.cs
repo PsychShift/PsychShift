@@ -5,10 +5,10 @@ namespace Player
     /// <summary>
     /// Root state, responsible for making an enemy Jump and handling gravity in air.
     /// </summary>
-    public class JumpState1 : RootState1, IState
+    public class JumpState : RootState, IState
     {
 
-        public JumpState1(PlayerStateMachine1 playerStateMachine, StateMachine.StateMachine stateMachine)
+        public JumpState(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
         {
             this.playerStateMachine = playerStateMachine;
             this.stateMachine = stateMachine;
@@ -44,7 +44,7 @@ namespace Player
 
         private void HandleGravity()
         {
-            bool isFalling = playerStateMachine.CurrentMovementY <= 0f || !InputManager1.Instance.IsJumpPressed;
+            bool isFalling = playerStateMachine.CurrentMovementY <= 0f || !InputManager.Instance.IsJumpPressed;
             float fallMultiplier = 3.0f;
 
             if(isFalling)

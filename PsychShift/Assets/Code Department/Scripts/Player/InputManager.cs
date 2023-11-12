@@ -6,12 +6,12 @@ using System;
 using Unity.VisualScripting;
 using System.Data.Common;
 
-public class InputManager1 : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
     //[SerializeField] private CinemachinePOVExtension cinemachinePOVExtension;
-    private static InputManager1 _instance;
+    private static InputManager _instance;
     
-    public static InputManager1 Instance {
+    public static InputManager Instance {
         get {
             return _instance;
         }

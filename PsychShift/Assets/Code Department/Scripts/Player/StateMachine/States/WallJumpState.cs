@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace Player
 {
-    public class WallJumpState1 : RootState1, IState
+    public class WallJumpState : RootState, IState
     {
         private CharacterInfo currentCharacter;
 
-        public WallJumpState1(PlayerStateMachine1 playerStateMachine, StateMachine.StateMachine stateMachine)
+        public WallJumpState(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
         {
             this.playerStateMachine = playerStateMachine;
             this.stateMachine = stateMachine;
@@ -50,7 +50,7 @@ namespace Player
 
         private void HandleGravity()
         {
-            bool isFalling = playerStateMachine.CurrentMovementY <= 0f || !InputManager1.Instance.IsJumpPressed;
+            bool isFalling = playerStateMachine.CurrentMovementY <= 0f || !InputManager.Instance.IsJumpPressed;
             float fallMultiplier = 3.0f;
 
             if(isFalling)

@@ -17,7 +17,7 @@ public class IdleShootState : IState
     float waitToShoot = 0f;
     public void OnEnter()
     {
-        brain.CharacterInfo1.animator.SetBool("shooting", false);
+        brain.CharacterInfo.animator.SetBool("shooting", false);
         waitToShoot = Time.time + UnityEngine.Random.Range(FireRateAgro.FireRates[agression.FireRateAgression].MinWaitTime, FireRateAgro.FireRates[agression.FireRateAgression].MaxWaitTime);
     }
 
@@ -33,7 +33,7 @@ public class IdleShootState : IState
             Vector3 lookPos = brain.player.transform.position - brain.transform.position;
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
-            brain.CharacterInfo1.model.transform.rotation = Quaternion.Slerp(brain.CharacterInfo1.model.transform.rotation, rotation, Time.deltaTime * 5f);
+            brain.CharacterInfo.model.transform.rotation = Quaternion.Slerp(brain.CharacterInfo.model.transform.rotation, rotation, Time.deltaTime * 5f);
         }
     }
     public Color GizmoColor()

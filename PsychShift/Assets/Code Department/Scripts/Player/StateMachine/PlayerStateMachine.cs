@@ -9,8 +9,8 @@ using System.Collections;
 using UnityEngine.Animations;
 namespace Player
 {
-    [RequireComponent(typeof(InputManager1))]
-    public class PlayerStateMachine1 : MonoBehaviour
+    [RequireComponent(typeof(InputManager))]
+    public class PlayerStateMachine : MonoBehaviour
     {
         #region References
         [Header("Look Speeds")]
@@ -118,7 +118,7 @@ namespace Player
             
             currentCharacter = null;
             SwapCharacter(tempCharacter);
-            OnSwap+= GetComponent<GunHandler1>().SetGun;
+            OnSwap+= GetComponent<GunHandler>().SetGun;
 
             //virtualCamera.Follow = currentCharacter.cameraRoot;
 
@@ -126,28 +126,28 @@ namespace Player
             stateMachine = new StateMachine.StateMachine();
 
             #region Function Events
-            InputManager1.Instance.OnSlowActionStateChanged += SlowMotion;
-            InputManager1.Instance.OnSwapPressed += SwapPressed;
-            InputManager1.Instance.OnManipulatePressed += Manipulate;
-            InputManager1.Instance.OnSwitchPressed += SwitchMode;
+            InputManager.Instance.OnSlowActionStateChanged += SlowMotion;
+            InputManager.Instance.OnSwapPressed += SwapPressed;
+            InputManager.Instance.OnManipulatePressed += Manipulate;
+            InputManager.Instance.OnSwitchPressed += SwitchMode;
             #endregion
 
             // Create instances of root states
-            var groundState = new GroundedState1(this, stateMachine);
-            var fallState = new FallState1(this, stateMachine);
-            var jumpState = new JumpState1(this, stateMachine);
-            var wallFlowState = new WallFlowState1(this, stateMachine);
-            var wallStaticState = new WallStaticState1(this, stateMachine);
-            var wallJumpState = new WallJumpState1(this, stateMachine);
+            var groundState = new GroundedState(this, stateMachine);
+            var fallState = new FallState(this, stateMachine);
+            var jumpState = new JumpState(this, stateMachine);
+            var wallFlowState = new WallFlowState(this, stateMachine);
+            var wallStaticState = new WallStaticState(this, stateMachine);
+            var wallJumpState = new WallJumpState(this, stateMachine);
 
             // Create instances of sub-states
-            var idleState = new IdleState1(this);
-            var walkState = new WalkState1(this);
+            var idleState = new IdleState(this);
+            var walkState = new WalkState(this);
 
-            var wallRunState = new WallRunState1(this, this);
-            var vaultState = new VaultState1(this);
-            var mantleState = new MantleState1(this);
-            var wallHangState = new WallHangState1(this);
+            var wallRunState = new WallRunState(this, this);
+            var vaultState = new VaultState(this);
+            var mantleState = new MantleState(this);
+            var wallHangState = new WallHangState(this);
 
             // Makes it easier to add transitions (less text per line)
             void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition); // If a condition meets switch from 'from' state to 'to' state (Root state only)
@@ -228,31 +228,31 @@ namespace Player
             #endregion
 
             // Root State Conditions
-            Func<bool> Jumped() => () => InputManager1.Instance.IsJumpPressed && GroundedCheck();
+            Func<bool> Jumped() => () => InputManager.Instance.IsJumpPressed && GroundedCheck();
             Func<bool> Falling() => () => AppliedMovementY < 0 && !GroundedCheck();
             Func<bool> Grounded() => () => GroundedCheck();
             Func<bool> OnWallStatic() => () => CheckForWall() && AboveGround() && StaticMode;
-            Func<bool> OnWallFlow() => () => CheckForWall() && AboveGround() && InputManager1.Instance.GetPlayerMovement().magnitude > 0 && !StaticMode;
-            Func<bool> NotOnWallFlow() => () => !WallStateVariables.Instance.CheckOnWall() || InputManager1.Instance.GetPlayerMovement().magnitude == 0 || StaticMode;
+            Func<bool> OnWallFlow() => () => CheckForWall() && AboveGround() && InputManager.Instance.GetPlayerMovement().magnitude > 0 && !StaticMode;
+            Func<bool> NotOnWallFlow() => () => !WallStateVariables.Instance.CheckOnWall() || InputManager.Instance.GetPlayerMovement().magnitude == 0 || StaticMode;
             Func<bool> NotOnWallStatic() => () => !WallStateVariables.Instance.CheckOnWall() || !StaticMode;
-            Func<bool> WallJump() => () => InputManager1.Instance.IsJumpPressed && WallStateVariables.Instance.TimeOnWall > 0.4f;
+            Func<bool> WallJump() => () => InputManager.Instance.IsJumpPressed && WallStateVariables.Instance.TimeOnWall > 0.4f;
             Func<bool> WallFall() => () => AppliedMovementY < 0 && !GroundedCheck() && WallStateVariables.Instance.TimeOffWall > 0.2f;
 
             // Sub State Conditions
-            Func<bool> Walked() => () => InputManager1.Instance.GetPlayerMovement().magnitude != 0;
-            Func<bool> Stopped() => () => InputManager1.Instance.GetPlayerMovement().magnitude == 0;
+            Func<bool> Walked() => () => InputManager.Instance.GetPlayerMovement().magnitude != 0;
+            Func<bool> Stopped() => () => InputManager.Instance.GetPlayerMovement().magnitude == 0;
 
-            //Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && InputManager1.Instance.GetPlayerMovement().magnitude == 0;
+            //Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.GetPlayerMovement().magnitude == 0;
             Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft;
             //Func<bool> Ledge() => () => WallStateVariables.Instance.LedgeDetection(currentCharacter, cameraTransform) && WallStateVariables.Instance.ForwardWall && StaticMode;
-            Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && InputManager1.Instance.IsJumpPressed && StaticMode;
+            Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.IsJumpPressed && StaticMode;
 
             stateMachine.SetState(groundState);
         }
         void OnDisable()
         {
-            InputManager1.Instance.OnSlowActionStateChanged -= SlowMotion;
-            InputManager1.Instance.OnSwapPressed -= SwapPressed;
+            InputManager.Instance.OnSlowActionStateChanged -= SlowMotion;
+            InputManager.Instance.OnSwapPressed -= SwapPressed;
             OnSwap -= EnemyTargetManager.Instance.SetPlayer;
         }
         void Update()
@@ -310,8 +310,8 @@ namespace Player
         public void SwapCharacter(GameObject newCharacter)
         {
             
-            CharacterInfoReference1 newCharacterInfoReference1 = newCharacter.GetComponent<CharacterInfoReference1>();
-            CharacterInfo newCharInfo = newCharacterInfoReference1.characterInfo;
+            CharacterInfoReference newCharacterInfoReference = newCharacter.GetComponent<CharacterInfoReference>();
+            CharacterInfo newCharInfo = newCharacterInfoReference.characterInfo;
             if(newCharacter == null) return;
             SlowMotion(false);
             
@@ -319,10 +319,10 @@ namespace Player
             {
                 if (BrainJuiceBarTest.instance.currentBrain >= 15)
                 {
-                    CharacterInfoReference1 oldCharacterInfoReference1 = currentCharacter.characterContainer.GetComponent<CharacterInfoReference1>();
+                    CharacterInfoReference oldCharacterInfoReference = currentCharacter.characterContainer.GetComponent<CharacterInfoReference>();
                     StartCoroutine(SwapAnimation(currentCharacter.cameraRoot.transform, 
-                    newCharacterInfoReference1.characterInfo.cameraRoot.transform, 
-                    oldCharacterInfoReference1, newCharacterInfoReference1));
+                    newCharacterInfoReference.characterInfo.cameraRoot.transform, 
+                    oldCharacterInfoReference, newCharacterInfoReference));
                     BrainJuiceBarTest.instance.UseBrain(15);
 
                     currentCharacter = newCharInfo;
@@ -330,10 +330,10 @@ namespace Player
             }
             else
             {
-                newCharacterInfoReference1.vCamParent.SetActive(true);
+                newCharacterInfoReference.vCamParent.SetActive(true);
                 currentCharacter = newCharInfo;
                 currentCharacter.enemyBrain.enabled = false;
-                newCharacterInfoReference1.ActivateCharacter();
+                newCharacterInfoReference.ActivateCharacter();
                 OnSwap?.Invoke(currentCharacter.characterContainer.transform);
             }
             
@@ -341,10 +341,10 @@ namespace Player
         }
         bool isSwapping = false;
         // The movement of the camera is handled by Cinemachine, this is mostly for the particle effects and enabling/disabling the enemy ai.
-        private IEnumerator SwapAnimation(Transform startTransform, Transform endTransform, CharacterInfoReference1 startCharacter, CharacterInfoReference1 endCharacter)
+        private IEnumerator SwapAnimation(Transform startTransform, Transform endTransform, CharacterInfoReference startCharacter, CharacterInfoReference endCharacter)
         {
             //deactivate input
-            InputManager1.Instance.PlayerInput.enabled = false;
+            InputManager.Instance.PlayerInput.enabled = false;
             isSwapping = true;
 
             // Instantiate the particle system at the camera's position and as a child of the camera
@@ -386,7 +386,7 @@ namespace Player
             tunnel.Stop();
             Destroy(tunnel.gameObject);
             isSwapping = false;
-            InputManager1.Instance.PlayerInput.enabled = true;
+            InputManager.Instance.PlayerInput.enabled = true;
             //activate input
         }
         #endregion
@@ -404,17 +404,17 @@ namespace Player
         {
             if(timeSlow)
             {
-                InputManager1.Instance.SwapControlMap(ActionMapEnum.slow);
-                TimeManager1.Instance.DoSlowmotion(0.1f);
+                InputManager.Instance.SwapControlMap(ActionMapEnum.slow);
+                TimeManager.Instance.DoSlowmotion(0.1f);
             }
             else
             {
-                InputManager1.Instance.SwapControlMap(ActionMapEnum.standard);
-                TimeManager1.Instance.UndoSlowmotion();
+                InputManager.Instance.SwapControlMap(ActionMapEnum.standard);
+                TimeManager.Instance.UndoSlowmotion();
             }
             isSlowed = timeSlow;
         }
-        private Outliner1 currentOutlinedObject;
+        private Outliner currentOutlinedObject;
 
         private void SearchForInteractable()
         {
@@ -432,11 +432,11 @@ namespace Player
                 return;
             }
 
-            Outliner1 Outliner1 = hitObject.GetComponent<Outliner1>();
+            Outliner outliner = hitObject.GetComponent<Outliner>();
 
-            if (Outliner1 == null)
+            if (outliner == null)
             {
-                // Player is looking at an object without an Outliner1 component, deactivate current outline (if any)
+                // Player is looking at an object without an Outliner component, deactivate current outline (if any)
                 if (currentOutlinedObject != null)
                 {
                     currentOutlinedObject.ActivateOutline(false);
@@ -445,15 +445,15 @@ namespace Player
                 return;
             }
 
-            // Player is looking at an object with an Outliner1 component
-            if (currentOutlinedObject != null && currentOutlinedObject != Outliner1)
+            // Player is looking at an object with an Outliner component
+            if (currentOutlinedObject != null && currentOutlinedObject != outliner)
             {
                 // Deactivate the outline of the previously outlined object
                 currentOutlinedObject.ActivateOutline(false);
             }
 
             // Activate the outline of the currently looked at object
-            currentOutlinedObject = Outliner1;
+            currentOutlinedObject = outliner;
             currentOutlinedObject.ActivateOutline(true);
         }
 
@@ -463,7 +463,7 @@ namespace Player
         public virtual void RotatePlayer()
         {
             if(isSwapping) return;
-            Vector2 mouseDelta = InputManager1.Instance.GetMouseDelta();
+            Vector2 mouseDelta = InputManager.Instance.GetMouseDelta();
             Vector3 currentRotation = cameraTransform.localRotation.eulerAngles;
 
             currentRotation.x -= mouseDelta.y;

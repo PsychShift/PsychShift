@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AtCoverState1 : ShootingSuperState1
+public class AtCoverState : ShootingSuperState
 {
-    public AtCoverState1(EnemyBrain brain, AIAgression agression)
+    public AtCoverState(EnemyBrain brain, AIAgression agression)
     {
         SetUp(brain, agression);
     }
@@ -24,13 +24,13 @@ public class AtCoverState1 : ShootingSuperState1
     public override void Tick()
     {
         base.Tick();
-        if(stateMachine._currentState is ActiveShootState1)
+        if(stateMachine._currentState is ActiveShootState)
         {
-            brain.CharacterInfo1.animator.SetFloat("cover", 0);
+            brain.CharacterInfo.animator.SetFloat("cover", 0);
         }
         else
         {
-            brain.CharacterInfo1.animator.SetFloat("cover", 1);
+            brain.CharacterInfo.animator.SetFloat("cover", 1);
         }
     }
 

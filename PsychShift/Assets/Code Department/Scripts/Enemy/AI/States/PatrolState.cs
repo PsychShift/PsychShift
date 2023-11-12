@@ -2,37 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class GuardState1 : IState
+public class PatrolState : IState
 {
     private EnemyBrain brain;
     private AIAgression agression;
-    private Vector3 startPosition;
-    private float rotationSpeed;
-
     private Player.CharacterInfo currentCharacterInfo;
-    public GuardState1(EnemyBrain brain, AIAgression agression, Vector3 startPosition)
+    private List<Vector3> patrolPoints;
+    private int wpIndex = 0;
+
+    public PatrolState(EnemyBrain brain, AIAgression agression, List<Vector3> patrolPoints)
     {
         this.brain = brain;
         this.agression = agression;
-        this.startPosition = startPosition;
+        this.patrolPoints = patrolPoints;
     }
 
     public void OnEnter()
     {
-        currentCharacterInfo = brain.CharacterInfo1;
-        currentCharacterInfo.agent.SetDestination(startPosition);
+        wpIndex = brain as BasicEnemy != null ? (brain as BasicEnemy).CurrentPatrolPointIndex : 0;
+        currentCharacterInfo = brain.CharacterInfo;
+        currentCharacterInfo.agent.SetDestination(patrolPoints[wpIndex]);
     }
 
     public void OnExit()
     {
-        
+        if (brain as BasicEnemy != null) (brain as BasicEnemy).CurrentPatrolPointIndex = wpIndex;
     }
 
     public void Tick()
     {
-        
+        if (currentCharacterInfo.agent.remainingDistance < 0.5f)
+        {
+            wpIndex = (wpIndex + 1) % patrolPoints.Count;
+            currentCharacterInfo.agent.SetDestination(patrolPoints[wpIndex]);
+        }
     }
 
     public void SetField(object obj, string fieldName, object value)
@@ -70,3 +74,4 @@ public class GuardState1 : IState
         return Color.green;
     }
 }
+

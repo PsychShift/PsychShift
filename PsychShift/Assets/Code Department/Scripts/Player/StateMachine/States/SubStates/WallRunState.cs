@@ -9,7 +9,7 @@ clamp the player to the wall
 */
 namespace Player
 {
-    public class WallRunState1 : IState
+    public class WallRunState : IState
     {
         private float normalizedAngleThreshold = 0.1f;
 
@@ -17,13 +17,13 @@ namespace Player
 
 
 
-        private readonly PlayerStateMachine1 playerStateMachine;
+        private readonly PlayerStateMachine playerStateMachine;
         private MonoBehaviour monoBehaviour;
         private CharacterInfo currentCharacter;
         private WallStateVariables wallVariables;
         private CinemachineTiltExtension cameraTilt;
 
-        public WallRunState1(PlayerStateMachine1 playerStateMachine, MonoBehaviour monoBehaviour)
+        public WallRunState(PlayerStateMachine playerStateMachine, MonoBehaviour monoBehaviour)
         {
             this.playerStateMachine = playerStateMachine;
             this.monoBehaviour = monoBehaviour;

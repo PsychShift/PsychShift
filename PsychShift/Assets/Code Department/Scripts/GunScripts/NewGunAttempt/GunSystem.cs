@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GunSystem1 : MonoBehaviour
+public class GunSystem : MonoBehaviour
 {
 
     public int damage;
@@ -29,11 +29,11 @@ public class GunSystem1 : MonoBehaviour
     {
         bulletsLeft = magazineSize;
         readyToShoot = true;
-        InputManager1.Instance.OnShootPressed += PressedShoot;
+        InputManager.Instance.OnShootPressed += PressedShoot;
     }
     private void OnDisable()
     {
-        InputManager1.Instance.OnShootPressed -= PressedShoot;
+        InputManager.Instance.OnShootPressed -= PressedShoot;
     }
 /*     private void Update()
     {

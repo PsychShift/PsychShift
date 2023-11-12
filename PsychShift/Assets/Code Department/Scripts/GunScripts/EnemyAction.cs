@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class EnemyShootScript : MonoBehaviour
 {
     [SerializeField]
-    private GunHandler1 GunSelector;
+    private GunHandler GunSelector;
     [SerializeField]
     private bool AutoReload = true;
 

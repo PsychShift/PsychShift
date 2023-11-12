@@ -6,8 +6,8 @@ using Player;
 using CharacterInfo = Player.CharacterInfo;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(CharacterController), typeof(GunHandler1), typeof(NavMeshAgent))]
-public class CharacterInfoReference1 : MonoBehaviour
+[RequireComponent(typeof(CharacterController), typeof(GunHandler), typeof(NavMeshAgent))]
+public class CharacterInfoReference : MonoBehaviour
 {
     [Header("VERY IMPORTANT MUST FILL IN IN EDITOR")]
     [Tooltip("This is a thing that does stuff")]
@@ -28,8 +28,6 @@ public class CharacterInfoReference1 : MonoBehaviour
             return _characterInfo;
         }
     }
-
-    public CharacterInfo CharacterInfo { get; internal set; }
 
     [HideInInspector]public GameObject vCamParent;
     private CinemachineVirtualCamera vCam;

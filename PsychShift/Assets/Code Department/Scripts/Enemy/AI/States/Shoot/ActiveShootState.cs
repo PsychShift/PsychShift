@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActiveShootState1 : IState
+public class ActiveShootState : IState
 {
     private EnemyBrain brain;
     private AIAgression agression;
-    public ActiveShootState1(EnemyBrain brain, AIAgression agression)
+    public ActiveShootState(EnemyBrain brain, AIAgression agression)
     {
         this.brain = brain;
         this.agression = agression;
@@ -22,7 +22,7 @@ public class ActiveShootState1 : IState
     public void OnExit()
     {
         Debug.Log("Exit ShootState");
-        brain.CharacterInfo1.animator.SetBool("shooting", false);
+        brain.CharacterInfo.animator.SetBool("shooting", false);
     }
 
     public void Tick()
@@ -32,10 +32,10 @@ public class ActiveShootState1 : IState
             Vector3 lookPos = brain.player.transform.position - brain.transform.position;
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
-            brain.CharacterInfo1.model.transform.rotation = Quaternion.Slerp(brain.CharacterInfo1.model.transform.rotation, rotation, Time.deltaTime * 5f);
+            brain.CharacterInfo.model.transform.rotation = Quaternion.Slerp(brain.CharacterInfo.model.transform.rotation, rotation, Time.deltaTime * 5f);
 
-            brain.CharacterInfo1.gunHandler.EnemyShoot();
-            brain.CharacterInfo1.animator.SetBool("shooting", true);
+            brain.CharacterInfo.gunHandler.EnemyShoot();
+            brain.CharacterInfo.animator.SetBool("shooting", true);
         }
     }
     public Color GizmoColor()

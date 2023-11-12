@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootingSuperState1 : IState
+public class ShootingSuperState : IState
 {
     protected StateMachine.StateMachine stateMachine;
     protected EnemyBrain brain;
@@ -15,14 +15,14 @@ public class ShootingSuperState1 : IState
         stateMachine = new StateMachine.StateMachine();
 
         var idleShootState = new IdleShootState(brain, agression);
-        var activeShootState = new ActiveShootState1(brain, agression);
+        var activeShootState = new ActiveShootState(brain, agression);
         var reloadState = new ReloadState(brain, agression);
 
         // Transitions
         AT(idleShootState, activeShootState, idleShootState.IsDone());
         AT(activeShootState, idleShootState, activeShootState.IsDone());
-        AT(activeShootState, reloadState,() => brain.CharacterInfo1.gunHandler.ShouldReload());
-        AT(reloadState, activeShootState, () => !brain.CharacterInfo1.gunHandler.ShouldReload());
+        AT(activeShootState, reloadState,() => brain.CharacterInfo.gunHandler.ShouldReload());
+        AT(reloadState, activeShootState, () => !brain.CharacterInfo.gunHandler.ShouldReload());
 
 
         stateMachine.SetState(activeShootState);

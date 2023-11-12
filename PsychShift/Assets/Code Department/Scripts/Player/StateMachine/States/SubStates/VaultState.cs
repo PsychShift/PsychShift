@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Player
 {
-    public class VaultState1 : IState
+    public class VaultState : IState
     {
-        private readonly PlayerStateMachine1 playerStateMachine;
+        private readonly PlayerStateMachine playerStateMachine;
         private CharacterInfo currentCharacter;
         private float playerHeight = 2f;
         private float playerRadius = 0.5f;
@@ -13,7 +13,7 @@ namespace Player
         private Vector3 startPosition;
         private Vector3 targetPosition;
         private Vector3 currentTargetPosition;
-        public VaultState1(PlayerStateMachine1 playerStateMachine)
+        public VaultState(PlayerStateMachine playerStateMachine)
         {
             this.playerStateMachine = playerStateMachine;
         }

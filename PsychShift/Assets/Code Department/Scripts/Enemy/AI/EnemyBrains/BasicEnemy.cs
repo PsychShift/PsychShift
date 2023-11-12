@@ -7,7 +7,7 @@ using Player;
 using CharacterInfo = Player.CharacterInfo;
 
 
-public class BasicEnemy1 : EnemyBrain
+public class BasicEnemy : EnemyBrain
 {
     
     [SerializeField] private List<Vector3> patrolPoints;
@@ -21,7 +21,7 @@ public class BasicEnemy1 : EnemyBrain
 
     void Update()
     {
-        if(CharacterInfo1.agent.enabled)
+        if(CharacterInfo.agent.enabled)
             stateMachine.Tick();
     }
 
@@ -29,9 +29,9 @@ public class BasicEnemy1 : EnemyBrain
     {
         stateMachine = new StateMachine.StateMachine();
 
-        var patrolState = new PatrolState1(this, agression, patrolPoints);
-        var guardState = new GuardState1(this, agression, transform.position);
-        var chaseState = new ChaseState1(this, agression);
+        var patrolState = new PatrolState(this, agression, patrolPoints);
+        var guardState = new GuardState(this, agression, transform.position);
+        var chaseState = new ChaseState(this, agression);
 
         
         AT(patrolState, chaseState, PlayerInSight());

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class TempGravity1 : MonoBehaviour
+public class TempGravity : MonoBehaviour
 {
     Vector3 appliedMovement;
     float CurrentMovementY;

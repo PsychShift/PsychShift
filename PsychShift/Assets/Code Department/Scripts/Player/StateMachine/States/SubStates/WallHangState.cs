@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Player
 {
-    public class WallHangState1 : IState
+    public class WallHangState : IState
     {
         //References
-        PlayerStateMachine1 playerStateMachine;
+        PlayerStateMachine playerStateMachine;
         private CharacterInfo currentCharacter;
         public Transform camera;
         public Transform orientation;
@@ -39,7 +39,7 @@ namespace Player
         //Exiting
          public bool exitingLedge;
         public float exitLedgeTime;
-        public WallHangState1(PlayerStateMachine1 playerStateMachine)
+        public WallHangState(PlayerStateMachine playerStateMachine)
         {
             this.playerStateMachine = playerStateMachine;
         }

@@ -1,11 +1,11 @@
 using UnityEditor;
 using UnityEngine;
-[CustomEditor(typeof(FieldOfView1))]
+[CustomEditor(typeof(FieldOfView))]
 public class FieldOfViewEditor : Editor
 {
     private void OnSceneGUI() 
     {
-        FieldOfView1 fov = (FieldOfView1)target;  
+        FieldOfView fov = (FieldOfView)target;  
         Handles.color = Color.white;
         Handles.DrawWireArc(fov.transform.position,Vector3.up, Vector3.forward, 360, fov.radius);
 

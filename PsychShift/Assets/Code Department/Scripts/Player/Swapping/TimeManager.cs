@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeManager1 : MonoBehaviour
+public class TimeManager : MonoBehaviour
 {
     private float fixedDeltaTime;
 
-    private static TimeManager1 instance;
+    private static TimeManager instance;
 
-    public static TimeManager1 Instance
+    public static TimeManager Instance
     {
         get { return instance; }
     }
