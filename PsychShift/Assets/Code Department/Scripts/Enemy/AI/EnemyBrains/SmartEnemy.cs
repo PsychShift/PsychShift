@@ -9,6 +9,8 @@ public class SmartEnemy : EnemyBrain
     [HideInInspector] public int CurrentPatrolPointIndex { get; set; } = 0;
     
     [SerializeField] bool DebugMode = false;
+
+    
     protected override void SetUp()
     {
         VariableSetup();
@@ -36,8 +38,7 @@ public class SmartEnemy : EnemyBrain
         AT(debugState, runToCoverState, () => !DebugMode);
         ANY(debugState, () => DebugMode);
         
-
-        stateMachine.SetState(runToCoverState);
+        stateMachine.SetState(runToCoverState, true);
     }
 
     void OnDrawGizmos()
@@ -45,5 +46,13 @@ public class SmartEnemy : EnemyBrain
         if (stateMachine == null) return;
         Gizmos.color = stateMachine.GetGizmoColor();
         Gizmos.DrawSphere(transform.position + Vector3.up * 6, 0.4f);     
+    }
+
+    protected override void HandleReactivation()
+    {
+        var state = stateMachine._currentState;
+        
+        stateMachine.SetState(stateMachine.defaultState);
+        stateMachine.SetState(state);
     }
 }

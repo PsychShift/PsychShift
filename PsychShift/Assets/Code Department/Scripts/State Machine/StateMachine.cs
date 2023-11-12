@@ -8,6 +8,7 @@ namespace StateMachine
 {
     public class StateMachine
     {
+        public IState defaultState { get; private set; }
         public IState _currentRootState { get; private set; }
         public IState _currentState { get; private set; }
         public IState _currentSubState { get; set; }
@@ -25,7 +26,7 @@ namespace StateMachine
             
             _currentState?.Tick(); // update function for the current state
         }
-
+        
         public void SetState(IState state)
         {
             if(state == _currentState) // If the new state is the same as the last return
@@ -40,6 +41,12 @@ namespace StateMachine
             
 
             _currentState.OnEnter(); // Call the OnEnter function for the new state
+        }
+        public void SetState(IState state, bool isDefault)
+        {
+            if(isDefault)
+                defaultState = state;
+            SetState(state);
         }
 
         public void AddTransition(IState from, IState to, Func<bool> predicate)

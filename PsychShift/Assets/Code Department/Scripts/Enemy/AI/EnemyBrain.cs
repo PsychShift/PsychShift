@@ -24,6 +24,10 @@ public abstract class EnemyBrain : MonoBehaviour
             {
                 StopAllCoroutines();
             }
+            else
+            {
+                HandleReactivation();
+            }
             _isActive = value; 
         }
     }
@@ -71,6 +75,8 @@ public abstract class EnemyBrain : MonoBehaviour
         fovRef = GetComponent<FieldOfView>();
 
     }
+
+    protected abstract void HandleReactivation();
 
     protected void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition);
     protected void ANY(IState from, Func<bool> condition) => stateMachine.AddAnyTransition(from, condition);

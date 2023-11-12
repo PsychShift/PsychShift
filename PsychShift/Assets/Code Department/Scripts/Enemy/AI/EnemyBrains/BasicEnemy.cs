@@ -41,10 +41,16 @@ public class BasicEnemy : EnemyBrain
         AT(chaseState, guardState, OutOfRangeForTooLongAndIsGuard(agression.StopChasingTime));
 
         if(isGaurd)
-            stateMachine.SetState(guardState);
+            stateMachine.SetState(guardState, true);
         else
-            stateMachine.SetState(patrolState);
+            stateMachine.SetState(patrolState, true);
     }
 
-
+    protected override void HandleReactivation()
+    {
+        var state = stateMachine._currentState;
+        
+        stateMachine.SetState(stateMachine.defaultState);
+        stateMachine.SetState(state);
+    }
 }

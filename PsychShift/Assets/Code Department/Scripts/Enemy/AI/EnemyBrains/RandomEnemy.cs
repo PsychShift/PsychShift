@@ -26,7 +26,7 @@ public class RandomEnemy : EnemyBrain
         
 
 
-        stateMachine.SetState(pickRandom);
+        stateMachine.SetState(pickRandom, true);
     }
 
     void Update()
@@ -40,5 +40,13 @@ public class RandomEnemy : EnemyBrain
         if (stateMachine == null) return;
         Gizmos.color = stateMachine.GetGizmoColor();
         Gizmos.DrawSphere(transform.position + Vector3.up * 6, 0.4f);     
+    }
+
+    protected override void HandleReactivation()
+    {
+        var state = stateMachine._currentState;
+        
+        stateMachine.SetState(stateMachine.defaultState);
+        stateMachine.SetState(state);
     }
 }
