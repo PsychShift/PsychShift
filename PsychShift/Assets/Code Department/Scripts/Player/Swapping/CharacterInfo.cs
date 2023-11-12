@@ -30,7 +30,7 @@ namespace Player
             cameraRoot = characterContainer.transform.Find("CameraRoot");
             enemyBrain = characterContainer.GetComponent<EnemyBrain>();
             gunHandler = characterContainer.GetComponent<EnemyGunSelector>();
-            animator = characterContainer.GetComponentInChildren<Animator>();
+            animator = model.GetComponent<Animator>();
         }
         public CharacterInfo(GameObject characterContainer, Cinemachine.CinemachineVirtualCamera vCam, CharacterMovementStatsSO movementStats, CharacterStatsSO characterStats)
         {
@@ -46,7 +46,7 @@ namespace Player
             enemyBrain = characterContainer.GetComponent<EnemyBrain>();
             agent = characterContainer.GetComponent<NavMeshAgent>();
             gunHandler = characterContainer.GetComponent<EnemyGunSelector>();
-            animator = characterContainer.GetComponentInChildren<Animator>();
+            animator = model.GetComponent<Animator>();
             this.vCam = vCam;
 
             this.movementStats = movementStats;

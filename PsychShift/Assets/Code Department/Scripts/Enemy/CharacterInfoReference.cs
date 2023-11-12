@@ -52,23 +52,23 @@ public class CharacterInfoReference : MonoBehaviour
 
     }
 
-    public void ActivateCharacter()
+    public void ActivatePlayer()
     {
         
         characterInfo.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
-        /* characterInfo.characterContainer.GetComponent<EnemyBrain>().enabled = false;
-        characterInfo.characterContainer.GetComponent<EnemyBrain>().isActive = false; */
+        characterInfo.enemyBrain.enabled = false;
+        characterInfo.gunHandler.enabled = false;
         characterInfo.agent.enabled = false;
 
         characterInfo.characterContainer.layer = LayerMask.NameToLayer("Player");
         characterInfo.characterContainer.tag = "Player";
     }
 
-    public void DeactivateCharacter()
+    public void DeactivatePlayer()
     {
         characterInfo.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
-        /* characterInfo.characterContainer.GetComponent<EnemyBrain>().enabled = true;
-        characterInfo.characterContainer.GetComponent<EnemyBrain>().isActive = true; */
+        characterInfo.enemyBrain.enabled = true;
+        characterInfo.gunHandler.enabled = true;
         characterInfo.agent.enabled = true;
 
         characterInfo.characterContainer.tag = "Swapable";

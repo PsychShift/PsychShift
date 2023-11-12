@@ -15,13 +15,11 @@ public class ActiveShootState : IState
     float shootForSeconds = 0f;
     public void OnEnter()
     {
-        Debug.Log("Enter ShootState");
         shootForSeconds = Time.time + UnityEngine.Random.Range(FireRateAgro.FireRates[agression.FireRateAgression].MinWaitTime, FireRateAgro.FireRates[agression.FireRateAgression].MaxWaitTime);
     }
 
     public void OnExit()
     {
-        Debug.Log("Exit ShootState");
         brain.CharacterInfo.animator.SetBool("shooting", false);
     }
 

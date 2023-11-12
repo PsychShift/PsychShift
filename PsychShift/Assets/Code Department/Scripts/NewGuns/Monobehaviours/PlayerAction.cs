@@ -32,6 +32,7 @@ namespace Guns.Demo
             {
                 GunSelector.ActiveGun.StartReloading();
                 IsReloading = true;
+                EndReload();
                 /*PlayerAnimator.SetTrigger("Reload");
                 InverseKinematics.HandIKAmount = 0.25f;
                 InverseKinematics.ElbowIKAmount = 0.25f; */
@@ -56,8 +57,8 @@ namespace Guns.Demo
         private void EndReload()
         {
             GunSelector.ActiveGun.EndReload();
-            InverseKinematics.HandIKAmount = 1f;
-            InverseKinematics.ElbowIKAmount = 1f;
+            /* InverseKinematics.HandIKAmount = 1f;
+            InverseKinematics.ElbowIKAmount = 1f; */
             IsReloading = false;
         }
     }

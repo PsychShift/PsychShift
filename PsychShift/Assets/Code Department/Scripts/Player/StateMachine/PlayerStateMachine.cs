@@ -335,7 +335,7 @@ namespace Player
                 newCharacterInfoReference.vCamParent.SetActive(true);
                 currentCharacter = newCharInfo;
                 currentCharacter.enemyBrain.enabled = false;
-                newCharacterInfoReference.ActivateCharacter();
+                newCharacterInfoReference.ActivatePlayer();
                 OnSwapPlayer?.Invoke(currentCharacter.characterContainer.transform);
                 gunSelector.SetupGun(currentCharacter.gunHandler.StartGun);
             }
@@ -372,14 +372,14 @@ namespace Player
                 tunnel.transform.position = cameraTransform.position;
                 yield return null;
             }
-            startCharacter.DeactivateCharacter();
+            startCharacter.DeactivatePlayer();
             // now wait till the player is close enough to the endTransform to disable its body
             while(Vector3.Distance(endTransform.position, cameraTransform.position) > 0.5f)
             {
                 tunnel.transform.position = cameraTransform.position;
                 yield return null;
             }
-            endCharacter.ActivateCharacter();
+            endCharacter.ActivatePlayer();
 
             // Re enable the startTransforms ai component.
             startCharacter.characterInfo.enemyBrain.enabled = true;
