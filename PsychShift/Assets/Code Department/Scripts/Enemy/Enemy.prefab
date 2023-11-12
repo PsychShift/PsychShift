@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1646378165844274489}
-  - component: {fileID: 2499824481524552568}
+  - component: {fileID: 4083860027196579546}
   - component: {fileID: 6939670908053585402}
   - component: {fileID: 7540109023965677844}
   - component: {fileID: 176710509250746110}
@@ -74,7 +74,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2499824481524552568
+--- !u!114 &4083860027196579546
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,7 +83,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8115607342825376186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 930008696439db4408e1cc68a550afc5, type: 3}
+  m_Script: {fileID: 11500000, guid: fb183c3dc1244e948b73d311ad1a93a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isGaurd: 0
@@ -91,21 +91,9 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
-  agression: {fileID: 0}
+  agression: {fileID: 11400000, guid: 68b8a78772ceeef4cb80a3ade2c7c150, type: 2}
   isMelee: 0
   currentCover: {fileID: 0}
-  radius: 0
-  angle: 0
-  playerRef: {fileID: 0}
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 0
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 0
-  canSeePlayer: 0
-  patrolPoints: []
-  DebugMode: 0
 --- !u!114 &6939670908053585402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +177,7 @@ MonoBehaviour:
     m_Bits: 32768
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 229375
+    m_Bits: 4294967295
   canSeePlayer: 0
 --- !u!114 &1004847536629043803
 MonoBehaviour:

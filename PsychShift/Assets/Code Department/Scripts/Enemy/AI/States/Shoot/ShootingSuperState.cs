@@ -35,6 +35,7 @@ public class ShootingSuperState : IState
     public virtual void OnEnter()
     {
         Debug.Log($"{this} is a ShootingSuperState");
+        SetUp(brain, agression);
     }
 
     public virtual void OnExit()

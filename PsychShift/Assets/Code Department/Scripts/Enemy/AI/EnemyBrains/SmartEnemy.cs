@@ -17,7 +17,7 @@ public class SmartEnemy : EnemyBrain
 
     void Update()
     {
-        if(CharacterInfo.agent.enabled)
+        if(CharacterInfo.agent.enabled && isActive)
             stateMachine.Tick();
     }
 

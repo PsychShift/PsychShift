@@ -56,8 +56,8 @@ public class CharacterInfoReference : MonoBehaviour
     {
         
         characterInfo.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
-        characterInfo.enemyBrain.enabled = false;
-        characterInfo.gunHandler.enabled = false;
+        characterInfo.enemyBrain.isActive = false;
+        //characterInfo.gunHandler.enabled = false;
         characterInfo.agent.enabled = false;
 
         characterInfo.characterContainer.layer = LayerMask.NameToLayer("Player");
@@ -67,8 +67,8 @@ public class CharacterInfoReference : MonoBehaviour
     public void DeactivatePlayer()
     {
         characterInfo.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
-        characterInfo.enemyBrain.enabled = true;
-        characterInfo.gunHandler.enabled = true;
+        characterInfo.enemyBrain.isActive = true;
+        //characterInfo.gunHandler.enabled = true;
         characterInfo.agent.enabled = true;
 
         characterInfo.characterContainer.tag = "Swapable";

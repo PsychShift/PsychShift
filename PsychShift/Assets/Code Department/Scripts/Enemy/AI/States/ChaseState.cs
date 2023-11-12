@@ -2,11 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChaseState : IState
+public class ChaseState : ShootingSuperState
 {
-    private EnemyBrain brain;
-    private AIAgression agression;
-
     private Player.CharacterInfo currentCharacterInfo;
     public ChaseState(EnemyBrain brain, AIAgression agression)
     {
@@ -14,25 +11,22 @@ public class ChaseState : IState
         this.agression = agression;
     }
 
-    public Color GizmoColor()
+    public override void OnEnter()
     {
-        return Color.red;
-    }
-
-    public void OnEnter()
-    {
+        base.OnEnter();
         currentCharacterInfo = brain.CharacterInfo;
         brain.StartCoroutine(ChasePlayer());
     }
 
-    public void OnExit()
+    public override void OnExit()
     {
+        base.OnExit();
         brain.StopCoroutine(ChasePlayer());
     }
 
-    public void Tick()
+    public override void Tick()
     {
-        
+        base.Tick();
     }
 
     private IEnumerator ChasePlayer()
