@@ -233,7 +233,7 @@ public class PuzzleKit : MonoBehaviour
         Debug.Log("HERE ON TRIGGER");
         if(shootObj)
         {
-            if(other.GetComponent<Collider>().gameObject.layer == LayerMask.NameToLayer("Bullets"))
+            if(other.GetComponent<Collider>().gameObject.layer == LayerMask.NameToLayer("Bullet"))
             {
                /*  Debug.Log("Shot Ow");
                 if(move)
