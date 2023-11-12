@@ -32,6 +32,7 @@ public abstract class EnemyBrain : MonoBehaviour
 
     [HideInInspector] public Transform gauranteedPlayer => EnemyTargetManager.Instance.player;
     private Transform _player;
+    private FieldOfView fovRef;
     public Transform player 
     { 
         get 
@@ -198,15 +199,4 @@ public abstract class EnemyBrain : MonoBehaviour
         sphere.transform.position = transform.position;
     }
 
-    public float radius;
-    [Range(0,360)]
-    public float angle;
-
-    public GameObject playerRef;
-
-    public LayerMask targetMask;
-    public LayerMask obstructionMask;
-
-    public bool canSeePlayer;
-    private FieldOfView fovRef;
 }

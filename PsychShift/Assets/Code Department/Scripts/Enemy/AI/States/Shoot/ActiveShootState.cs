@@ -20,6 +20,7 @@ public class ActiveShootState : IState
 
     public void OnExit()
     {
+        Debug.Log(brain);
         brain.CharacterInfo.animator.SetBool("shooting", false);
     }
 
