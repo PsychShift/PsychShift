@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Guns
 {
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody), typeof(Collider))]
     public class Bullet : MonoBehaviour
     {
         private int ObjectsPenetrated;
