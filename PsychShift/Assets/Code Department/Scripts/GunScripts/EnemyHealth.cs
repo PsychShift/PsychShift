@@ -35,6 +35,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(int Damage)
     {
+        Debug.Log("Take Damage");
         int damageTaken = Mathf.Clamp(Damage, 0, CurrenHealth);
 
         CurrenHealth -= damageTaken;
