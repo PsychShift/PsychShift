@@ -219,7 +219,7 @@ namespace ImpactSystem
                 }
             }
 
-            foreach (PlayAudioEffect playAudioEffect in SurfaceEffect.PlayAudioEffects)
+            /* foreach (PlayAudioEffect playAudioEffect in SurfaceEffect.PlayAudioEffects)
             {
                 if (!ObjectPools.ContainsKey(playAudioEffect.AudioSourcePrefab.gameObject))
                 {
@@ -234,7 +234,7 @@ namespace ImpactSystem
                 audioSource.transform.position = HitPoint;
                 audioSource.PlayOneShot(clip, SoundOffset * Random.Range(playAudioEffect.VolumeRange.x, playAudioEffect.VolumeRange.y));
                 StartCoroutine(DisableAudioSource(ObjectPools[playAudioEffect.AudioSourcePrefab.gameObject], audioSource, clip.length));
-            }
+            } */
         }
 
         private IEnumerator DisableAudioSource(ObjectPool<GameObject> Pool, AudioSource AudioSource, float Time)
