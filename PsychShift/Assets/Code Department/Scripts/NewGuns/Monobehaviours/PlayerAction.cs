@@ -20,6 +20,8 @@ namespace Guns.Demo
 
         private void Update()
         {
+            if(GunSelector.ActiveGun == null) return;
+            
             GunSelector.ActiveGun.Tick(
                 !IsReloading
                 && Application.isFocused && InputManager.Instance.ShootAction.triggered
@@ -30,9 +32,9 @@ namespace Guns.Demo
             {
                 GunSelector.ActiveGun.StartReloading();
                 IsReloading = true;
-                //PlayerAnimator.SetTrigger("Reload");
+                /*PlayerAnimator.SetTrigger("Reload");
                 InverseKinematics.HandIKAmount = 0.25f;
-                InverseKinematics.ElbowIKAmount = 0.25f;
+                InverseKinematics.ElbowIKAmount = 0.25f; */
             }
         }
 

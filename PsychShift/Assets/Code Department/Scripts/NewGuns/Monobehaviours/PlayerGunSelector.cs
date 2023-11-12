@@ -40,6 +40,7 @@ namespace Guns.Demo
             if (ActiveGun != null)
             {
                 ActiveGun.Despawn();
+                Debug.Log("DespawnActiveGun");
             }
 
             Destroy(ActiveGun);
