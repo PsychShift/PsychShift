@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 [DisallowMultipleComponent]
-public class PlayerAction : MonoBehaviour
+public class PlayerAction1 : MonoBehaviour
 {
     [SerializeField]
-    private GunHandler GunSelector;
+    private GunHandler1 GunSelector;
     [SerializeField]
     private bool AutoReload = true;
     [SerializeField]
@@ -24,12 +24,12 @@ public class PlayerAction : MonoBehaviour
 
     private void OnEnable() 
     {
-        InputManager.Instance.OnShootPressed += Shoot;
+        InputManager1.Instance.OnShootPressed += Shoot;
         //currentBullets =GunSelector.currentBullets;
     }
     private void OnDisable()
     {
-        InputManager.Instance.OnShootPressed -= Shoot;
+        InputManager1.Instance.OnShootPressed -= Shoot;
     }
     private void Shoot()
     {

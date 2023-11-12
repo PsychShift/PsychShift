@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Player;
 using UnityEngine;
 [DisallowMultipleComponent]//Might have to turn this off for mindswapping. Guns changing on swap could bug cuz of this. Just a theory tho
-public class GunHandler : MonoBehaviour
+public class GunHandler1 : MonoBehaviour
 {
     public Camera Camera;
 
@@ -11,7 +11,7 @@ public class GunHandler : MonoBehaviour
    private Transform GunParent;
    [SerializeField]
    private GunScriptableObject SpawnGun;
-   public PlayerStateMachine stateMachineRef;
+   public PlayerStateMachine1 stateMachineRef;
 
    public int currentAmmo;
    /*[SerializeField]

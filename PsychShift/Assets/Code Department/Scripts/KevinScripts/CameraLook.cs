@@ -41,7 +41,7 @@ public class MouseLook : MonoBehaviour
 
       }*/
      //getmousedelta put in player
-        mouseInput = InputManager.Instance.GetMouseDelta();
+        mouseInput = InputManager1.Instance.GetMouseDelta();
 
         float mouseX = mouseInput.x * mouseSensitivity * Time.deltaTime;
         float mouseY = mouseInput.y * mouseSensitivity * Time.deltaTime;

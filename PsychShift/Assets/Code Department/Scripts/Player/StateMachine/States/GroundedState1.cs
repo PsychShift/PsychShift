@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace Player
 {
-    public class GroundedState : RootState, IState
+    public class GroundedState1 : RootState1, IState
     {
         private CharacterInfo currentCharacter;
-        public GroundedState(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
+        public GroundedState1(PlayerStateMachine1 playerStateMachine, StateMachine.StateMachine stateMachine)
         {
             this.playerStateMachine = playerStateMachine;
             this.stateMachine = stateMachine;

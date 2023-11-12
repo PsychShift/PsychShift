@@ -15,7 +15,7 @@ public class ShaderOnOff : MonoBehaviour
             TurnOff();
         else if(Input.GetMouseButtonDown(1))
             TurnOn();*/
-        if(InputManager.Instance.PlayerSwitcherShader())
+        if(InputManager1.Instance.PlayerSwitcherShader())
         {
             BoolOnOff();
         }

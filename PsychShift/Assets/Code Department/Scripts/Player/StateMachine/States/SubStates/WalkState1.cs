@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace Player
 {
-    public class WalkState : IState
+    public class WalkState1 : IState
     {
-        private readonly PlayerStateMachine playerStateMachine;
+        private readonly PlayerStateMachine1 playerStateMachine;
         private CharacterInfo currentCharacter;
-        public WalkState(PlayerStateMachine playerStateMachine)
+        public WalkState1(PlayerStateMachine1 playerStateMachine)
         {
             this.playerStateMachine = playerStateMachine;
         }
@@ -28,7 +28,7 @@ namespace Player
 
         private void Move()
         {
-            Vector2 input = InputManager.Instance.GetPlayerMovement();
+            Vector2 input = InputManager1.Instance.GetPlayerMovement();
             playerStateMachine.currentInputVector = Vector2.SmoothDamp(playerStateMachine.currentInputVector, input, ref playerStateMachine.smoothInputVelocity, playerStateMachine.smoothInputSpeed);
             Vector3 movement = new Vector3(playerStateMachine.currentInputVector.x, 0f, playerStateMachine.currentInputVector.y);
             movement = playerStateMachine.currentCharacter.characterContainer.transform.forward * movement.z + playerStateMachine.currentCharacter.characterContainer.transform.right * movement.x;

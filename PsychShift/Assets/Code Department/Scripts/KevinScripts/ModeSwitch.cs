@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class ModeSwitch : MonoBehaviour
 {
-    PlayerStateMachine playerStateMachine;
+    PlayerStateMachine1 playerStateMachine;
     public bool canHang = false;
     void Update()
     {
-        if(InputManager.Instance.PlayerSwitchedModeThisFrame())
+        if(InputManager1.Instance.PlayerSwitchedModeThisFrame())
         {
             if(canHang == false)
             {

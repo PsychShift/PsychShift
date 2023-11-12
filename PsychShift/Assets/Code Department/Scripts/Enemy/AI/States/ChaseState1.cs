@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChaseState : IState
+public class ChaseState1 : IState
 {
     private EnemyBrain brain;
     private AIAgression agression;
 
     private Player.CharacterInfo currentCharacterInfo;
-    public ChaseState(EnemyBrain brain, AIAgression agression)
+    public ChaseState1(EnemyBrain brain, AIAgression agression)
     {
         this.brain = brain;
         this.agression = agression;
@@ -21,7 +21,7 @@ public class ChaseState : IState
 
     public void OnEnter()
     {
-        currentCharacterInfo = brain.CharacterInfo;
+        currentCharacterInfo = brain.CharacterInfo1;
         brain.StartCoroutine(ChasePlayer());
     }
 

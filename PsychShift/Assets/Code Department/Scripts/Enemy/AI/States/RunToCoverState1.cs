@@ -16,14 +16,14 @@ public class RunToCoverState : IState
 
     public void OnEnter()
     {
-        currentCharacterInfo = brain.CharacterInfo;
+        currentCharacterInfo = brain.CharacterInfo1;
     }
 
     public void OnExit()
     {
         brain.currentCover = null;
         target = null;
-        brain.CharacterInfo.agent.ResetPath();
+        brain.CharacterInfo1.agent.ResetPath();
     }
 
     public void Tick()

@@ -5,7 +5,7 @@ using StateMachine;
 using System;
 
 using CharacterInfo = Player.CharacterInfo;
-[RequireComponent(typeof(CharacterInfoReference), typeof(TempGravity), typeof(FieldOfView))]
+[RequireComponent(typeof(CharacterInfoReference1), typeof(TempGravity1), typeof(FieldOfView1))]
 public abstract class EnemyBrain : MonoBehaviour
 {
     [Tooltip("If this is true, the enemy will stand in one spot, if false, it will require a patrol path")]
@@ -15,15 +15,15 @@ public abstract class EnemyBrain : MonoBehaviour
     [SerializeField] protected LayerMask playerLayer;
     protected StateMachine.StateMachine stateMachine;
     public AIAgression agression;
-    private CharacterInfo characterInfo = null;
-    public CharacterInfo CharacterInfo {
+    private CharacterInfo CharacterInfo = null;
+    public CharacterInfo CharacterInfo1 {
         get {
-            if(characterInfo == null)
+            if(CharacterInfo == null)
             {
-                characterInfo = gameObject.GetComponent<CharacterInfoReference>().characterInfo;
-                Debug.Log(characterInfo);
+                CharacterInfo = gameObject.GetComponent<CharacterInfoReference1>().CharacterInfo;
+                Debug.Log(CharacterInfo);
             }
-            return characterInfo;
+            return CharacterInfo;
         }
     }
     public bool isMelee;
@@ -52,7 +52,7 @@ public abstract class EnemyBrain : MonoBehaviour
     {
         attackRange = isMelee ? 1f : 40f;
         CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
-        fovRef = GetComponent<FieldOfView>();
+        fovRef = GetComponent<FieldOfView1>();
 
     }
 
@@ -68,7 +68,7 @@ public abstract class EnemyBrain : MonoBehaviour
     protected Func<bool> OutOfRangeForTooLongAndIsGuard(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight) && isGaurd;
     protected Func<bool> CanGuard() => () => !IsPlayerInSight() && isGaurd;
     protected Func<bool> FoundCover() => () => FindCover() != null;
-    protected Func<bool> HasReachedDestination() => () => CharacterInfo.agent.remainingDistance <= 0.1f;
+    protected Func<bool> HasReachedDestination() => () => CharacterInfo1.agent.remainingDistance <= 0.1f;
 
     float time = 0f;
     public Cover FindCover()
@@ -97,8 +97,8 @@ public abstract class EnemyBrain : MonoBehaviour
 
     private bool IsPlayerInSight()
     {
-        Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius, 
-        CharacterInfo.cameraRoot.forward, out RaycastHit hit, agression.DetectionRange, layerMask: playerLayer);
+        Physics.SphereCast(CharacterInfo1.cameraRoot.position, agression.SphereCastDetectionRadius, 
+        CharacterInfo1.cameraRoot.forward, out RaycastHit hit, agression.DetectionRange, layerMask: playerLayer);
         if(hit.collider == null) return false;
         if(hit.collider.tag == "Player")
         {
@@ -116,8 +116,8 @@ public abstract class EnemyBrain : MonoBehaviour
         // Cast a sphere slightly to the right of transform.forward
         Vector3 rightDirection = Quaternion.Euler(0, 20, 0) * transform.forward;
 
-        Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
-        CharacterInfo.cameraRoot.forward, out RaycastHit hit, agression.DetectionRange, layerMask: playerLayer);
+        Physics.SphereCast(CharacterInfo1.cameraRoot.position, agression.SphereCastDetectionRadius,
+        CharacterInfo1.cameraRoot.forward, out RaycastHit hit, agression.DetectionRange, layerMask: playerLayer);
         if (hit.collider == null) return false;
         if (hit.collider.tag == "Player")
         {
@@ -125,7 +125,7 @@ public abstract class EnemyBrain : MonoBehaviour
             return true;
         }
 
-        Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
+        Physics.SphereCast(CharacterInfo1.cameraRoot.position, agression.SphereCastDetectionRadius,
         leftDirection, out hit, agression.DetectionRange, layerMask: playerLayer);
         if (hit.collider == null) return false;
         if (hit.collider.tag == "Player")
@@ -134,7 +134,7 @@ public abstract class EnemyBrain : MonoBehaviour
             return true;
         }
 
-        Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
+        Physics.SphereCast(CharacterInfo1.cameraRoot.position, agression.SphereCastDetectionRadius,
         rightDirection, out hit, agression.DetectionRange, layerMask: playerLayer);
         if (hit.collider == null) return false;
         if (hit.collider.tag == "Player")
@@ -151,32 +151,32 @@ public abstract class EnemyBrain : MonoBehaviour
     void OnEnable()
     {
         SetUp();
-        CharacterInfo.agent.enabled = true;
-        if(!CharacterInfo.controller.isGrounded)
+        CharacterInfo1.agent.enabled = true;
+        if(!CharacterInfo1.controller.isGrounded)
         {
-            CharacterInfo.agent.enabled = false;
-            GetComponent<TempGravity>().enabled = true;
+            CharacterInfo1.agent.enabled = false;
+            GetComponent<TempGravity1>().enabled = true;
             StartCoroutine(WaitTillGrounded());
         }
     }
     void OnDisable()
     {
-        CharacterInfo.agent.enabled = false;
+        CharacterInfo1.agent.enabled = false;
     }
     private IEnumerator WaitTillGrounded()
     {
-        while(!CharacterInfo.controller.isGrounded)
+        while(!CharacterInfo1.controller.isGrounded)
         {
             yield return null;
         }
-        GetComponent<TempGravity>().enabled = false;
-        CharacterInfo.agent.enabled = true;
+        GetComponent<TempGravity1>().enabled = false;
+        CharacterInfo1.agent.enabled = true;
     }
 
 
     private bool IsPlayerInRange()
     {
-        float distance = Vector3.Distance(transform.position, CharacterInfo.characterContainer.transform.position);
+        float distance = Vector3.Distance(transform.position, CharacterInfo1.characterContainer.transform.position);
         return distance <= attackRange;
     }
 
@@ -186,7 +186,7 @@ public abstract class EnemyBrain : MonoBehaviour
     {
         if(!Application.isPlaying || !isActive) return;
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(characterInfo.cameraRoot.position, characterInfo.cameraRoot.position + (characterInfo.cameraRoot.forward * agression.SphereCastDetectionRadius));
+        Gizmos.DrawLine(CharacterInfo1.cameraRoot.position, CharacterInfo1.cameraRoot.position + (CharacterInfo1.cameraRoot.forward * agression.SphereCastDetectionRadius));
         Gizmos.color = Color.blue;
 
     } */
@@ -208,5 +208,5 @@ public abstract class EnemyBrain : MonoBehaviour
     public LayerMask obstructionMask;
 
     public bool canSeePlayer;
-    private FieldOfView fovRef;
+    private FieldOfView1 fovRef;
 }

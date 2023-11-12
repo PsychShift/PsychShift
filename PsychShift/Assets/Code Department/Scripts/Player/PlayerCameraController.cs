@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerCameraController : MonoBehaviour
+    public class PlayerCameraController1 : MonoBehaviour
     {
         #region Sensitivity
         [SerializeField] private float keyBoardSensitivityX = 15F;
@@ -52,7 +52,7 @@ namespace Player
 
         public void RotatePlayer()
         {
-            Vector2 mouseDelta = InputManager.Instance.GetMouseDelta();
+            Vector2 mouseDelta = InputManager1.Instance.GetMouseDelta();
             mouseDelta.x *= currentSenseX;
             mouseDelta.y *= currentSenseY;
 

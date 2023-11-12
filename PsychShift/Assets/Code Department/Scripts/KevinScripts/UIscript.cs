@@ -7,14 +7,14 @@ using TMPro;
 public class UIscript : MonoBehaviour
 {
     [SerializeField]
-    private PlayerStateMachine uiRef;
+    private PlayerStateMachine1 uiRef;
     [SerializeField]
     TextMeshProUGUI statFlowText;
 
     // Start is called before the first frame update
     void Start()
     {
-        InputManager.Instance.OnSwitchPressed+= SwitchMode;//Do the thing when dis pressed
+        InputManager1.Instance.OnSwitchPressed+= SwitchMode;//Do the thing when dis pressed
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class UIscript : MonoBehaviour
 
     void OnDisable()
     {
-        InputManager.Instance.OnSwitchPressed-= SwitchMode;
+        InputManager1.Instance.OnSwitchPressed-= SwitchMode;
     }
 
     private void SwitchMode(bool mode_Static)

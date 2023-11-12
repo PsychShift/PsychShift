@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class FieldOfView : MonoBehaviour
+public class FieldOfView1 : MonoBehaviour
 {
     public float radius;
     [Range(0,360)]

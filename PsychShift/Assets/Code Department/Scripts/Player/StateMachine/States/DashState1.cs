@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Player
 {
-    public class DashState : RootState, IState
+    public class DashState : RootState1, IState
     {
         public Color GizmoColor()
         {

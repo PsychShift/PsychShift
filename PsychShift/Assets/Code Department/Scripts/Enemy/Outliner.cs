@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Outliner : MonoBehaviour
+public class Outliner1 : MonoBehaviour
 {
     [SerializeField] private bool UsesSkinnedMeshRenderer;
     [SerializeField] private Material outlineMaterial;

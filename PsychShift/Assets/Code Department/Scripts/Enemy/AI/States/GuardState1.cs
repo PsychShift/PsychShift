@@ -2,41 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class PatrolState : IState
+public class GuardState1 : IState
 {
     private EnemyBrain brain;
     private AIAgression agression;
-    private Player.CharacterInfo currentCharacterInfo;
-    private List<Vector3> patrolPoints;
-    private int wpIndex = 0;
+    private Vector3 startPosition;
+    private float rotationSpeed;
 
-    public PatrolState(EnemyBrain brain, AIAgression agression, List<Vector3> patrolPoints)
+    private Player.CharacterInfo currentCharacterInfo;
+    public GuardState1(EnemyBrain brain, AIAgression agression, Vector3 startPosition)
     {
         this.brain = brain;
         this.agression = agression;
-        this.patrolPoints = patrolPoints;
+        this.startPosition = startPosition;
     }
 
     public void OnEnter()
     {
-        wpIndex = brain as BasicEnemy != null ? (brain as BasicEnemy).CurrentPatrolPointIndex : 0;
-        currentCharacterInfo = brain.CharacterInfo;
-        currentCharacterInfo.agent.SetDestination(patrolPoints[wpIndex]);
+        currentCharacterInfo = brain.CharacterInfo1;
+        currentCharacterInfo.agent.SetDestination(startPosition);
     }
 
     public void OnExit()
     {
-        if (brain as BasicEnemy != null) (brain as BasicEnemy).CurrentPatrolPointIndex = wpIndex;
+        
     }
 
     public void Tick()
     {
-        if (currentCharacterInfo.agent.remainingDistance < 0.5f)
-        {
-            wpIndex = (wpIndex + 1) % patrolPoints.Count;
-            currentCharacterInfo.agent.SetDestination(patrolPoints[wpIndex]);
-        }
+        
     }
 
     public void SetField(object obj, string fieldName, object value)
@@ -74,4 +70,3 @@ public class PatrolState : IState
         return Color.green;
     }
 }
-

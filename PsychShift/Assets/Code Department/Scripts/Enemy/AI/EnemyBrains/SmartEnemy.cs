@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmartEnemy : EnemyBrain
+public class SmartEnemy1 : EnemyBrain
 {
     [SerializeField] private List<Vector3> patrolPoints;
     [HideInInspector] public int CurrentPatrolPointIndex { get; set; } = 0;
@@ -16,7 +16,7 @@ public class SmartEnemy : EnemyBrain
 
     void Update()
     {
-        if(CharacterInfo.agent.enabled)
+        if(CharacterInfo1.agent.enabled)
             stateMachine.Tick();
     }
 
@@ -27,7 +27,7 @@ public class SmartEnemy : EnemyBrain
 
         var runToCoverState = new RunToCoverState(this, agression);
         var delayState = new DelayState(2f);
-        var coverState = new AtCoverState(this, agression);
+        var coverState = new AtCoverState1(this, agression);
         var debugState = new DebugState();
 
         AT(runToCoverState, delayState, HasReachedDestination());

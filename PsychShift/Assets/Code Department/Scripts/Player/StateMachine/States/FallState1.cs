@@ -5,10 +5,10 @@ namespace Player
     /// <summary>
     /// Root state responsible for handling  gravity after reaching the peak of a jump or falling off a ledge.
     /// </summary> 
-    public class FallState : RootState, IState
+    public class FallState1 : RootState1, IState
     {
         private CharacterInfo currentCharacter;
-        public FallState(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
+        public FallState1(PlayerStateMachine1 playerStateMachine, StateMachine.StateMachine stateMachine)
         {
             this.playerStateMachine = playerStateMachine;
             this.stateMachine = stateMachine;

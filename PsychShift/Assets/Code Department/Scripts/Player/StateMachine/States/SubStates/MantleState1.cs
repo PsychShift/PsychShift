@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace Player
 {
-    public class MantleState : IState
+    public class MantleState1 : IState
     {
-        private readonly PlayerStateMachine playerStateMachine;
+        private readonly PlayerStateMachine1 playerStateMachine;
         
-        public MantleState(PlayerStateMachine playerStateMachine)
+        public MantleState1(PlayerStateMachine1 playerStateMachine)
         {
             this.playerStateMachine = playerStateMachine;
         }

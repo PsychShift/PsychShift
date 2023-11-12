@@ -5,10 +5,10 @@ using StateMachine;
 
 namespace Player
 {
-    public class RootState
+    public class RootState1
     {
         protected StateMachine.StateMachine stateMachine;
-        protected PlayerStateMachine playerStateMachine;
+        protected PlayerStateMachine1 playerStateMachine;
         protected List<IState> subStates = new();
         protected IState defaultSubState;
         protected Dictionary<Type, List<Transition>> subTransitions = new(); // Transitions for sub states
@@ -102,7 +102,7 @@ namespace Player
 
         public virtual void Look()
         {
-            Vector2 mouseDelta = InputManager.Instance.GetMouseDelta();
+            Vector2 mouseDelta = InputManager1.Instance.GetMouseDelta();
             Vector3 currentRotation = playerStateMachine.cameraTransform.localRotation.eulerAngles;
 
             currentRotation.x -= mouseDelta.y;

@@ -21,7 +21,7 @@ public class CinemachinePOVExtension : CinemachineExtension
         {
             if(stage == CinemachineCore.Stage.Aim)
             {
-                Vector2 deltaInput = InputManager.Instance.GetMouseDelta();
+                Vector2 deltaInput = InputManager1.Instance.GetMouseDelta();
                 startingRotation.x += deltaInput.x * horizontalSpeed * Time.deltaTime;
                 startingRotation.y += deltaInput.y * verticalSpeed * Time.deltaTime;
                 startingRotation.y = Mathf.Clamp(startingRotation.y, -clampAngle, clampAngle);
