@@ -36,6 +36,7 @@ namespace Guns
         private ObjectPool<TrailRenderer> TrailPool;
         private ObjectPool<Bullet> BulletPool;
         private bool LastFrameWantedToShoot;
+        private bool isEnemyMaybe;
 
         /// <summary>
         /// Spawns the Gun Model into the scene
@@ -152,6 +153,7 @@ namespace Guns
         /// </summary>
         public void TryToShoot(bool isEnemy = false)
         {
+            isEnemyMaybe=isEnemy;//sets if enemy for whole script
             if (Time.time - LastShootTime - ShootConfig.FireRate > Time.deltaTime)
             {
                 float lastDuration = Mathf.Clamp(
@@ -216,6 +218,10 @@ namespace Guns
             bullet.gameObject.SetActive(true);
             bullet.gameObject.layer = isEnemy ? LayerMask.NameToLayer("EnemyBullet") : LayerMask.NameToLayer("Bullet");
             bullet.OnCollision += HandleBulletCollision;
+            if(isEnemyMaybe == true)
+                bullet.gameObject.layer = 17;
+            else if(isEnemyMaybe == false)
+                bullet.gameObject.layer = 14;
 
             // We have to ensure if shooting from the camera, but shooting real proejctiles, that we aim the gun at the hit point
             // of the raycast from the camera. Otherwise the aim is off.
@@ -503,7 +509,7 @@ namespace Guns
                         maxPercentDamage *= BulletPenConfig.DamageRetentionPercentage;
                     }
                 }
-
+                Debug.Log("damgeplez");
                 damageable.TakeDamage(DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage));
             }
 

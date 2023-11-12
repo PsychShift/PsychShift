@@ -267,6 +267,7 @@ namespace Player
         }
         void FixedUpdate()
         {
+            //Time.fixedDeltaTime = .02f;
             currentCharacter.controller.Move(appliedMovement * Time.deltaTime);
         }
         #endregion
