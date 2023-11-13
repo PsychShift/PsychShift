@@ -185,7 +185,11 @@ namespace Guns
                 Model.transform.forward += Model.transform.TransformDirection(spreadAmount);
                 if (ShootConfig.ShootType == ShootType.FromGun)
                 {
-                    shootDirection = ShootSystem.transform.forward;
+                    shootDirection = ShootSystem.transform.forward + new Vector3(
+                    Random.Range(-ShootConfig.Spread.x,ShootConfig.Spread.x),
+                    Random.Range(-ShootConfig.Spread.y,ShootConfig.Spread.y),
+                    Random.Range(-ShootConfig.Spread.z, ShootConfig.Spread.z)
+                );
                 }
                 else
                 {
