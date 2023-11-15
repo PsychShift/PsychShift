@@ -73,6 +73,8 @@ public class PuzzleKit : MonoBehaviour
     GameObject[] spawnPoints;
 
     public bool puzzleComplete;
+    public AudioSource Beep;
+    public AudioClip beepTwo;
     /* public delegate void OnPuzzleDone();
     public static event OnPuzzleDone PuzzleDone; */
 
@@ -192,6 +194,7 @@ public class PuzzleKit : MonoBehaviour
             if(activated == false)//activates this object and sends number to godBox.
             {
                 activated = true;
+                Beep.PlayOneShot(beepTwo);
                 Collider turnOff=gameObject.GetComponent<Collider>();
                 godBoxRef.activateCount++;
                 turnOff.enabled = false;
@@ -266,6 +269,11 @@ public class PuzzleKit : MonoBehaviour
                 ThisActivate();
             }
         } 
+    }
+
+    private void PlaySound(AudioClip beep)
+    {
+        Beep.PlayOneShot(beep);
     }
     /* private void OnCollisionEnter(Collision other) 
     {

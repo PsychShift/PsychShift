@@ -185,7 +185,11 @@ namespace Guns
                 Model.transform.forward += Model.transform.TransformDirection(spreadAmount);
                 if (ShootConfig.ShootType == ShootType.FromGun)
                 {
-                    shootDirection = ShootSystem.transform.forward;
+                    shootDirection = ShootSystem.transform.forward + new Vector3(
+                    Random.Range(-ShootConfig.Spread.x,ShootConfig.Spread.x),
+                    Random.Range(-ShootConfig.Spread.y,ShootConfig.Spread.y),
+                    Random.Range(-ShootConfig.Spread.z, ShootConfig.Spread.z)
+                );
                 }
                 else
                 {
@@ -218,10 +222,10 @@ namespace Guns
             bullet.gameObject.SetActive(true);
             bullet.gameObject.layer = isEnemy ? LayerMask.NameToLayer("EnemyBullet") : LayerMask.NameToLayer("Bullet");
             bullet.OnCollision += HandleBulletCollision;
-            if(isEnemyMaybe == true)
+            /* if(isEnemyMaybe == true)
                 bullet.gameObject.layer = 17;
             else if(isEnemyMaybe == false)
-                bullet.gameObject.layer = 14;
+                bullet.gameObject.layer = 14; */
 
             // We have to ensure if shooting from the camera, but shooting real proejctiles, that we aim the gun at the hit point
             // of the raycast from the camera. Otherwise the aim is off.
