@@ -28,8 +28,8 @@ namespace Guns
             ObjectsPenetrated = 0;
             SpawnLocation = transform.position;
             transform.forward = SpawnForce.normalized;
-            Rigidbody.AddForce(SpawnForce);
-            SpawnVelocity = SpawnForce * Time.fixedDeltaTime / Rigidbody.mass;
+            //SpawnVelocity = SpawnForce * Time.fixedDeltaTime / Rigidbody.mass;
+            Rigidbody.velocity = SpawnForce;
             StartCoroutine(DelayedDisable(2));
         }
 
