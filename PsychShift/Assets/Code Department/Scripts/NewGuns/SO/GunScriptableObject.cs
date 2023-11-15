@@ -222,10 +222,10 @@ namespace Guns
             bullet.gameObject.SetActive(true);
             bullet.gameObject.layer = isEnemy ? LayerMask.NameToLayer("EnemyBullet") : LayerMask.NameToLayer("Bullet");
             bullet.OnCollision += HandleBulletCollision;
-            if(isEnemyMaybe == true)
+            /* if(isEnemyMaybe == true)
                 bullet.gameObject.layer = 17;
             else if(isEnemyMaybe == false)
-                bullet.gameObject.layer = 14;
+                bullet.gameObject.layer = 14; */
 
             // We have to ensure if shooting from the camera, but shooting real proejctiles, that we aim the gun at the hit point
             // of the raycast from the camera. Otherwise the aim is off.
