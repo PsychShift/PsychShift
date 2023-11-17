@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChaseState : ShootingSuperState
+public class ChaseState : ShootingSuperState, ICoroutineRestarter
 {
     private Player.CharacterInfo currentCharacterInfo;
     Transform gunParent;
+
     public ChaseState(EnemyBrain brain, AIAgression agression)
     {
         this.brain = brain;
@@ -27,6 +28,11 @@ public class ChaseState : ShootingSuperState
         brain.StopCoroutine(ChasePlayer());
     }
 
+    public void RestartCoroutine()
+    {
+        brain.StartCoroutine(ChasePlayer());
+    }
+
     public override void Tick()
     {
         base.Tick();
@@ -40,6 +46,7 @@ public class ChaseState : ShootingSuperState
 
     private IEnumerator ChasePlayer()
     {
+        
         while (true)
         {
             currentCharacterInfo.agent.SetDestination(brain.player.transform.position);

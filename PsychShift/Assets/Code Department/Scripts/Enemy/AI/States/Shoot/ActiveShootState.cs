@@ -32,7 +32,6 @@ public class ActiveShootState : IState
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             brain.CharacterInfo.model.transform.rotation = Quaternion.Slerp(brain.CharacterInfo.model.transform.rotation, rotation, Time.deltaTime * 5f);
-
             brain.CharacterInfo.gunHandler.EnemyShoot();
             brain.CharacterInfo.animator.SetBool("shooting", true);
         }

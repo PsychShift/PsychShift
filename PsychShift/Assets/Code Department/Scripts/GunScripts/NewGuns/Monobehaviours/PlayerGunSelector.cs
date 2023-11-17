@@ -26,7 +26,6 @@ namespace Guns.Demo
 
         public void SetupGun(GunScriptableObject Gun)
         {
-            Debug.Log("SetupGun");
             ActiveBaseGun = Gun;
             ActiveGun = Gun.Clone() as GunScriptableObject;
             ActiveGun.Spawn(GunParent, this, Camera);
@@ -40,7 +39,6 @@ namespace Guns.Demo
             if (ActiveGun != null)
             {
                 ActiveGun.Despawn();
-                Debug.Log("DespawnActiveGun");
             }
 
             Destroy(ActiveGun);

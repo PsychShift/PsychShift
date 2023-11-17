@@ -21,7 +21,7 @@ public class BasicEnemy : EnemyBrain
 
     void Update()
     {
-        if(CharacterInfo.agent.enabled && isActive)
+        if(CharacterInfo.agent.enabled && IsActive)
             stateMachine.Tick();
     }
 
@@ -44,13 +44,5 @@ public class BasicEnemy : EnemyBrain
             stateMachine.SetState(guardState, true);
         else
             stateMachine.SetState(patrolState, true);
-    }
-
-    protected override void HandleReactivation()
-    {
-        var state = stateMachine._currentState;
-        
-        stateMachine.SetState(stateMachine.defaultState);
-        stateMachine.SetState(state);
     }
 }

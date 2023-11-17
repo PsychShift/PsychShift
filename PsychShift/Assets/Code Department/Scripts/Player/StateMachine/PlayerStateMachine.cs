@@ -397,6 +397,11 @@ namespace Player
             //activate input
             InputManager.Instance.PlayerInput.enabled = true;
 
+            // rotate the character containers for both the previous and current character to match the model rotation
+            // This should fix a bug where the input doesn't match what the player is doing.
+            startCharacter.characterInfo.characterContainer.transform.rotation = startCharacter.characterInfo.model.transform.rotation;
+            endCharacter.characterInfo.characterContainer.transform.rotation = endCharacter.characterInfo.model.transform.rotation;
+
             gunSelector.SetupGun(endCharacter.characterInfo.gunHandler.StartGun);
             isSwapping = false;
         }

@@ -514,7 +514,7 @@ namespace Guns
                         maxPercentDamage *= BulletPenConfig.DamageRetentionPercentage;
                     }
                 }
-                Debug.Log("damgeplez");
+                //Debug.Log("damgeplez");
                 damageable.TakeDamage(DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage));
             }
 

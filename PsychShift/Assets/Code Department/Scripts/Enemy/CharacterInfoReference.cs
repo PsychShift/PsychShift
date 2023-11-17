@@ -52,7 +52,7 @@ public class CharacterInfoReference : MonoBehaviour
     {
         vCamParent.SetActive(true);
         characterInfo.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
-        characterInfo.enemyBrain.isActive = false;
+        characterInfo.enemyBrain.IsActive = false;
         characterInfo.agent.enabled = false;
 
         characterInfo.characterContainer.layer = LayerMask.NameToLayer("Player");
@@ -62,7 +62,7 @@ public class CharacterInfoReference : MonoBehaviour
     public void DeactivatePlayerAllAtOnce()
     {
         characterInfo.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
-        characterInfo.enemyBrain.isActive = true;
+        characterInfo.enemyBrain.IsActive = true;
         characterInfo.agent.enabled = true;
 
         characterInfo.characterContainer.tag = "Swapable";

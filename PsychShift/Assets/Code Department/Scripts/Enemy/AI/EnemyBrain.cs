@@ -13,7 +13,7 @@ public abstract class EnemyBrain : MonoBehaviour
     [SerializeField] protected bool isGaurd;
 
     [SerializeField] private bool _isActive = true;
-    public bool isActive {
+    public bool IsActive {
         get 
         { 
             return _isActive; 
@@ -22,10 +22,12 @@ public abstract class EnemyBrain : MonoBehaviour
         { 
             if(value == false)
             {
+                //Debug.Log("Deactivating");
                 StopAllCoroutines();
             }
             else
             {
+                //Debug.Log("Reactivating");
                 HandleReactivation();
             }
             _isActive = value; 
@@ -73,10 +75,16 @@ public abstract class EnemyBrain : MonoBehaviour
         attackRange = isMelee ? 1f : 40f;
         CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
         fovRef = GetComponent<FieldOfView>();
-
     }
 
-    protected abstract void HandleReactivation();
+    protected void HandleReactivation()
+    {
+        if(stateMachine._currentState is ICoroutineRestarter)
+        {
+            (stateMachine._currentState as ICoroutineRestarter).RestartCoroutine();
+            Debug.Log("Restarted Coroutine");
+        }
+    }
 
     protected void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition);
     protected void ANY(IState from, Func<bool> condition) => stateMachine.AddAnyTransition(from, condition);
