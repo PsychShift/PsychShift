@@ -104,9 +104,11 @@ namespace Player
         #endregion
         [SerializeField] private GameObject tempCharacter;
         public CharacterInfo currentCharacter;
+        private static Vector3 checkPointL;
         #region Monobehaviours
         private void Awake()
         {
+            Debug.Log("RESET?????? "+ checkPointL);
             WallStateVariables.Instance.wallLayer = wallLayer;
             WallStateVariables.Instance.WallholdLayers = wallholdLayers;
             WallStateVariables.Instance.WallSpeed = wallSpeed;
@@ -120,7 +122,7 @@ namespace Player
 
             
             currentCharacter = null;
-            SwapCharacter(tempCharacter);
+            SwapCharacter(tempCharacter, PlayerMaster.Instance.checkPointLocation);
 
             //virtualCamera.Follow = currentCharacter.cameraRoot;
 
@@ -341,8 +343,25 @@ namespace Player
                 OnSwapPlayer?.Invoke(currentCharacter.characterContainer.transform);
                 gunSelector.SetupGun(currentCharacter.gunHandler.StartGun);
             }
-            
 
+            PlayerMaster.Instance.currentChar = currentCharacter.characterContainer;
+
+        }
+        public void SwapCharacter(GameObject newChar, Transform position)
+        {
+            Debug.Log("WE ARE GIVING VAR TO CHAR" + checkPointL);
+            Debug.Log("Location in PM " + PlayerMaster.Instance.checkPointLocation.position);
+            //newChar.transform.position = position.position;
+            SwapCharacter(newChar);
+            Debug.Log(newChar.transform.position);
+            Debug.Log("StateMachineInfo");
+            if(checkPointL!=Vector3.zero)
+            {
+                currentCharacter.controller.enabled = false;
+                newChar.transform.position = checkPointL;
+                Debug.Log("WE ARE GIVING VAR TO CHAR" + newChar.transform.position);
+                currentCharacter.controller.enabled = true;
+            }
         }
         bool isSwapping = false;
         // The movement of the camera is handled by Cinemachine, this is mostly for the particle effects and enabling/disabling the enemy ai.
@@ -607,5 +626,12 @@ namespace Player
                 }
             }
         }
+        public void PleaseSetLocationGODPLEASE(Transform location)
+        {
+            Debug.Log("PLEASESET point: "+ location.position);
+            checkPointL = location.position;
+            Debug.Log("CHECKPOINTL "+ checkPointL);
+        }
     }
+    
 }
