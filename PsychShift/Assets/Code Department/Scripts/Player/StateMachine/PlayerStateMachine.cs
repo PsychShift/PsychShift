@@ -102,7 +102,7 @@ namespace Player
         #region  Slow Variables
         private bool isSlowed = false;
         #endregion
-        [SerializeField] public GameObject tempCharacter;//turned public by kevin
+        [SerializeField] private GameObject tempCharacter;
         public CharacterInfo currentCharacter;
         #region Monobehaviours
         private void Awake()
