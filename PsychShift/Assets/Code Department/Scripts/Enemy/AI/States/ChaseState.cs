@@ -36,7 +36,6 @@ public class ChaseState : ShootingSuperState, ICoroutineRestarter
     public override void Tick()
     {
         base.Tick();
-
         // aim at the player based on the gun forward
         /* Vector3 direction = brain.player.position - gunParent.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);

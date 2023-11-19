@@ -23,8 +23,6 @@ public class RandomEnemy : EnemyBrain
 
         stateMachine.AddTransition(pickRandom, chaseState, PlayerInSight());
         stateMachine.AddTransition(lookAround, chaseState, PlayerInSight());
-        
-
 
         stateMachine.SetState(pickRandom, true);
     }

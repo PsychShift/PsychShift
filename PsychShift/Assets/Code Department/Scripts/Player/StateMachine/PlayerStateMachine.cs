@@ -401,6 +401,7 @@ namespace Player
             // This should fix a bug where the input doesn't match what the player is doing.
             startCharacter.characterInfo.characterContainer.transform.rotation = startCharacter.characterInfo.model.transform.rotation;
             endCharacter.characterInfo.characterContainer.transform.rotation = endCharacter.characterInfo.model.transform.rotation;
+            startCharacter.characterInfo.enemyBrain.enabled = true;
 
             gunSelector.SetupGun(endCharacter.characterInfo.gunHandler.StartGun);
             isSwapping = false;
