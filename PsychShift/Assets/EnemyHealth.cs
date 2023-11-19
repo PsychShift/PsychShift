@@ -50,7 +50,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             {
                 OnDeath?.Invoke(transform);
                 //CURRENT SOLUTION NOT FINAL
-                Destroy(gameObject); 
+                Destroy(gameObject);
+                //gameObject.SetActive(false); 
             }
             else if(gameObject.layer == 15)
             {
@@ -58,6 +59,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
                 //CURRENT SOLUTION NOT FINAL
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 Destroy(gameObject);
+                //gameObject.SetActive(false);
             }
 
 

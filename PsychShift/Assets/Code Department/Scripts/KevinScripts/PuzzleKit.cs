@@ -150,6 +150,7 @@ public class PuzzleKit : MonoBehaviour
     private void Move()
     {
         //Moves object forward and back
+        Debug.Log("Moving");
         movingActivated = true;
         puzzleComplete = true;
         //PuzzleDone?.Invoke();
