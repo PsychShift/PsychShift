@@ -32,6 +32,8 @@ namespace Player
             stateMachine._currentSubState = currentSubState;
             playerStateMachine.InAirForward = Vector3.zero;
             playerStateMachine.InAirRight = Vector3.zero;
+            playerStateMachine.CurrentMovementY = 0f;
+            playerStateMachine.AppliedMovementY = 0f;
         }
 
         private void HandleGravity()

@@ -9,7 +9,16 @@ using UnityEngine.SceneManagement;
 public class PlayerMaster : MonoBehaviour
 {
     private static PlayerMaster _Instance;
-    public static PlayerMaster Instance{get{return _Instance;} set{_Instance = value;}}//makes sure there's only one player master
+    public static PlayerMaster Instance{
+        get
+        {
+            return _Instance;
+        } 
+        set
+        {
+            _Instance = value;
+        }
+    }//makes sure there's only one player master
     private bool isDeath;
     [HideInInspector] public GameObject currentChar;
     //public GameObject charAtLastCheck;

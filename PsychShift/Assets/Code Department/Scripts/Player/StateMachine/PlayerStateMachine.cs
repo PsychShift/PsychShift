@@ -108,7 +108,6 @@ namespace Player
         #region Monobehaviours
         private void Awake()
         {
-            Debug.Log("RESET?????? "+ checkPointL);
             WallStateVariables.Instance.wallLayer = wallLayer;
             WallStateVariables.Instance.WallholdLayers = wallholdLayers;
             WallStateVariables.Instance.WallSpeed = wallSpeed;
