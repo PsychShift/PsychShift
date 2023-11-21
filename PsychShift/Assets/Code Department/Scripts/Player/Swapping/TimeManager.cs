@@ -5,6 +5,7 @@ using UnityEngine;
 public class TimeManager : MonoBehaviour
 {
     private float fixedDeltaTime;
+    public GameObject SlowUI;
 
     private static TimeManager instance;
 
@@ -15,6 +16,7 @@ public class TimeManager : MonoBehaviour
     
     private void Awake()
     {
+        
         if (instance == null)
         {
             instance = this;
@@ -27,16 +29,24 @@ public class TimeManager : MonoBehaviour
 
         this.fixedDeltaTime = Time.fixedDeltaTime;
     }
+    void Start()
+    {
+        SlowUI.SetActive(false);
+    }
 
     public void DoSlowmotion(float slowdownFactor = 0.1f)
     {
+        SlowUI.SetActive(true);
         Time.timeScale = slowdownFactor;
         Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale * 0.05f;
+        
     }
 
     public void UndoSlowmotion()
     {
+        SlowUI.SetActive(false);
         Time.timeScale = 1;
         Time.fixedDeltaTime = this.fixedDeltaTime;
+        
     }
 }
