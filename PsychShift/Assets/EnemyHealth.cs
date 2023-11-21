@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
@@ -16,6 +17,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;
     //Get Carsons destroy script CHECK IF OBJECT
+    public Slider healthBar;
     private TestBreakObjectCode implodeThing;
     private bool isObject=false;
     BoxCollider boxCollider;
@@ -24,6 +26,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private void OnEnable()
     {
         CurrenHealth = MaxHealth;
+        healthBar.maxValue = MaxHealth;
+        healthBar.value = MaxHealth;
         if(gameObject.tag == "Destructable")//Seperate script eventually 
         {
             implodeThing = gameObject.GetComponentInChildren<TestBreakObjectCode>();
@@ -32,16 +36,20 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         }
         //getbreakscript
     }
+    
 
     public void TakeDamage(int Damage)
     {
         //Debug.Log("Take Damage");
         int damageTaken = Mathf.Clamp(Damage, 0, CurrenHealth);
+        
 
         CurrenHealth -= damageTaken;
+        healthBar.value = CurrenHealth;
         if(damageTaken !=0)
         {
             OnTakeDamage?.Invoke(damageTaken);
+    
         }
 
         if(CurrenHealth == 0 && damageTaken != 0 && isObject == false)
