@@ -22,6 +22,7 @@ namespace Player
         [SerializeField] private PlayerGunSelector gunSelector;
         public Transform cameraTransform;
         private ParticleMaster particleMaster;
+        [SerializeField] private HealthUI healthUI;
         #endregion
 
         #region Movement Variables
@@ -121,6 +122,7 @@ namespace Player
 
             
             currentCharacter = null;
+            Debug.Log(PlayerMaster.Instance);
             SwapCharacter(tempCharacter, PlayerMaster.Instance.checkPointLocation);
 
             //virtualCamera.Follow = currentCharacter.cameraRoot;
@@ -341,9 +343,13 @@ namespace Player
                 newCharacterInfoReference.ActivatePlayerAllAtOnce();
                 OnSwapPlayer?.Invoke(currentCharacter.characterContainer.transform);
                 gunSelector.SetupGun(currentCharacter.gunHandler.StartGun);
+                // Setup healthbar ui
+                healthUI.SetHealthBarOnSwap(currentCharacter.enemyHealth.CurrenHealth, currentCharacter.enemyHealth.MaxHealth);
+                currentCharacter.enemyHealth.OnTakeDamage += healthUI.UpdateHealthBar;
             }
 
             PlayerMaster.Instance.currentChar = currentCharacter.characterContainer;
+           
 
         }
         public void SwapCharacter(GameObject newChar, Transform position)
@@ -387,9 +393,12 @@ namespace Player
             startCharacter.characterInfo.agent.enabled = false;
             endCharacter.characterInfo.agent.enabled = false;
 
-            
+            healthUI.Enabled(false);
+            startCharacter.characterInfo.enemyHealth.OnTakeDamage -= healthUI.UpdateHealthBar;
+
+
             // Wait for the player to be far enough away from the startTransform to re enable its body
-            while(Vector3.Distance(startTransform.position, cameraTransform.position) < 1f)
+            while (Vector3.Distance(startTransform.position, cameraTransform.position) < 1f)
             {
                 tunnel.transform.position = cameraTransform.position;
                 yield return null;
@@ -420,6 +429,10 @@ namespace Player
             startCharacter.characterInfo.characterContainer.transform.rotation = startCharacter.characterInfo.model.transform.rotation;
             endCharacter.characterInfo.characterContainer.transform.rotation = endCharacter.characterInfo.model.transform.rotation;
             startCharacter.characterInfo.enemyBrain.enabled = true;
+
+            healthUI.SetHealthBarOnSwap(endCharacter.characterInfo.enemyHealth.CurrenHealth, endCharacter.characterInfo.enemyHealth.MaxHealth);
+            endCharacter.characterInfo.enemyHealth.OnTakeDamage += healthUI.UpdateHealthBar;
+            healthUI.Enabled(true);
 
             gunSelector.SetupGun(endCharacter.characterInfo.gunHandler.StartGun);
             isSwapping = false;

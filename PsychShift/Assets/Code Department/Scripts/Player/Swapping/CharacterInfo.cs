@@ -16,6 +16,7 @@ namespace Player
         public NavMeshAgent agent;
         public Animator animator;
         public EnemyGunSelector gunHandler;
+        public EnemyHealth enemyHealth;
 
         public CharacterMovementStatsSO movementStats;
         public CharacterStatsSO characterStats;
@@ -31,6 +32,7 @@ namespace Player
             enemyBrain = characterContainer.GetComponent<EnemyBrain>();
             gunHandler = characterContainer.GetComponent<EnemyGunSelector>();
             animator = model.GetComponent<Animator>();
+            enemyHealth = characterContainer.GetComponent<EnemyHealth>();
         }
         public CharacterInfo(GameObject characterContainer, Cinemachine.CinemachineVirtualCamera vCam, CharacterMovementStatsSO movementStats, CharacterStatsSO characterStats)
         {
@@ -46,6 +48,7 @@ namespace Player
             enemyBrain = characterContainer.GetComponent<EnemyBrain>();
             agent = characterContainer.GetComponent<NavMeshAgent>();
             gunHandler = characterContainer.GetComponent<EnemyGunSelector>();
+            enemyHealth = characterContainer.GetComponent<EnemyHealth>();
             animator = model.GetComponent<Animator>();
             this.vCam = vCam;
 

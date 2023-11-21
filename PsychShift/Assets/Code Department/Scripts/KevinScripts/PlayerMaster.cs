@@ -27,7 +27,7 @@ public class PlayerMaster : MonoBehaviour
     public Transform checkPointLocation;
     public PlayerStateMachine playerRef;
     // Start is called before the first frame update
-    void Awake()
+    private void OnEnable()
     {
         //Debug.Log("ChecPointLTwo "+ checkPointLocationTWO.position);
         if(checkPointLocationTWO!= null)

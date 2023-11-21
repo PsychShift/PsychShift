@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 5309087219355432835}
   - component: {fileID: 4915459179439826330}
   - component: {fileID: 1208104801448778468}
+  - component: {fileID: 302005179172114414}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -193,6 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunSelector: {fileID: 5309087219355432835}
   cameraTransform: {fileID: 0}
+  healthUI: {fileID: 302005179172114414}
   walkSpeed: 25
   smoothInputSpeed: 0.1
   smoothInputVelocity: {x: 0, y: 0}
@@ -234,6 +236,7 @@ MonoBehaviour:
     agent: {fileID: 0}
     animator: {fileID: 0}
     gunHandler: {fileID: 0}
+    enemyHealth: {fileID: 0}
     movementStats: {fileID: 0}
     characterStats: {fileID: 0}
     enemyBrain: {fileID: 0}
@@ -359,6 +362,19 @@ MonoBehaviour:
   charDouble: {fileID: 0}
   checkPointLocation: {fileID: 0}
   playerRef: {fileID: 2092379065464602434}
+--- !u!114 &302005179172114414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8056168598108683875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ec0129afceba643a17153cc01cee6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
 --- !u!1001 &2328858885241308174
 PrefabInstance:
   m_ObjectHideFlags: 0
