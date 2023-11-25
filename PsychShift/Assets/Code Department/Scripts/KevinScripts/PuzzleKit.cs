@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,7 +10,11 @@ public class PuzzleKit : MonoBehaviour
     public string Notes = "Use this script for creating puzzles. Select the bools at the bottom. One for action another for reaction. Use this script again on a new object for new puzzles"; 
     //USE THIS SCRIPT FOR EVERY PUZZLE. YOU WILL NEED A NEW OBJECT WITH THIS SCRIPT FOR FOLLOW UP PUZZLES 
 
+    //EFFECTS FOR SHOOT AND PLATE
+    public ParticleSystem effectForAct;
 
+    //EFFECT FOR REACTION
+    public ParticleSystem effectForGod;
     [TextArea]
     public string Notepad = "Add the god puzzle kit object here, mainly used for interaction puzzles.";
     //god box var
@@ -74,7 +79,7 @@ public class PuzzleKit : MonoBehaviour
 
     public bool puzzleComplete;
     public AudioSource Beep;
-    public AudioClip beepTwo;
+    public AudioClip soundClip;
     /* public delegate void OnPuzzleDone();
     public static event OnPuzzleDone PuzzleDone; */
 
@@ -94,6 +99,10 @@ public class PuzzleKit : MonoBehaviour
         if(godBoxRef!= null)
         {
             godBox = false;
+            if(effectForAct== null)
+            {
+                Debug.LogError("UH OH NO EFFECTS FOR THIS ACTION OBJ DETECTED LUL(HINT IM ONE OF THE PUZZLE KIT OBJ, I'M NOT THE GOD ONE THO) "+ gameObject.name);
+            }
         }
         else
         {
@@ -102,9 +111,12 @@ public class PuzzleKit : MonoBehaviour
         if(godBox)
         {
             startTime = Time.time;
-            journeyLength = Vector3.Distance(transform.position, endPosition);  
+            journeyLength = Vector3.Distance(transform.position, endPosition);
+            if(effectForGod==null)
+            {
+                Debug.LogError("UH OH YOU FORGOT GOD BOX EFFECT LUL: "+ gameObject.name);
+            } 
         }
-  
     }
     public void Update()
     {
@@ -149,6 +161,12 @@ public class PuzzleKit : MonoBehaviour
 
     private void Move()
     {
+        if(effectForGod!=null)
+        {
+            Instantiate(effectForGod,transform.position, Quaternion.identity);
+        }
+        if(soundClip!=null)
+                Beep.PlayOneShot(soundClip);
         //Moves object forward and back
         Debug.Log("Moving");
         movingActivated = true;
@@ -161,8 +179,15 @@ public class PuzzleKit : MonoBehaviour
         //Spawns object after a puzzle is complete
         //if(isSpawnInf)
         //{
+            if(effectForGod!=null)
+            {
+                Instantiate(effectForGod,transform.position, Quaternion.identity);
+            }
+            if(soundClip!=null)
+                Beep.PlayOneShot(soundClip);
             for(int i = 0; i< spawnObjects.Length; i++) 
                 Instantiate(spawnObjects[i], locationOfSpawn.position, Quaternion.identity);
+            
             //PuzzleDone?.Invoke();
             puzzleComplete = true;
         //}
@@ -195,7 +220,10 @@ public class PuzzleKit : MonoBehaviour
             if(activated == false)//activates this object and sends number to godBox.
             {
                 activated = true;
-                Beep.PlayOneShot(beepTwo);
+                if(soundClip!=null)
+                    Beep.PlayOneShot(soundClip);
+                if(effectForAct!=null)  
+                    Instantiate(effectForAct,transform.position, Quaternion.identity); 
                 Collider turnOff=gameObject.GetComponent<Collider>();
                 godBoxRef.activateCount++;
                 turnOff.enabled = false;
@@ -270,6 +298,11 @@ public class PuzzleKit : MonoBehaviour
                 ThisActivate();
             }
         } 
+    }
+
+    public void ShootHitScan()
+    {
+        ThisActivate();
     }
 
     private void PlaySound(AudioClip beep)

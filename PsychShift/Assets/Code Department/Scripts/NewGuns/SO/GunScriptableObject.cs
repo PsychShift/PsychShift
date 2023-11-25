@@ -281,6 +281,11 @@ namespace Guns
                     hit.collider,
                     Iteration
                 );
+                if(hit.collider.tag == "PuzzleShoot")
+                {
+                    PuzzleKit pRef = hit.collider.gameObject.GetComponent<PuzzleKit>();
+                    pRef.ShootHitScan();
+                }
                 /* ActiveMonoBehaviour.StartCoroutine(
                     PlayTrail(
                         TrailOrigin,
@@ -288,7 +293,8 @@ namespace Guns
                         hit,
                         Iteration
                     )
-                ); */
+                );
+                
             }
             else
             {
