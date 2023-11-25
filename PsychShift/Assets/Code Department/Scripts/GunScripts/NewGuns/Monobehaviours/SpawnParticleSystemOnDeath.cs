@@ -1,4 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
+using ImpactSystem.Effects;
 using UnityEngine;
+using UnityEngine.Pool;
 namespace Guns.Demo
 {
     [DisallowMultipleComponent]
@@ -7,6 +11,13 @@ namespace Guns.Demo
     {
         [SerializeField]
         private ParticleSystem DeathSystem;
+
+        [SerializeField]
+        private PlayAudioEffect DeathAudioEffect;
+
+        private Dictionary<GameObject, ObjectPool<GameObject>> ObjectPools = new();
+
+
         public IDamageable Damageable;
 
         private void Awake()
@@ -23,6 +34,16 @@ namespace Guns.Demo
         {
             Instantiate(DeathSystem, Position.position, Quaternion.identity);
             gameObject.SetActive(false);
+        }
+
+        private void PlayAudioEffectFromList()
+        {
+            AudioClip clip = DeathAudioEffect.AudioClips[Random.Range(0, DeathAudioEffect.AudioClips.Count)];
+            GameObject instance = Instantiate(DeathAudioEffect.AudioSourcePrefab.gameObject);
+            AudioSource audioSource = instance.GetComponent<AudioSource>();
+
+            audioSource.transform.position = transform.position;
+            audioSource.PlayOneShot(clip, Random.Range(DeathAudioEffect.VolumeRange.x, DeathAudioEffect.VolumeRange.y));
         }
     }
 }
