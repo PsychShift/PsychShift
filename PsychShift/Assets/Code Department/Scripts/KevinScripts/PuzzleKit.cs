@@ -76,7 +76,6 @@ public class PuzzleKit : MonoBehaviour
     //shut off spawners after a bit 
     [SerializeField]
     GameObject[] spawnPoints;
-
     public bool puzzleComplete;
     public AudioSource Beep;
     public AudioClip soundClip;
