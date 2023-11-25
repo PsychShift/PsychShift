@@ -281,6 +281,10 @@ namespace Guns
                     hit.collider,
                     Iteration
                 );
+                if(hit.collider.tag=="Swapable")
+                    AudioConfig.PlayHitClip(ShootingAudioSource);
+                else if(hit.collider.tag == "Player")
+                    AudioConfig.PlayHitClipEnemy(ShootingAudioSource);
                 if(hit.collider.tag == "PuzzleShoot")
                 {
                     PuzzleKit pRef = hit.collider.gameObject.GetComponent<PuzzleKit>();
