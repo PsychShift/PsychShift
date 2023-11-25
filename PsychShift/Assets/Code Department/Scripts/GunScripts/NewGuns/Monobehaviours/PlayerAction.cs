@@ -24,7 +24,7 @@ namespace Guns.Demo
             
             GunSelector.ActiveGun.Tick(
                 !IsReloading
-                && Application.isFocused && InputManager.Instance.ShootAction.triggered
+                && Application.isFocused && InputManager.Instance.IsShootingHeld
                 && GunSelector.ActiveGun != null
             );
 

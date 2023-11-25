@@ -46,6 +46,7 @@ public class InputManager : MonoBehaviour
     #endregion
 
     public bool IsJumpPressed { get; private set; }
+    public bool IsShootingHeld { get; private set; }
     public delegate void SwapPressedHandler();
     public delegate void ManipulatePressedHandler();
     public delegate void ShootPressedHandler();
@@ -139,6 +140,8 @@ public class InputManager : MonoBehaviour
         SwitchAction.started += OnSwitch;
         StandardShootAction.started += PressedShoot;
         SlowShootAction.started += PressedShoot;
+        StandardShootAction.canceled += PressedShoot;
+        SlowShootAction.canceled += PressedShoot;
 
 
 
@@ -237,6 +240,7 @@ public class InputManager : MonoBehaviour
     public void PressedShoot(InputAction.CallbackContext context)
     {
         OnShootPressed?.Invoke();
+        IsShootingHeld = context.ReadValueAsButton();
     }
 
     public bool PlayerSwitchedModeThisFrame()//Press L shift or L bump to swap static/flow//Kevin Added this

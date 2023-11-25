@@ -172,6 +172,7 @@ namespace Player
             AT(wallFlowState, fallState, NotOnWallFlow());
             AT(wallFlowState, wallJumpState, WallJump());
             AT(wallFlowState, wallStaticState, OnWallStatic());
+            AT(wallFlowState, fallState, Swapped());
             // Leave Wall Static State
             AT(wallStaticState, groundState, Grounded());
             AT(wallStaticState, fallState, NotOnWallStatic());
@@ -238,6 +239,7 @@ namespace Player
             Func<bool> NotOnWallStatic() => () => !WallStateVariables.Instance.CheckOnWall() || !StaticMode;
             Func<bool> WallJump() => () => InputManager.Instance.IsJumpPressed && WallStateVariables.Instance.TimeOnWall > 0.4f;
             Func<bool> WallFall() => () => AppliedMovementY < 0 && !GroundedCheck() && WallStateVariables.Instance.TimeOffWall > 0.2f;
+            Func<bool> Swapped() => () => isSwapping;
 
             // Sub State Conditions
             Func<bool> Walked() => () => InputManager.Instance.GetPlayerMovement().magnitude != 0;
@@ -249,6 +251,10 @@ namespace Player
             Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.IsJumpPressed && StaticMode;
 
             stateMachine.SetState(groundState);
+        }
+        void Start()
+        {
+            
         }
         void OnDisable()
         {
@@ -282,7 +288,7 @@ namespace Player
         {
             // Store the results of the BoxCast.
             RaycastHit[] hits = Physics.BoxCastAll(cameraTransform.position, boxHalfExtents, cameraTransform.forward, boxRotation, swapDistance, swapableLayer);
-            Debug.DrawRay(cameraTransform.position, Camera.main.transform.forward * swapDistance, Color.green, 0.5f);
+
             // Loop through the hits to find the first object with the "Swapable" tag.
             foreach (RaycastHit hit in hits)
             {
@@ -601,8 +607,8 @@ namespace Player
             //trySetStatic = false;
         }
 
-        private void OnDrawGizmos()
-        {
+        void OnDrawGizmos()
+        {                
             if(Application.isPlaying)
             {
                 bool isHit;
@@ -633,7 +639,7 @@ namespace Player
                     Gizmos.color = Color.green;
                     Gizmos.DrawRay(cameraTransform.position, cameraTransform.forward * swapDistance);
                 }
-            }
+           }
         }
         public void PleaseSetLocationGODPLEASE(Transform location)
         {

@@ -100,7 +100,6 @@ namespace ImpactSystem
             {
                 if (typeEffect.ImpactType == Impact)
                 {
-                    Debug.Log("Hit");
                     PlayEffects(HitPoint, HitNormal, typeEffect.SurfaceEffect, 1);
                     break;
                 }

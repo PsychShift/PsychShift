@@ -20,7 +20,6 @@ namespace Player
 
         public void OnEnter()
         {
-            Debug.Log("WallFlowState entered");
             WallStateVariables.Instance.TimeOnWall = 0f;
             currentCharacter = playerStateMachine.currentCharacter;
             currentSubState = stateMachine._currentSubState;
