@@ -274,25 +274,39 @@ namespace Guns
                     ShootConfig.HitMask
                 ))
             {
-                ActiveMonoBehaviour.StartCoroutine(
+                HandleBulletImpact(
+                    Vector3.Distance(hit.point, TrailOrigin),
+                    hit.point,
+                    hit.normal,
+                    hit.collider,
+                    Iteration
+                );
+                /* ActiveMonoBehaviour.StartCoroutine(
                     PlayTrail(
                         TrailOrigin,
                         hit.point,
                         hit,
                         Iteration
                     )
-                );
+                ); */
             }
             else
             {
-                ActiveMonoBehaviour.StartCoroutine(
+                HandleBulletImpact(
+                    TrailConfig.MissDistance,
+                    TrailOrigin + (ShootDirection * TrailConfig.MissDistance),
+                    ShootDirection,
+                    null,
+                    Iteration
+                );
+                /* ActiveMonoBehaviour.StartCoroutine(
                     PlayTrail(
                         TrailOrigin,
                         TrailOrigin + (ShootDirection * TrailConfig.MissDistance),
                         new RaycastHit(),
                         Iteration
                     )
-                );
+                ); */
             }
         }
 
@@ -496,6 +510,7 @@ namespace Guns
             Collider HitCollider,
             int ObjectsPenetrated = 0)
         {
+            if(HitCollider == null) return;
             SurfaceManager.Instance.HandleImpact(
                 HitCollider.gameObject,
                 HitLocation,
