@@ -43,10 +43,11 @@ GameObject:
   - component: {fileID: 4083860027196579546}
   - component: {fileID: 6939670908053585402}
   - component: {fileID: 7540109023965677844}
-  - component: {fileID: 176710509250746110}
+  - component: {fileID: 1317301347369803411}
   - component: {fileID: 4772957906549644194}
   - component: {fileID: 3596074021636246936}
   - component: {fileID: 1004847536629043803}
+  - component: {fileID: 176710509250746110}
   - component: {fileID: 8605567475765216567}
   - component: {fileID: 1980412459526967793}
   m_Layer: 6
@@ -124,8 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MaxHealth: 100
   _Health: 100
-  healthBar: {fileID: 0}
---- !u!114 &176710509250746110
+--- !u!114 &1317301347369803411
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,12 +134,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8115607342825376186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25cf5b5de3d6fcf4ca908955a409ec7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3fda184a37a45a54eac4fe395b38e29b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UsesSkinnedMeshRenderer: 1
-  outlineMaterial: {fileID: 2100000, guid: c116e317f056ca4449be7d65feee6a58, type: 2}
-  highlightColor: {r: 0, g: 0.098634005, b: 1, a: 1}
+  DeathSystem: {fileID: 0}
 --- !u!114 &4772957906549644194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +190,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a486d3e02892b547beb5033b4055f65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &176710509250746110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115607342825376186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25cf5b5de3d6fcf4ca908955a409ec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UsesSkinnedMeshRenderer: 1
+  outlineMaterial: {fileID: 2100000, guid: c116e317f056ca4449be7d65feee6a58, type: 2}
+  highlightColor: {r: 0, g: 0.098634005, b: 1, a: 1}
 --- !u!195 &8605567475765216567
 NavMeshAgent:
   m_ObjectHideFlags: 0

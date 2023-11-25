@@ -1,12 +1,8 @@
 using System;
 using UnityEngine;
 using Cinemachine;
-//using System.Threading.Tasks;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using System.Linq;
 using System.Collections;
-using UnityEngine.Animations;
 using Guns.Demo;
 
 namespace Player

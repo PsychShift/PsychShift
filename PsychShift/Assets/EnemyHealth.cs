@@ -1,81 +1,81 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class EnemyHealth : MonoBehaviour, IDamageable
+namespace Guns.Health
 {
-    [SerializeField]
-    private int _MaxHealth = 100;
-    [SerializeField]
-    private int _Health;
-
-    public int CurrenHealth {get => _Health; private set => _Health = value; }
-
-    public int MaxHealth {get => _MaxHealth; private set=> _MaxHealth = value; }
-    public event IDamageable.TakeDamageEvent OnTakeDamage;
-    public event IDamageable.DeathEvent OnDeath;
-    //Get Carsons destroy script CHECK IF OBJECT
-    private TestBreakObjectCode implodeThing;
-    private bool isObject=false;
-    BoxCollider boxCollider;
-
-    
-    private void OnEnable()
+    public class EnemyHealth : MonoBehaviour, IDamageable
     {
-        CurrenHealth = MaxHealth;
-        if(gameObject.tag == "Destructable")//Seperate script eventually 
+        [SerializeField]
+        private int _MaxHealth = 100;
+        [SerializeField]
+        private int _Health;
+
+        public int CurrenHealth {get => _Health; private set => _Health = value; }
+
+        public int MaxHealth {get => _MaxHealth; private set=> _MaxHealth = value; }
+        public event IDamageable.TakeDamageEvent OnTakeDamage;
+        public event IDamageable.DeathEvent OnDeath;
+        //Get Carsons destroy script CHECK IF OBJECT
+        private TestBreakObjectCode implodeThing;
+        private bool isObject=false;
+        BoxCollider boxCollider;
+
+        
+        private void OnEnable()
         {
-            implodeThing = gameObject.GetComponentInChildren<TestBreakObjectCode>();
-            isObject = true;
-            boxCollider= gameObject.GetComponent<BoxCollider>();
+            CurrenHealth = MaxHealth;
+            if(gameObject.tag == "Destructable")//Seperate script eventually 
+            {
+                implodeThing = gameObject.GetComponentInChildren<TestBreakObjectCode>();
+                isObject = true;
+                boxCollider= gameObject.GetComponent<BoxCollider>();
+            }
+            //getbreakscript
         }
-        //getbreakscript
-    }
-    
-
-    public void TakeDamage(int Damage)
-    {
-        int damageTaken = Mathf.Clamp(Damage, 0, CurrenHealth);
         
 
-        CurrenHealth -= damageTaken;
-        //healthBar.value = CurrenHealth;
-        if(damageTaken !=0)
+        public void TakeDamage(int Damage)
         {
-            OnTakeDamage?.Invoke(damageTaken);
-    
-        }
+            int damageTaken = Mathf.Clamp(Damage, 0, CurrenHealth);
+            
 
-        if(CurrenHealth == 0 && damageTaken != 0 && isObject == false)
-        {
-            if(this.gameObject.layer == 6)//EDIT IF LAYER ORDER IS CHANGED
+            CurrenHealth -= damageTaken;
+            //healthBar.value = CurrenHealth;
+            if(damageTaken !=0)
             {
-                OnDeath?.Invoke(transform);
-                //CURRENT SOLUTION NOT FINAL
-                Destroy(gameObject);
-                //gameObject.SetActive(false); 
-            }
-            else if(gameObject.layer == 15)
-            {
-                OnDeath?.Invoke(transform);
-                //CURRENT SOLUTION NOT FINAL
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                Destroy(gameObject);
-                //gameObject.SetActive(false);
+                OnTakeDamage?.Invoke(damageTaken);
+        
             }
 
+            if(CurrenHealth == 0 && damageTaken != 0 && isObject == false)
+            {
+                if(this.gameObject.layer == 6)//EDIT IF LAYER ORDER IS CHANGED
+                {
+                    OnDeath?.Invoke(transform);
+                    //CURRENT SOLUTION NOT FINAL
+                    Destroy(gameObject);
+                    //gameObject.SetActive(false); 
+                }
+                else if(gameObject.layer == 15)
+                {
+                    OnDeath?.Invoke(transform);
+                    //CURRENT SOLUTION NOT FINAL
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    Destroy(gameObject);
+                    //gameObject.SetActive(false);
+                }
 
-           
+
+            
+            }
+            else if(CurrenHealth == 0 && damageTaken != 0 && isObject == true)
+            {
+                boxCollider.enabled = false;
+                implodeThing.BreakTheThing();
+            }
+            //if and destruct tag on obj run destroy funct
         }
-        else if(CurrenHealth == 0 && damageTaken != 0 && isObject == true)
-        {
-            boxCollider.enabled = false;
-            implodeThing.BreakTheThing();
-        }
-        //if and destruct tag on obj run destroy funct
+
     }
 
 }
-
