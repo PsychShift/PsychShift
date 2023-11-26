@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
+
 public class ObjectManipulator : MonoBehaviour, IManipulate
 {
     public bool IsInteracted { get; set; }
@@ -11,8 +12,7 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
     [Tooltip("This must be set in the inspector. It is the position the object will end in.")]
     [SerializeField] private Vector3 endPosition; // End Position
     public float animationTime = 2.0f; // Duration of the interaction in seconds
-
-
+    public AudioSource audioSource; // Added AudioSource
 
     private void Start()
     {
@@ -34,6 +34,7 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
         {
             IsInteracted = true;
             StartCoroutine(MoveObject(endPosition, animationTime));
+            PlayAudio(); // Added PlayAudio call
         }
     }
 
@@ -43,6 +44,15 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
         {
             IsInteracted = false;
             StartCoroutine(MoveObject(startPosition, animationTime));
+            PlayAudio(); // Added PlayAudio call
+        }
+    }
+
+    private void PlayAudio()
+    {
+        if (audioSource != null)
+        {
+            audioSource.Play();
         }
     }
 
@@ -63,5 +73,4 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
         transform.position = targetPosition;
         CanInteract = true;
     }
-
 }
