@@ -22,13 +22,18 @@ public class PauseMenuScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("escape"))
+        if (Input.GetKey("p"))
         {
             PauseMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
             Time.timeScale = 0f;
             GameIsPaused = true;
             Cursor.visible = true;
+        }
+        if (Input.GetKey("escape"))
+        {
+            Debug.Log("Quit");
+            Application.Quit();
         }
     }
     public void Resume()
