@@ -1,38 +1,54 @@
 using UnityEngine;
+using Player;
+using CharacterInfo = Player.CharacterInfo;
+using System;
 
 namespace Player
 {
     /// <summary>
     /// Root state, responsible for making an enemy Jump and handling gravity in air.
     /// </summary>
-    public class JumpState : RootState, IState
+    public class JumpState : IState
     {
-
-        public JumpState(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
+        private PlayerStateMachine playerStateMachine;
+        private StateMachine.StateMachine subStateMachine;
+        private CharacterInfo currentCharacter;
+        public JumpState(PlayerStateMachine playerStateMachine)
         {
             this.playerStateMachine = playerStateMachine;
-            this.stateMachine = stateMachine;
+            void AT(IState from, IState to, Func<bool> condition) => subStateMachine.AddTransition(from, to, condition);
+            void Any(IState from, Func<bool> condition) => subStateMachine.AddAnyTransition(from, condition);
+
+            subStateMachine = new StateMachine.StateMachine();
+            var idleState = new IdleState(playerStateMachine);
+            var walkState = new WalkState(playerStateMachine);
+
+            AT(idleState, walkState, Walked());
+            AT(walkState, idleState, Stopped());
+
+            subStateMachine.SetState(idleState);
+
+            Func<bool> Walked() => () => InputManager.Instance.GetPlayerMovement().magnitude != 0;
+            Func<bool> Stopped() => () => InputManager.Instance.GetPlayerMovement().magnitude == 0;
         }
         
         public void Tick()
         {
             // Call the Tick method of the current sub-state
             //Debug.Log(currentSubState);
-            SubStateTick();
             HandleGravity();
+            subStateMachine.Tick();
         }
 
         public void OnEnter()
         {
-            currentSubState = stateMachine._currentSubState;
-
             HandleJump();
-            SetSubState();
+            subStateMachine._currentState.OnEnter();
         }
 
         public void OnExit()
         {
-            stateMachine._currentSubState = currentSubState;
+            subStateMachine._currentState.OnExit();
         }
 
         private void HandleJump()
@@ -63,7 +79,7 @@ namespace Player
 
         public Color GizmoColor()
         {
-            throw new System.NotImplementedException();
+            return Color.white;
         }
     }
 }

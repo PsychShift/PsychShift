@@ -1,41 +1,54 @@
-using Player;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Player;
+using CharacterInfo = Player.CharacterInfo;
+using System;
 
 namespace Player
 {
-    public class WallJumpState : RootState, IState
+    public class WallJumpState : IState
     {
+        private PlayerStateMachine playerStateMachine;
+        private StateMachine.StateMachine subStateMachine;
         private CharacterInfo currentCharacter;
-
-        public WallJumpState(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
+        public WallJumpState(PlayerStateMachine playerStateMachine)
         {
             this.playerStateMachine = playerStateMachine;
-            this.stateMachine = stateMachine;
+            void AT(IState from, IState to, Func<bool> condition) => subStateMachine.AddTransition(from, to, condition);
+            void Any(IState from, Func<bool> condition) => subStateMachine.AddAnyTransition(from, condition);
+
+            subStateMachine = new StateMachine.StateMachine();
+            var idleState = new IdleState(playerStateMachine);
+            var walkState = new WalkState(playerStateMachine);
+
+            AT(idleState, walkState, Walked());
+            AT(walkState, idleState, Stopped());
+
+            subStateMachine.SetState(idleState);
+
+            Func<bool> Walked() => () => InputManager.Instance.GetPlayerMovement().magnitude != 0;
+            Func<bool> Stopped() => () => InputManager.Instance.GetPlayerMovement().magnitude == 0;
         }
 
         public void Tick()
         {
             WallStateVariables.Instance.TimeOffWall += Time.deltaTime;
             HandleGravity();
-            SubStateTick();
+            subStateMachine.Tick();
         }
 
         public void OnEnter()
         {
             WallStateVariables.Instance.TimeOffWall = 0f;
             currentCharacter = playerStateMachine.currentCharacter;
-            currentSubState = stateMachine._currentSubState;
             /* playerStateMachine.InAirForward = currentCharacter.model.transform.forward;
             playerStateMachine.InAirRight = currentCharacter.model.transform.right; */
             HandleJump();
-            SetSubState();
+            subStateMachine._currentState.OnEnter();
         }
 
         public void OnExit()
         {
-            stateMachine._currentSubState = currentSubState;
+            subStateMachine._currentState.OnExit();
         }
 
         private void HandleJump()

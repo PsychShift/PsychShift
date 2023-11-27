@@ -1,19 +1,32 @@
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
+using Player;
+using CharacterInfo = Player.CharacterInfo;
+using System;
 
 namespace Player
 {
-    public class WallStaticState : RootState, IState
+    public class WallStaticState : IState
     {
+        private PlayerStateMachine playerStateMachine;
+        private StateMachine.StateMachine subStateMachine;
         private CharacterInfo currentCharacter;
-
-        public WallStaticState(PlayerStateMachine playerStateMachine, StateMachine.StateMachine stateMachine)
+        public WallStaticState(PlayerStateMachine playerStateMachine)
         {
             this.playerStateMachine = playerStateMachine;
-            this.stateMachine = stateMachine;
+            void AT(IState from, IState to, Func<bool> condition) => subStateMachine.AddTransition(from, to, condition);
+            void Any(IState from, Func<bool> condition) => subStateMachine.AddAnyTransition(from, condition);
 
+            subStateMachine = new StateMachine.StateMachine();
+            var wallHangState = new WallHangState(playerStateMachine);
+            var vaultState = new VaultState(playerStateMachine);
+
+
+
+            AT(wallHangState, vaultState, ClimbUpLedge());
+
+            Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.IsJumpPressed && playerStateMachine.StaticMode;
+
+            subStateMachine.SetState(wallHangState);
         }
 
         public Color GizmoColor()
@@ -23,20 +36,16 @@ namespace Player
 
         public void OnEnter()
         {
-             //if(StaticBar.instance.currentStatic >= 1)
-            //{
             WallStateVariables.Instance.TimeOnWall = 0f;
             currentCharacter = playerStateMachine.currentCharacter;
-            currentSubState = stateMachine._currentSubState;
             playerStateMachine.CurrentMovementY = 0;
             playerStateMachine.AppliedMovementY = 0;
-            SetSubState();
-           // }
+            subStateMachine._currentState.OnEnter();
         }
         //Kevin added this call public funct from substate that swaps var that changes wallhang substate
         public void OnExit()
         {
-            stateMachine._currentSubState = currentSubState;
+            subStateMachine._currentState.OnExit();
         }
 
         public void Tick()
@@ -48,10 +57,8 @@ namespace Player
                 WallHangState.canHangChange();
             }*/
             WallStateVariables.Instance.TimeOnWall += Time.deltaTime;
-            SubStateTick();
-            //wallVariables.OrganizeHitsList();
             WallStateVariables.Instance.CheckWalls(playerStateMachine.currentCharacter.wallCheck);
-            //Debug.Log("Forward Wall == " + WallStateVariables.Instance.ForwardWall + " Side Wall == " + WallStateVariables.Instance.SideWall);
+            subStateMachine.Tick();
         }
     }
 }

@@ -134,12 +134,18 @@ namespace Player
             #endregion
 
             // Create instances of root states
-            var groundState = new GroundedState(this, stateMachine);
+            /* var groundState = new GroundedState(this, stateMachine);
             var fallState = new FallState(this, stateMachine);
             var jumpState = new JumpState(this, stateMachine);
             var wallFlowState = new WallFlowState(this, stateMachine);
             var wallStaticState = new WallStaticState(this, stateMachine);
-            var wallJumpState = new WallJumpState(this, stateMachine);
+            var wallJumpState = new WallJumpState(this, stateMachine); */
+            var groundState = new GroundedState(this);
+            var fallState = new FallState(this);
+            var jumpState = new JumpState(this);
+            var wallFlowState = new WallFlowState(this);
+            var wallStaticState = new WallStaticState(this);
+            var wallJumpState = new WallJumpState(this);
 
             // Create instances of sub-states
             var idleState = new IdleState(this);
@@ -197,7 +203,7 @@ namespace Player
             #endregion
 
             #region Assign Substates to Rootstates
-            groundState.AddSubState(idleState);
+            /* groundState.AddSubState(idleState);
             groundState.AddSubState(walkState);
             groundState.PrepareSubStates();
             groundState.SetDefaultSubState(idleState);
@@ -226,7 +232,7 @@ namespace Player
             wallJumpState.AddSubState(idleState);
             wallJumpState.AddSubState(walkState);
             wallJumpState.PrepareSubStates();
-            wallJumpState.SetDefaultSubState(idleState);
+            wallJumpState.SetDefaultSubState(idleState); */
             #endregion
 
             // Root State Conditions
@@ -274,7 +280,6 @@ namespace Player
         }
         void FixedUpdate()
         {
-            //Time.fixedDeltaTime = .02f;
             currentCharacter.controller.Move(appliedMovement * Time.deltaTime);
         }
         #endregion
@@ -625,7 +630,6 @@ namespace Player
                         Gizmos.color = Color.red;
                         Gizmos.DrawWireCube(currentCharacter.characterContainer.transform.position, boxSize);
                     }
-
                 }
                 isHit = Physics.BoxCast(cameraTransform.position, boxHalfExtents, cameraTransform.forward, out RaycastHit hit, boxRotation, swapDistance, swapableLayer);
                 if (isHit)

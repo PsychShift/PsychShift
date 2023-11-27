@@ -1,21 +1,13 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
+using Player;
+using CharacterInfo = Player.CharacterInfo;
+using System.Collections;
 
-/*
-Stops when player stops moving or jumps
-if the player looks in a different direction, they continue in the original direction.
-clamp the player to the wall
-*/
 namespace Player
 {
     public class WallRunState : IState
     {
         private float normalizedAngleThreshold = 0.1f;
-
-
-
-
 
         private readonly PlayerStateMachine playerStateMachine;
         private MonoBehaviour monoBehaviour;
@@ -64,7 +56,7 @@ namespace Player
 
         private IEnumerator SetNormal()
         {
-            yield return new WaitForNextFrameUnit();
+            yield return new Unity.VisualScripting.WaitForNextFrameUnit();
 
             wallRight = WallStateVariables.Instance.WallRight;
             wallNormal = wallRight ? WallStateVariables.Instance.RightWallNormal() : WallStateVariables.Instance.LeftWallNormal();

@@ -1,4 +1,6 @@
 using UnityEngine;
+using Player;
+using CharacterInfo = Player.CharacterInfo;
 
 namespace Player
 {

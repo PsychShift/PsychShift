@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
+using Player;
+using CharacterInfo = Player.CharacterInfo;
+
 namespace Player
 {
-    public class DashState : RootState, IState
+    public class DashState : IState
     {
         public Color GizmoColor()
         {
