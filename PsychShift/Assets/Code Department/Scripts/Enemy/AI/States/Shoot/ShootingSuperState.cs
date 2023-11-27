@@ -34,13 +34,13 @@ public class ShootingSuperState : IState
 
     public virtual void OnEnter()
     {
-        Debug.Log($"{this} is a ShootingSuperState");
         SetUp(brain, agression);
+        brain.Animator.SetBool("Combat", true);
     }
 
     public virtual void OnExit()
     {
-        
+        brain.Animator.SetBool("Combat", false);
     }
 
     public virtual void Tick()

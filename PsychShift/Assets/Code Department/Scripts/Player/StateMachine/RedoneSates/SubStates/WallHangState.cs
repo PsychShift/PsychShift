@@ -46,7 +46,6 @@ namespace Player
         }
         public void OnEnter()
         {
-            Debug.Log("Entered Wall Hang State");
             currentCharacter = playerStateMachine.currentCharacter;
             /* RaycastHit[] hits = Physics.SphereCastAll(currentCharacter.characterContainer.transform.position + Vector3.up * 1f , ledgeSphereCastRadius, playerStateMachine.cameraTransform.forward, ledgeDetectionLength, WallStateVariables.Instance.WallholdLayers, QueryTriggerInteraction.Collide);
             foreach(RaycastHit hit in hits)
@@ -58,7 +57,7 @@ namespace Player
 
         public void OnExit()
         {
-            Debug.Log("Exited Wall Hang State");
+            
         }
 
         public void Tick()

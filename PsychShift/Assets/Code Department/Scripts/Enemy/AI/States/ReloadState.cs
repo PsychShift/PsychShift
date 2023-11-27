@@ -14,14 +14,12 @@ public class ReloadState : IState
     }
     public void OnEnter()
     {
-        Debug.Log("Start Reload");
-        brain.CharacterInfo.animator.SetFloat("cover", 1);
-        brain.CharacterInfo.animator.SetTrigger("reload");
+        brain.Animator.SetFloat("cover", 1);
+        brain.Animator.SetTrigger("reload");
     }
     public void OnExit()
     {
-        Debug.Log("stop reload");
-        brain.CharacterInfo.animator.SetFloat("cover", 0);
+        brain.Animator.SetFloat("cover", 0);
     }
     public void Tick()
     {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class RandomLocationState : IState
@@ -17,16 +18,19 @@ public class RandomLocationState : IState
     {
         PickRandomLocation();
         endAt = Time.time + 5f;
+        brain.Animator.SetFloat("speed", 1f);
     }
 
     public void OnExit()
     {
-        
+        brain.Animator.SetFloat("speed", 0f);
+        /* brain.Animator.SetFloat("speedForward", 0f);
+        brain.Animator.SetFloat("speedRight", 0f); */
     }
 
     public void Tick()
     {
-        
+        //AnimatorHelper.SetMovementVector(brain.Animator, brain.Agent.velocity, brain.Model, "speedForward", "speedRight");
     }
 
     public Color GizmoColor()
@@ -47,7 +51,7 @@ public class RandomLocationState : IState
     public Func<bool> IsDone() => () => IsFinished();
     private bool IsFinished()
     {
-        if(brain.CharacterInfo.agent.remainingDistance < 0.5f || Time.time > endAt)
+        if(brain.CharacterInfo.agent.remainingDistance < 0.01f || Time.time > endAt)
         {
             return true;
         }

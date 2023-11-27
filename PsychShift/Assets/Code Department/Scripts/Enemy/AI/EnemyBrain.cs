@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 
 using CharacterInfo = Player.CharacterInfo;
+using UnityEngine.AI;
 [RequireComponent(typeof(CharacterInfoReference), typeof(TempGravity), typeof(FieldOfView))]
 [DisallowMultipleComponent]
 public abstract class EnemyBrain : MonoBehaviour
@@ -39,11 +40,14 @@ public abstract class EnemyBrain : MonoBehaviour
             if(characterInfo == null)
             {
                 characterInfo = gameObject.GetComponent<CharacterInfoReference>().characterInfo;
-                Debug.Log(characterInfo);
             }
             return characterInfo;
         }
     }
+
+    public Animator Animator => CharacterInfo.animator;
+    public NavMeshAgent Agent => CharacterInfo.agent;
+    public Transform Model => CharacterInfo.model.transform;
     public bool isMelee;
     protected float attackRange;
     [HideInInspector] public Cover currentCover;

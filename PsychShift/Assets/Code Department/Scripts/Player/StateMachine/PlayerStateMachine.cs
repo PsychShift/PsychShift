@@ -118,7 +118,6 @@ namespace Player
 
             
             currentCharacter = null;
-            Debug.Log(PlayerMaster.Instance);
             SwapCharacter(tempCharacter, PlayerMaster.Instance.checkPointLocation);
 
             //virtualCamera.Follow = currentCharacter.cameraRoot;
@@ -361,17 +360,17 @@ namespace Player
         }
         public void SwapCharacter(GameObject newChar, Transform position)
         {
-            Debug.Log("WE ARE GIVING VAR TO CHAR" + checkPointL);
-            Debug.Log("Location in PM " + PlayerMaster.Instance.checkPointLocation.position);
+            //Debug.Log("WE ARE GIVING VAR TO CHAR" + checkPointL);
+            //Debug.Log("Location in PM " + PlayerMaster.Instance.checkPointLocation.position);
             //newChar.transform.position = position.position;
             SwapCharacter(newChar);
-            Debug.Log(newChar.transform.position);
-            Debug.Log("StateMachineInfo");
+            //Debug.Log(newChar.transform.position);
+            //Debug.Log("StateMachineInfo");
             if(checkPointL!=Vector3.zero)
             {
                 currentCharacter.controller.enabled = false;
                 newChar.transform.position = checkPointL;
-                Debug.Log("WE ARE GIVING VAR TO CHAR" + newChar.transform.position);
+                //Debug.Log("WE ARE GIVING VAR TO CHAR" + newChar.transform.position);
                 currentCharacter.controller.enabled = true;
             }
         }

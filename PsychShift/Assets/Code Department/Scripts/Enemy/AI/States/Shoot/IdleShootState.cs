@@ -17,7 +17,7 @@ public class IdleShootState : IState
     float waitToShoot = 0f;
     public void OnEnter()
     {
-        brain.CharacterInfo.animator.SetBool("shooting", false);
+        brain.Animator.SetBool("shooting", false);
         waitToShoot = Time.time + UnityEngine.Random.Range(FireRateAgro.FireRates[agression.FireRateAgression].MinWaitTime, FireRateAgro.FireRates[agression.FireRateAgression].MaxWaitTime);
     }
 

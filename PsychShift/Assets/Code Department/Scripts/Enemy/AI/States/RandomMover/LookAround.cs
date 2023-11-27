@@ -18,7 +18,11 @@ public class LookAroundState : IState
     public void OnEnter()
     {
         endAt = Time.time + 3f;
-        brain.CharacterInfo.agent.isStopped = true;
+        brain.Agent.velocity = Vector3.zero;
+        brain.Agent.isStopped = true;
+        brain.Animator.SetFloat("speed", 0f);
+        /* brain.Animator.SetFloat("speedForward", 0f);
+        brain.Animator.SetFloat("speedRight", 0f); */
     }
 
     public void OnExit()
@@ -49,7 +53,7 @@ public class LookAroundState : IState
 
     public Color GizmoColor()
     {
-        return Color.blue;
+        return Color.green;
     }
 
 

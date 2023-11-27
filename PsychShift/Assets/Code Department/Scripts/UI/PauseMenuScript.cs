@@ -32,7 +32,6 @@ public class PauseMenuScript : MonoBehaviour
         }
         if (Input.GetKey("escape"))
         {
-            Debug.Log("Quit");
             Application.Quit();
         }
     }

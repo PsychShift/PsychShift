@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ChaseState : ShootingSuperState, ICoroutineRestarter
 {
-    private Player.CharacterInfo currentCharacterInfo;
     Transform gunParent;
 
     public ChaseState(EnemyBrain brain, AIAgression agression)
@@ -16,15 +15,18 @@ public class ChaseState : ShootingSuperState, ICoroutineRestarter
     public override void OnEnter()
     {
         base.OnEnter();
-        brain.CharacterInfo.agent.stoppingDistance = brain.agression.PlayerStoppingDistance;
-        currentCharacterInfo = brain.CharacterInfo;
+        brain.Agent.stoppingDistance = brain.agression.PlayerStoppingDistance;
         brain.StartCoroutine(ChasePlayer());
+        brain.Animator.SetFloat("speed", 1f);
     }
 
     public override void OnExit()
     {
         base.OnExit();
-        brain.CharacterInfo.agent.stoppingDistance = brain.agression.DestinationStoppingDistance;
+        brain.Animator.SetFloat("speed", 0f);
+        /* brain.Animator.SetFloat("speedForward", 0f);
+        brain.Animator.SetFloat("speedRight", 0f); */
+        brain.Agent.stoppingDistance = brain.agression.DestinationStoppingDistance;
         brain.StopCoroutine(ChasePlayer());
     }
 
@@ -36,6 +38,21 @@ public class ChaseState : ShootingSuperState, ICoroutineRestarter
     public override void Tick()
     {
         base.Tick();
+        if(brain.Agent.remainingDistance < brain.Agent.stoppingDistance)
+        {
+            brain.Animator.SetFloat("speed", 0f);
+            brain.Agent.isStopped = true;
+            /* brain.Animator.SetFloat("speedForward", 0f);
+            brain.Animator.SetFloat("speedRight", 0f); */
+        }
+        else
+        {
+            brain.Animator.SetFloat("speed", 1f);
+            brain.Agent.isStopped = false;
+        }
+
+        //AnimatorHelper.SetMovementVector(brain.Animator, brain.Agent.velocity, brain.Model, "speedForward", "speedRight");
+        
         // aim at the player based on the gun forward
         /* Vector3 direction = brain.player.position - gunParent.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
@@ -48,12 +65,8 @@ public class ChaseState : ShootingSuperState, ICoroutineRestarter
         
         while (true)
         {
-            currentCharacterInfo.agent.SetDestination(brain.player.transform.position);
+            brain.Agent.SetDestination(brain.player.transform.position);
             yield return new WaitForSeconds(0.1f);
         }
     }
-
-    
-    
-
 }
