@@ -23,16 +23,14 @@ Material:
   m_Name: SecurityExteriorWallPurple
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 2100000, guid: 5ce313e25ed267443a5ee55fae0d1b50, type: 2}
-  m_ModifiedSerializedProperties: 24
+  m_ModifiedSerializedProperties: 28
   m_ValidKeywords:
   - _METALLICSPECGLOSSMAP
   - _NORMALMAP
   - _PARALLAXMAP
-  - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-  - _SPECULARHIGHLIGHTS_OFF
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
   m_CustomRenderQueue: 2008
   stringTagMap:
@@ -50,9 +48,11 @@ Material:
     - _Cutoff: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _Parallax: 0.005
     - _ReceiveShadows: 1
     - _Smoothness: 1
-    - _SmoothnessTextureChannel: 1
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
