@@ -122,6 +122,8 @@ MonoBehaviour:
   Notes: Use this script for creating puzzles. Select the bools at the bottom. One
     for action another for reaction. Use this script again on a new object for new
     puzzles
+  effectForAct: {fileID: 0}
+  effectForGod: {fileID: 0}
   Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
   godBoxRef: {fileID: 0}
   Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
@@ -147,7 +149,10 @@ MonoBehaviour:
   spawnPoints: []
   puzzleComplete: 0
   Beep: {fileID: 5592697869247978549}
-  beepTwo: {fileID: 8300000, guid: 302feaa6130857843841947c6e42b814, type: 3}
+  soundClip: {fileID: 0}
+  NotepadBoss: Variables for Boss stuff
+  isBossBox: 0
+  bossContainerRef: {fileID: 0}
 --- !u!82 &5592697869247978549
 AudioSource:
   m_ObjectHideFlags: 0
