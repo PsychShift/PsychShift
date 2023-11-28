@@ -22,20 +22,20 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: SecurityExteriorWallPurple
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: 2100000, guid: 5ce313e25ed267443a5ee55fae0d1b50, type: 2}
+  m_Parent: {fileID: 2100000, guid: bf83e903ce474ca4585b9c0a10334c95, type: 2}
   m_ModifiedSerializedProperties: 30
   m_ValidKeywords:
-  - _ALPHATEST_ON
+  - _EMISSION
   - _METALLICSPECGLOSSMAP
   - _NORMALMAP
   - _PARALLAXMAP
   m_InvalidKeywords: []
-  m_LightmapFlags: 6
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 2458
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2000
   stringTagMap:
-    RenderType: TransparentCutout
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -43,14 +43,14 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _AlphaClip: 1
-    - _AlphaToMask: 1
-    - _Cull: 0
+    - _AlphaClip: 0
+    - _AlphaToMask: 0
+    - _Cull: 2
     - _Cutoff: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 1
+    - _Smoothness: 0.545
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _Surface: 0
