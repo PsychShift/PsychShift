@@ -46,6 +46,7 @@ public class PuzzleKit : MonoBehaviour
     private bool move;
     [SerializeField]
     private bool spawn;
+    private bool fall;
 
     [TextArea]
     public string moveVariables = "Variables that need to be filled in for move below";
@@ -79,20 +80,28 @@ public class PuzzleKit : MonoBehaviour
     public bool puzzleComplete;
     public AudioSource Beep;
     public AudioClip soundClip;
+    [TextArea]
+    public string NotepadBoss = "Variables for Boss stuff";
+    public bool isBossBox;
+    public EncounterTracker bossContainerRef;
+    /* public float puzzleCompletionTimer;//
+    public bool puzzleTimer;
+    private bool puzzleTimeBegan; */
+
     /* public delegate void OnPuzzleDone();
-    public static event OnPuzzleDone PuzzleDone; */
+public static event OnPuzzleDone PuzzleDone; */
 
 
 
 
     //Actions
-        //Interact
-        //Pressure plate
-        //shoot it
+    //Interact
+    //Pressure plate
+    //shoot it
     //Re actions
-        //Move object
-        //Spawn object
-        //count down to how many need activating//also deactivates this one
+    //Move object
+    //Spawn object
+    //count down to how many need activating//also deactivates this one
     private void Awake() 
     {
         if(godBoxRef!= null)
@@ -130,32 +139,11 @@ public class PuzzleKit : MonoBehaviour
                 movingActivated = false;
             }
         }
-    }
-
-/*     public void Interact()//Need raycast for this to work 
-    {
-        if(interact)
+        /* if(puzzleTimeBegan)
         {
-            if(move)
-            {
-                Move();
-            }
-            else if(spawn)
-            {
-                SpawnObject();
-            }
-        }
-    } */
-/*     public void PressurePlate() //all done in onTriggerEnter
-    {
-        //detects how long you've been standing on something
 
-    } */
-/*     public void ShootIt()
-    {
-        //Detect if bullet makes impact and sets off reaction.
-
-    } */
+        } */
+    }
 
 
     private void Move()
@@ -175,9 +163,6 @@ public class PuzzleKit : MonoBehaviour
 
     private void SpawnObject()
     {
-        //Spawns object after a puzzle is complete
-        //if(isSpawnInf)
-        //{
             if(effectForGod!=null)
             {
                 Instantiate(effectForGod,transform.position, Quaternion.identity);
@@ -187,18 +172,9 @@ public class PuzzleKit : MonoBehaviour
             for(int i = 0; i< spawnObjects.Length; i++) 
                 Instantiate(spawnObjects[i], locationOfSpawn.position, Quaternion.identity);
             
-            //PuzzleDone?.Invoke();
             puzzleComplete = true;
-        //}
-/*         else
-        {
-            if(spawnCount < howManySpawn)
-            {
-                for(int i = 0; i< spawnObjects.Length; i++) 
-                    Instantiate(spawnObjects[i], locationOfSpawn.position, Quaternion.identity);
-                spawnCount++;
-            }
-        }   */      
+       
+     
     }
     private void StopSpawn()
     {
@@ -240,20 +216,14 @@ public class PuzzleKit : MonoBehaviour
                 {
                     Debug.Log("Move");
                     Move();
-                    /* if(stopSpawn)
-                    {
-                        //stop spawner when puzzle is solved 
-                        StopSpawn();
-                    } */ 
                 }
                 else if(spawn)
                 {
                     SpawnObject();
-                    /* if(stopSpawn)
-                    {
-                        StopSpawn();
-                        //stop spawner when puzzle is solved
-                    } */ 
+                }
+                if(isBossBox)
+                {
+                    bossContainerRef.AddPuzzle();
                 }
             }
         }
@@ -266,15 +236,6 @@ public class PuzzleKit : MonoBehaviour
         {
             if(other.GetComponent<Collider>().gameObject.layer == LayerMask.NameToLayer("Bullet"))
             {
-               /*  Debug.Log("Shot Ow");
-                if(move)
-                {
-                    Move();
-                }
-                else if(spawn)
-                {
-                    godBoxRef.SpawnObject();
-                } */
                 ThisActivate();
             }
             //send to reaction
@@ -285,15 +246,6 @@ public class PuzzleKit : MonoBehaviour
             
             if(other.GetComponent<Collider>().gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                /* Debug.Log("Stepped on Plate");
-                if(move)
-                {
-                    Move();
-                }
-                else if(spawn)
-                {
-                    godBoxRef.SpawnObject();
-                } */
                 ThisActivate();
             }
         } 
@@ -308,8 +260,4 @@ public class PuzzleKit : MonoBehaviour
     {
         Beep.PlayOneShot(beep);
     }
-    /* private void OnCollisionEnter(Collision other) 
-    {
-
-    } */
 }
