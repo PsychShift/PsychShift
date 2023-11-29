@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 758e5bd059ecf9749b9310cf66fe1493, type: 2}
     - target: {fileID: 919132149155446097, guid: e109ea643d943e14bb43693c3934c01d, type: 3}
       propertyPath: m_Name
-      value: MD_TOILET_SEAT_DOWN Variant 2
+      value: Toilet Prop
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -75,6 +75,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e109ea643d943e14bb43693c3934c01d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1534584799644959943}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e109ea643d943e14bb43693c3934c01d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6230491903313964568}
   m_SourcePrefab: {fileID: 100100000, guid: e109ea643d943e14bb43693c3934c01d, type: 3}
 --- !u!1 &7094609904846952550 stripped
 GameObject:
@@ -102,3 +105,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.013435079, y: 0.022774069, z: 0.024465822}
   m_Center: {x: 0.00023065694, y: 0.0034200083, z: -0.002708013}
+--- !u!208 &-6230491903313964568
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7094609904846952550}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.007, y: 0.011000001, z: 0.012}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.003, z: -0.003}
+  m_TimeToStationary: 0.5

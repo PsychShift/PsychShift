@@ -105,7 +105,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 2cd9a99db53944f4eb0e52cbfc1f8ebc, type: 2}
     - target: {fileID: -8679921383154817045, guid: 704a0e68bd063f64bbe7ac341eca5521, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 704a0e68bd063f64bbe7ac341eca5521, type: 3}
       propertyPath: m_LocalPosition.x
@@ -217,7 +217,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 2cd9a99db53944f4eb0e52cbfc1f8ebc, type: 2}
     - target: {fileID: 919132149155446097, guid: 704a0e68bd063f64bbe7ac341eca5521, type: 3}
       propertyPath: m_Name
-      value: surgerymonitor
+      value: SurgeryMonitor Prop
       objectReference: {fileID: 0}
     - target: {fileID: 7202271454713460447, guid: 704a0e68bd063f64bbe7ac341eca5521, type: 3}
       propertyPath: m_Materials.Array.size
@@ -255,6 +255,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 704a0e68bd063f64bbe7ac341eca5521, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5610534232923623882}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 704a0e68bd063f64bbe7ac341eca5521, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1747164745291492441}
   m_SourcePrefab: {fileID: 100100000, guid: 704a0e68bd063f64bbe7ac341eca5521, type: 3}
 --- !u!1 &6160904021293425640 stripped
 GameObject:
@@ -282,6 +285,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.7837029, y: 4.8162637, z: 1.9541016}
   m_Center: {x: -0.017038345, y: 2.2829435, z: -0.016967773}
+--- !u!208 &1747164745291492441
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6160904021293425640}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.01, y: 2.59, z: 0.99}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2.23, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!4 &6788117867851692370 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 704a0e68bd063f64bbe7ac341eca5521, type: 3}
