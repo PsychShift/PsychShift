@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 758e5bd059ecf9749b9310cf66fe1493, type: 2}
     - target: {fileID: 919132149155446097, guid: 74aef80a8d6c4fb4680ab0b8817b351d, type: 3}
       propertyPath: m_Name
-      value: Surgery_Table Variant
+      value: SurgeryTable Prop
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -79,6 +79,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 74aef80a8d6c4fb4680ab0b8817b351d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 243715382994061053}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 74aef80a8d6c4fb4680ab0b8817b351d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 393851024769318397}
   m_SourcePrefab: {fileID: 100100000, guid: 74aef80a8d6c4fb4680ab0b8817b351d, type: 3}
 --- !u!1 &2775666210166814085 stripped
 GameObject:
@@ -106,3 +109,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 100.000015, y: 8581.38, z: 99.99999}
   m_Center: {x: 0.0000019073486, y: 4290.693, z: 0}
+--- !u!208 &393851024769318397
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2775666210166814085}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 50.000004, y: 4290.6904, z: 50.000004}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 4290.6934, z: 0}
+  m_TimeToStationary: 0.5

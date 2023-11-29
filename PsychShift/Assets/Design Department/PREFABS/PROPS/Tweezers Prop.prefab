@@ -58,10 +58,34 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0fb3960ce750e8d46857e8a7998591b0, type: 2}
     - target: {fileID: 919132149155446097, guid: ff6b9bd355feb3548a23a99b9c6bb1b4, type: 3}
       propertyPath: m_Name
-      value: Tweezers Variant 1
+      value: Tweezers Prop
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ff6b9bd355feb3548a23a99b9c6bb1b4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1288671155297028102}
   m_SourcePrefab: {fileID: 100100000, guid: ff6b9bd355feb3548a23a99b9c6bb1b4, type: 3}
+--- !u!1 &8777241989064537316 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ff6b9bd355feb3548a23a99b9c6bb1b4, type: 3}
+  m_PrefabInstance: {fileID: 8434800941107546549}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &-1288671155297028102
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8777241989064537316}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 32.055, y: 3.6680002, z: 103.340004}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.402, z: 48.158}
+  m_TimeToStationary: 0.5
