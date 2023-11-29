@@ -48,7 +48,9 @@ namespace Player
         #region  Wall
         [Header("Wall Variables")]
         [SerializeField] private float wallSpeed;
-        [SerializeField] private float wallJumpForce;
+        [SerializeField] private float wallJumpForce = 25f;
+        [Range(0, 1)]
+        [SerializeField] private float wallJumpAngle = 0.7f;
         public float WallSpeed { get { return wallSpeed;  } }
         public LayerMask wallLayer;
         [SerializeField] private LayerMask vaultLayers;
@@ -145,8 +147,8 @@ namespace Player
             var jumpState = new JumpState(this);
             var wallFlowState = new WallFlowState(this);
             var wallStaticState = new WallStaticState(this);
-            var wallJumpState = new WallJumpState(this, wallJumpForce);
-            var wallFallState = new WallFallState(this, wallJumpForce);
+            var wallJumpState = new WallJumpState(this, wallJumpForce, wallJumpAngle);
+            var wallFallState = new WallFallState(this, wallJumpForce, wallJumpAngle);
 
            /*  // Create instances of sub-states
             var idleState = new IdleState(this);

@@ -12,11 +12,12 @@ namespace Player
         private CharacterInfo currentCharacter;
         float jumpForce;
         Vector3 jumpDirection;
-        public WallJumpState(PlayerStateMachine playerStateMachine, float jumpForce)
+        float jumpAngle;
+        public WallJumpState(PlayerStateMachine playerStateMachine, float jumpForce, float jumpAngle)
         {
             this.playerStateMachine = playerStateMachine;
             this.jumpForce = jumpForce;
-
+            this.jumpAngle = jumpAngle;
 
             /* void AT(IState from, IState to, Func<bool> condition) => subStateMachine.AddTransition(from, to, condition);
             void Any(IState from, Func<bool> condition) => subStateMachine.AddAnyTransition(from, condition);
@@ -96,7 +97,7 @@ namespace Player
             movement = Quaternion.Euler(0f, playerStateMachine.cameraTransform.eulerAngles.y, 0f) * movement;
             //movement = playerStateMachine.currentCharacter.characterContainer.transform.forward * movement.z + playerStateMachine.currentCharacter.characterContainer.transform.right * movement.x;
             movement.Normalize();
-            movement = movement != Vector3.zero ? (Vector3.Lerp(movement, jumpDirection, 0.7f) * jumpForce) : (jumpDirection * jumpForce);
+            movement = movement != Vector3.zero ? (Vector3.Lerp(movement, jumpDirection, jumpAngle) * jumpForce) : (jumpDirection * jumpForce);
             playerStateMachine.AppliedMovementX = movement.x;
             playerStateMachine.AppliedMovementZ = movement.z;
 
