@@ -37,6 +37,7 @@ namespace Guns
         private ObjectPool<Bullet> BulletPool;
         private bool LastFrameWantedToShoot;
         private bool isEnemyMaybe;
+        private Animator gunAnim;
 
         /// <summary>
         /// Spawns the Gun Model into the scene
@@ -60,6 +61,8 @@ namespace Guns
             Model.transform.SetParent(Parent, false);
             Model.transform.localPosition = SpawnPoint;
             Model.transform.localRotation = Quaternion.Euler(SpawnRotation);
+            gunAnim = Model.GetComponent<Animator>();
+            
 
             ActiveCamera = Camera;
 
@@ -110,12 +113,14 @@ namespace Guns
             if (WantsToShoot)
             {
                 LastFrameWantedToShoot = true;
+                gunAnim.SetInteger("Fire",1);
                 TryToShoot();
             }
 
             if (!WantsToShoot && LastFrameWantedToShoot)
             {
                 StopShootingTime = Time.time;
+                gunAnim.SetInteger("Fire",0);
                 LastFrameWantedToShoot = false;
             }
         }
@@ -175,7 +180,6 @@ namespace Guns
                     AudioConfig.PlayOutOfAmmoClip(ShootingAudioSource);
                     return;
                 }
-
                 ShootSystem.Play();
                 AudioConfig.PlayShootingClip(ShootingAudioSource, AmmoConfig.CurrentClipAmmo == 1);
 
