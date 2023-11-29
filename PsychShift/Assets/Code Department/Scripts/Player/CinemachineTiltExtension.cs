@@ -7,6 +7,7 @@ using System.Collections;
 public class CinemachineTiltExtension : CinemachineExtension
 {
     public float tiltSpeed = 75f;
+    public float tiltAngle = 20f;
     private float tiltDirection = 0f; // 1 for right, -1 for left, 0 for no tilt
 
     private float previousTiltAngle = 0f;
@@ -34,8 +35,15 @@ public class CinemachineTiltExtension : CinemachineExtension
     }
 
     
-    public void SetTiltDirection(float direction)
+    public void SetTiltDirection(bool dir)
     {
-        targetAngle = direction;
+        if (dir)
+            targetAngle = tiltAngle;
+        else
+            targetAngle = -tiltAngle;
+    }
+    public void SetTiltDirection(float angle)
+    {
+        targetAngle = angle;
     }
 }

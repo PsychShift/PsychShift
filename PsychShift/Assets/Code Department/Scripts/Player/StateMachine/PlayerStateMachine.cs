@@ -48,6 +48,7 @@ namespace Player
         #region  Wall
         [Header("Wall Variables")]
         [SerializeField] private float wallSpeed;
+        [SerializeField] private float wallJumpForce;
         public float WallSpeed { get { return wallSpeed;  } }
         public LayerMask wallLayer;
         [SerializeField] private LayerMask vaultLayers;
@@ -144,16 +145,17 @@ namespace Player
             var jumpState = new JumpState(this);
             var wallFlowState = new WallFlowState(this);
             var wallStaticState = new WallStaticState(this);
-            var wallJumpState = new WallJumpState(this);
+            var wallJumpState = new WallJumpState(this, wallJumpForce);
+            var wallFallState = new WallFallState(this, wallJumpForce);
 
-            // Create instances of sub-states
+           /*  // Create instances of sub-states
             var idleState = new IdleState(this);
             var walkState = new WalkState(this);
 
             var wallRunState = new WallRunState(this, this);
             var vaultState = new VaultState(this);
             var mantleState = new MantleState(this);
-            var wallHangState = new WallHangState(this);
+            var wallHangState = new WallHangState(this); */
 
             // Makes it easier to add transitions (less text per line)
             void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition); // If a condition meets switch from 'from' state to 'to' state (Root state only)
@@ -184,11 +186,16 @@ namespace Player
             AT(wallStaticState, wallJumpState, WallJump());
             AT(wallStaticState, wallFlowState, OnWallFlow());
             // Leave Wall Jump State
-            AT(wallJumpState, fallState, WallFall());
+            AT(wallJumpState, wallFallState, WallFall());
             AT(wallJumpState, groundState, Grounded());
+            // Leave Wall Fall State
+            AT(wallFallState, groundState, Grounded());    
+            AT(wallFallState, wallFlowState, OnWallFlow());  
+            AT(wallFallState, wallStaticState, OnWallStatic());
+            AT(wallFallState, fallState, wallFallState.IsDone());
             #endregion
 
-            #region Standard Transitions
+            /* #region Standard Transitions
             AT(idleState, walkState, Walked());
             AT(walkState, idleState, Stopped());
             #endregion
@@ -199,7 +206,7 @@ namespace Player
             AT(wallHangState, vaultState, ClimbUpLedge());
             AT(vaultState, wallRunState, WallRun());
             
-            #endregion
+            #endregion */
 
             #region Assign Substates to Rootstates
             /* groundState.AddSubState(idleState);
@@ -246,14 +253,14 @@ namespace Player
             Func<bool> WallFall() => () => AppliedMovementY < 0 && !GroundedCheck() && WallStateVariables.Instance.TimeOffWall > 0.2f;
             Func<bool> Swapped() => () => isSwapping;
 
-            // Sub State Conditions
+            /* // Sub State Conditions
             Func<bool> Walked() => () => InputManager.Instance.GetPlayerMovement().magnitude != 0;
             Func<bool> Stopped() => () => InputManager.Instance.GetPlayerMovement().magnitude == 0;
 
             //Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.GetPlayerMovement().magnitude == 0;
             Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft;
             //Func<bool> Ledge() => () => WallStateVariables.Instance.LedgeDetection(currentCharacter, cameraTransform) && WallStateVariables.Instance.ForwardWall && StaticMode;
-            Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.IsJumpPressed && StaticMode;
+            Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.IsJumpPressed && StaticMode; */
 
             stateMachine.SetState(groundState);
         }
@@ -610,7 +617,6 @@ namespace Player
 
             //trySetStatic = false;
         }
-
         void OnDrawGizmos()
         {                
             if(Application.isPlaying)
@@ -642,14 +648,16 @@ namespace Player
                     Gizmos.color = Color.green;
                     Gizmos.DrawRay(cameraTransform.position, cameraTransform.forward * swapDistance);
                 }
+                Gizmos.color = Color.yellow;
+                Vector3 startPos = currentCharacter.characterContainer.transform.position + Vector3.up * 4f;
+                Vector3 normal = startPos + (WallStateVariables.Instance.LastWallNormal * 4f);
+                Gizmos.DrawLine(startPos, normal);
+                Gizmos.DrawSphere(normal, 0.1f);
            }
         }
         public void PleaseSetLocationGODPLEASE(Transform location)
         {
-            Debug.Log("PLEASESET point: "+ location.position);
             checkPointL = location.position;
-            Debug.Log("CHECKPOINTL "+ checkPointL);
         }
-    }
-    
+    } 
 }

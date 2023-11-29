@@ -2,22 +2,22 @@ using UnityEngine;
 using Player;
 using CharacterInfo = Player.CharacterInfo;
 using System;
-
 namespace Player
 {
-    public class WallJumpState : IState
+    /// <summary>
+    /// Root state responsible for handling  gravity after reaching the peak of a jump or falling off a ledge.
+    /// </summary> 
+    public class WallFallState : IState
     {
         private PlayerStateMachine playerStateMachine;
         private StateMachine.StateMachine subStateMachine;
         private CharacterInfo currentCharacter;
-        float jumpForce;
         Vector3 jumpDirection;
-        public WallJumpState(PlayerStateMachine playerStateMachine, float jumpForce)
+        float jumpForce;
+        public WallFallState(PlayerStateMachine playerStateMachine, float jumpForce)
         {
             this.playerStateMachine = playerStateMachine;
             this.jumpForce = jumpForce;
-
-
             /* void AT(IState from, IState to, Func<bool> condition) => subStateMachine.AddTransition(from, to, condition);
             void Any(IState from, Func<bool> condition) => subStateMachine.AddAnyTransition(from, condition);
 
@@ -36,7 +36,6 @@ namespace Player
 
         public void Tick()
         {
-            WallStateVariables.Instance.TimeOffWall += Time.deltaTime;
             HandleGravity();
             HorizontalMovement();
             //subStateMachine.Tick();
@@ -44,12 +43,12 @@ namespace Player
 
         public void OnEnter()
         {
-            WallStateVariables.Instance.TimeOffWall = 0f;
+            endTime = Time.time + 0.4f;
             currentCharacter = playerStateMachine.currentCharacter;
-            /* playerStateMachine.InAirForward = currentCharacter.model.transform.forward;
-            playerStateMachine.InAirRight = currentCharacter.model.transform.right; */
-            HandleJump();
             //subStateMachine._currentState.OnEnter();
+
+            jumpDirection = WallStateVariables.Instance.LastWallNormal;
+            jumpDirection.Normalize();
         }
 
         public void OnExit()
@@ -57,34 +56,12 @@ namespace Player
             //subStateMachine._currentState.OnExit();
         }
 
-
-        private void HandleJump()
-        {
-            jumpDirection = WallStateVariables.Instance.LastWallNormal;
-            jumpDirection.Normalize();
-            playerStateMachine.AppliedMovementX = jumpDirection.x * jumpForce;
-            playerStateMachine.AppliedMovementZ = jumpDirection.z * jumpForce;
-            playerStateMachine.CurrentMovementY = playerStateMachine.InitialJumpVelocity;
-            playerStateMachine.AppliedMovementY = playerStateMachine.InitialJumpVelocity;
-        }
-
         private void HandleGravity()
         {
-            bool isFalling = playerStateMachine.CurrentMovementY <= 0f || !InputManager.Instance.IsJumpPressed;
-            float fallMultiplier = 3.0f;
-
-            if(isFalling)
-            {
-                float previousYVelocity = playerStateMachine.CurrentMovementY;
-                playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + (playerStateMachine.InitialJumpGravity * fallMultiplier * Time.deltaTime);
-                playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -playerStateMachine.MaxFallSpeed);
-            }
-            else
-            {
-                float previousYVelocity = playerStateMachine.CurrentMovementY;
-                playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + (playerStateMachine.InitialJumpGravity * Time.deltaTime);
-                playerStateMachine.AppliedMovementY = (previousYVelocity + playerStateMachine.CurrentMovementY) * .5f;
-            }
+            float previousYVelocity = playerStateMachine.CurrentMovementY;
+            playerStateMachine.CurrentMovementY = playerStateMachine.CurrentMovementY + playerStateMachine.gravityValue * Time.deltaTime;
+            playerStateMachine.AppliedMovementY = Mathf.Max((previousYVelocity + playerStateMachine.CurrentMovementY) * .5f, -playerStateMachine.MaxFallSpeed);
+            //Debug.Log(playerStateMachine.AppliedMovementY);
         }
 
         private void HorizontalMovement()
@@ -101,10 +78,22 @@ namespace Player
             playerStateMachine.AppliedMovementZ = movement.z;
 
         }
+        float endTime = 0f;
+        private bool DelayOver()
+        {
+            if (Time.time >= endTime)
+            {
+                Debug.Log("Delay over");
+                return true;
+            }
+            return false;
+        }
+        public Func<bool> IsDone() => () => DelayOver();
+        
 
         public Color GizmoColor()
         {
-            throw new System.NotImplementedException();
+            return Color.black;
         }
     }
 }

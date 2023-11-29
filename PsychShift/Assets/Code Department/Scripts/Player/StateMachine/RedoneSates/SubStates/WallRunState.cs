@@ -31,9 +31,15 @@ namespace Player
         public void Tick()
         {
             if(WallStateVariables.Instance.WallRight)
-                cameraTilt.SetTiltDirection(20f);
+            {
+                cameraTilt.SetTiltDirection(true);
+                //currentCharacter.vCam.m_Lens.Dutch = 20f;
+            }
             else if(WallStateVariables.Instance.WallLeft)
-                cameraTilt.SetTiltDirection(-20f);
+            {
+                cameraTilt.SetTiltDirection(false);
+                //currentCharacter.vCam.m_Lens.Dutch = -20f;
+            }
     
             HandleMovement();
         }
@@ -52,7 +58,9 @@ namespace Player
             wallNormal = Vector3.zero; 
             wallForward = Vector3.zero;
             cameraTilt.SetTiltDirection(0f);
+            //currentCharacter.vCam.m_Lens.Dutch = 0f;
         }
+        // Lerp from float a to b by t 
 
         private IEnumerator SetNormal()
         {

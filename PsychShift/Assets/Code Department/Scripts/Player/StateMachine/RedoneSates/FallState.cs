@@ -58,7 +58,7 @@ namespace Player
 
         public Color GizmoColor()
         {
-            return Color.black;
+            return Color.green;
         }
     }
 }
