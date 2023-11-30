@@ -11,6 +11,7 @@ public class Checkpoints : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip audioClip;
     public GameObject checkpointUI;
+    public ParticleSystem checkpoint;
 
     // Start is called before the first frame update
     void Awake()
@@ -37,6 +38,7 @@ public class Checkpoints : MonoBehaviour
     {
         checkpointUI.SetActive(true);
         audioSource.PlayOneShot(audioClip);
+        Instantiate(checkpoint,transform.position, Quaternion.FromToRotation(Vector3.up, transform.position));
         yield return new WaitForSeconds(2);
         checkpointUI.SetActive(false);
     }
