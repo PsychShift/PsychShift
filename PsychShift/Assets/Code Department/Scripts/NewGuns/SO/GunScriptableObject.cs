@@ -65,11 +65,16 @@ namespace Guns
             Model.transform.localRotation = Quaternion.Euler(SpawnRotation);
             gunAnim = Model.GetComponent<Animator>();
 
-            HandOrientations = Model.GetComponentInChildren<SetHands>().hands;
             ActiveCamera = Camera;
 
             ShootingAudioSource = Model.GetComponent<AudioSource>();
             ShootSystem = Model.GetComponentInChildren<ParticleSystem>();
+        }
+
+        public List<HandsOrientation> GetHandOrientations()
+        {
+            HandOrientations = Model.GetComponentInChildren<SetHands>().hands;
+            return HandOrientations;
         }
 
         /// <summary>

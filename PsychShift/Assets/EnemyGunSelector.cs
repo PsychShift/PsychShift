@@ -21,7 +21,7 @@ namespace Guns.Demo
         /// If you are configuring this separately using <see cref="SetupGun"/> then set this to false.
         /// </summary>
         [SerializeField] private bool InitializeOnStart = false;
-        void Start()
+        void OnEnable()
         {
             SetupGun(StartGun);
         }

@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using Guns.Demo;
 using Guns.Health;
+using System.Collections.Generic;
+
 namespace Player
 {
     [System.Serializable]
@@ -67,8 +69,10 @@ namespace Player
 
         private void PrepareAnimator()
         {
-            HandsOrientation orientation = gunHandler.ActiveGun.HandOrientations[0];
-            animMaster.SetHandPositions(orientation.leftHand.transform, orientation.rightHand.transform);
+            Debug.Log(gunHandler.ActiveGun);
+            List<HandsOrientation> orientations = gunHandler.ActiveGun.GetHandOrientations();
+            HandsOrientation ori = orientations[0];
+            animMaster.SetHandPositions(ori.leftHand.transform, ori.rightHand.transform);
         }
         public override string ToString()
         {
