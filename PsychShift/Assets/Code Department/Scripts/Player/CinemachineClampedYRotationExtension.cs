@@ -24,4 +24,10 @@ public class CinemachineClampedYRotationExtension : CinemachineExtension
             state.RawOrientation = Quaternion.Euler(baseRotation + rotationDifference);
         }
     }
+
+    public void SetBaseRotation(Vector3 newBaseRotation)
+    {
+        newBaseRotation.y = 0f;
+        baseRotationEulerAngles = newBaseRotation;
+    }
 }

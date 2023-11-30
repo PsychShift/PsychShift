@@ -14,6 +14,7 @@ namespace Player
         private CharacterInfo currentCharacter;
         private WallStateVariables wallVariables;
         private CinemachineTiltExtension cameraTilt;
+        //private CinemachineClampedYRotationExtension cameraClamp;
 
         public WallRunState(PlayerStateMachine playerStateMachine, MonoBehaviour monoBehaviour)
         {
@@ -48,6 +49,9 @@ namespace Player
         {
             currentCharacter = playerStateMachine.currentCharacter;
             cameraTilt = currentCharacter.vCam.GetComponent<CinemachineTiltExtension>();
+            /* cameraClamp = currentCharacter.vCam.GetComponent<CinemachineClampedYRotationExtension>();
+            cameraClamp.enabled = true;
+            cameraClamp.SetBaseRotation(WallStateVariables.Instance.LastWallNormal); */
             monoBehaviour.StartCoroutine(SetNormal());
             this.WallSpeed = playerStateMachine.WallSpeed;
         }
@@ -58,6 +62,7 @@ namespace Player
             wallNormal = Vector3.zero; 
             wallForward = Vector3.zero;
             cameraTilt.SetTiltDirection(0f);
+            //cameraClamp.enabled = false;
             //currentCharacter.vCam.m_Lens.Dutch = 0f;
         }
         // Lerp from float a to b by t 

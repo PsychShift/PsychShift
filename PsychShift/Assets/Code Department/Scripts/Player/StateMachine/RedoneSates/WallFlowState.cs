@@ -4,7 +4,7 @@ using CharacterInfo = Player.CharacterInfo;
 using System;
 
 namespace Player
-{
+{ 
     public class WallFlowState : IState
     {
         private PlayerStateMachine playerStateMachine;
