@@ -16,6 +16,7 @@ namespace Player
         public CharacterController controller;
         public NavMeshAgent agent;
         public Animator animator;
+        public EnemyAnimatorMaster animMaster;
         public EnemyGunSelector gunHandler;
         public EnemyHealth enemyHealth;
 
@@ -34,6 +35,9 @@ namespace Player
             gunHandler = characterContainer.GetComponent<EnemyGunSelector>();
             animator = model.GetComponent<Animator>();
             enemyHealth = characterContainer.GetComponent<EnemyHealth>();
+            animMaster = model.GetComponent<EnemyAnimatorMaster>();
+
+            PrepareAnimator();
         }
         public CharacterInfo(GameObject characterContainer, Cinemachine.CinemachineVirtualCamera vCam, CharacterMovementStatsSO movementStats, CharacterStatsSO characterStats)
         {
@@ -51,10 +55,20 @@ namespace Player
             gunHandler = characterContainer.GetComponent<EnemyGunSelector>();
             enemyHealth = characterContainer.GetComponent<EnemyHealth>();
             animator = model.GetComponent<Animator>();
+            animMaster = model.GetComponent<EnemyAnimatorMaster>();
+
+            PrepareAnimator();
+
             this.vCam = vCam;
 
             this.movementStats = movementStats;
             this.characterStats = characterStats;
+        }
+
+        private void PrepareAnimator()
+        {
+            HandsOrientation orientation = gunHandler.ActiveGun.HandOrientations[0];
+            animMaster.SetHandPositions(orientation.leftHand.transform, orientation.rightHand.transform);
         }
         public override string ToString()
         {

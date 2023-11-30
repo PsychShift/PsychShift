@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
+using System.Collections.Generic;
 using ImpactSystem;
 using Guns.ImpactEffects;
 namespace Guns
@@ -12,6 +13,7 @@ namespace Guns
         public GunType Type;
         public string Name;
         public GameObject ModelPrefab;
+        public List<HandsOrientation> HandOrientations;
         public Vector3 SpawnPoint;
         public Vector3 SpawnRotation;
 
@@ -62,8 +64,8 @@ namespace Guns
             Model.transform.localPosition = SpawnPoint;
             Model.transform.localRotation = Quaternion.Euler(SpawnRotation);
             gunAnim = Model.GetComponent<Animator>();
-            
 
+            HandOrientations = Model.GetComponentInChildren<SetHands>().hands;
             ActiveCamera = Camera;
 
             ShootingAudioSource = Model.GetComponent<AudioSource>();
@@ -608,4 +610,6 @@ namespace Guns
             return config;
         }
     }
+
 }
+
