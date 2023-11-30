@@ -102,7 +102,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717119879000888505}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.18, z: 3.73}
+  m_LocalPosition: {x: 0.35056907, y: 3.43, z: -4.74}
   m_LocalScale: {x: 0.807298, y: 0.807298, z: 0.807298}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -134,7 +134,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337120661769584684}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.813, y: 3.452, z: 0.498}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -763,6 +763,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 68532813586455864}
+  - component: {fileID: 8378981181647477103}
   m_Layer: 0
   m_Name: Arms
   m_TagString: Untagged
@@ -787,6 +788,20 @@ Transform:
   m_Father: {fileID: 2236602318283619358}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8378981181647477103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9103713023986419904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Weight: 1
+  m_Effectors: []
 --- !u!1001 &694680542204284881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1183,6 +1198,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8067005427340205180, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6904852814028750770}
+    - targetCorrespondingSourceObject: {fileID: 5177005703586482086, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7124378551398889256}
   m_SourcePrefab: {fileID: 100100000, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
 --- !u!4 &65123973079722386 stripped
 Transform:
@@ -1239,6 +1257,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4892763636957741303, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
   m_PrefabInstance: {fileID: 5781022304604532916}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1721002234598242066 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5177005703586482086, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
+  m_PrefabInstance: {fileID: 5781022304604532916}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7124378551398889256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721002234598242066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boneShape: 1
+  drawBones: 1
+  drawTripods: 0
+  boneSize: 1
+  tripodSize: 1
+  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
+  m_Transforms:
+  - {fileID: 2222726231246874877}
 --- !u!4 &1977440827603732273 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5425455312481875845, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
@@ -1247,6 +1290,11 @@ Transform:
 --- !u!4 &1986505386418332034 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5452501490613440822, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
+  m_PrefabInstance: {fileID: 5781022304604532916}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2222726231246874877 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5684357000762857545, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
   m_PrefabInstance: {fileID: 5781022304604532916}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &2244492378182416260 stripped
@@ -1378,13 +1426,14 @@ Animator:
   m_StabilizeFeet: 0
   m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
     are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'mixamorig:Head'\n\tTransform 'mixamorig:Hips'\n\tTransform
-    'mixamorig:Neck'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform 'mixamorig:LeftHandThumb2'\n\tTransform
-    'mixamorig:LeftHandIndex1'\n\tTransform 'mixamorig:LeftHandPinky2'\n\tTransform
-    'mixamorig:RightHandRing2'\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tand
-    more ...\n\tFrom animation clip 'RifleIdle'\n\tFrom animation clip 'RifleRun'\n\tFrom
-    animation clip 'RifleIdle'\n\tFrom animation clip 'IdleCrouch'\n\tFrom animation
-    clip 'Rifle shoot'\n\tFrom animation clip 'RifleIdle'"
+    by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
+    'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
+    'mixamorig:LeftHandPinky2'\n\tTransform 'mixamorig:RightHandRing2'\n\tTransform
+    'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:LeftHandThumb3'\n\tTransform
+    'mixamorig:RightArm'\n\tand more ...\n\tFrom animation clip 'RifleIdle'\n\tFrom
+    animation clip 'RifleRun'\n\tFrom animation clip 'RifleIdle'\n\tFrom animation
+    clip 'IdleCrouch'\n\tFrom animation clip 'Rifle shoot'\n\tFrom animation clip
+    'RifleIdle'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -1415,6 +1464,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RigLayers:
   - m_Rig: {fileID: 308487453321594850}
+    m_Active: 1
+  - m_Rig: {fileID: 8378981181647477103}
     m_Active: 1
   m_Effectors:
   - m_Transform: {fileID: 3608235262123630657}
