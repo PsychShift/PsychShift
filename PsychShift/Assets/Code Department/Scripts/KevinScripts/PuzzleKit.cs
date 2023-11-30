@@ -84,9 +84,11 @@ public class PuzzleKit : MonoBehaviour
     public string NotepadBoss = "Variables for Boss stuff";
     public bool isBossBox;
     public EncounterTracker bossContainerRef;
+    public bool isAnim;
+
     /* public float puzzleCompletionTimer;//
-    public bool puzzleTimer;
-    private bool puzzleTimeBegan; */
+public bool puzzleTimer;
+private bool puzzleTimeBegan; */
 
     /* public delegate void OnPuzzleDone();
 public static event OnPuzzleDone PuzzleDone; */
@@ -134,6 +136,7 @@ public static event OnPuzzleDone PuzzleDone; */
             float distCovered = (Time.time - startTime) * speedOfMove;
             float fracJourney = distCovered / journeyLength;
             transform.position = Vector3.Lerp(transform.position, endPosition, fracJourney);
+            
             if(fracJourney >= 1)
             {
                 movingActivated = false;
@@ -154,10 +157,19 @@ public static event OnPuzzleDone PuzzleDone; */
         }
         if(soundClip!=null)
                 Beep.PlayOneShot(soundClip);
+        if(isAnim)
+        {
+            //PLAY animation here
+            Animator godBoxAnim = gameObject.GetComponent<Animator>();
+            godBoxAnim.SetBool("Move", true);
+        }
+        else
+        {
+            Debug.Log("Moving");
+            movingActivated = true;
+            puzzleComplete = true;
+        }
         //Moves object forward and back
-        Debug.Log("Moving");
-        movingActivated = true;
-        puzzleComplete = true;
         //PuzzleDone?.Invoke();
     }
 
@@ -253,6 +265,7 @@ public static event OnPuzzleDone PuzzleDone; */
 
     public void ShootHitScan()
     {
+        Debug.Log("ACTIVATEEEEEEEEE");
         ThisActivate();
     }
 
