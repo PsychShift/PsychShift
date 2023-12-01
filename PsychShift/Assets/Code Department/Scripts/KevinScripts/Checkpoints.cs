@@ -38,7 +38,7 @@ public class Checkpoints : MonoBehaviour
     {
         checkpointUI.SetActive(true);
         audioSource.PlayOneShot(audioClip);
-        Instantiate(checkpoint,transform.position, Quaternion.FromToRotation(Vector3.up, transform.position));
+        Instantiate(checkpoint,transform.position-new Vector3(0,10,0), Quaternion.FromToRotation(Vector3.up, transform.position));
         yield return new WaitForSeconds(2);
         checkpointUI.SetActive(false);
     }

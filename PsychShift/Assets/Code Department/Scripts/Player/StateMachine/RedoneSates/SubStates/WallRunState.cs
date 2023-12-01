@@ -52,12 +52,16 @@ namespace Player
             /* cameraClamp = currentCharacter.vCam.GetComponent<CinemachineClampedYRotationExtension>();
             cameraClamp.enabled = true;
             cameraClamp.SetBaseRotation(WallStateVariables.Instance.LastWallNormal); */
+            playerStateMachine.wallRunEffect.SetActive(true);
+            playerStateMachine.playerAudio.PlayOneShot(playerStateMachine.wallRunSound);
             monoBehaviour.StartCoroutine(SetNormal());
             this.WallSpeed = playerStateMachine.WallSpeed;
         }
 
         public void OnExit()
         {
+            playerStateMachine.playerAudio.Stop();
+            playerStateMachine.wallRunEffect.SetActive(false);
             WallStateVariables.Instance.LastWallNormal = wallNormal;
             wallNormal = Vector3.zero; 
             wallForward = Vector3.zero;

@@ -10,6 +10,8 @@ namespace Player
     [RequireComponent(typeof(InputManager))]
     public class PlayerStateMachine : MonoBehaviour
     {
+        //AUDIO SOURCE HERE
+        [SerializeField] public AudioSource playerAudio;
         #region References
         [Header("Look Speeds")]
         //[SerializeField] private float vertLookSpeed = 300, horzLookSpeed = 300, slowVertLookSpeed = 150, slowHorzLookSpeed = 150;
@@ -49,6 +51,9 @@ namespace Player
         [Header("Wall Variables")]
         [SerializeField] private float wallSpeed;
         [SerializeField] private float wallJumpForce = 25f;
+        //KEVIN ADDED THIS FOR THE WALL STATE
+        [SerializeField] public GameObject wallRunEffect;
+        [SerializeField] public AudioClip wallRunSound;
         
         [SerializeField] float wallJumpAngle = 0.7f;
         public float WallSpeed { get { return wallSpeed;  } }
@@ -95,8 +100,15 @@ namespace Player
         Quaternion boxRotation;
         public delegate void SwapEvent(Transform player);
         public event SwapEvent OnSwapPlayer;
-
+        //mindswap fx and arms
         private ParticleSystem mindSwapTunnel;
+        [SerializeField] GameObject armsOff;
+        [SerializeField] AudioClip mindswapBegin;
+        bool playingBeginning;
+        [SerializeField] AudioClip mindswapDuring;
+        bool playingDuring;
+        [SerializeField] AudioClip mindswapEnd;
+        bool playingEnd;
         #endregion
         
         #region  Slow Variables
@@ -340,14 +352,21 @@ namespace Player
             
             if(currentCharacter != null)
             {
-                if (BrainJuiceBarTest.instance.currentBrain >= 15)
+                if (BrainJuiceBarTest.instance.currentBrain >= 15)//This is where mindswap starts
                 {
                     CharacterInfoReference oldCharacterInfoReference = currentCharacter.characterContainer.GetComponent<CharacterInfoReference>();
                     StartCoroutine(SwapAnimation(currentCharacter.cameraRoot.transform, 
                     newCharacterInfoReference.characterInfo.cameraRoot.transform, 
                     oldCharacterInfoReference, newCharacterInfoReference));
                     BrainJuiceBarTest.instance.UseBrain(15);
-
+                    /* if(playingBeginning ==false)
+                    {
+                        playerAudio.PlayOneShot(mindswapBegin);
+                        playingBeginning = true;
+                    } */
+                    playerAudio.PlayOneShot(mindswapBegin);
+                    armsOff.SetActive(false);
+                    
                     currentCharacter = newCharInfo;
                 }
             }
@@ -367,7 +386,7 @@ namespace Player
            
 
         }
-        public void SwapCharacter(GameObject newChar, Transform position)
+        public void SwapCharacter(GameObject newChar, Transform position)//checkpoint stuff 
         {
             //Debug.Log("WE ARE GIVING VAR TO CHAR" + checkPointL);
             //Debug.Log("Location in PM " + PlayerMaster.Instance.checkPointLocation.position);
@@ -387,6 +406,7 @@ namespace Player
         // The movement of the camera is handled by Cinemachine, this is mostly for the particle effects and enabling/disabling the enemy ai.
         private IEnumerator SwapAnimation(Transform startTransform, Transform endTransform, CharacterInfoReference startCharacter, CharacterInfoReference endCharacter)
         {
+            
             //deactivate input
             isSwapping = true;
             InputManager.Instance.PlayerInput.enabled = false;
@@ -410,12 +430,24 @@ namespace Player
 
             healthUI.Enabled(false);
             startCharacter.characterInfo.enemyHealth.OnTakeDamage -= healthUI.UpdateHealthBar;
+            playerAudio.PlayOneShot(mindswapDuring);
+            playerAudio.loop = true;
 
 
             // Wait for the player to be far enough away from the startTransform to re enable its body
-            while (Vector3.Distance(startTransform.position, cameraTransform.position) < 1f)
+            while (Vector3.Distance(startTransform.position, cameraTransform.position) < 1f)//DURING MINDSWAP
             {
                 tunnel.transform.position = cameraTransform.position;
+                
+                /* if(playingDuring == false)
+                {
+                    playerAudio.PlayOneShot(mindswapDuring);
+                    playerAudio.loop = true;
+                    playingDuring = true;
+        
+                } */
+                
+                
                 yield return null;
             }
             startCharacter.ActivateThirdPersonModel();
@@ -438,6 +470,18 @@ namespace Player
 
             //activate input
             InputManager.Instance.PlayerInput.enabled = true;
+            /* if(playingEnd == false)
+                {
+                    playerAudio.PlayOneShot(mindswapEnd);
+                    playerAudio.loop = false;
+                    playingEnd = true;
+                    playingDuring = false;
+                    playingBeginning = false;
+                } */
+            playerAudio.Stop();
+            playerAudio.PlayOneShot(mindswapEnd);//end of swap audio
+            armsOff.SetActive(true);
+            playerAudio.loop = false;
 
             // rotate the character containers for both the previous and current character to match the model rotation
             // This should fix a bug where the input doesn't match what the player is doing.

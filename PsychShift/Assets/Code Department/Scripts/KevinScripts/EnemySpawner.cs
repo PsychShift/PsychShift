@@ -28,6 +28,7 @@ public class EnemySpawner : MonoBehaviour
     private bool puzzleNotDone= true;
     public PuzzleKit godBoxActionRef;
     int deathCount=0;
+    public ParticleSystem spawnFX;
 
     private void Start() 
     {
@@ -63,6 +64,7 @@ public class EnemySpawner : MonoBehaviour
                 {
                    enemySpawned.Add(Instantiate(enemyType[whatEnemytoSpawn], transform.position,Quaternion.identity)); 
                 }
+                Instantiate(spawnFX,transform.position, Quaternion.identity);
                 enemySpawned[enemySpawned.Count-1].GetComponent<EnemyHealth>().OnDeath += EnemyDeath;
                 //PuzzleKit.PuzzleDone+=PuzzleFinished;
                 yield return new WaitForSeconds(Random.Range(gapBetweenSpawns.x, gapBetweenSpawns.y));//gap between spawns 
