@@ -165,7 +165,6 @@ public static event OnPuzzleDone PuzzleDone; */
         }
         else
         {
-            Debug.Log("Moving");
             movingActivated = true;
             puzzleComplete = true;
         }
@@ -222,7 +221,6 @@ public static event OnPuzzleDone PuzzleDone; */
         {
             if(activateCount == amountToActivate)//runs when called to check if everything is activated
             {
-                Debug.Log("Time2choose");
                 //Do whatever action is marked 
                 if(move)
                 {
@@ -243,7 +241,6 @@ public static event OnPuzzleDone PuzzleDone; */
 
     private void OnTriggerEnter(Collider other)//used for pressure plate
     {
-        Debug.Log("HERE ON TRIGGER");
         if(shootObj)
         {
             if(other.GetComponent<Collider>().gameObject.layer == LayerMask.NameToLayer("Bullet"))
@@ -265,7 +262,6 @@ public static event OnPuzzleDone PuzzleDone; */
 
     public void ShootHitScan()
     {
-        Debug.Log("ACTIVATEEEEEEEEE");
         ThisActivate();
     }
 

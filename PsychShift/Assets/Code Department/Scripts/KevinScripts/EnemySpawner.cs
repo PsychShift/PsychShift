@@ -64,7 +64,6 @@ public class EnemySpawner : MonoBehaviour
                    enemySpawned.Add(Instantiate(enemyType[whatEnemytoSpawn], transform.position,Quaternion.identity)); 
                 }
                 enemySpawned[enemySpawned.Count-1].GetComponent<EnemyHealth>().OnDeath += EnemyDeath;
-                Debug.Log("Count of enem "+ enemySpawned.Count);
                 //PuzzleKit.PuzzleDone+=PuzzleFinished;
                 yield return new WaitForSeconds(Random.Range(gapBetweenSpawns.x, gapBetweenSpawns.y));//gap between spawns 
         } 
@@ -101,7 +100,6 @@ public class EnemySpawner : MonoBehaviour
         }
         enemTransform.GetComponent<EnemyHealth>().OnDeath -= EnemyDeath;
         enemySpawned.Remove(enemTransform.gameObject);
-        Debug.Log("Count of enem aft death "+ enemySpawned.Count);
         if(puzzleNotDone && enemySpawned.Count-1<=0)
         {
             StartCoroutine(SpawnIn());

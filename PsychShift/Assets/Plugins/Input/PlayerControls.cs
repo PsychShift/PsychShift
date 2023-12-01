@@ -116,6 +116,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""13ff33d4-1165-4525-85e0-283b58d4a7a2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -371,6 +380,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Gamepad Switch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e5de7f70-7379-44f9-97ae-2819d426f407"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1eb771f7-f5f7-4c07-8a41-21ac81654642"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -457,6 +488,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""5775e19d-5a52-4593-8594-0d52cffa7945"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -702,6 +742,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Shader"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a4f5123-b2d7-4e43-984a-005039774af4"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d3d695e1-c31d-41cb-a8b4-01e93052f6cf"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -748,6 +810,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Controls_Switch = m_Controls.FindAction("Switch", throwIfNotFound: true);
         m_Controls_Shader = m_Controls.FindAction("Shader", throwIfNotFound: true);
         m_Controls_GamepadSwitch = m_Controls.FindAction("Gamepad Switch", throwIfNotFound: true);
+        m_Controls_Pause = m_Controls.FindAction("Pause", throwIfNotFound: true);
         // Slow
         m_Slow = asset.FindActionMap("Slow", throwIfNotFound: true);
         m_Slow_MindSwap = m_Slow.FindAction("MindSwap", throwIfNotFound: true);
@@ -759,6 +822,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Slow_Shoot = m_Slow.FindAction("Shoot", throwIfNotFound: true);
         m_Slow_Switch = m_Slow.FindAction("Switch", throwIfNotFound: true);
         m_Slow_Shader = m_Slow.FindAction("Shader", throwIfNotFound: true);
+        m_Slow_Pause = m_Slow.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -830,6 +894,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Controls_Switch;
     private readonly InputAction m_Controls_Shader;
     private readonly InputAction m_Controls_GamepadSwitch;
+    private readonly InputAction m_Controls_Pause;
     public struct ControlsActions
     {
         private @PlayerControls m_Wrapper;
@@ -844,6 +909,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Switch => m_Wrapper.m_Controls_Switch;
         public InputAction @Shader => m_Wrapper.m_Controls_Shader;
         public InputAction @GamepadSwitch => m_Wrapper.m_Controls_GamepadSwitch;
+        public InputAction @Pause => m_Wrapper.m_Controls_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -883,6 +949,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @GamepadSwitch.started += instance.OnGamepadSwitch;
             @GamepadSwitch.performed += instance.OnGamepadSwitch;
             @GamepadSwitch.canceled += instance.OnGamepadSwitch;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IControlsActions instance)
@@ -917,6 +986,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @GamepadSwitch.started -= instance.OnGamepadSwitch;
             @GamepadSwitch.performed -= instance.OnGamepadSwitch;
             @GamepadSwitch.canceled -= instance.OnGamepadSwitch;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IControlsActions instance)
@@ -947,6 +1019,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Slow_Shoot;
     private readonly InputAction m_Slow_Switch;
     private readonly InputAction m_Slow_Shader;
+    private readonly InputAction m_Slow_Pause;
     public struct SlowActions
     {
         private @PlayerControls m_Wrapper;
@@ -960,6 +1033,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Slow_Shoot;
         public InputAction @Switch => m_Wrapper.m_Slow_Switch;
         public InputAction @Shader => m_Wrapper.m_Slow_Shader;
+        public InputAction @Pause => m_Wrapper.m_Slow_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Slow; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -996,6 +1070,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Shader.started += instance.OnShader;
             @Shader.performed += instance.OnShader;
             @Shader.canceled += instance.OnShader;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(ISlowActions instance)
@@ -1027,6 +1104,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Shader.started -= instance.OnShader;
             @Shader.performed -= instance.OnShader;
             @Shader.canceled -= instance.OnShader;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(ISlowActions instance)
@@ -1074,6 +1154,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSwitch(InputAction.CallbackContext context);
         void OnShader(InputAction.CallbackContext context);
         void OnGamepadSwitch(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface ISlowActions
     {
@@ -1086,5 +1167,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnSwitch(InputAction.CallbackContext context);
         void OnShader(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
