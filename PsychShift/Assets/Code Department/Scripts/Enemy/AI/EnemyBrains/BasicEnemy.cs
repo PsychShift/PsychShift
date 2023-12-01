@@ -45,4 +45,10 @@ public class BasicEnemy : EnemyBrain
         else
             stateMachine.SetState(patrolState, true);
     }
+
+    private void OnDrawGizmos() {
+        if(stateMachine == null) return;
+        Gizmos.color = stateMachine.GetGizmoColor();
+        Gizmos.DrawSphere(transform.position + Vector3.up * 6, 0.4f);
+    }
 }

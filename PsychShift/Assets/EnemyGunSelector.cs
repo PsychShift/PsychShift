@@ -1,5 +1,7 @@
 using UnityEngine;
 using Guns.Modifiers;
+using System;
+using UnityEngine.Animations.Rigging;
 
 namespace Guns.Demo
 {
@@ -13,7 +15,18 @@ namespace Guns.Demo
 
         [SerializeField] private PlayerIK InverseKinematics;
 
-        [Space] [Header("Runtime Filled")] public GunScriptableObject ActiveGun;
+        [Space] 
+        [Header("Runtime Filled")] 
+        private GunScriptableObject _activeGun;
+        public GunScriptableObject ActiveGun
+        { 
+            get { return _activeGun; } 
+            
+            private set
+            {
+                _activeGun = value;
+            }
+        }
         [field: SerializeField] public GunScriptableObject ActiveBaseGun { get; private set; }
 
         /// <summary>
@@ -21,6 +34,8 @@ namespace Guns.Demo
         /// If you are configuring this separately using <see cref="SetupGun"/> then set this to false.
         /// </summary>
         [SerializeField] private bool InitializeOnStart = false;
+
+        public event Action OnActiveGunSet;
         void OnEnable()
         {
             SetupGun(StartGun);
@@ -30,7 +45,9 @@ namespace Guns.Demo
             ActiveBaseGun = Gun;
             ActiveGun = Gun.Clone() as GunScriptableObject;
             ActiveGun.Spawn(GunParent, this, Camera);
-
+            ActiveGun.ShootConfig.ShootType = ShootType.FromGun;
+            ActiveGun.Model.AddComponent<RigTransform>();
+            OnActiveGunSet?.Invoke();
             /* InverseKinematics.SetGunStyle(ActiveGun.Type == GunType.Glock);
             InverseKinematics.Setup(GunParent); */
         }

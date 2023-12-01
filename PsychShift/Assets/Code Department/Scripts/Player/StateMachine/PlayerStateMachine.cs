@@ -49,8 +49,8 @@ namespace Player
         [Header("Wall Variables")]
         [SerializeField] private float wallSpeed;
         [SerializeField] private float wallJumpForce = 25f;
-        [Range(0, 1)]
-        [SerializeField] private float wallJumpAngle = 0.7f;
+        
+        [SerializeField] float wallJumpAngle = 0.7f;
         public float WallSpeed { get { return wallSpeed;  } }
         public LayerMask wallLayer;
         [SerializeField] private LayerMask vaultLayers;
@@ -660,6 +660,12 @@ namespace Player
         public void PleaseSetLocationGODPLEASE(Transform location)
         {
             checkPointL = location.position;
+        }
+
+        void OnValidate()
+        {
+            wallJumpAngle = wallJumpAngle > 1 ? 1 : wallJumpAngle;
+            wallJumpAngle = wallJumpAngle < 0 ? 0 : wallJumpAngle;
         }
     } 
 }

@@ -7,6 +7,7 @@ public class EnemyAnimatorMaster : MonoBehaviour
 {
     public Animator animator;
     [Header("Rigs")]
+    [SerializeField] private RigBuilder rigBuilder;
     [SerializeField] private GameObject armRigGameObject;
     [HideInInspector] public Rig armsRig;
     [HideInInspector] public Rig headRig;
@@ -68,5 +69,6 @@ public class EnemyAnimatorMaster : MonoBehaviour
         leftArmConstraint.data.target = leftHandTarget;
         // Set right hand target
         rightArmConstraint.data.target = rightHandTarget;
+        rigBuilder.Build();
     }
 }

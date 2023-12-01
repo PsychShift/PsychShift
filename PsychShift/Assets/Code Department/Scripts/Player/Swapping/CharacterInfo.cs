@@ -59,7 +59,8 @@ namespace Player
             animator = model.GetComponent<Animator>();
             animMaster = model.GetComponent<EnemyAnimatorMaster>();
 
-            PrepareAnimator();
+            gunHandler.OnActiveGunSet += PrepareAnimator;
+            gunHandler.OnActiveGunSet += enemyBrain.SetUpAim;
 
             this.vCam = vCam;
 
@@ -69,10 +70,10 @@ namespace Player
 
         private void PrepareAnimator()
         {
-            Debug.Log(gunHandler.ActiveGun);
             List<HandsOrientation> orientations = gunHandler.ActiveGun.GetHandOrientations();
             HandsOrientation ori = orientations[0];
             animMaster.SetHandPositions(ori.leftHand.transform, ori.rightHand.transform);
+            gunHandler.OnActiveGunSet -= PrepareAnimator;
         }
         public override string ToString()
         {

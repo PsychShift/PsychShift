@@ -21,12 +21,14 @@ public class LookAroundState : IState
         brain.Agent.velocity = Vector3.zero;
         brain.Agent.isStopped = true;
         brain.Animator.SetFloat("speed", 0f);
+        brain.Agent.enabled = false;
         /* brain.Animator.SetFloat("speedForward", 0f);
         brain.Animator.SetFloat("speedRight", 0f); */
     }
 
     public void OnExit()
     {
+        brain.Agent.enabled = true;
         brain.CharacterInfo.agent.isStopped = false;
     }
 
@@ -43,7 +45,7 @@ public class LookAroundState : IState
     public Func<bool> IsDone() => () => IsFinished();
     private bool IsFinished()
     {
-        if(brain.CharacterInfo.agent.remainingDistance < 0.5f || Time.time > endAt)
+        if(/* brain.CharacterInfo.agent.remainingDistance < 0.5f || */ Time.time > endAt)
         {
             return true;
         }

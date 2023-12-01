@@ -23,20 +23,18 @@ public class PatrolState : IState
         wpIndex = brain as BasicEnemy != null ? (brain as BasicEnemy).CurrentPatrolPointIndex : 0;
         currentCharacterInfo = brain.CharacterInfo;
         currentCharacterInfo.agent.SetDestination(patrolPoints[wpIndex]);
+        currentCharacterInfo.agent.enabled = false;
     }
 
     public void OnExit()
     {
         if (brain as BasicEnemy != null) (brain as BasicEnemy).CurrentPatrolPointIndex = wpIndex;
+        
     }
 
     public void Tick()
     {
-        if (currentCharacterInfo.agent.remainingDistance < 0.5f)
-        {
-            wpIndex = (wpIndex + 1) % patrolPoints.Count;
-            currentCharacterInfo.agent.SetDestination(patrolPoints[wpIndex]);
-        }
+        
     }
 
     public void SetField(object obj, string fieldName, object value)
@@ -71,7 +69,7 @@ public class PatrolState : IState
 
     public Color GizmoColor()
     {
-        return Color.green;
+        return Color.white;
     }
 }
 

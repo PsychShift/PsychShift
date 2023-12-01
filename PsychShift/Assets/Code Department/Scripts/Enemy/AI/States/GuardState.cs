@@ -23,16 +23,17 @@ public class GuardState : IState
     {
         currentCharacterInfo = brain.CharacterInfo;
         currentCharacterInfo.agent.SetDestination(startPosition);
+        brain.Agent.enabled = false;
     }
 
     public void OnExit()
     {
-        
+        currentCharacterInfo.agent.enabled = true;
     }
 
     public void Tick()
     {
-        
+
     }
 
     public void SetField(object obj, string fieldName, object value)
@@ -67,6 +68,6 @@ public class GuardState : IState
 
     public Color GizmoColor()
     {
-        return Color.green;
+        return Color.black;
     }
 }

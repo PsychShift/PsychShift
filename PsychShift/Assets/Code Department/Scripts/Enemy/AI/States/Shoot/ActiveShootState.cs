@@ -15,6 +15,7 @@ public class ActiveShootState : IState
     float shootForSeconds = 0f;
     public void OnEnter()
     {
+        brain.aim.SetTarget(brain.player);
         shootForSeconds = Time.time + UnityEngine.Random.Range(FireRateAgro.FireRates[agression.FireRateAgression].MinWaitTime, FireRateAgro.FireRates[agression.FireRateAgression].MaxWaitTime);
         brain.Animator.SetBool("shooting", true);
     }
@@ -22,6 +23,7 @@ public class ActiveShootState : IState
     public void OnExit()
     {
         brain.Animator.SetBool("shooting", false);
+        brain.aim.ResetAim();
     }
 
     public void Tick()
@@ -37,6 +39,7 @@ public class ActiveShootState : IState
             }
             brain.CharacterInfo.gunHandler.EnemyShoot();
             brain.CharacterInfo.animator.SetBool("shooting", true);
+            brain.aim.Aim();
         }
     }
     public Color GizmoColor()

@@ -28,7 +28,7 @@ namespace Guns
 
         private MonoBehaviour ActiveMonoBehaviour;
         private AudioSource ShootingAudioSource;
-        private GameObject Model;
+        public GameObject Model;
         private Camera ActiveCamera;
         private float LastShootTime;
         private float InitialClickTime;
@@ -73,8 +73,14 @@ namespace Guns
 
         public List<HandsOrientation> GetHandOrientations()
         {
-            HandOrientations = Model.GetComponentInChildren<SetHands>().hands;
-            return HandOrientations;
+            if(Model.TryGetComponent(out SetHands setHands))
+            {
+                HandOrientations = setHands.hands;
+                return HandOrientations;
+            }
+            else
+                Debug.LogError("No SetHands component found on gun model");
+            return null;
         }
 
         /// <summary>

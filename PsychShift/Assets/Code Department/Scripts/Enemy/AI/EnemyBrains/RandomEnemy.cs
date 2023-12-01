@@ -29,7 +29,7 @@ public class RandomEnemy : EnemyBrain
 
     void Update()
     {
-        if(CharacterInfo.agent.enabled && IsActive)
+        if(IsActive)
             stateMachine.Tick();
     }
 

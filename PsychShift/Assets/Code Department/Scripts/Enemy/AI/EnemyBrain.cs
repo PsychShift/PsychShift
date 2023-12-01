@@ -48,6 +48,7 @@ public abstract class EnemyBrain : MonoBehaviour
     public Animator Animator => CharacterInfo.animator;
     public NavMeshAgent Agent => CharacterInfo.agent;
     public Transform Model => CharacterInfo.model.transform;
+    public EnemyAim aim;
     public bool isMelee;
     protected float attackRange;
     [HideInInspector] public Cover currentCover;
@@ -229,4 +230,9 @@ public abstract class EnemyBrain : MonoBehaviour
         sphere.transform.position = transform.position;
     }
 
+    internal void SetUpAim()
+    {
+        characterInfo.gunHandler.OnActiveGunSet -= SetUpAim;
+        aim = new EnemyAim(CharacterInfo.gunHandler.ActiveGun.Model, this, characterInfo.model.transform);
+    }
 }
