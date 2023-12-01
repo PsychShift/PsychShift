@@ -183,7 +183,6 @@ public abstract class EnemyBrain : MonoBehaviour
     private bool wasHit = false;
     private void TookDamage(int dmg)
     {
-        Debug.Log("Took Damage");
         wasHit = true;
         StartCoroutine(NotAngryAfterHit());
     }
