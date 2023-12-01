@@ -37,7 +37,7 @@ public class PuzzleKit : MonoBehaviour
     [SerializeField]//Add this number on god box
     int amountToActivate;
     private bool activated;
-    private int activateCount=0;
+    public int activateCount=0;
 
     [TextArea]
     public string Notes3 = "Reactions below";

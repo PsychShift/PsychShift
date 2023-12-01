@@ -26,6 +26,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     Vector2 gapBetweenSpawns;
     private bool puzzleNotDone= true;
+    public PuzzleKit godBoxActionRef;
     int deathCount=0;
 
     private void Start() 
@@ -89,6 +90,15 @@ public class EnemySpawner : MonoBehaviour
     {
         if(godBoxRef!= null && godBoxRef.puzzleComplete)
                 puzzleNotDone = false;
+        if(puzzleNotDone == false)
+        {
+            if(enemySpawned.Count-1<=0)
+            {
+                godBoxActionRef.activateCount++;
+                godBoxActionRef.ThisActivate();
+            }
+            
+        }
         enemTransform.GetComponent<EnemyHealth>().OnDeath -= EnemyDeath;
         enemySpawned.Remove(enemTransform.gameObject);
         Debug.Log("Count of enem aft death "+ enemySpawned.Count);
