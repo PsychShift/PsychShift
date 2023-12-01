@@ -16,7 +16,6 @@ public class AmmoDisplayer : MonoBehaviour
     }
     private void Update()
     {
-        AmmoText.SetText($"{GunSelector.ActiveGun.AmmoConfig.CurrentClipAmmo} / " +
-        $"{GunSelector.ActiveGun.AmmoConfig.CurrentAmmo}");
+        AmmoText.SetText($"{GunSelector.ActiveGun.AmmoConfig.CurrentClipAmmo}" );
     }
 }
