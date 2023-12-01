@@ -710,7 +710,7 @@ GameObject:
   - component: {fileID: 2742087451972755724}
   - component: {fileID: 1260833831656099229}
   m_Layer: 0
-  m_Name: HeadTracking
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1025,6 +1025,9 @@ PrefabInstance:
       addedObject: {fileID: 1421742370598858990}
     - targetCorrespondingSourceObject: {fileID: 8067005427340205180, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 8355886673809068278}
+    - targetCorrespondingSourceObject: {fileID: 8067005427340205180, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 4915967621063371050}
     - targetCorrespondingSourceObject: {fileID: 8067005427340205180, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
       insertIndex: -1
@@ -1192,12 +1195,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7521535251318622748}
+  weaponIK: {fileID: 8355886673809068278}
   rigBuilder: {fileID: 7477298241623347587}
   armRigGameObject: {fileID: 6394276117411786330}
+  headRigGameObject: {fileID: 3595116892827038378}
   armsRig: {fileID: 0}
   headRig: {fileID: 0}
+  headConstraint: {fileID: 0}
   rightArmConstraint: {fileID: 0}
   leftArmConstraint: {fileID: 0}
+--- !u!114 &8355886673809068278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3961928057090135697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 057ba1aba45a01d498d556e53c480aa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyGunSelector: {fileID: 414762622354829841}
+  iterations: 10
+  weight: 1
+  angleLimit: 90
+  distanceLimit: 2
+  humanBones:
+  - bone: 7
+    weight: 1
+  - bone: 8
+    weight: 1
+  - bone: 54
+    weight: 1
 --- !u!111 &4915967621063371050
 Animation:
   m_ObjectHideFlags: 0

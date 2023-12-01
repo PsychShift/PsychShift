@@ -37,6 +37,7 @@ public class SmartEnemy : EnemyBrain
         AT(delayState, coverState, delayState.IsDone());
         AT(debugState, runToCoverState, () => !DebugMode);
         ANY(debugState, () => DebugMode);
+        stateMachine.AddAnyTransition(coverState, WasDamaged());
         
         stateMachine.SetState(runToCoverState, true);
     }

@@ -35,12 +35,14 @@ public class ShootingSuperState : IState
     public virtual void OnEnter()
     {
         SetUp(brain, agression);
+        brain.AnimMaster.SetWeaponTarget(brain.player);
         brain.Animator.SetBool("Combat", true);
     }
 
     public virtual void OnExit()
     {
         brain.Animator.SetBool("Combat", false);
+        brain.AnimMaster.SetOriginalHeadTarget();
     }
 
     public virtual void Tick()

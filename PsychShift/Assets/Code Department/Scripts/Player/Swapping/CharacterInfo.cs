@@ -38,8 +38,6 @@ namespace Player
             animator = model.GetComponent<Animator>();
             enemyHealth = characterContainer.GetComponent<EnemyHealth>();
             animMaster = model.GetComponent<EnemyAnimatorMaster>();
-
-            PrepareAnimator();
         }
         public CharacterInfo(GameObject characterContainer, Cinemachine.CinemachineVirtualCamera vCam, CharacterMovementStatsSO movementStats, CharacterStatsSO characterStats)
         {
@@ -59,22 +57,12 @@ namespace Player
             animator = model.GetComponent<Animator>();
             animMaster = model.GetComponent<EnemyAnimatorMaster>();
 
-            gunHandler.OnActiveGunSet += PrepareAnimator;
-            gunHandler.OnActiveGunSet += enemyBrain.SetUpAim;
-
             this.vCam = vCam;
 
             this.movementStats = movementStats;
             this.characterStats = characterStats;
         }
 
-        private void PrepareAnimator()
-        {
-            List<HandsOrientation> orientations = gunHandler.ActiveGun.GetHandOrientations();
-            HandsOrientation ori = orientations[0];
-            animMaster.SetHandPositions(ori.leftHand.transform, ori.rightHand.transform, ori.leftElbow.transform, ori.rightElbow.transform);
-            gunHandler.OnActiveGunSet -= PrepareAnimator;
-        }
         public override string ToString()
         {
             return $"CharacterInfo:\n" +

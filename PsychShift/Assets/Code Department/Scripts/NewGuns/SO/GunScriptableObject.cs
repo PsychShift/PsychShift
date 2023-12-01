@@ -34,7 +34,7 @@ namespace Guns
         private float InitialClickTime;
         private float StopShootingTime;
 
-        private ParticleSystem ShootSystem;
+        public ParticleSystem ShootSystem;
         private ObjectPool<TrailRenderer> TrailPool;
         private ObjectPool<Bullet> BulletPool;
         private bool LastFrameWantedToShoot;

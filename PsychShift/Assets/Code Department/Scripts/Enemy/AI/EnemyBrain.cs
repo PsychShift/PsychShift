@@ -3,6 +3,7 @@ using System;
 
 using CharacterInfo = Player.CharacterInfo;
 using UnityEngine.AI;
+using System.Collections;
 [RequireComponent(typeof(CharacterInfoReference), typeof(TempGravity), typeof(FieldOfView))]
 [DisallowMultipleComponent]
 public abstract class EnemyBrain : MonoBehaviour
@@ -48,7 +49,8 @@ public abstract class EnemyBrain : MonoBehaviour
     public Animator Animator => CharacterInfo.animator;
     public NavMeshAgent Agent => CharacterInfo.agent;
     public Transform Model => CharacterInfo.model.transform;
-    public EnemyAim aim;
+    public EnemyAnimatorMaster AnimMaster => CharacterInfo.animMaster;
+    
     public bool isMelee;
     protected float attackRange;
     [HideInInspector] public Cover currentCover;
@@ -101,6 +103,7 @@ public abstract class EnemyBrain : MonoBehaviour
     protected Func<bool> CanGuard() => () => !IsPlayerInSight() && isGaurd;
     protected Func<bool> FoundCover() => () => FindCover() != null;
     protected Func<bool> HasReachedDestination() => () => CharacterInfo.agent.remainingDistance <= 0.1f;
+    protected Func<bool> WasDamaged() => () => wasHit;
 
     float time = 0f;
     public Cover FindCover()
@@ -177,12 +180,24 @@ public abstract class EnemyBrain : MonoBehaviour
 
         return false;
     }
-
+    private bool wasHit = false;
+    private void TookDamage(int dmg)
+    {
+        Debug.Log("Took Damage");
+        wasHit = true;
+        StartCoroutine(NotAngryAfterHit());
+    }
+    IEnumerator NotAngryAfterHit()
+    {
+        yield return new WaitForSeconds(5f);
+        wasHit = false;
+    }
     protected abstract void SetUp();
 
     void OnEnable()
     {
         SetUp();
+        characterInfo.enemyHealth.OnTakeDamage += TookDamage;
         /*CharacterInfo.agent.enabled = true;
         if(!CharacterInfo.controller.isGrounded)
         {
@@ -191,9 +206,12 @@ public abstract class EnemyBrain : MonoBehaviour
             StartCoroutine(WaitTillGrounded());
         } */
     }
+
+
     void OnDisable()
     {
         CharacterInfo.agent.enabled = false;
+        characterInfo.enemyHealth.OnTakeDamage -= TookDamage;
     }
 /*     private IEnumerator WaitTillGrounded()
     {
@@ -228,11 +246,5 @@ public abstract class EnemyBrain : MonoBehaviour
         // create a sphere at the transform position
         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.transform.position = transform.position;
-    }
-
-    internal void SetUpAim()
-    {
-        characterInfo.gunHandler.OnActiveGunSet -= SetUpAim;
-        aim = new EnemyAim(CharacterInfo.gunHandler.ActiveGun.Model, this, characterInfo.model.transform);
     }
 }
