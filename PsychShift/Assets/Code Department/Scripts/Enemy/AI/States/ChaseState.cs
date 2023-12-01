@@ -43,13 +43,11 @@ public class ChaseState : ShootingSuperState, ICoroutineRestarter
             brain.Animator.SetFloat("speed", 0f);
             brain.Agent.isStopped = true;
             brain.Agent.velocity = Vector3.zero;
-            if(brain.Agent.enabled) brain.Agent.enabled = false;
             /* brain.Animator.SetFloat("speedForward", 0f);
             brain.Animator.SetFloat("speedRight", 0f); */
         }
         else
         {
-            if(!brain.Agent.enabled) brain.Agent.enabled = true;
             brain.Animator.SetFloat("speed", 1f);
             brain.Agent.isStopped = false;
         }

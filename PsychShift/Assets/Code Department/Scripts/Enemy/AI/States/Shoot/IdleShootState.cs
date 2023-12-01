@@ -28,13 +28,13 @@ public class IdleShootState : IState
 
     public void Tick()
     {
-        if(brain.player != null) 
+        /* if(brain.player != null) 
         {
             Vector3 lookPos = brain.player.transform.position - brain.transform.position;
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             brain.CharacterInfo.model.transform.rotation = Quaternion.Slerp(brain.CharacterInfo.model.transform.rotation, rotation, Time.deltaTime * 5f);
-        }
+        } */
     }
     public Color GizmoColor()
     {

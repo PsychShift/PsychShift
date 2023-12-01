@@ -17,18 +17,16 @@ public class LookAroundState : IState
     float endAt = 0f;
     public void OnEnter()
     {
-        endAt = Time.time + 3f;
+        endAt = Time.time + UnityEngine.Random.Range(agression.WaitAroundTime.x, agression.WaitAroundTime.y);
         brain.Agent.velocity = Vector3.zero;
         brain.Agent.isStopped = true;
         brain.Animator.SetFloat("speed", 0f);
-        brain.Agent.enabled = false;
         /* brain.Animator.SetFloat("speedForward", 0f);
         brain.Animator.SetFloat("speedRight", 0f); */
     }
 
     public void OnExit()
     {
-        brain.Agent.enabled = true;
         brain.CharacterInfo.agent.isStopped = false;
     }
 

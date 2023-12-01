@@ -34,13 +34,13 @@ public class ActiveShootState : IState
     {
         if(brain.player != null) 
         {
-            Vector3 lookPos = brain.player.transform.position - brain.transform.position;
+            /* Vector3 lookPos = brain.player.transform.position - brain.transform.position;
             lookPos.y = 0;
             if(lookPos != Vector3.zero)
             {
                 Quaternion rotation = Quaternion.LookRotation(lookPos);
                 brain.CharacterInfo.model.transform.rotation = Quaternion.Slerp(brain.CharacterInfo.model.transform.rotation, rotation, Time.deltaTime * 5f);
-            }
+            } */
             brain.CharacterInfo.gunHandler.EnemyShoot();
             brain.CharacterInfo.animator.SetBool("shooting", true);
             brain.aim.Aim();

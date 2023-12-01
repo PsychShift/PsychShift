@@ -21,7 +21,10 @@ public class AIAgression : ScriptableObject
     [Tooltip("If true, the enemy will take cover when it is chasing the player or running away.")]
     public bool TakesCover;
 
-    
+    [Tooltip("Sometimes these guys dilly dally. This determines about how long they should. The x is the min, the y is the max")]
+    public Vector2 WaitAroundTime = new Vector2(2f, 7f);
+    [Tooltip("Sometimes these guys wander. This determines about how long they will go before stopping (less they reach the destination). The x is the min, the y is the max")]
+    public Vector2 GoSomewhereTime = new Vector2(5f, 10f);
 }
 
 public enum FireRateAgression

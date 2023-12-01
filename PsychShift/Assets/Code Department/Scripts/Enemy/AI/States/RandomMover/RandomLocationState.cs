@@ -17,7 +17,7 @@ public class RandomLocationState : IState
     public void OnEnter()
     {
         PickRandomLocation();
-        endAt = Time.time + 5f;
+        endAt = Time.time + UnityEngine.Random.Range(agression.GoSomewhereTime.x, agression.GoSomewhereTime.y);
         brain.Animator.SetFloat("speed", 1f);
     }
 
@@ -42,8 +42,7 @@ public class RandomLocationState : IState
     {
         Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * walkRadius;
         randomDirection += brain.transform.position;
-        UnityEngine.AI.NavMeshHit hit;
-        UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, walkRadius, 1);
+        UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out UnityEngine.AI.NavMeshHit hit, walkRadius, 1);
         Vector3 finalPosition = hit.position;
         brain.CharacterInfo.agent.SetDestination(finalPosition);
     }
