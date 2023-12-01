@@ -126,7 +126,7 @@ namespace Guns
             if (WantsToShoot)
             {
                 LastFrameWantedToShoot = true;
-                gunAnim.SetInteger("Fire",1);
+                //gunAnim.SetInteger("Fire",1);
                 TryToShoot();
             }
 
@@ -191,8 +191,10 @@ namespace Guns
                 if (AmmoConfig.CurrentClipAmmo == 0)
                 {
                     AudioConfig.PlayOutOfAmmoClip(ShootingAudioSource);
+                    gunAnim.SetInteger("Fire",0);
                     return;
                 }
+                gunAnim.SetInteger("Fire",1);
                 ShootSystem.Play();
                 AudioConfig.PlayShootingClip(ShootingAudioSource, AmmoConfig.CurrentClipAmmo == 1);
 

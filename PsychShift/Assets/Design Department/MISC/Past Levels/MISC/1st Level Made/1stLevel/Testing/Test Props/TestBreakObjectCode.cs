@@ -5,6 +5,7 @@ public class TestBreakObjectCode : MonoBehaviour
 {
     public GameObject fractured;
     public GameObject objectToDestroy; // Add a public GameObject variable to specify the object to destroy
+      public AudioSource DestroySound;
     public float breakForce;
     private bool Test = true;
 
@@ -20,6 +21,8 @@ public class TestBreakObjectCode : MonoBehaviour
         {
             Vector3 force = (rb.transform.position - transform.position).normalized * breakForce;
             rb.AddForce(force);
+            DestroySound.Play();
+
         }
 
         // Destroy the specified object along with the original GameObject

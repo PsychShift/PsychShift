@@ -82,11 +82,11 @@ namespace Player
         float endTime = 0f;
         private bool DelayOver()
         {
-            if (Time.time >= endTime)
-            {
-                Debug.Log("Delay over");
-                return true;
-            }
+            //if (Time.time >= endTime)
+            //{
+            //    Debug.Log("Delay over");
+            //    return true;
+            //}
             return false;
         }
         public Func<bool> IsDone() => () => DelayOver();

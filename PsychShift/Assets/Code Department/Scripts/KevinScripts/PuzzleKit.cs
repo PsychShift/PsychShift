@@ -37,7 +37,7 @@ public class PuzzleKit : MonoBehaviour
     [SerializeField]//Add this number on god box
     int amountToActivate;
     private bool activated;
-    private int activateCount=0;
+    public int activateCount=0;
 
     [TextArea]
     public string Notes3 = "Reactions below";
@@ -84,9 +84,11 @@ public class PuzzleKit : MonoBehaviour
     public string NotepadBoss = "Variables for Boss stuff";
     public bool isBossBox;
     public EncounterTracker bossContainerRef;
+    public bool isAnim;
+
     /* public float puzzleCompletionTimer;//
-    public bool puzzleTimer;
-    private bool puzzleTimeBegan; */
+public bool puzzleTimer;
+private bool puzzleTimeBegan; */
 
     /* public delegate void OnPuzzleDone();
 public static event OnPuzzleDone PuzzleDone; */
@@ -134,6 +136,7 @@ public static event OnPuzzleDone PuzzleDone; */
             float distCovered = (Time.time - startTime) * speedOfMove;
             float fracJourney = distCovered / journeyLength;
             transform.position = Vector3.Lerp(transform.position, endPosition, fracJourney);
+            
             if(fracJourney >= 1)
             {
                 movingActivated = false;
@@ -154,10 +157,18 @@ public static event OnPuzzleDone PuzzleDone; */
         }
         if(soundClip!=null)
                 Beep.PlayOneShot(soundClip);
+        if(isAnim)
+        {
+            //PLAY animation here
+            Animator godBoxAnim = gameObject.GetComponent<Animator>();
+            godBoxAnim.SetBool("Move", true);
+        }
+        else
+        {
+            movingActivated = true;
+            puzzleComplete = true;
+        }
         //Moves object forward and back
-        Debug.Log("Moving");
-        movingActivated = true;
-        puzzleComplete = true;
         //PuzzleDone?.Invoke();
     }
 
@@ -210,7 +221,6 @@ public static event OnPuzzleDone PuzzleDone; */
         {
             if(activateCount == amountToActivate)//runs when called to check if everything is activated
             {
-                Debug.Log("Time2choose");
                 //Do whatever action is marked 
                 if(move)
                 {
@@ -231,7 +241,6 @@ public static event OnPuzzleDone PuzzleDone; */
 
     private void OnTriggerEnter(Collider other)//used for pressure plate
     {
-        Debug.Log("HERE ON TRIGGER");
         if(shootObj)
         {
             if(other.GetComponent<Collider>().gameObject.layer == LayerMask.NameToLayer("Bullet"))

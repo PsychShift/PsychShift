@@ -8,6 +8,8 @@ public class MusicControl : MonoBehaviour
     AudioSource musicPlayer;
     [SerializeField]
     AudioClip Song;
+    public bool isVA;
+    public bool activated;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,13 @@ public class MusicControl : MonoBehaviour
     private void OnTriggerEnter(Collider other) 
     {
         if(other.gameObject.tag == "Player")
-            TrackChoice();    
+        {
+            TrackChoice();
+            if(isVA)
+                Destroy(gameObject);
+        }
+            
+
+            
     }
 }

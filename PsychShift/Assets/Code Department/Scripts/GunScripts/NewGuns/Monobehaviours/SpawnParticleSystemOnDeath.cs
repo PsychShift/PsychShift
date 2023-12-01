@@ -30,9 +30,10 @@ namespace Guns.Demo
             Damageable.OnDeath += Damageable_OnDeath;
         }
 
+        public Vector3 particleOffset;
         private void Damageable_OnDeath(Transform Position)
         {
-            Instantiate(DeathSystem, Position.position, Quaternion.identity);
+            Instantiate(DeathSystem, Position.position + particleOffset, Quaternion.identity);
             gameObject.SetActive(false);
         }
 
