@@ -63,12 +63,16 @@ public class EnemyAnimatorMaster : MonoBehaviour
         headRig.weight = weight;
     }
 
-    public void SetHandPositions(Transform leftHandTarget, Transform rightHandTarget)
+    public void SetHandPositions(Transform leftHandTarget, Transform rightHandTarget, Transform leftElbowTarget, Transform rightElbowTarget)
     {
         // Set left hand target
         leftArmConstraint.data.target = leftHandTarget;
         // Set right hand target
         rightArmConstraint.data.target = rightHandTarget;
+        // Set left elbow target
+        leftArmConstraint.data.hint = leftElbowTarget;
+        // Set right elbow target
+        rightArmConstraint.data.hint = rightElbowTarget;
         rigBuilder.Build();
     }
 }

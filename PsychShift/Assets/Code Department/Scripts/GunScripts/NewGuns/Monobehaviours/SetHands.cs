@@ -6,7 +6,9 @@ using UnityEngine;
 public class HandsOrientation
 {
     public GameObject leftHand;
+    public GameObject leftElbow;
     public GameObject rightHand;
+    public GameObject rightElbow;
 }
 public class SetHands : MonoBehaviour
 {

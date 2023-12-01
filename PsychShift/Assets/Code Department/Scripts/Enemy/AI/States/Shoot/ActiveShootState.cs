@@ -15,7 +15,11 @@ public class ActiveShootState : IState
     float shootForSeconds = 0f;
     public void OnEnter()
     {
-        brain.aim.SetTarget(brain.player);
+        if(brain.player != null)
+        {
+            brain.aim.SetTarget(brain.player);
+        }
+        
         shootForSeconds = Time.time + UnityEngine.Random.Range(FireRateAgro.FireRates[agression.FireRateAgression].MinWaitTime, FireRateAgro.FireRates[agression.FireRateAgression].MaxWaitTime);
         brain.Animator.SetBool("shooting", true);
     }

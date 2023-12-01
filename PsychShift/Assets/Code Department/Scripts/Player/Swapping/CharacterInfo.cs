@@ -72,7 +72,7 @@ namespace Player
         {
             List<HandsOrientation> orientations = gunHandler.ActiveGun.GetHandOrientations();
             HandsOrientation ori = orientations[0];
-            animMaster.SetHandPositions(ori.leftHand.transform, ori.rightHand.transform);
+            animMaster.SetHandPositions(ori.leftHand.transform, ori.rightHand.transform, ori.leftElbow.transform, ori.rightElbow.transform);
             gunHandler.OnActiveGunSet -= PrepareAnimator;
         }
         public override string ToString()
