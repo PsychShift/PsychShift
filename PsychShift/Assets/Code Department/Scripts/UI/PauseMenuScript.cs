@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
 public class PauseMenuScript : MonoBehaviour
 {
     public GameObject PauseMenu;
+    public GameObject PauseMenuFirst;
     public GameObject PauseMenuSettings;
+    public GameObject PauseMenuSettingsFirst;
     public static bool GameIsPaused = false;
     // Start is called before the first frame update
     void Start()
@@ -34,6 +37,7 @@ public class PauseMenuScript : MonoBehaviour
         Time.timeScale = 1f;
         GameIsPaused = false;
         Cursor.visible = false;
+        EventSystem.current.SetSelectedGameObject(null);
 
     }
     public void Retry()
@@ -48,19 +52,25 @@ public class PauseMenuScript : MonoBehaviour
     public void OpenPauseSettings()
     {
         PauseMenuSettings.SetActive(true);
+        PauseMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(PauseMenuSettingsFirst);
 
     }
     public void ClosePauseSettings()
     {
         PauseMenuSettings.SetActive(false);
+        PauseMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(PauseMenuFirst);
     }
     private void PausePressed()
     {
         PauseMenu.SetActive(true);
+        PauseMenuSettings.SetActive(false);
         Cursor.lockState = CursorLockMode.Confined;
         Time.timeScale = 0f;
         GameIsPaused = true;
         Cursor.visible = true;
+        EventSystem.current.SetSelectedGameObject(PauseMenuFirst);
         
     }
     private void OnEnable() 

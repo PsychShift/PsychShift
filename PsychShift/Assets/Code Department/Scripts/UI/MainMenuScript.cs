@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
 public class MainMenuScript : MonoBehaviour
 {
     public GameObject LoadMenu;
+    public GameObject MainMenu;
+    public GameObject MainMenuFirst;
     public GameObject SettingsMenu;
+    public GameObject SettingsMenuFirst;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +22,7 @@ public class MainMenuScript : MonoBehaviour
         // Jonathan plased this in the update state, dont know why. Undo it if I broke something.
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = true;
+        EventSystem.current.SetSelectedGameObject(MainMenuFirst);
     }
 
     // Update is called once per frame
@@ -62,11 +67,15 @@ public class MainMenuScript : MonoBehaviour
     public void OpenSettings()
     {
         SettingsMenu.SetActive(true);
+        MainMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
     }
 
     public void CloseSettings()
     {
         SettingsMenu.SetActive(false);
+        MainMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(MainMenuFirst);
     }
 
     public void Quit()
