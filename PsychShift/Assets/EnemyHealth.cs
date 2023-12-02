@@ -60,8 +60,8 @@ namespace Guns.Health
                 {
                     OnDeath?.Invoke(transform);
                     //CURRENT SOLUTION NOT FINAL
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                    Destroy(gameObject);
+                    //SceneManager.LoadScene(SceneManager.GetActiveScene().name); MIGHT BE A PROBLEM
+                    //Destroy(gameObject);
                     //gameObject.SetActive(false);
                 }
 
