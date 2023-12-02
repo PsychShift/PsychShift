@@ -5994,10 +5994,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 211685215}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1326419081}
+        m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
+        m_MethodName: OpenCredits
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8115,7 +8115,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadMenu: {fileID: 662823788}
+  MainMenu: {fileID: 421121053}
+  MainMenuFirst: {fileID: 1287021765}
   SettingsMenu: {fileID: 1557757401}
+  SettingsMenuFirst: {fileID: 1801936577}
+  CreditsMenu: {fileID: 211685215}
+  CreditsMenuFirst: {fileID: 1626575846}
 --- !u!114 &1326419082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8129,7 +8134,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseMenu: {fileID: 513862823}
+  PauseMenuFirst: {fileID: 0}
   PauseMenuSettings: {fileID: 2003734476}
+  PauseMenuSettingsFirst: {fileID: 0}
 --- !u!114 &1326419083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11122,7 +11129,7 @@ GameObject:
   - component: {fileID: 1626575849}
   - component: {fileID: 1626575848}
   m_Layer: 5
-  m_Name: CloseSettingsButton (1)
+  m_Name: CloseCreditsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11193,10 +11200,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 211685215}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1326419081}
+        m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
+        m_MethodName: CloseCredits
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
