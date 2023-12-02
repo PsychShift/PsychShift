@@ -13,10 +13,12 @@ public class EncounterTracker : MonoBehaviour
     public int howManyComplete;
     public int howManyAreThere;
     public GameObject dropFloor;
+    AudioSource bossFloorAudio;
+    public AudioClip bossSiren;
 
     private void Awake() 
     {
-            
+        bossFloorAudio = gameObject.GetComponent<AudioSource>();
     }
     private void Update() 
     {
@@ -24,8 +26,10 @@ public class EncounterTracker : MonoBehaviour
         {
             //Do the thing here
             //Hard code for now
-            Rigidbody floorBoxRef = dropFloor.GetComponent<Rigidbody>();
-            floorBoxRef.useGravity = true;
+            Animator floorBoxRef = dropFloor.GetComponent<Animator>();
+            floorBoxRef.SetBool("Move", true);
+            bossFloorAudio.PlayOneShot(bossSiren);
+
 
         }
     }

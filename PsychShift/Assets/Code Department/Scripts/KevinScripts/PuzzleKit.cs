@@ -160,6 +160,7 @@ public static event OnPuzzleDone PuzzleDone; */
         if(isAnim)
         {
             //PLAY animation here
+            Debug.Log("Trying ANim");
             Animator godBoxAnim = gameObject.GetComponent<Animator>();
             godBoxAnim.SetBool("Move", true);
         }
@@ -215,6 +216,7 @@ public static event OnPuzzleDone PuzzleDone; */
                 turnOff.enabled = false;
                 Debug.Log("Activated: " + godBoxRef.activateCount);
                 godBoxRef.ThisActivate();
+                Destroy(this.gameObject);
             }
         }
         else if(godBox == true)
