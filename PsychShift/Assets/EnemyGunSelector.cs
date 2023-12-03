@@ -46,7 +46,7 @@ namespace Guns.Demo
             ActiveGun = Gun.Clone() as GunScriptableObject;
             ActiveGun.Spawn(GunParent, this, Camera);
             ActiveGun.ShootConfig.ShootType = ShootType.FromGun;
-            ActiveGun.DamageConfig.DamageCurve.constant /= 2;
+            ActiveGun.DamageConfig.DamageCurve.constant /= 4;
   
             ActiveGun.Model.AddComponent<RigTransform>();
             OnActiveGunSet?.Invoke();
