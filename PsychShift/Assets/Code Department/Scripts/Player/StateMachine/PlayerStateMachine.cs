@@ -284,6 +284,8 @@ namespace Player
         }
         void OnDisable()
         {
+            currentCharacter.enemyHealth.OnTakeDamage -= healthUI.UpdateHealthBar;
+            currentCharacter.enemyHealth.OnDeath -= healthUI.HandleDeath;
             OnSwapPlayer -= EnemyTargetManager.Instance.SetPlayer;
             InputManager.Instance.OnSlowActionStateChanged -= SlowMotion;
             InputManager.Instance.OnSwapPressed -= SwapPressed;
@@ -293,7 +295,7 @@ namespace Player
         void Update()
         {
             RotatePlayer();
-            IsVaulting = CheckForVaultableObject();
+            //IsVaulting = CheckForVaultableObject();
             stateMachine.Tick();
             if (isSlowed)
                 SearchForInteractable();
@@ -380,6 +382,7 @@ namespace Player
                 // Setup healthbar ui
                 healthUI.SetHealthBarOnSwap(currentCharacter.enemyHealth.CurrenHealth, currentCharacter.enemyHealth.MaxHealth);
                 currentCharacter.enemyHealth.OnTakeDamage += healthUI.UpdateHealthBar;
+                currentCharacter.enemyHealth.OnDeath += healthUI.HandleDeath;
             }
 
             PlayerMaster.Instance.currentChar = currentCharacter.characterContainer;
@@ -430,6 +433,7 @@ namespace Player
 
             healthUI.Enabled(false);
             startCharacter.characterInfo.enemyHealth.OnTakeDamage -= healthUI.UpdateHealthBar;
+            startCharacter.characterInfo.enemyHealth.OnDeath -= healthUI.HandleDeath;
             playerAudio.PlayOneShot(mindswapDuring);
             playerAudio.loop = true;
 
@@ -491,6 +495,7 @@ namespace Player
 
             healthUI.SetHealthBarOnSwap(endCharacter.characterInfo.enemyHealth.CurrenHealth, endCharacter.characterInfo.enemyHealth.MaxHealth);
             endCharacter.characterInfo.enemyHealth.OnTakeDamage += healthUI.UpdateHealthBar;
+            endCharacter.characterInfo.enemyHealth.OnDeath += healthUI.HandleDeath;
             healthUI.Enabled(true);
 
             gunSelector.SetupGun(endCharacter.characterInfo.gunHandler.StartGun);

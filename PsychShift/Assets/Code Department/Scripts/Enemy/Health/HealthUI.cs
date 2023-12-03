@@ -47,18 +47,32 @@ public class HealthUI : MonoBehaviour
             DamagedTimer = timeDamaged;
         }
 
-        if(healthBar.value == 0)
+        /* if(healthBar.value == 0)
         {
             LoseUI.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             EventSystem.current.SetSelectedGameObject(LoseUIFirst);
             Time.timeScale = 0f;
-        }
+        } */
     }
     public void Enabled(bool enabled)
     {
         healthBar.enabled = enabled;
+    }
+
+    /// <summary>
+    /// I have to take in the transform because of how the event is set up in EnemyHealth.cs, I don't actually need it though.
+    /// </summary>
+    /// <param name="transform"></param>
+    public void HandleDeath(Transform transform)
+    {
+        InputManager.Instance.SwapControlMap(ActionMapEnum.ui);
+        LoseUI.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        EventSystem.current.SetSelectedGameObject(LoseUIFirst);
+        TimeManager.Instance.Pause();
     }
     
 }

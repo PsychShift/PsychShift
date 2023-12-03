@@ -32,6 +32,7 @@ public class TimeManager : MonoBehaviour
     void Start()
     {
         SlowUI.SetActive(false);
+        UndoSlowmotion();
     }
 
     public void DoSlowmotion(float slowdownFactor = 0.1f)
@@ -46,7 +47,15 @@ public class TimeManager : MonoBehaviour
     {
         SlowUI.SetActive(false);
         Time.timeScale = 1;
-        Time.fixedDeltaTime = this.fixedDeltaTime;
-        
+        Time.fixedDeltaTime = this.fixedDeltaTime;   
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+    public void UnPause()
+    {
+        Time.timeScale = 1;
     }
 }
