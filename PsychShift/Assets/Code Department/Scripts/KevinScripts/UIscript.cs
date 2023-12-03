@@ -10,11 +10,14 @@ public class UIscript : MonoBehaviour
     private PlayerStateMachine uiRef;
     [SerializeField]
     TextMeshProUGUI statFlowText;
+    public GameObject StaticImage;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         InputManager.Instance.OnSwitchPressed += SwitchMode;//Do the thing when dis pressed
+        StaticImage.SetActive(false);
     }
 
     // Update is called once per frame
@@ -34,11 +37,13 @@ public class UIscript : MonoBehaviour
         {
             //UI dis
             statFlowText.text = "LT/L shift:Static";
+            StaticImage.SetActive(true);
         }
         else
         {
             //UI DAT
             statFlowText.text = "LT/L shift:Flow";
+            StaticImage.SetActive(false);
         }
 
     }
