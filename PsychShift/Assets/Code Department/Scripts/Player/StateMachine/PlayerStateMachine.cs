@@ -134,6 +134,15 @@ namespace Player
             
             currentCharacter = null;
             SwapCharacter(tempCharacter, PlayerMaster.Instance.checkPointLocation);
+            // This is the first character, if it has a the FirstEnemy script, subrsribe its Swap function to the OnSwapPlayer event.
+            if(currentCharacter != null)
+            {
+                if(currentCharacter.characterContainer.TryGetComponent(out FirstEnemy firstEnemy))
+                {
+                    firstEnemy.playerStateMachine = this;
+                    OnSwapPlayer += firstEnemy.Swap;
+                }
+            }
 
             //virtualCamera.Follow = currentCharacter.cameraRoot;
 
@@ -277,10 +286,6 @@ namespace Player
             Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.IsJumpPressed && StaticMode; */
 
             stateMachine.SetState(groundState);
-        }
-        void Start()
-        {
-            
         }
         void OnDisable()
         {
