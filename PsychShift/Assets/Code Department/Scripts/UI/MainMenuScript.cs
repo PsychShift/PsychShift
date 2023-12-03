@@ -13,11 +13,14 @@ public class MainMenuScript : MonoBehaviour
     public GameObject MainMenuFirst;
     public GameObject SettingsMenu;
     public GameObject SettingsMenuFirst;
+    public GameObject CreditsMenu;
+    public GameObject CreditsMenuFirst;
     // Start is called before the first frame update
     void Start()
     {
         SettingsMenu.SetActive(false);
         LoadMenu.SetActive(false);
+        CreditsMenu.SetActive(false);
 
         // Jonathan plased this in the update state, dont know why. Undo it if I broke something.
         Cursor.lockState = CursorLockMode.Locked;
@@ -62,6 +65,18 @@ public class MainMenuScript : MonoBehaviour
     public void CloseLoad()
     {
         LoadMenu.SetActive(false);
+    }
+    public void OpenCredits()
+    {
+        CreditsMenu.SetActive(true);
+        MainMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(CreditsMenuFirst);
+    }
+    public void CloseCredits()
+    {
+        CreditsMenu.SetActive(false);
+        MainMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(MainMenuFirst);
     }
 
     public void OpenSettings()
