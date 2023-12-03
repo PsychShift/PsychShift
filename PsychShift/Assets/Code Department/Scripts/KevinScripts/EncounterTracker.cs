@@ -21,6 +21,7 @@ public class EncounterTracker : MonoBehaviour
     private void Awake() 
     {
         bossFloorAudio = gameObject.GetComponent<AudioSource>();
+        realWarden.SetActive(false);
     }
     private void Update() 
     {
