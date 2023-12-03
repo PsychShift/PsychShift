@@ -54,7 +54,7 @@ public class MainMenuScript : MonoBehaviour
     }
     public void VSScene()
     {
-        SceneManager.LoadScene("Final_VS_Prototype");
+        SceneManager.LoadScene("Intro");
     }
 
     public void OpenLoad()

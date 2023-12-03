@@ -45,4 +45,8 @@ public class WinLoseButtons : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("Main Menu VS");
     }
+    public void CloseGame()
+    {
+        Application.Quit();
+    }
 }

@@ -52,6 +52,10 @@ namespace Guns.Health
                 if(this.gameObject.layer == 6)//EDIT IF LAYER ORDER IS CHANGED
                 {
                     OnDeath?.Invoke(transform);
+                    if(gameObject.tag == "Boss")
+                    {
+                        SceneManager.LoadScene("Outro");
+                    }
                     //CURRENT SOLUTION NOT FINAL
                     Destroy(gameObject);
                     //gameObject.SetActive(false); 
