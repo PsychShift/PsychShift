@@ -15,13 +15,13 @@ public class WinLoseButtons : MonoBehaviour
     {
         WinUI.SetActive(false);
         LoseUI.SetActive(false);
-        Time.fixedDeltaTime = .02f;
+        //Time.fixedDeltaTime = .02f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.L))
+        /* if (Input.GetKey(KeyCode.L))
         {
             LoseUI.SetActive(true);
             Cursor.visible = true;
@@ -32,7 +32,7 @@ public class WinLoseButtons : MonoBehaviour
             WinUI.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
-        }
+        } */
     }
 
     public void Retry()

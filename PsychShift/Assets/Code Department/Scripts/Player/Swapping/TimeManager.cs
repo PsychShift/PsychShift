@@ -39,7 +39,7 @@ public class TimeManager : MonoBehaviour
     {
         SlowUI.SetActive(true);
         Time.timeScale = slowdownFactor;
-        Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale * 0.05f;
+        Time.fixedDeltaTime = Time.timeScale * 0.05f;
         
     }
 
@@ -47,7 +47,7 @@ public class TimeManager : MonoBehaviour
     {
         SlowUI.SetActive(false);
         Time.timeScale = 1;
-        Time.fixedDeltaTime = this.fixedDeltaTime;   
+        Time.fixedDeltaTime = Time.timeScale* 0.05f;   
     }
 
     public void Pause()
