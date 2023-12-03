@@ -47,6 +47,11 @@ public class InputManager : MonoBehaviour
     public InputAction SlowPauseAction {get; private set;}
     #endregion
 
+    #region UI Controls
+    public InputActionMap UIActionMap { get; private set; }
+    public InputAction UIPauseAction { get; private set; }
+    #endregion
+
     public bool IsJumpPressed { get; private set; }
     public bool IsShootingHeld { get; private set; }
     public delegate void SwapPressedHandler();
@@ -102,6 +107,7 @@ public class InputManager : MonoBehaviour
         }
         StandardActionMap = PlayerInput.actions.FindActionMap("Controls");
         SlowActionMap = PlayerInput.actions.FindActionMap("Slow");
+        UIActionMap = PlayerInput.actions.FindActionMap("UI");
 
         #region Standard Controls
         StandardMoveAction = PlayerInput.actions[StandardActionMap.name + "/Move"];
@@ -128,6 +134,10 @@ public class InputManager : MonoBehaviour
         SlowSwitchAction = PlayerInput.actions[SlowActionMap.name + "/Switch"];
         SlowPauseAction = PlayerInput.actions[SlowActionMap.name + "/Pause"];
         #endregion
+
+        #region UI Controls
+        UIPauseAction = PlayerInput.actions[UIActionMap.name + "/Pause"];
+        #endregion
     
         /* PlayerInput.SwitchCurrentControlScheme("Controller");
         Debug.Log(PlayerInput.currentControlScheme); */
@@ -147,8 +157,9 @@ public class InputManager : MonoBehaviour
         SlowShootAction.started += PressedShoot;
         StandardShootAction.canceled += PressedShoot;
         SlowShootAction.canceled += PressedShoot;
-        StandardPauseAction.started+=PressedPause;
-        SlowPauseAction.started+= PressedPause;
+        StandardPauseAction.started += PressedPause;
+        SlowPauseAction.started += PressedPause;
+        UIPauseAction.started += PressedPause;
 
 
         // Camera Sensitivity Stuff
@@ -168,6 +179,7 @@ public class InputManager : MonoBehaviour
         SlowShootAction.started -= PressedShoot;
         StandardPauseAction.started-=PressedPause;
         SlowPauseAction.started-= PressedPause;
+        UIPauseAction.started -= PressedPause;
     }
 
     public Vector2 GetPlayerMovement() {
@@ -239,7 +251,7 @@ public class InputManager : MonoBehaviour
             SwitchAction = SlowSwitchAction;
             break;
         case ActionMapEnum.ui:
-            // Handle switching to the UI action map if needed.
+            PlayerInput.SwitchCurrentActionMap(UIActionMap.name);
             break;
         default:
             Debug.LogWarning("Unknown action map: " + currentMap);

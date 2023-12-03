@@ -46,6 +46,8 @@ namespace Guns.Demo
             ActiveGun = Gun.Clone() as GunScriptableObject;
             ActiveGun.Spawn(GunParent, this, Camera);
             ActiveGun.ShootConfig.ShootType = ShootType.FromGun;
+            ActiveGun.DamageConfig.DamageCurve.constant /= 2;
+  
             ActiveGun.Model.AddComponent<RigTransform>();
             OnActiveGunSet?.Invoke();
             /* InverseKinematics.SetGunStyle(ActiveGun.Type == GunType.Glock);
