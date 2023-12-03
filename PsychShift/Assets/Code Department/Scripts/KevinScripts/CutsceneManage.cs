@@ -18,6 +18,15 @@ public class CutsceneManage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown("n"))
+        {
+            if(sceneName=="Intro")
+                SceneManager.LoadScene("Final_VS_Prototype");
+            else if(sceneName=="Outro")
+                SceneManager.LoadScene("WinScreen");
+
+        }
+            
         if(sceneName == "Intro")
         {
             introScene-=Time.deltaTime;

@@ -15,6 +15,10 @@ public class WinLoseButtons : MonoBehaviour
     {
         WinUI.SetActive(false);
         LoseUI.SetActive(false);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        
+
         //Time.fixedDeltaTime = .02f;
     }
 

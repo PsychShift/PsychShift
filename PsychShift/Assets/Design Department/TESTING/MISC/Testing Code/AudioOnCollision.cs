@@ -19,15 +19,12 @@ public class AudioOnCollision : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Check if the trigger has already been used
-        if (!hasBeenTriggered)
+        if (!hasBeenTriggered && other.tag == "Player")
         {
 
                 AnimationWSound.Play();
-
                 // Play additional sound effects with individual delays
                 StartCoroutine(PlaySoundsWithDelays());
-
-
             // Disable the trigger
             hasBeenTriggered = true;
         }
