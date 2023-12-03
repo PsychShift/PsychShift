@@ -25,7 +25,9 @@ public class EnemySpawner : MonoBehaviour
     bool waveSpawn; */
     [SerializeField]
     Vector2 gapBetweenSpawns;
-    private bool puzzleNotDone= true;
+    [TextArea]
+    public string moveVariables = "TURN THIS OFF MANUALLY FOR KILL EVERYONE SECTIONS";
+    public bool puzzleNotDone= true;
     public PuzzleKit godBoxActionRef;
     int deathCount=0;
     public ParticleSystem spawnFX;
@@ -73,7 +75,7 @@ public class EnemySpawner : MonoBehaviour
     }
     private IEnumerator Spawnwait()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         StartCoroutine(SpawnIn());
     }
 
