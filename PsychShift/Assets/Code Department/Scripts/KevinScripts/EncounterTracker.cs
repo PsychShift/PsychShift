@@ -15,6 +15,8 @@ public class EncounterTracker : MonoBehaviour
     public GameObject dropFloor;
     AudioSource bossFloorAudio;
     public AudioClip bossSiren;
+    public GameObject fakeWarden;
+    public GameObject realWarden;
 
     private void Awake() 
     {
@@ -29,6 +31,9 @@ public class EncounterTracker : MonoBehaviour
             Animator floorBoxRef = dropFloor.GetComponent<Animator>();
             floorBoxRef.SetBool("Move", true);
             bossFloorAudio.PlayOneShot(bossSiren);
+            //disable anim
+            fakeWarden.SetActive(false);
+            realWarden.SetActive(true);
 
 
         }
