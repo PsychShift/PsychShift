@@ -64,6 +64,7 @@ public class PauseMenuScript : MonoBehaviour
     }
     private void PausePressed()
     {
+        TimeManager.Instance.UndoSlowmotion();
         PauseMenu.SetActive(true);
         PauseMenuSettings.SetActive(false);
         Cursor.lockState = CursorLockMode.Confined;

@@ -67,6 +67,7 @@ public class HealthUI : MonoBehaviour
     /// <param name="transform"></param>
     public void HandleDeath(Transform transform)
     {
+        TimeManager.Instance.UndoSlowmotion();
         InputManager.Instance.SwapControlMap(ActionMapEnum.ui);
         LoseUI.SetActive(true);
         Cursor.visible = true;
