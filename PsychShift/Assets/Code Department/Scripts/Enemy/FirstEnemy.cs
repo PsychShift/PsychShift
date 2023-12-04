@@ -11,6 +11,9 @@ public class FirstEnemy : MonoBehaviour
     {
         playerStateMachine.OnSwapPlayer -= Swap;
         EnemyBrain brain = GetComponent<EnemyBrain>();
+        // remove all tags from the enemy
+        brain.gameObject.tag = "Untagged";
+        gameObject.layer = LayerMask.NameToLayer("Default");
         Destroy(brain);
     }
 }
