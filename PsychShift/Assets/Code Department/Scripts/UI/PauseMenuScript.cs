@@ -16,7 +16,7 @@ public class PauseMenuScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time.fixedDeltaTime = .02f;
+        //Time.fixedDeltaTime = .02f;
         
         PauseMenu.SetActive(false);
         PauseMenuSettings.SetActive(false);
