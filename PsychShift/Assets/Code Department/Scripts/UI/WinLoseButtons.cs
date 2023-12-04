@@ -8,15 +8,20 @@ using TMPro;
 public class WinLoseButtons : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject WinUI;
+    //public GameObject WinUI;
     public GameObject LoseUI;
 
     void Start()
     {
-        WinUI.SetActive(false);
+        //WinUI.SetActive(false);
+
         LoseUI.SetActive(false);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
+        if(SceneManager.GetActiveScene().name == "WinScreen")
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+        
         
 
         //Time.fixedDeltaTime = .02f;
