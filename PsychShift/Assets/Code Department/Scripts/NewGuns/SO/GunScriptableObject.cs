@@ -541,7 +541,7 @@ namespace Guns
         {
             if(HitCollider == null) return;
             SurfaceManager.Instance.HandleImpact(
-                HitCollider.gameObject,
+                HitCollider.transform.root.gameObject,
                 HitLocation,
                 HitNormal,
                 ImpactType,

@@ -162,7 +162,7 @@ Transform:
   - {fileID: 5946811797235988572}
   - {fileID: 8128335859218646655}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2092379065464602434
 MonoBehaviour:
@@ -176,18 +176,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a815d17123dea654ba70be0be0fcbf8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAudio: {fileID: 0}
   gunSelector: {fileID: 5309087219355432835}
   cameraTransform: {fileID: 0}
   healthUI: {fileID: 302005179172114414}
-  walkSpeed: 25
+  walkSpeed: 35
   smoothInputSpeed: 0.1
   smoothInputVelocity: {x: 0, y: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 2945
-  wallSpeed: 30
-  wallJumpForce: 25
-  wallJumpAngle: 1
+  wallSpeed: 40
+  wallJumpForce: 70
+  wallRunEffect: {fileID: 0}
+  wallRunSound: {fileID: 8300000, guid: 9ad157fa51ceabb4887d521ceae4ad58, type: 3}
+  wallJumpAngle: 0.3
   wallLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -200,17 +203,21 @@ MonoBehaviour:
   wallCheckDistance: 4
   minJumpHeight: 6
   jumpForce: 1
-  gravityValue: -20
-  maxJumpHeight: 4
+  gravityValue: -30.8
+  maxJumpHeight: 6
   maxJumpTime: 0.75
-  maxFallSpeed: 60
+  maxFallSpeed: 107.3
   manipulateLayers:
     serializedVersion: 2
     m_Bits: 256
-  swapDistance: 40
+  swapDistance: 637
   swapableLayer:
     serializedVersion: 2
     m_Bits: 64
+  armsOff: {fileID: 0}
+  mindswapBegin: {fileID: 8300000, guid: 225eb6bf765651b46b01fb5e99e29095, type: 3}
+  mindswapDuring: {fileID: 8300000, guid: f5ed6dd3767bd5b4f92bb38416bde386, type: 3}
+  mindswapEnd: {fileID: 8300000, guid: 0ab1ebb10d042e047aa39cb562af5aa8, type: 3}
   tempCharacter: {fileID: 0}
   currentCharacter:
     characterContainer: {fileID: 0}
@@ -221,6 +228,7 @@ MonoBehaviour:
     controller: {fileID: 0}
     agent: {fileID: 0}
     animator: {fileID: 0}
+    animMaster: {fileID: 0}
     gunHandler: {fileID: 0}
     enemyHealth: {fileID: 0}
     movementStats: {fileID: 0}
@@ -315,7 +323,7 @@ MonoBehaviour:
   InverseKinematics: {fileID: 0}
   ActiveGun: {fileID: 0}
   <ActiveBaseGun>k__BackingField: {fileID: 0}
-  InitializeOnStart: 0
+  InitializeOnStart: 1
 --- !u!114 &4915459179439826330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,6 +371,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 0}
   LoseUI: {fileID: 0}
+  LoseUIFirst: {fileID: 0}
+  DamageUI: {fileID: 0}
+  timeDamaged: 2
 --- !u!1001 &2328858885241308174
 PrefabInstance:
   m_ObjectHideFlags: 0
