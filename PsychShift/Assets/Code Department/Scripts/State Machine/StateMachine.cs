@@ -9,14 +9,14 @@ namespace StateMachine
     public class StateMachine
     {
         public IState defaultState { get; private set; }
-        public IState _currentRootState { get; private set; }
         public IState _currentState { get; private set; }
-        public IState _currentSubState { get; set; }
         private Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>(); // Saves all transitions
         private List<Transition> _currentTransitions = new List<Transition>(); // Switches out what transition is active
         private List<Transition> _anyTransitions = new List<Transition>();
 
         private static List<Transition> EmptyTransitions = new List<Transition>(capacity: 0);
+
+        bool isEmpty => _currentTransitions.Count == 0;
 
         public void Tick()
         {
@@ -82,7 +82,7 @@ namespace StateMachine
                         return transition;
             }
             
-            if (_currentTransitions != null)
+            if (_currentTransitions != null && !isEmpty)
             {
                 foreach(var transition in _currentTransitions)
                     if(transition.Condition())

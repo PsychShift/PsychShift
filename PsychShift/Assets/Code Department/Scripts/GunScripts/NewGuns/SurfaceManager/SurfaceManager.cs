@@ -7,6 +7,7 @@ using ImpactSystem.Pool;
 
 namespace ImpactSystem
 {
+    [RequireComponent(typeof(SpecialEffectManager))]
     public class SurfaceManager : MonoBehaviour
     {
         private static SurfaceManager _instance;
@@ -32,7 +33,10 @@ namespace ImpactSystem
             }
 
             Instance = this;
+
         }
+        [SerializeField]
+        private SpecialEffectManager specialEffectManager;
 
         [SerializeField]
         private List<SurfaceType> Surfaces = new List<SurfaceType>();
@@ -42,35 +46,18 @@ namespace ImpactSystem
 
         public void HandleImpact(GameObject HitObject, Vector3 HitPoint, Vector3 HitNormal, ImpactType Impact, int TriangleIndex)
         {
-            /* if (HitObject.TryGetComponent<Terrain>(out Terrain terrain))
+            if (!Impact.CheckForRenderer)
             {
-                List<TextureAlpha> activeTextures = GetActiveTexturesFromTerrain(terrain, HitPoint);
-                foreach (TextureAlpha activeTexture in activeTextures)
+                foreach (Surface.SurfaceImpactTypeEffect typeEffect in DefaultSurface.ImpactTypeEffects)
                 {
-                    SurfaceType surfaceType = Surfaces.Find(surface => surface.Albedo == activeTexture.Texture);
-                    if (surfaceType != null)
+                    if (typeEffect.ImpactType == Impact)
                     {
-                        foreach (Surface.SurfaceImpactTypeEffect typeEffect in surfaceType.Surface.ImpactTypeEffects)
-                        {
-                            if (typeEffect.ImpactType == Impact)
-                            {
-                                PlayEffects(HitPoint, HitNormal, typeEffect.SurfaceEffect, activeTexture.Alpha);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (Surface.SurfaceImpactTypeEffect typeEffect in DefaultSurface.ImpactTypeEffects)
-                        {
-                            if (typeEffect.ImpactType == Impact)
-                            {
-                                PlayEffects(HitPoint, HitNormal, typeEffect.SurfaceEffect, 1);
-                            }
-                        }
+                        PlayEffects(HitPoint, HitNormal, typeEffect.SurfaceEffect, 1);
+                        break;
                     }
                 }
             }
-            else if (HitObject.TryGetComponent<Renderer>(out Renderer renderer))
+            else if (HitObject.TryGetComponent(out Renderer renderer))
             {
                 Texture activeTexture = GetActiveTextureFromRenderer(renderer, TriangleIndex);
 
@@ -95,45 +82,7 @@ namespace ImpactSystem
                         }
                     }
                 }
-            } */
-            foreach (Surface.SurfaceImpactTypeEffect typeEffect in DefaultSurface.ImpactTypeEffects)
-            {
-                if (typeEffect.ImpactType == Impact)
-                {
-                    PlayEffects(HitPoint, HitNormal, typeEffect.SurfaceEffect, 1);
-                    break;
-                }
             }
-        }
-
-        private List<TextureAlpha> GetActiveTexturesFromTerrain(Terrain Terrain, Vector3 HitPoint)
-        {
-            Vector3 terrainPosition = HitPoint - Terrain.transform.position;
-            Vector3 splatMapPosition = new Vector3(
-                terrainPosition.x / Terrain.terrainData.size.x,
-                0,
-                terrainPosition.z / Terrain.terrainData.size.z
-            );
-
-            int x = Mathf.FloorToInt(splatMapPosition.x * Terrain.terrainData.alphamapWidth);
-            int z = Mathf.FloorToInt(splatMapPosition.z * Terrain.terrainData.alphamapHeight);
-
-            float[,,] alphaMap = Terrain.terrainData.GetAlphamaps(x, z, 1, 1);
-
-            List<TextureAlpha> activeTextures = new List<TextureAlpha>();
-            for (int i = 0; i < alphaMap.Length; i++)
-            {
-                if (alphaMap[0, 0, i] > 0)
-                {
-                    activeTextures.Add(new TextureAlpha()
-                    {
-                        Texture = Terrain.terrainData.terrainLayers[i].diffuseTexture,
-                        Alpha = alphaMap[0, 0, i]
-                    });
-                }
-            }
-
-            return activeTextures;
         }
 
         private Texture GetActiveTextureFromRenderer(Renderer Renderer, int TriangleIndex)
@@ -219,8 +168,9 @@ namespace ImpactSystem
                 }
             }
 
-            /* foreach (PlayAudioEffect playAudioEffect in SurfaceEffect.PlayAudioEffects)
+            foreach (PlayAudioEffect playAudioEffect in SurfaceEffect.PlayAudioEffects)
             {
+                if(playAudioEffect.AudioClips.Count == 0) continue;
                 if (!ObjectPools.ContainsKey(playAudioEffect.AudioSourcePrefab.gameObject))
                 {
                     ObjectPools.Add(playAudioEffect.AudioSourcePrefab.gameObject, new ObjectPool<GameObject>(() => Instantiate(playAudioEffect.AudioSourcePrefab.gameObject)));
@@ -234,7 +184,17 @@ namespace ImpactSystem
                 audioSource.transform.position = HitPoint;
                 audioSource.PlayOneShot(clip, SoundOffset * Random.Range(playAudioEffect.VolumeRange.x, playAudioEffect.VolumeRange.y));
                 StartCoroutine(DisableAudioSource(ObjectPools[playAudioEffect.AudioSourcePrefab.gameObject], audioSource, clip.length));
-            } */
+            }
+
+            foreach (SpawnSpecialEffect spawnSpecialEffect in SurfaceEffect.SpawnSpecialEffects)
+            {
+                Debug.Log("trying to play special effect");
+                if (spawnSpecialEffect.Probability > Random.value)
+                {
+                    Debug.Log("playing special effect");
+                    spawnSpecialEffect.SpecialEffect.PlaySpecialEffect(specialEffectManager);
+                }
+            }
         }
 
         private IEnumerator DisableAudioSource(ObjectPool<GameObject> Pool, AudioSource AudioSource, float Time)

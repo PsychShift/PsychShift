@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    public int CurrenHealth {get; }
+    public int CurrentHealth {get; }
     public int MaxHealth {get; }
 
     public delegate void TakeDamageEvent(int Damage);

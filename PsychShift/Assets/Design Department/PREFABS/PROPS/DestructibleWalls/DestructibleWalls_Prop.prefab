@@ -291,8 +291,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4752680144037721457}
-  - component: {fileID: 2098640856156238267}
   - component: {fileID: 471425938322681127}
+  - component: {fileID: 8497409334177922669}
   m_Layer: 19
   m_Name: DestructibleWalls_Prop
   m_TagString: Destructable
@@ -317,20 +317,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2098640856156238267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8063158078267494663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4126de5ce1d8474448838d2cfa56c542, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _MaxHealth: 1
-  _Health: 1
 --- !u!65 &471425938322681127
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -352,6 +338,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.425598, y: 8.358234, z: 0.36853027}
   m_Center: {x: 0.008422852, y: 0.008419037, z: 0.003112793}
+--- !u!114 &8497409334177922669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8063158078267494663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ad9a11077039e4e88522d524d56782, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3501463992795969173
 PrefabInstance:
   m_ObjectHideFlags: 0
