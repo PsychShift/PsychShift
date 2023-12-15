@@ -8,5 +8,6 @@ namespace ImpactSystem.Effects
     {
         public List<SpawnObjectEffect> SpawnObjectEffects = new List<SpawnObjectEffect>();
         public List<PlayAudioEffect> PlayAudioEffects = new List<PlayAudioEffect>();
+        public List<SpawnSpecialEffect> SpawnSpecialEffects = new List<SpawnSpecialEffect>();
     }
 }

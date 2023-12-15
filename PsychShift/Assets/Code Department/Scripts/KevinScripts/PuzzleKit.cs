@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PuzzleKit : MonoBehaviour
+public class PuzzleKit : MonoBehaviour, IDamageable
 {
     [TextArea]
     public string Notes = "Use this script for creating puzzles. Select the bools at the bottom. One for action another for reaction. Use this script again on a new object for new puzzles"; 
@@ -86,6 +87,14 @@ public class PuzzleKit : MonoBehaviour
     public EncounterTracker bossContainerRef;
     public bool isAnim;
 
+    public event IDamageable.TakeDamageEvent OnTakeDamage;
+    public event IDamageable.DeathEvent OnDeath;
+
+    private int currentHealth;
+    public int CurrentHealth { get => currentHealth; set => currentHealth = value;}
+
+    public int MaxHealth { get { return 1; } }
+
     /* public float puzzleCompletionTimer;//
 public bool puzzleTimer;
 private bool puzzleTimeBegan; */
@@ -127,6 +136,7 @@ public static event OnPuzzleDone PuzzleDone; */
                 Debug.LogError("UH OH YOU FORGOT GOD BOX EFFECT LUL: "+ gameObject.name);
             } 
         }
+        CurrentHealth = MaxHealth;
     }
     public void Update()
     {
@@ -270,5 +280,14 @@ public static event OnPuzzleDone PuzzleDone; */
     private void PlaySound(AudioClip beep)
     {
         Beep.PlayOneShot(beep);
+    }
+
+    private bool wasHit => CurrentHealth == 0;
+    public void TakeDamage(int Damage)
+    {
+        if(wasHit)
+            return;
+        currentHealth = 0;
+        ShootHitScan();
     }
 }

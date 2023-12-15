@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8128335859218646655}
   - component: {fileID: 7917584836329711028}
+  - component: {fileID: 976690231730570603}
   m_Layer: 0
   m_Name: SurfaceManager
   m_TagString: Untagged
@@ -44,8 +45,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8ffacad4bb0f2f42a59894157d688d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  specialEffectManager: {fileID: 976690231730570603}
   Surfaces: []
   DefaultSurface: {fileID: 11400000, guid: 16627379184aa4340b142b4d1edef388, type: 2}
+--- !u!114 &976690231730570603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595589199849639917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daead4a96e5fce742a3e9a2fb2238e63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4966696826914652551
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +176,7 @@ Transform:
   - {fileID: 5946811797235988572}
   - {fileID: 8128335859218646655}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2092379065464602434
 MonoBehaviour:

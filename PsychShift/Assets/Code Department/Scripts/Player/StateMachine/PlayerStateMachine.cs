@@ -10,6 +10,8 @@ namespace Player
     [RequireComponent(typeof(InputManager))]
     public class PlayerStateMachine : MonoBehaviour
     {
+        private static PlayerStateMachine instance;
+        public static PlayerStateMachine Instance { get { return instance; } }
         //AUDIO SOURCE HERE
         [SerializeField] public AudioSource playerAudio;
         #region References
@@ -120,6 +122,13 @@ namespace Player
         #region Monobehaviours
         private void Awake()
         {
+            if(instance != null)
+            {
+                Debug.LogError("More than one PlayerStateMachine active in the scene! Destroying latest one: " + name);
+                Destroy(gameObject);
+                return;
+            }
+            instance = this;
             WallStateVariables.Instance.wallLayer = wallLayer;
             WallStateVariables.Instance.WallholdLayers = wallholdLayers;
             WallStateVariables.Instance.WallSpeed = wallSpeed;
@@ -318,36 +327,23 @@ namespace Player
         }
         public GameObject CheckForCharacter()
         {
-            // Store the results of the BoxCast.
-            RaycastHit[] hits = Physics.BoxCastAll(cameraTransform.position, boxHalfExtents, cameraTransform.forward, boxRotation, swapDistance, swapableLayer);
-
-            // Loop through the hits to find the first object with the "Swapable" tag.
-            foreach (RaycastHit hit in hits)
+            // Perform a BoxCast to check for objects in the specified direction.
+            RaycastHit hit;
+            if (Physics.BoxCast(cameraTransform.position, boxHalfExtents, cameraTransform.forward, out hit, boxRotation, swapDistance, swapableLayer))
             {
                 if (hit.collider.CompareTag("Swapable") && hit.collider.gameObject != currentCharacter.characterContainer)
                 {
-                    // Return the GameObject that was hit if there is line of sight.
-                    RaycastHit lineOfSightHit;
-                    if (Physics.Raycast(cameraTransform.position, (hit.point - cameraTransform.position).normalized, out lineOfSightHit, swapDistance))
-                    {
-                        if (lineOfSightHit.collider.gameObject == hit.collider.gameObject)
-                        {
-                            return hit.collider.gameObject;
-                        }
-                    }
+                    // No need for the second raycast, as BoxCast already checks for obstacles.
+                    return hit.collider.gameObject;
                 }
-            }
-            foreach (RaycastHit hit in hits)
-            {
-                if (hit.collider.CompareTag("Manipulatable"))
+                else if (hit.collider.CompareTag("Manipulatable"))
                 {
                     return hit.collider.gameObject;
                 }
             }
-             
-            // If no "Swapable" object was hit, return null.
+
+            // Return null if no valid object is found.
             return null;
-           
         }
         public void SwapCharacter(GameObject newCharacter)
         {
@@ -385,7 +381,7 @@ namespace Player
                 OnSwapPlayer?.Invoke(currentCharacter.characterContainer.transform);
                 gunSelector.SetupGun(currentCharacter.gunHandler.StartGun);
                 // Setup healthbar ui
-                healthUI.SetHealthBarOnSwap(currentCharacter.enemyHealth.CurrenHealth, currentCharacter.enemyHealth.MaxHealth);
+                healthUI.SetHealthBarOnSwap(currentCharacter.enemyHealth.CurrentHealth, currentCharacter.enemyHealth.MaxHealth);
                 currentCharacter.enemyHealth.OnTakeDamage += healthUI.UpdateHealthBar;
                 currentCharacter.enemyHealth.OnDeath += healthUI.HandleDeath;
             }
@@ -498,7 +494,7 @@ namespace Player
             endCharacter.characterInfo.characterContainer.transform.rotation = endCharacter.characterInfo.model.transform.rotation;
             startCharacter.characterInfo.enemyBrain.enabled = true;
 
-            healthUI.SetHealthBarOnSwap(endCharacter.characterInfo.enemyHealth.CurrenHealth, endCharacter.characterInfo.enemyHealth.MaxHealth);
+            healthUI.SetHealthBarOnSwap(endCharacter.characterInfo.enemyHealth.CurrentHealth, endCharacter.characterInfo.enemyHealth.MaxHealth);
             endCharacter.characterInfo.enemyHealth.OnTakeDamage += healthUI.UpdateHealthBar;
             endCharacter.characterInfo.enemyHealth.OnDeath += healthUI.HandleDeath;
             healthUI.Enabled(true);

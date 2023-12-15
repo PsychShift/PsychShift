@@ -45,6 +45,7 @@ public class CharacterInfoReference : MonoBehaviour
 
         _characterInfo = new CharacterInfo(gameObject, vCam, movementStats, characterStats);
         vCam.Follow = characterInfo.cameraRoot;
+        GetComponent<RigColliderManager>().SwapTag("Enemy");
     }
 
 
@@ -55,6 +56,7 @@ public class CharacterInfoReference : MonoBehaviour
         characterInfo.enemyBrain.IsActive = false;
         characterInfo.agent.enabled = false;
 
+        GetComponent<RigColliderManager>().SwapTag("Player");
         characterInfo.characterContainer.layer = LayerMask.NameToLayer("Player");
         characterInfo.characterContainer.tag = "Player";
     }
@@ -65,6 +67,7 @@ public class CharacterInfoReference : MonoBehaviour
         characterInfo.enemyBrain.IsActive = true;
         characterInfo.agent.enabled = true;
 
+        GetComponent<RigColliderManager>().SwapTag("Enemy");
         characterInfo.characterContainer.tag = "Swapable";
         characterInfo.characterContainer.layer = LayerMask.NameToLayer("Character");
     }

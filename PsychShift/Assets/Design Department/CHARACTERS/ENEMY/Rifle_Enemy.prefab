@@ -468,7 +468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db8febe8bdb4464dad7650225af151d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Colliders: []
+  childColliders: []
 --- !u!1 &4347460276408098320
 GameObject:
   m_ObjectHideFlags: 0
@@ -2995,6 +2995,9 @@ PrefabInstance:
       addedObject: {fileID: 5926595715857599308}
     - targetCorrespondingSourceObject: {fileID: 8067005427340205180, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 642825682090804466}
+    - targetCorrespondingSourceObject: {fileID: 8067005427340205180, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7217711931491848697}
     - targetCorrespondingSourceObject: {fileID: 8067005427340205180, guid: 7fa4ab1b3f023004dad3c341c0b70919, type: 3}
       insertIndex: -1
@@ -3390,6 +3393,31 @@ MonoBehaviour:
   headConstraint: {fileID: 0}
   rightArmConstraint: {fileID: 0}
   leftArmConstraint: {fileID: 0}
+--- !u!114 &642825682090804466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4596367185035848904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33404b0cd39e66e4aa882ed22594f206, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableFeetIK: 1
+  heightFromGroundRaycast: 1.14
+  raycastDownDistance: 1.5
+  environmentLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  pelvisOffset: 0
+  pelvisUpAndDownSpeed: 0.28
+  feetToIKPositionSpeed: 0.5
+  leftFootAnimVariableName: LeftFootCurve
+  rightFootAnimVariableName: RightFootCurve
+  useProIKFeature: 0
+  showSolverDebug: 1
 --- !u!114 &7217711931491848697
 MonoBehaviour:
   m_ObjectHideFlags: 0

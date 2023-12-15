@@ -304,11 +304,11 @@ namespace Guns
                     AudioConfig.PlayHitClip(ShootingAudioSource);
                 else if(hit.collider.tag == "Player")
                     AudioConfig.PlayHitClipEnemy(ShootingAudioSource);
-                if(hit.collider.tag == "PuzzleShoot")
+                /* if(hit.collider.tag == "PuzzleShoot") // I made the Puzzle Kit an IDamageable, so we don't have to check for the tag anymore, it will just play if it got hit straight from the puzzle script
                 {
                     PuzzleKit pRef = hit.collider.gameObject.GetComponent<PuzzleKit>();
                     pRef.ShootHitScan();
-                }
+                } */
                 /* ActiveMonoBehaviour.StartCoroutine(
                     PlayTrail(
                         TrailOrigin,

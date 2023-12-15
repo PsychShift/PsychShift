@@ -10,36 +10,28 @@ namespace Guns.Health
         [SerializeField]
         private int _Health;
 
-        public int CurrenHealth {get => _Health; private set => _Health = value; }
+        public int CurrentHealth {get => _Health; private set => _Health = value; }
 
         public int MaxHealth {get => _MaxHealth; private set=> _MaxHealth = value; }
         public event IDamageable.TakeDamageEvent OnTakeDamage;
         public event IDamageable.DeathEvent OnDeath;
-        //Get Carsons destroy script CHECK IF OBJECT
-        private TestBreakObjectCode implodeThing;
-        private bool isObject=false;
-        BoxCollider boxCollider;
 
+        private RigColliderManager rigColliderManager;
         
         private void OnEnable()
         {
-            CurrenHealth = MaxHealth;
-            if(gameObject.tag == "Destructable")//Seperate script eventually 
-            {
-                implodeThing = gameObject.GetComponentInChildren<TestBreakObjectCode>();
-                isObject = true;
-                boxCollider= gameObject.GetComponent<BoxCollider>();
-            }
-            //getbreakscript
+            CurrentHealth = MaxHealth;
+            rigColliderManager = gameObject.AddComponent<RigColliderManager>();
+            rigColliderManager.SetUp(this);
         }
         
 
         public void TakeDamage(int Damage)
         {
-            int damageTaken = Mathf.Clamp(Damage, 0, CurrenHealth);
+            int damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
             
 
-            CurrenHealth -= damageTaken;
+            CurrentHealth -= damageTaken;
             //healthBar.value = CurrenHealth;
             if(damageTaken !=0)
             {
@@ -47,7 +39,7 @@ namespace Guns.Health
         
             }
 
-            if(CurrenHealth == 0 && damageTaken != 0 && isObject == false)
+            if(CurrentHealth == 0 && damageTaken != 0)
             {
                 if(this.gameObject.layer == 6)//EDIT IF LAYER ORDER IS CHANGED
                 {
@@ -72,12 +64,6 @@ namespace Guns.Health
 
             
             }
-            else if(CurrenHealth == 0 && damageTaken != 0 && isObject == true)
-            {
-                boxCollider.enabled = false;
-                implodeThing.BreakTheThing();
-            }
-            //if and destruct tag on obj run destroy funct
         }
 
     }
