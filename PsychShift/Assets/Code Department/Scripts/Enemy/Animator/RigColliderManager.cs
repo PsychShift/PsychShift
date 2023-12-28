@@ -16,10 +16,12 @@ public class RigColliderManager : MonoBehaviour
             childCollider.SetUp(parentDamageable);
             childColliders.Add(childCollider);
         }
+        Debug.Log("Set up " + childColliders.Count + " colliders");
     }
 
     public void SwapTag(string tag)
     {
+        Debug.Log("Swapping tag: " + tag);
         foreach (var collider in childColliders)
         {
             collider.gameObject.GetComponent<ChildCollider>().SwapTag(tag);

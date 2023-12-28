@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 7565373901236621290}
   - component: {fileID: 5940004059917036012}
   - component: {fileID: 171221974779912671}
+  - component: {fileID: 5487679910794434775}
   m_Layer: 6
   m_Name: Officer_Enemy
   m_TagString: Swapable
@@ -316,6 +317,19 @@ MonoBehaviour:
   DeathSystem: {fileID: 7877367344763205324, guid: b99f417b34cc91e408c364f95d39ae8f, type: 3}
   DeathAudioEffect: {fileID: 11400000, guid: 29a9f25649650f84c955a54c28d0fa97, type: 2}
   particleOffset: {x: 0, y: 2.19, z: 0}
+--- !u!114 &5487679910794434775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498666358945130432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db8febe8bdb4464dad7650225af151d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  childColliders: []
 --- !u!1001 &1579518556388240063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1050,16 +1064,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
-    'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
-    'mixamorig:LeftHandPinky2'\n\tTransform 'mixamorig:RightHandRing2'\n\tTransform
-    'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:LeftHandThumb3'\n\tTransform
-    'mixamorig:RightArm'\n\tand more ...\n\tFrom animation clip 'RifleIdle'\n\tFrom
-    animation clip 'RifleRun'\n\tFrom animation clip 'RifleIdle'\n\tFrom animation
-    clip 'IdleCrouch'\n\tFrom animation clip 'Rifle shoot'\n\tFrom animation clip
-    'RifleIdle'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
