@@ -83,11 +83,11 @@ public abstract class EnemyBrain : MonoBehaviour
 
     protected void HandleReactivation()
     {
-        if(stateMachine._currentState is ICoroutineRestarter)
-        {
-            (stateMachine._currentState as ICoroutineRestarter).RestartCoroutine();
-            Debug.Log("Restarted Coroutine");
-        }
+        //if(stateMachine._currentState is ICoroutineRestarter)
+        //{
+           // (stateMachine._currentState as ICoroutineRestarter).RestartCoroutine();
+           // Debug.Log("Restarted Coroutine");
+        //}
     }
 
     protected void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition);
