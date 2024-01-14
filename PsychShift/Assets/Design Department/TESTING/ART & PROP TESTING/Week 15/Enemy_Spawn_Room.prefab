@@ -1650,6 +1650,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4898546719753535045, guid: 84673fa41da00d047a6b6d724c576702, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1742,7 +1746,7 @@ PrefabInstance:
       objectReference: {fileID: 8104602591558637260}
     - target: {fileID: 3286193831056658644, guid: 56971a3b40500f44c94fed172f251116, type: 3}
       propertyPath: howManySpawn
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3286193831056658644, guid: 56971a3b40500f44c94fed172f251116, type: 3}
       propertyPath: whatEnemytoSpawn
@@ -1752,6 +1756,18 @@ PrefabInstance:
       propertyPath: gapBetweenSpawns.y
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3286193831056658644, guid: 56971a3b40500f44c94fed172f251116, type: 3}
+      propertyPath: enemyType.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3286193831056658644, guid: 56971a3b40500f44c94fed172f251116, type: 3}
+      propertyPath: enemyType.Array.data[0]
+      value: 
+      objectReference: {fileID: 3185649951960435271, guid: 32895d64b4deeab4c959abb2d28b336b, type: 3}
+    - target: {fileID: 3286193831056658644, guid: 56971a3b40500f44c94fed172f251116, type: 3}
+      propertyPath: enemyType.Array.data[1]
+      value: 
+      objectReference: {fileID: 5905654126347321776, guid: 96d598813e377274bb4b307fdd9fedf0, type: 3}
     - target: {fileID: 4223596018903390569, guid: 56971a3b40500f44c94fed172f251116, type: 3}
       propertyPath: m_Name
       value: Spawner
