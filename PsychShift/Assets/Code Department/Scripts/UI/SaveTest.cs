@@ -14,4 +14,7 @@ public class SaveTest : MonoBehaviour
     {
         saveObject = SaveManager.Load();
     }
+
+    // Save the current character game object
+    // the current character health characterInfoReference.enemyHealth.CurrentHealth
 }
