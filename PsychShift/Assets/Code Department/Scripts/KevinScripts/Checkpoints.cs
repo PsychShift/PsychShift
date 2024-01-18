@@ -13,6 +13,9 @@ public class Checkpoints : MonoBehaviour
     public GameObject checkpointUI;
     public ParticleSystem checkpoint;
 
+    // Public field to drag the spawn position object in Unity Editor
+    public Transform spawnPositionObject;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -28,9 +31,6 @@ public class Checkpoints : MonoBehaviour
             hitCheck = true;
             PlayerMaster.Instance.SetCheckPoint(gameObject.transform, other.gameObject);
             StartCoroutine(checkPointReach());
-            
-
-            
         }
     }
 
@@ -38,10 +38,14 @@ public class Checkpoints : MonoBehaviour
     {
         checkpointUI.SetActive(true);
         audioSource.PlayOneShot(audioClip);
-        Instantiate(checkpoint,transform.position-new Vector3(0,10,0), Quaternion.FromToRotation(Vector3.up, transform.position));
+
+        // Use the public spawn position object or fallback to respawnPoint
+        Transform spawnTransform = spawnPositionObject != null ? spawnPositionObject : respawnPoint;
+        Vector3 spawnPosition = spawnTransform.position;
+
+        Instantiate(checkpoint, spawnPosition - new Vector3(0, 10, 0), Quaternion.FromToRotation(Vector3.up, spawnPosition));
+    
         yield return new WaitForSeconds(2);
         checkpointUI.SetActive(false);
     }
-
-
 }
