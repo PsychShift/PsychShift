@@ -9,7 +9,7 @@ using CharacterInfo = Player.CharacterInfo;
 
 public class BasicEnemy : EnemyBrain
 {
-    
+    [SerializeField] private bool isGuard;
     [SerializeField] private List<Vector3> patrolPoints;
     [HideInInspector] public int CurrentPatrolPointIndex { get; set; } = 0;
     
@@ -42,10 +42,10 @@ public class BasicEnemy : EnemyBrain
 
         stateMachine.AddAnyTransition(chaseState, WasDamaged());
 
-        if(isGaurd)
-            stateMachine.SetState(guardState, true);
-        else
-            stateMachine.SetState(patrolState, true);
+        //if(isGaurd)
+        stateMachine.SetState(guardState, true);
+        //else
+        //    stateMachine.SetState(patrolState, true);
     }
 
     private void OnDrawGizmos() {

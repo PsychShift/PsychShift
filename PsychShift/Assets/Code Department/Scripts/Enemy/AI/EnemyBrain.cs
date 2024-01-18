@@ -8,9 +8,6 @@ using System.Collections;
 [DisallowMultipleComponent]
 public abstract class EnemyBrain : MonoBehaviour
 {
-    [Tooltip("If this is true, the enemy will stand in one spot, if false, it will require a patrol path")]
-    [SerializeField] protected bool isGaurd;
-
     [SerializeField] private bool _isActive = true;
     public bool IsActive {
         get 
@@ -51,8 +48,6 @@ public abstract class EnemyBrain : MonoBehaviour
     public Transform Model => CharacterInfo.model.transform;
     public EnemyAnimatorMaster AnimMaster => CharacterInfo.animMaster;
     
-    public bool isMelee;
-    protected float attackRange;
     [HideInInspector] public Cover currentCover;
 
     [HideInInspector] public Transform gauranteedPlayer => EnemyTargetManager.Instance.player;
@@ -76,7 +71,6 @@ public abstract class EnemyBrain : MonoBehaviour
     /// </summary> 
     protected void VariableSetup()
     {
-        attackRange = isMelee ? 1f : 40f;
         CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
         fovRef = GetComponent<FieldOfView>();
     }
@@ -99,8 +93,8 @@ public abstract class EnemyBrain : MonoBehaviour
     protected Func<bool> PlayerInSightWide() => () => IsPlayerInSightWideView();
     protected Func<bool> PlayerInAttackRange() => () => IsPlayerInRange();
     protected Func<bool> OutOfRangeForTooLong(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight);
-    protected Func<bool> OutOfRangeForTooLongAndIsGuard(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight) && isGaurd;
-    protected Func<bool> CanGuard() => () => !IsPlayerInSight() && isGaurd;
+    protected Func<bool> OutOfRangeForTooLongAndIsGuard(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight);
+    protected Func<bool> CanGuard() => () => !IsPlayerInSight();
     protected Func<bool> FoundCover() => () => FindCover() != null;
     protected Func<bool> HasReachedDestination() => () => CharacterInfo.agent.remainingDistance <= 0.1f;
     protected Func<bool> WasDamaged() => () => wasHit;
@@ -225,8 +219,8 @@ public abstract class EnemyBrain : MonoBehaviour
 
     private bool IsPlayerInRange()
     {
-        float distance = Vector3.Distance(transform.position, CharacterInfo.characterContainer.transform.position);
-        return distance <= attackRange;
+        float distance = Vector3.SqrMagnitude(transform.position - CharacterInfo.characterContainer.transform.position);
+        return distance <= agression.DetectionRange;
     }
 
 

@@ -313,6 +313,7 @@ namespace Player
             stateMachine.Tick();
             if (isSlowed)
                 SearchForInteractable();
+            Debug.Log(currentMovement.y);
         }
         void FixedUpdate()
         {
@@ -676,6 +677,8 @@ namespace Player
                 bool isHit;
                 if(currentCharacter != null)
                 {
+                    Gizmos.color = stateMachine.GetGizmoColor();
+                    Gizmos.DrawCube(currentCharacter.characterContainer.transform.position + Vector3.up * 3f, Vector3.one);
                     RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer);
                     if(hits.Any(hit => hit.collider != null))
                     {

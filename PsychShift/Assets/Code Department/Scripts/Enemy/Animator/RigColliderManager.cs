@@ -21,18 +21,20 @@ public class RigColliderManager : MonoBehaviour
 
     public void SwapTag(string tag)
     {
+
         Debug.Log("Swapping tag: " + tag);
         foreach (var collider in childColliders)
         {
-            collider.gameObject.GetComponent<ChildCollider>().SwapTag(tag);
+            collider.SwapTag(tag);
         }
+        Debug.Log(childColliders.Count);
     }
 
     public void SwapLayer(string layer)
     {
         foreach (var collider in childColliders)
         {
-            collider.gameObject.GetComponent<ChildCollider>().SwapLayer(layer);
+            collider.SwapLayer(layer);
         }
     }
 }
