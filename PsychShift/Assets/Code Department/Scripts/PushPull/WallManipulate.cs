@@ -73,4 +73,15 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
         transform.position = targetPosition;
         CanInteract = true;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Prop_Destroy")
+        {
+            if(other.TryGetComponent(out IDamageable damageable))
+            {
+                damageable.TakeDamage(999);
+            }
+        }
+    }
 }
