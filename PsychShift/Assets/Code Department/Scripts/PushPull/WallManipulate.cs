@@ -11,8 +11,12 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
     [SerializeField] private Vector3 startPosition; // Initial position of the object
     [Tooltip("This must be set in the inspector. It is the position the object will end in.")]
     [SerializeField] private Vector3 endPosition; // End Position
+    [SerializeField] private Transform collisionDetection;
+    [SerializeField] private Vector3 collisionDetectionSize;
     public float animationTime = 2.0f; // Duration of the interaction in seconds
     public AudioSource audioSource; // Added AudioSource
+
+    
 
     private void Start()
     {
@@ -67,6 +71,19 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
         {
             float journeyFraction = (Time.time - startTime) / duration;
             transform.position = Vector3.Lerp(currentPosition, targetPosition, journeyFraction);
+            if(collisionDetection == null) yield return null;
+            Collider[] colliders = Physics.OverlapBox(collisionDetection.position, collisionDetectionSize / 2);
+            foreach(Collider other in colliders)
+            {
+                Debug.Log("hit");
+                if(other.tag == "Destructable")
+                {
+                    if(other.TryGetComponent(out IDamageable damageable))
+                    {
+                        damageable.TakeDamage(999);
+                    }
+                }
+            }
             yield return null;
         }
 
@@ -74,14 +91,11 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
         CanInteract = true;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Prop_Destroy")
+    private void OnDrawGizmos() {
+        if(collisionDetection != null)
         {
-            if(other.TryGetComponent(out IDamageable damageable))
-            {
-                damageable.TakeDamage(999);
-            }
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(collisionDetection.position, collisionDetectionSize / 2);
         }
     }
 }

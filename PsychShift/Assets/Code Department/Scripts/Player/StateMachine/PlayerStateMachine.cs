@@ -313,7 +313,6 @@ namespace Player
             stateMachine.Tick();
             if (isSlowed)
                 SearchForInteractable();
-            Debug.Log(currentMovement.y);
         }
         void FixedUpdate()
         {
