@@ -466,6 +466,7 @@ namespace Player
             startCharacter.DeactivatePlayerAllAtOnce();
             endCharacter.ActivatePlayerAllAtOnce();
 
+            startCharacter.characterInfo.animMaster.PrepareAnimator();
             
             OnSwapPlayer?.Invoke(endCharacter.characterInfo.characterContainer.transform);
             // Destroy the particle system at the end of the swap animation

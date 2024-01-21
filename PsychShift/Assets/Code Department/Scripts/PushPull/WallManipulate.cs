@@ -71,16 +71,17 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
         {
             float journeyFraction = (Time.time - startTime) / duration;
             transform.position = Vector3.Lerp(currentPosition, targetPosition, journeyFraction);
-            if(collisionDetection == null) yield return null;
-            Collider[] colliders = Physics.OverlapBox(collisionDetection.position, collisionDetectionSize / 2);
-            foreach(Collider other in colliders)
+            if(collisionDetection != null)
             {
-                Debug.Log("hit");
-                if(other.tag == "Destructable")
+                Collider[] colliders = Physics.OverlapBox(collisionDetection.position, collisionDetectionSize / 2);
+                foreach(Collider other in colliders)
                 {
-                    if(other.TryGetComponent(out IDamageable damageable))
+                    if(other.tag == "Destructable")
                     {
-                        damageable.TakeDamage(999);
+                        if(other.TryGetComponent(out IDamageable damageable))
+                        {
+                            damageable.TakeDamage(999);
+                        }
                     }
                 }
             }
