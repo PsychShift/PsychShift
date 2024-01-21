@@ -42,6 +42,7 @@ namespace Guns.Demo
         }
         public void SetupGun(GunScriptableObject Gun)
         {
+            Debug.Log("SetUpGun called");
             ActiveBaseGun = Gun;
             ActiveGun = Gun.Clone() as GunScriptableObject;
             ActiveGun.Spawn(GunParent, this, Camera);

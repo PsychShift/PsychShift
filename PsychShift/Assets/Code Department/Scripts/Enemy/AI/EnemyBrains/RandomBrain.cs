@@ -4,25 +4,44 @@ using UnityEngine;
 
 public class RandomBrain : EnemyBrain
 {
-    public override void StateMachineSetup()
-    {
-        throw new System.NotImplementedException();
-    }
-
     protected override void SetUp()
     {
-        throw new System.NotImplementedException();
+        VariableSetup();
+        StateMachineSetup();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public override void StateMachineSetup()
     {
+        stateMachine = new StateMachine.StateMachine();
+
+
+        var pickRandom = new RandomLocationState(this, agression);
+        var moveToDestination = new MoveToDestinationState(this, agression, () => pickRandom.Destination);
         
+        var lookAround = new LookAroundState(this, agression);
+        var chaseState = new ChaseState(this, agression);
+
+        stateMachine.AddTransition(pickRandom, lookAround, pickRandom.IsDone());
+        stateMachine.AddTransition(lookAround, pickRandom, lookAround.IsDone());
+
+        stateMachine.AddTransition(pickRandom, chaseState, PlayerInSight());
+        stateMachine.AddTransition(lookAround, chaseState, PlayerInSight());
+
+        stateMachine.AddAnyTransition(chaseState, WasDamaged());
+
+        stateMachine.SetState(pickRandom, true);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if(IsActive)
+            stateMachine.Tick();
+    }
+
+    void OnDrawGizmos()
+    {
+        if (stateMachine == null) return;
+        Gizmos.color = stateMachine.GetGizmoColor();
+        Gizmos.DrawSphere(transform.position + Vector3.up * 6, 0.4f);     
     }
 }

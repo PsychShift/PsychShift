@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RandomLocationState : IState
 {
-
+    public Vector3 Destination { get; set; }
     private EnemyBrain brain;
     private AIAgression agression;
     float walkRadius = 30f;
