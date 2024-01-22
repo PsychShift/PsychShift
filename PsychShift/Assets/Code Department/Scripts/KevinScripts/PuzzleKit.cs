@@ -253,7 +253,7 @@ public static event OnPuzzleDone PuzzleDone; */
 
     private void OnTriggerEnter(Collider other)//used for pressure plate
     {
-        if(shootObj)
+        /* if(shootObj)
         {
             if(other.GetComponent<Collider>().gameObject.layer == LayerMask.NameToLayer("Bullet"))
             {
@@ -261,7 +261,7 @@ public static event OnPuzzleDone PuzzleDone; */
             }
             //send to reaction
         }
-        else if(pressurePlate)
+        else  */if(pressurePlate)
         {
             //send to reaction
             

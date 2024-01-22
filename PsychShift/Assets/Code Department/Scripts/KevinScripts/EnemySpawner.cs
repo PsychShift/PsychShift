@@ -15,8 +15,8 @@ public class EnemySpawner : MonoBehaviour
     int whatEnemytoSpawn;//select int to only spawn an enemy of that type
     [SerializeField]
     int howManySpawn;
-    /* [SerializeField]
-    float spawnRate; */
+    [SerializeField]
+    float spawnRate;
     List<GameObject> enemySpawned;
 
     [SerializeField]
@@ -35,7 +35,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start() 
     {
         enemySpawned = new();
-        StartCoroutine(Spawnwait());
+        StartCoroutine(SpawnIn());
 
     }
 
@@ -56,8 +56,14 @@ public class EnemySpawner : MonoBehaviour
         } */
             
     //}
+    /* private IEnumerator Spawnwait()
+    {
+        yield return new WaitForSeconds(spawnRate);
+        StartCoroutine(SpawnIn());
+    } */
     private IEnumerator SpawnIn()
     {
+        yield return new WaitForSeconds(spawnRate);
         for(int i = 0; i<howManySpawn; i++)
         {
                 if(randomEnemySpawn)
@@ -73,11 +79,7 @@ public class EnemySpawner : MonoBehaviour
         } 
 
     }
-    private IEnumerator Spawnwait()
-    {
-        yield return new WaitForSeconds(1);
-        StartCoroutine(SpawnIn());
-    }
+    
 
     /* IEnumerator spawnWave()
     {
