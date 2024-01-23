@@ -55,7 +55,6 @@ public class EnemyAnimatorMaster : MonoBehaviour
     
     public void PrepareAnimator()
     {
-        Debug.Log("setting arm positions");
         List<HandsOrientation> orientations = gunSelector.ActiveGun.GetHandOrientations();
         HandsOrientation ori = orientations[0];
         SetHandPositions(ori.leftHand.transform, ori.rightHand.transform, ori.leftElbow.transform, ori.rightElbow.transform);
