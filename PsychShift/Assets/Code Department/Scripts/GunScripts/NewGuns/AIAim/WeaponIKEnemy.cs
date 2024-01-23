@@ -64,7 +64,7 @@ public class WeaponIKEnemy : MonoBehaviour
     // Update is called once per frame
     public void LateUpdate()
     {
-        if(!ready)
+        /* if(!ready)
             return;
         if(targetTransform == null)
             return;
@@ -75,9 +75,9 @@ public class WeaponIKEnemy : MonoBehaviour
             {
                 Transform bone = boneTransforms[b];
                 float boneWeight = humanBones[b].weight * weight;
-                AimAtTarget(bone, targetPosition, boneWeight);
+                //AimAtTarget(bone, targetPosition, boneWeight);
             }
-        }
+        } */
     }
 
     private void AimAtTarget(Transform bone, Vector3 targetPosition, float weight)

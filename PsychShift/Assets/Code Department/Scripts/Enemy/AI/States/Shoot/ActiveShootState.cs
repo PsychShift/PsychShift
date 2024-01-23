@@ -7,21 +7,28 @@ public class ActiveShootState : IState
 {
     private EnemyBrain brain;
     private AIAgression agression;
+    Vector3 defaultGunPosition;
     public ActiveShootState(EnemyBrain brain, AIAgression agression)
     {
         this.brain = brain;
         this.agression = agression;
+        defaultGunPosition = brain.AnimMaster.GetDefaultGunPosition();
     }
     float shootForSeconds = 0f;
     public void OnEnter()
     {        
         shootForSeconds = Time.time + UnityEngine.Random.Range(FireRateAgro.FireRates[agression.FireRateAgression].MinWaitTime, FireRateAgro.FireRates[agression.FireRateAgression].MaxWaitTime);
+        brain.AnimMaster.SetGunHandPosition(defaultGunPosition);
         brain.Animator.SetBool("shooting", true);
+        brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
     }
 
     public void OnExit()
     {
         brain.Animator.SetBool("shooting", false);
+        brain.AnimMaster.StopCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
+        brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(0f, .2f));
+        brain.AnimMaster.SetGunHandPosition(defaultGunPosition);
     }
 
     public void Tick()
@@ -35,9 +42,9 @@ public class ActiveShootState : IState
                 Quaternion rotation = Quaternion.LookRotation(lookPos);
                 brain.CharacterInfo.model.transform.rotation = Quaternion.Slerp(brain.CharacterInfo.model.transform.rotation, rotation, Time.deltaTime * 5f);
             }
-            brain.AnimMaster.WeaponAim();
+            //brain.AnimMaster.WeaponAim();
             brain.CharacterInfo.gunHandler.EnemyShoot();
-            brain.CharacterInfo.animator.SetBool("shooting", true);
+            //brain.CharacterInfo.animator.SetBool("shooting", true);
         }
     }
     public Color GizmoColor()

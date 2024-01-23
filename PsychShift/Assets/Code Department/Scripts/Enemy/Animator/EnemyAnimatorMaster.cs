@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Guns.Demo;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.UIElements;
 
 public class EnemyAnimatorMaster : MonoBehaviour
 {
@@ -17,6 +19,8 @@ public class EnemyAnimatorMaster : MonoBehaviour
     
     [HideInInspector] public Rig armsRig;
     [HideInInspector] public Rig headRig;
+    [Header("Aim Target")]
+    [SerializeField] private Transform aimTarget;
 
     [Header("Head")]
     private GameObject headGO;
@@ -64,9 +68,10 @@ public class EnemyAnimatorMaster : MonoBehaviour
 
     public void GetRigComponents()
     {
+        if(armRigGameObject == null) Debug.Log("stiiiiiiiiiiiiiiink");
         if(!armRigGameObject.TryGetComponent(out armsRig))
         {
-            Debug.Log("Arm rig not found for the model: " + gameObject.name);
+            Debug.LogError("Arm rig not found for the model: " + gameObject.name);
             return;
         }
         if(!gameObject.TryGetComponent(out weaponIK))
@@ -77,14 +82,14 @@ public class EnemyAnimatorMaster : MonoBehaviour
 
         if(!headRigGameObject.TryGetComponent(out headRig))
         {
-            Debug.Log("Head rig not found for the model: " + gameObject.name);
+            Debug.LogError("Head rig not found for the model: " + gameObject.name);
             return;
         }
 
         headGO = headRigGameObject.transform.Find("Head").gameObject;
         if(headGO == null)
         {
-            Debug.Log("Head GameObject not found for the model: " + gameObject.name);
+            Debug.LogError("Head GameObject not found for the model: " + gameObject.name);
             return;
         }
         if(!headGO.TryGetComponent(out headConstraint))
@@ -97,7 +102,7 @@ public class EnemyAnimatorMaster : MonoBehaviour
         rightArmGO = armRigGameObject.transform.Find("RightArm").gameObject;
         if(rightArmGO == null)
         {
-            Debug.Log("Right Arm GameObject not found for the model: " + gameObject.name);
+            Debug.LogError("Right Arm GameObject not found for the model: " + gameObject.name);
             return;
         }
         if(!rightArmGO.TryGetComponent(out  rightArmConstraint))
@@ -109,7 +114,7 @@ public class EnemyAnimatorMaster : MonoBehaviour
         leftArmGO = armRigGameObject.transform.Find("LeftArm").gameObject;
         if (leftArmGO == null)
         {
-            Debug.Log("Left Arm GameObject not found for the model: " + gameObject.name);
+            Debug.LogError("Left Arm GameObject not found for the model: " + gameObject.name);
             return;
         }
         if (!leftArmGO.TryGetComponent(out leftArmConstraint))
@@ -117,6 +122,8 @@ public class EnemyAnimatorMaster : MonoBehaviour
             Debug.LogError("Couldn't find the right arm Two Bone IK Constraint for the model: " + gameObject.name);
             return;
         }
+
+        armsRig.weight = 0f;
     }
 
     public void SetArmRigWeight(float weight)
@@ -147,9 +154,18 @@ public class EnemyAnimatorMaster : MonoBehaviour
 
     public void SetWeaponTarget(Transform aimTarget)
     {
-        SetHeadTarget(aimTarget);
+        //SetHeadTarget(aimTarget);
 
         weaponIK.SetTargetTransform(aimTarget);
+    }
+
+    public void SetGunHandPosition(Vector3 position)
+    {
+        rightArmConstraint.data.target.position = position;
+    }
+    public Vector3 GetDefaultGunPosition()
+    {
+        return rightArmConstraint.data.target.position;
     }
 
     public void SetHeadTarget(Transform headTarget)
@@ -180,4 +196,35 @@ public class EnemyAnimatorMaster : MonoBehaviour
     {
         //weaponIK.Aim();
     }
+
+    public void UpdateAimPosition(Vector3 position)
+    {
+        aimTarget.transform.position = position;
+    }
+
+    public IEnumerator SetWeightOverTime(float value, float blendTime)
+    {
+        float elapsedTime = 0f;
+        float initialWeight = armsRig.weight; // Assuming layer index is 0, change it as needed
+
+        while (elapsedTime < blendTime)
+        {
+            // Calculate the new weight using Lerp
+            float currentWeight = Mathf.Lerp(initialWeight, value, elapsedTime / blendTime);
+
+            // Set the layer weight
+            armsRig.weight = currentWeight;
+
+            // Increment the elapsed time
+            elapsedTime += Time.deltaTime;
+
+            // Wait for the next frame
+            yield return null;
+        }
+
+        // Ensure the final weight is set
+        armsRig.weight = value;
+    }
+
+
 }

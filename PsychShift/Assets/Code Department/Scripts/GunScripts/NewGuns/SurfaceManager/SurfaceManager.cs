@@ -188,10 +188,8 @@ namespace ImpactSystem
 
             foreach (SpawnSpecialEffect spawnSpecialEffect in SurfaceEffect.SpawnSpecialEffects)
             {
-                Debug.Log("trying to play special effect");
                 if (spawnSpecialEffect.Probability > Random.value)
                 {
-                    Debug.Log("playing special effect");
                     spawnSpecialEffect.SpecialEffect.PlaySpecialEffect(specialEffectManager);
                 }
             }
