@@ -31,23 +31,36 @@ public class ShootingSuperState : IState
     }
     protected void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition);
     protected void Any(IState from, Func<bool> condition) => stateMachine.AddAnyTransition(from, condition);
-
     public virtual void OnEnter()
     {
         SetUp(brain, agression);
-        brain.AnimMaster.SetWeaponTarget(brain.player);
-        brain.Animator.SetBool("Combat", true);
+        //brain.AnimMaster.SetWeaponTarget(brain.player);
+        //brain.Animator.SetBool("Combat", true);
+        //brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
     }
 
     public virtual void OnExit()
     {
-        brain.Animator.SetBool("Combat", false);
-        brain.AnimMaster.SetOriginalHeadTarget();
-    }
+        //brain.AnimMaster.StopCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
+        //brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(0f, .2f));
 
+        //brain.Animator.SetBool("Combat", false);
+        //brain.AnimMaster.SetOriginalHeadTarget();
+    }
+    Vector3 aimOffset = new Vector3(0, 3f, 0);
     public virtual void Tick()
     {
+        brain.AnimMaster.UpdateAimPosition(brain.player.position + aimOffset);
         stateMachine.Tick();
+        if (!brain.Agent.pathPending && brain.Agent.remainingDistance <= brain.Agent.stoppingDistance && !brain.Agent.hasPath || brain.Agent.velocity.sqrMagnitude == 0f)
+        {
+            // Calculate the direction to the target
+            Vector3 directionToTarget = (brain.player.position - brain.transform.position).normalized;
+            // Create a rotation that looks in the direction of the target
+            Quaternion lookRotation = Quaternion.LookRotation(directionToTarget);
+            // Rotate the agent towards the target rotation over time
+            brain.transform.rotation = Quaternion.Slerp(brain.transform.rotation, lookRotation, Time.deltaTime * brain.Agent.angularSpeed);
+        }
     }
     public Color GizmoColor()
     {

@@ -32,7 +32,6 @@ namespace ImpactSystem.Effects
             perlin.m_AmplitudeGain -= decreaseRate * Time.deltaTime;
             yield return null;
         }
-        Debug.Log("Done");
         perlin.m_AmplitudeGain = 0;
     }
         private void ShakeCamera(float intensity, float frequency, float duration, CinemachineVirtualCamera cam)

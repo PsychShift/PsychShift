@@ -50,7 +50,7 @@ public class RandomLocationState : IState
     public Func<bool> IsDone() => () => IsFinished();
     private bool IsFinished()
     {
-        if(brain.CharacterInfo.agent.remainingDistance < 0.01f || Time.time > endAt)
+        if(/* brain.CharacterInfo.agent.remainingDistance < 0.01f  || */Time.time > endAt)
         {
             return true;
         }
