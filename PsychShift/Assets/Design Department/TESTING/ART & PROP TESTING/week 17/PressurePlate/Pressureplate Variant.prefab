@@ -87,5 +87,85 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3cb91b0e6740dcd48903261e212dd291, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1072833869100131742}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3cb91b0e6740dcd48903261e212dd291, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5651507838528658438}
   m_SourcePrefab: {fileID: 100100000, guid: 3cb91b0e6740dcd48903261e212dd291, type: 3}
+--- !u!1 &6599613965307541504 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3cb91b0e6740dcd48903261e212dd291, type: 3}
+  m_PrefabInstance: {fileID: 6293745563528709457}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1072833869100131742
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6599613965307541504}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0132401595, y: 0.016575767, z: 0.0132401595}
+  m_Center: {x: 2.3283063e-10, y: 0.0032655261, z: -2.3283063e-10}
+--- !u!114 &5651507838528658438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6599613965307541504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
+    for action another for reaction. Use this script again on a new object for new
+    puzzles
+  effectForAct: {fileID: 0}
+  effectForGod: {fileID: 0}
+  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  godBoxRef: {fileID: 0}
+  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
+    set a count number to tell code how many objects need to be activated before
+    reaction.
+  stopSpawn: 0
+  interact: 1
+  pressurePlate: 0
+  shootObj: 0
+  amountToActivate: 0
+  activateCount: 0
+  Notes3: Reactions below
+  move: 0
+  spawn: 0
+  moveVariables: Variables that need to be filled in for move below
+  endPosition: {x: 0, y: 0, z: 0}
+  speedOfMove: 0
+  spawnVariables: Variables that need to be filled in for Spawn below, set objects
+    and location in godBox
+  spawnObjects: []
+  locationOfSpawn: {fileID: 0}
+  isSpawnInf: 0
+  howManySpawn: 0
+  spawnPoints: []
+  puzzleComplete: 0
+  Beep: {fileID: 0}
+  soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
+  NotepadBoss: Variables for Boss stuff
+  isBossBox: 0
+  bossContainerRef: {fileID: 0}
+  isAnim: 0

@@ -47,6 +47,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     private bool move;
     [SerializeField]
     private bool spawn;
+    [SerializeField]
+    private bool activate;
     private bool fall;
 
     [TextArea]
@@ -78,6 +80,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     //shut off spawners after a bit 
     [SerializeField]
     GameObject[] spawnPoints;
+    [SerializeField]
+    GameObject[] activateObject;
     public bool puzzleComplete;
     public AudioSource Beep;
     public AudioClip soundClip;
@@ -198,6 +202,22 @@ public static event OnPuzzleDone PuzzleDone; */
        
      
     }
+    private void ActivateObject()
+    {
+        if(effectForGod!=null)
+            {
+                Instantiate(effectForGod,transform.position, Quaternion.identity);
+            }
+        if(soundClip!=null)
+                Beep.PlayOneShot(soundClip);
+        for(int i = 0; i< activateObject.Length;i++)
+        {
+            activateObject[i].SetActive(true);
+        }
+        
+            
+        
+    }
     private void StopSpawn()
     {
         for(int i =0; i<spawnPoints.Length;i++)
@@ -243,6 +263,10 @@ public static event OnPuzzleDone PuzzleDone; */
                 {
                     SpawnObject();
                 }
+                else if(activate)
+                {
+                    ActivateObject();
+                }
                 if(isBossBox)
                 {
                     bossContainerRef.AddPuzzle();
@@ -261,7 +285,8 @@ public static event OnPuzzleDone PuzzleDone; */
             }
             //send to reaction
         }
-        else  */if(pressurePlate)
+        else  */
+        if(pressurePlate)
         {
             //send to reaction
             

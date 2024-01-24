@@ -97,7 +97,7 @@ public class EnemySpawner : MonoBehaviour
                 puzzleNotDone = false;
         if(puzzleNotDone == false)
         {
-            if(enemySpawned.Count-1<=0)
+            if(enemySpawned.Count-2<=0)//WAS ONE MADE -2 FOR TEMP FIX
             {
                 godBoxActionRef.activateCount++;
                 godBoxActionRef.ThisActivate();
@@ -106,7 +106,7 @@ public class EnemySpawner : MonoBehaviour
         }
         enemTransform.GetComponent<EnemyHealth>().OnDeath -= EnemyDeath;
         enemySpawned.Remove(enemTransform.gameObject);
-        if(puzzleNotDone && enemySpawned.Count-1<=0)
+        if(puzzleNotDone && enemySpawned.Count-2<=0)//WAS ONE MADE -2 FOR TEMP FIX 
         {
             StartCoroutine(SpawnIn());
             
