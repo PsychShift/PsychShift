@@ -29,7 +29,7 @@ public abstract class EnemyBrain : MonoBehaviour
             _isActive = value; 
         }
     }
-    [SerializeField] protected LayerMask playerLayer;
+    //[SerializeField] protected LayerMask playerLayer;
     protected StateMachine.StateMachine stateMachine;
     public AIAgression agression;
     private CharacterInfo characterInfo = null;
@@ -90,11 +90,11 @@ public abstract class EnemyBrain : MonoBehaviour
     public abstract void StateMachineSetup();
 
     protected Func<bool> PlayerInSight() => () => fovRef.canSeePlayer;
-    protected Func<bool> PlayerInSightWide() => () => IsPlayerInSightWideView();
+    //protected Func<bool> PlayerInSightWide() => () => IsPlayerInSightWideView();
     protected Func<bool> PlayerInAttackRange() => () => IsPlayerInRange();
     protected Func<bool> OutOfRangeForTooLong(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight);
     protected Func<bool> OutOfRangeForTooLongAndIsGuard(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight);
-    protected Func<bool> CanGuard() => () => !IsPlayerInSight();
+    protected Func<bool> CanGuard() => () => !fovRef.canSeePlayer;
     protected Func<bool> FoundCover() => () => FindCover() != null;
     protected Func<bool> HasReachedDestination() => () => CharacterInfo.agent.remainingDistance <= 0.1f;
     protected Func<bool> WasDamaged() => () => wasHit;
@@ -109,7 +109,7 @@ public abstract class EnemyBrain : MonoBehaviour
     }
     private bool IsPlayerOutOfRangeForTooLong(float maxTimeOutOfSight)
     {
-        if(!IsPlayerInSight())
+        if(!fovRef.canSeePlayer)
         {
             time += Time.deltaTime;
             if(time >= maxTimeOutOfSight)
@@ -124,7 +124,7 @@ public abstract class EnemyBrain : MonoBehaviour
         }
     }
 
-    private bool IsPlayerInSight()
+    /*private bool IsPlayerInSight()
     {
         Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius, 
         CharacterInfo.cameraRoot.forward, out RaycastHit hit, agression.DetectionRange, layerMask: playerLayer);
@@ -173,7 +173,7 @@ public abstract class EnemyBrain : MonoBehaviour
         }
 
         return false;
-    }
+    }*/
     private bool wasHit = false;
     private void TookDamage(int dmg)
     {
@@ -239,5 +239,11 @@ public abstract class EnemyBrain : MonoBehaviour
         // create a sphere at the transform position
         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.transform.position = transform.position;
+    }
+
+
+    public void SetUpBrainSwap(CharacterBrainSwappingInfo info)
+    {
+
     }
 }

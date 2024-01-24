@@ -64,6 +64,7 @@ public class ShootingSuperState : IState
     }
     public Color GizmoColor()
     {
-        return stateMachine.GetGizmoColor();
+        return Color.red;
+        //return stateMachine.GetGizmoColor();
     }
 }

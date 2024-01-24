@@ -37,7 +37,7 @@ public class BasicEnemy : EnemyBrain
         AT(patrolState, chaseState, PlayerInSight());
         AT(chaseState, patrolState, OutOfRangeForTooLong(agression.StopChasingTime));
 
-        AT(guardState, chaseState, PlayerInSightWide());
+        AT(guardState, chaseState, PlayerInSight());
         AT(chaseState, guardState, OutOfRangeForTooLongAndIsGuard(agression.StopChasingTime));
 
         stateMachine.AddAnyTransition(chaseState, WasDamaged());
