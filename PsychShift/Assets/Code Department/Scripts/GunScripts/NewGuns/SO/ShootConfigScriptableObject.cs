@@ -66,7 +66,6 @@ namespace Guns
                 spread = GetTextureDirection(ShootTime);
                 spread *= SpreadMultiplier;
             }
-
             return spread;
         }
 

@@ -45,6 +45,8 @@ namespace Guns.Demo
             ActiveBaseGun = Gun;
             ActiveGun = Gun.Clone() as GunScriptableObject;
             ActiveGun.Spawn(GunParent, this, Camera);
+            ActiveGun.ShootConfig.SpreadType = BulletSpreadType.Simple;
+            ActiveGun.ShootConfig.SpreadMultiplier = 10f;
             ActiveGun.ShootConfig.ShootType = ShootType.FromGun;
             ActiveGun.DamageConfig.DamageCurve.constant /= 4;
   

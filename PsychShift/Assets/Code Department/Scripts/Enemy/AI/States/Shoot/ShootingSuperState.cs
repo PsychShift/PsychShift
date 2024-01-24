@@ -51,7 +51,6 @@ public class ShootingSuperState : IState
     public virtual void Tick()
     {
         brain.AnimMaster.UpdateAimPosition(brain.player.position + aimOffset);
-        stateMachine.Tick();
         if (!brain.Agent.pathPending && brain.Agent.remainingDistance <= brain.Agent.stoppingDistance && !brain.Agent.hasPath || brain.Agent.velocity.sqrMagnitude == 0f)
         {
             // Calculate the direction to the target
@@ -61,6 +60,7 @@ public class ShootingSuperState : IState
             // Rotate the agent towards the target rotation over time
             brain.transform.rotation = Quaternion.Slerp(brain.transform.rotation, lookRotation, Time.deltaTime * brain.Agent.angularSpeed);
         }
+        stateMachine.Tick();
     }
     public Color GizmoColor()
     {
