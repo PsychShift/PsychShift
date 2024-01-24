@@ -5432,6 +5432,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6216466421609735626, guid: 5f006d95c4e417d4abff1a15a87935cf, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 6216466421609735626, guid: 5f006d95c4e417d4abff1a15a87935cf, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 6802312645698577425, guid: 5f006d95c4e417d4abff1a15a87935cf, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -6378,14 +6386,17 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3185649951960435271, guid: 36eba700113da2a488795b36f73d34fc, type: 3}
       insertIndex: 1
-      addedObject: {fileID: 1933003207}
+      addedObject: {fileID: 1933003196}
+    - targetCorrespondingSourceObject: {fileID: 3185649951960435271, guid: 36eba700113da2a488795b36f73d34fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1933003195}
   m_SourcePrefab: {fileID: 100100000, guid: 36eba700113da2a488795b36f73d34fc, type: 3}
 --- !u!1 &1933003194 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3185649951960435271, guid: 36eba700113da2a488795b36f73d34fc, type: 3}
   m_PrefabInstance: {fileID: 1933003193}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1933003207
+--- !u!114 &1933003195
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6394,14 +6405,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1933003194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 630a6ddba63248045b671137c0a27492, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b76e13e10e5e794a85471ea033aebeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isActive: 1
   agression: {fileID: 11400000, guid: b11693b8e2be01a418452a964a9584b0, type: 2}
   currentCover: {fileID: 0}
-  spawnerEnemy: 1
-  guardPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &1933003196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933003194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a1c97686b6c26d4d998c8022819eb3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 3
 --- !u!1 &1933082654
 GameObject:
   m_ObjectHideFlags: 0

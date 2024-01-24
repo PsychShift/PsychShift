@@ -53,8 +53,6 @@ public class LookAroundState : IState
 
     public Color GizmoColor()
     {
-        return Color.yellowwe;
+        return Color.yellow;
     }
-
-
 }

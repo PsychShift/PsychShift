@@ -29,16 +29,16 @@ public class EnemyBrainSelector : MonoBehaviour
         switch (type)
         {
             case EBrainType.Stationary:
-                Destroy(currentBrain);
+                DestroyImmediate(currentBrain);
                 return gameObject.AddComponent<StationaryBrain>();
             case EBrainType.Patrol:
-                Destroy(currentBrain);
+                DestroyImmediate(currentBrain);
                 return gameObject.AddComponent<PatrolBrain>();
             case EBrainType.Chase:
-                Destroy(currentBrain);
+                DestroyImmediate(currentBrain);
                 return gameObject.AddComponent<ChaseBrain>();
             case EBrainType.Random:
-                Destroy(currentBrain);
+                DestroyImmediate(currentBrain);
                 return gameObject.AddComponent<RandomBrain>();
             default:
                 Debug.LogError("Enemy (" + gameObject + ") doesn't have a brain");

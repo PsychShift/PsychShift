@@ -256,9 +256,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActive: 1
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 0
   agression: {fileID: 11400000, guid: 68b8a78772ceeef4cb80a3ade2c7c150, type: 2}
   currentCover: {fileID: 0}
 --- !u!114 &1139645129708313785
@@ -874,6 +871,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: security_capv2 (55) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8228316360106821885, guid: 0d8d687538f95e0489bff703c289a685, type: 3}
+      propertyPath: m_TagString
+      value: EnemyCosmetic
+      objectReference: {fileID: 0}
     - target: {fileID: 8753601909300105799, guid: 0d8d687538f95e0489bff703c289a685, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1327,6 +1328,7 @@ MonoBehaviour:
   headRigGameObject: {fileID: 3595116892827038378}
   armsRig: {fileID: 0}
   headRig: {fileID: 0}
+  aimTarget: {fileID: 0}
   headConstraint: {fileID: 0}
   rightArmConstraint: {fileID: 0}
   leftArmConstraint: {fileID: 0}
