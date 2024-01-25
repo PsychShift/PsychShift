@@ -28,7 +28,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1383360904441390571}
+  - {fileID: 2273539276471137430}
   m_Father: {fileID: 9202434533417121056}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -376,11 +376,11 @@ Transform:
   m_GameObject: {fileID: 2398212034121904079}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.9000244, y: 202.13924, z: -360.69995}
-  m_LocalScale: {x: 2.4231005, y: 37.598698, z: 26.372248}
+  m_LocalScale: {x: 2.4231005, y: 37.598698, z: 26.37225}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7357463037746093233}
-  m_Father: {fileID: 6677905023688345652}
+  m_Father: {fileID: 9202434533417121056}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &8884550773172396808
@@ -503,6 +503,10 @@ MonoBehaviour:
   isBossBox: 0
   bossContainerRef: {fileID: 0}
   isAnim: 0
+  NotePadStart: In case u want something to move to a location on start
+  moveOnStart: 0
+  endPointStart: {x: 0, y: 0, z: 0}
+  speedOfStart: 0
 --- !u!1 &2923772130632676233
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,10 +893,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1383360904441390571}
   - {fileID: 6677905023688345652}
-  - {fileID: 2273539276471137430}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8336264702670186804
 MonoBehaviour:
@@ -946,6 +950,10 @@ MonoBehaviour:
   isBossBox: 0
   bossContainerRef: {fileID: 0}
   isAnim: 0
+  NotePadStart: In case u want something to move to a location on start
+  moveOnStart: 0
+  endPointStart: {x: 0, y: 0, z: 0}
+  speedOfStart: 0
 --- !u!1 &6231088301745503062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,7 +1230,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8055046605097460940}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.570854, y: 110.35895, z: -172.16302}
+  m_LocalPosition: {x: 11.570862, y: 110.35895, z: -172.16309}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1256,7 +1264,7 @@ Transform:
   - {fileID: 8150937473299764994}
   - {fileID: 587461270766948187}
   - {fileID: 8169252126040967768}
-  m_Father: {fileID: 9202434533417121056}
+  m_Father: {fileID: 6677905023688345652}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8281244889259145427

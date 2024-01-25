@@ -56,6 +56,18 @@ public class MainMenuScript : MonoBehaviour
     {
         SceneManager.LoadScene("Intro");
     }
+    public void Donovan()
+    {
+        SceneManager.LoadScene("DonoLobbySection");
+    }
+    public void Ian()
+    {
+        SceneManager.LoadScene("IanLobbySection");
+    }
+    public void Tomas()
+    {
+        SceneManager.LoadScene("TREVOR ROOM");
+    }
 
     public void OpenLoad()
     {

@@ -85,6 +85,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     public bool puzzleComplete;
     public AudioSource Beep;
     public AudioClip soundClip;
+
+    //Boss scuff
     [TextArea]
     public string NotepadBoss = "Variables for Boss stuff";
     public bool isBossBox;
@@ -99,16 +101,22 @@ public class PuzzleKit : MonoBehaviour, IDamageable
 
     public int MaxHealth { get { return 1; } }
 
+
+    //ON AWAKE STUFF
+    [TextArea]
+    public string NotePadStart = "In case u want something to move to a location on start";
+    public bool moveOnStart;
+    [SerializeField]
+    private Vector3 endPointStart;
+    [SerializeField]
+    float speedOfStart;
+
     /* public float puzzleCompletionTimer;//
 public bool puzzleTimer;
 private bool puzzleTimeBegan; */
 
     /* public delegate void OnPuzzleDone();
 public static event OnPuzzleDone PuzzleDone; */
-
-
-
-
     //Actions
     //Interact
     //Pressure plate
@@ -141,9 +149,23 @@ public static event OnPuzzleDone PuzzleDone; */
             } 
         }
         CurrentHealth = MaxHealth;
+        
+
     }
     public void Update()
     {
+        /* if(moveOnStart)
+        {
+            Vector3.Lerp(transform.position, endPosition, speedOfStart);
+            float distCovered = (Time.time - startTime) * speedOfStart;
+            float fracJourney = distCovered / journeyLength;
+            transform.position = Vector3.Lerp(transform.position, endPointStart, fracJourney);
+            if(fracJourney >= 1)
+            {
+                moveOnStart = false;
+            }
+        } */
+
         if(movingActivated && godBox)
         {
             Vector3.Lerp(transform.position, endPosition, speedOfMove);
@@ -253,19 +275,19 @@ public static event OnPuzzleDone PuzzleDone; */
         {
             if(activateCount == amountToActivate)//runs when called to check if everything is activated
             {
-                //Do whatever action is marked 
+                //Do whatever action is marked
+                if(activate)
+                {
+                    ActivateObject();
+                } 
                 if(move)
                 {
                     Debug.Log("Move");
                     Move();
                 }
-                else if(spawn)
+                if(spawn)
                 {
                     SpawnObject();
-                }
-                else if(activate)
-                {
-                    ActivateObject();
                 }
                 if(isBossBox)
                 {
