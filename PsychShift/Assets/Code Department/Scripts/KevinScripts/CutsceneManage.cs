@@ -21,7 +21,7 @@ public class CutsceneManage : MonoBehaviour
         if(Input.GetKeyDown("n"))
         {
             if(sceneName=="Intro")
-                SceneManager.LoadScene("Final_VS_Prototype");
+                SceneManager.LoadScene("LEVEL 1");
             else if(sceneName=="Outro")
                 SceneManager.LoadScene("WinScreen");
 
@@ -33,7 +33,7 @@ public class CutsceneManage : MonoBehaviour
             if(introScene <= 0||played == true)
             {
                 played = true;
-                SceneManager.LoadScene("Final_VS_Prototype");
+                SceneManager.LoadScene("LEVEL 1");
             }
         }
         else if(sceneName== "Outro")
