@@ -448,7 +448,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2392382793057758284}
-  - component: {fileID: 7172704235241528648}
+  - component: {fileID: 3901977824267059083}
   - component: {fileID: 3034052666354345378}
   - component: {fileID: 7267820795112519546}
   - component: {fileID: 5917110174640737060}
@@ -459,6 +459,7 @@ GameObject:
   - component: {fileID: 8529488873736923060}
   - component: {fileID: 3815130362257633509}
   - component: {fileID: 5197317781385627896}
+  - component: {fileID: 8413319104243627335}
   m_Layer: 6
   m_Name: Rifle_Enemy
   m_TagString: Swapable
@@ -474,7 +475,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3185649951960435271}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 64.1542, y: 0.016530037, z: -1356.3817}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2387, y: 1.2387, z: 1.2387}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -484,7 +485,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7172704235241528648
+--- !u!114 &3901977824267059083
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -493,15 +494,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3185649951960435271}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb183c3dc1244e948b73d311ad1a93a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a1c97686b6c26d4d998c8022819eb3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isActive: 1
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  agression: {fileID: 11400000, guid: dd55d4bb2267f0f43bfe239cbfcf8e59, type: 2}
-  currentCover: {fileID: 0}
+  enemyType: 0
 --- !u!114 &3034052666354345378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -674,6 +670,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childColliders: []
+--- !u!114 &8413319104243627335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3185649951960435271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630a6ddba63248045b671137c0a27492, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActive: 1
+  agression: {fileID: 11400000, guid: dd55d4bb2267f0f43bfe239cbfcf8e59, type: 2}
+  currentCover: {fileID: 0}
+  spawnerEnemy: 0
+  guardPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &3246458165115311550
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,6 +1394,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyGlassesProp
       objectReference: {fileID: 0}
+    - target: {fileID: 2141516686337581990, guid: b75711170d2d88c4690caf1102141ec8, type: 3}
+      propertyPath: m_TagString
+      value: EnemyCosmetic
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1459,6 +1476,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: belt_UVd
       objectReference: {fileID: 0}
+    - target: {fileID: 7673567582494077953, guid: 6fa9b088cc0820f4999f6840abefb68d, type: 3}
+      propertyPath: m_TagString
+      value: EnemyCosmetic
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1484,6 +1505,10 @@ PrefabInstance:
     - target: {fileID: 8228316360106821885, guid: a23e8d02fe8e5a54981090366e0a2adf, type: 3}
       propertyPath: m_Name
       value: security_capv2 (55) Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8228316360106821885, guid: a23e8d02fe8e5a54981090366e0a2adf, type: 3}
+      propertyPath: m_TagString
+      value: EnemyCosmetic
       objectReference: {fileID: 0}
     - target: {fileID: 8753601909300105799, guid: a23e8d02fe8e5a54981090366e0a2adf, type: 3}
       propertyPath: m_RootOrder
@@ -3504,6 +3529,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8067005427340205180, guid: f253d087ad32ca046b182707939deed6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6904852814028750770}
+    - targetCorrespondingSourceObject: {fileID: 8067005427340205180, guid: f253d087ad32ca046b182707939deed6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1771171184724645970}
     - targetCorrespondingSourceObject: {fileID: 5239846479679449856, guid: f253d087ad32ca046b182707939deed6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6371323991513316739}
@@ -4052,6 +4080,19 @@ MonoBehaviour:
   - {fileID: 6707285669380664999}
   - {fileID: 6131622361187848098}
   - {fileID: 4562704924054189319}
+--- !u!114 &1771171184724645970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4596367185035848904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc84673a7c4789e4a90294744d04daa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: Rifle
 --- !u!4 &4675524237528312068 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1213893468280756656, guid: f253d087ad32ca046b182707939deed6, type: 3}

@@ -244,6 +244,6 @@ public abstract class EnemyBrain : MonoBehaviour
 
     public void SetUpBrainSwap(CharacterBrainSwappingInfo info)
     {
-
+        agression = info.AIAgression;
     }
 }

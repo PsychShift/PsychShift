@@ -16,12 +16,13 @@ public class EnemyBrainSelector : MonoBehaviour
         CharacterBrainSwappingInfo oldInfo = new CharacterBrainSwappingInfo(currentBrain.agression);
         EnemyBrain newBrain = ChooseNewBrain(enemyType);
         if (newBrain == null) return;
+        currentBrain = newBrain;
         TransferBrainData(oldInfo);
     }
 
     private void TransferBrainData(CharacterBrainSwappingInfo oldInfo)
     {
-        
+        currentBrain.SetUpBrainSwap(oldInfo);
     }
 
     private EnemyBrain ChooseNewBrain(EBrainType type)
