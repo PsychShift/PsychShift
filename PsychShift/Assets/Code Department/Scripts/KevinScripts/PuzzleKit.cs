@@ -49,6 +49,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     private bool spawn;
     [SerializeField]
     private bool activate;
+    [SerializeField]
+    private bool deactivate;
     private bool fall;
 
     [TextArea]
@@ -82,6 +84,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     GameObject[] spawnPoints;
     [SerializeField]
     GameObject[] activateObject;
+    [SerializeField]
+    GameObject[] deactivateObject;
     public bool puzzleComplete;
     public AudioSource Beep;
     public AudioClip soundClip;
@@ -110,6 +114,12 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     private Vector3 endPointStart;
     [SerializeField]
     float speedOfStart;
+    [SerializeField]
+    GameObject activatedObject;
+    [TextArea]
+    public string NotePadwutHappensTostartObject = "These bools decide what happens to the puzzle object";
+    public bool changeObject;
+    private bool destructObject;
 
     /* public float puzzleCompletionTimer;//
 public bool puzzleTimer;
@@ -149,6 +159,8 @@ public static event OnPuzzleDone PuzzleDone; */
             } 
         }
         CurrentHealth = MaxHealth;
+        if(changeObject == false)
+            destructObject = true;
         
 
     }
@@ -240,6 +252,20 @@ public static event OnPuzzleDone PuzzleDone; */
             
         
     }
+
+    private void DeactivateObject()
+    {
+        if(effectForGod!=null)
+            {
+                Instantiate(effectForGod,transform.position, Quaternion.identity);
+            }
+        if(soundClip!=null)
+                Beep.PlayOneShot(soundClip);
+        for(int i = 0; i< deactivateObject.Length;i++)
+        {
+            deactivateObject[i].SetActive(false);
+        } 
+    }
     private void StopSpawn()
     {
         for(int i =0; i<spawnPoints.Length;i++)
@@ -268,7 +294,15 @@ public static event OnPuzzleDone PuzzleDone; */
                 turnOff.enabled = false;
                 Debug.Log("Activated: " + godBoxRef.activateCount);
                 godBoxRef.ThisActivate();
-                Destroy(this.gameObject);
+                //Destroy(this.gameObject);
+                if(changeObject)
+                {
+                    activatedObject.SetActive(true);
+                    this.gameObject.SetActive(false);  
+                }
+                else if(destructObject)
+                    Destroy(this.gameObject);
+                //Change color or object
             }
         }
         else if(godBox == true)
@@ -279,6 +313,10 @@ public static event OnPuzzleDone PuzzleDone; */
                 if(activate)
                 {
                     ActivateObject();
+                }
+                else if(deactivate)
+                {
+                    DeactivateObject();
                 } 
                 if(move)
                 {
@@ -321,7 +359,13 @@ public static event OnPuzzleDone PuzzleDone; */
 
     public void ShootHitScan()
     {
-        ThisActivate();
+        if(shootObj)
+            ThisActivate();
+    }
+    public void InteractFeature()
+    {
+        if(interact)
+            ThisActivate();
     }
 
     private void PlaySound(AudioClip beep)
