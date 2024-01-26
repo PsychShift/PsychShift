@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 using BrainSwapSaving;
+using Unity.Mathematics;
 
 [CustomEditor(typeof(ModelSaving), true)]
 public class ModelSavingEditor : Editor
@@ -41,7 +42,9 @@ public class ModelSavingEditor : Editor
             model = new();
 
             string modelJSON = SaveSystem.Load(fileName);
-            model = JsonUtility.FromJson<ModelSave>(modelJSON);
+
+            Load(script, modelJSON);
+            //model = JsonUtility.FromJson<ModelSave>(modelJSON);
           }
         base.OnInspectorGUI();
     }
@@ -73,7 +76,7 @@ public class ModelSavingEditor : Editor
                     props.Add(
                         new PropSave
                         (
-                            depth,
+                            child.parent.name,
                             prefabPath,
                             child.localPosition,
                             child.localEulerAngles,
@@ -100,13 +103,49 @@ public class ModelSavingEditor : Editor
         ModelSave modelSave = JsonUtility.FromJson<ModelSave>(file);
 
         // Now that we have the model info, we can modify the materials
-        script.transform.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterials = modelSave.meshMaterials;
+        Transform root = script.transform;
+
+        DeleteOldProps(root, modelSave.props.Count);
+        root.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterials = modelSave.meshMaterials;
 
         foreach(PropSave item in modelSave.props)
         {
+            Transform parent = root.Find(item.parent);
+            GameObject model = (GameObject)AssetDatabase.LoadAssetAtPath(item.prefabPath, typeof(GameObject));
+            Transform instance = Instantiate(model, parent).transform;
             
+            instance.localPosition = item.position;
+            instance.localEulerAngles = item.rotation;
+            instance.localScale = item.scale;
         }
 
+    }
+
+    int added = 0;
+    private void DeleteOldProps(Transform root, int numOfProps)
+    {
+        added = 0;
+        GameObject[] props = new GameObject[numOfProps];
+        DeletePropsRecursive(root, ref props);
+
+        for(int i = 0; i < numOfProps; i++)
+        {
+            Destroy(props[i]);
+        }
+    }
+
+    private void DeletePropsRecursive(Transform root, ref GameObject[] props)
+    {
+        foreach(Transform child in root)
+        {
+            if(child.CompareTag("EnemyCosmetic"))
+            {
+                props[added] = child.gameObject;
+                added++;
+                return;
+            }
+            DeletePropsRecursive(child, ref props);
+        }
     }
     #endregion
 }
@@ -123,15 +162,15 @@ public class ModelSave
 [System.Serializable]
 public class PropSave
 {
-    public PropSave(int depth, string prefabPath, Vector3 position, Vector3 rotation, Vector3 scale)
+    public PropSave(string parent, string prefabPath, Vector3 position, Vector3 rotation, Vector3 scale)
     {
-        this.depth = depth;
+        this.parent = parent;
         this.prefabPath = prefabPath;
         this.position = position;
         this.rotation = rotation;
         this.scale = scale;
     }
-    public int depth;
+    public string parent;
     public string prefabPath;
     public Vector3 position;
     public Vector3 rotation;
