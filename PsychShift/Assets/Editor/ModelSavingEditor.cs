@@ -46,6 +46,7 @@ public class ModelSavingEditor : Editor
         base.OnInspectorGUI();
     }
 
+    #region Saving
     public void CreateList(Transform root, ref List<PropSave> props)
     {
         int depth = 0;
@@ -89,6 +90,25 @@ public class ModelSavingEditor : Editor
             CreateListRecursive(child, ref depth, ref props);
         }
     }
+    #endregion
+
+    #region Loading
+    private void Load(ModelSaving script, string fileName)
+    {
+        string file = SaveSystem.Load(fileName);
+
+        ModelSave modelSave = JsonUtility.FromJson<ModelSave>(file);
+
+        // Now that we have the model info, we can modify the materials
+        script.transform.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterials = modelSave.meshMaterials;
+
+        foreach(PropSave item in modelSave.props)
+        {
+            
+        }
+
+    }
+    #endregion
 }
 [System.Serializable]
 public class ModelSave
