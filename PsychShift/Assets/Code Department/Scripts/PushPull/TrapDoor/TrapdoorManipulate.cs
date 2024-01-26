@@ -23,6 +23,7 @@ public class TrapdoorManipulate : MonoBehaviour, IManipulate
 
     private void Start()
     {
+        transform.tag = "Manipulatable";
         CanInteract = true;
         IsInteracted = false;
 

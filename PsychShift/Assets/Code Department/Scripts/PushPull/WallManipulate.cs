@@ -20,6 +20,7 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
 
     private void Start()
     {
+        transform.tag = "Manipulatable";
         CanInteract = true;
         startPosition = transform.position;
     }

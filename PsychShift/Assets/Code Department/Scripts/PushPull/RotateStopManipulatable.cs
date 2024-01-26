@@ -22,6 +22,7 @@ public class RotateStopManipulatable : MonoBehaviour, IManipulate
     void Start()
     {
         CanInteract = true;
+        transform.tag = "Manipulatable";
         StartCoroutine(Rotate());
     }
     public void Interacted()
