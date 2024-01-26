@@ -116,6 +116,11 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     float speedOfStart;
     [SerializeField]
     GameObject activatedObject;
+    [TextArea]
+    public string NotePadwutHappensTostartObject = "These bools decide what happens to the puzzle object";
+    public bool changeObject;
+    private bool destructObject;
+
     /* public float puzzleCompletionTimer;//
 public bool puzzleTimer;
 private bool puzzleTimeBegan; */
@@ -154,6 +159,8 @@ public static event OnPuzzleDone PuzzleDone; */
             } 
         }
         CurrentHealth = MaxHealth;
+        if(changeObject == false)
+            destructObject = true;
         
 
     }
@@ -288,8 +295,13 @@ public static event OnPuzzleDone PuzzleDone; */
                 Debug.Log("Activated: " + godBoxRef.activateCount);
                 godBoxRef.ThisActivate();
                 //Destroy(this.gameObject);
-                activatedObject.SetActive(true);
-                this.gameObject.SetActive(false);
+                if(changeObject)
+                {
+                    activatedObject.SetActive(true);
+                    this.gameObject.SetActive(false);  
+                }
+                else if(destructObject)
+                    Destroy(this.gameObject);
                 //Change color or object
             }
         }
