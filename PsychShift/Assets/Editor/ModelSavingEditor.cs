@@ -16,7 +16,7 @@ public class ModelSavingEditor : Editor
         // Display other inspector elements here
 
         // Check if the button is pressed
-        if (GUILayout.Button("Test"))
+        if (GUILayout.Button("Test Save"))
         {
             ModelSaving script = (ModelSaving)target;
             // find the props on the enemy, this assigns the depth of the props and the transform of the prop
@@ -32,6 +32,17 @@ public class ModelSavingEditor : Editor
 
             CreateList(root, ref model.props);
         }
+
+        if (GUILayout.Button("Test Load"))
+        {
+            ModelSaving script = (ModelSaving)target;
+            // find the props on the enemy, this assigns the depth of the props and the transform of the prop
+            // to the scriptable object, but the SO cant use this version of the transform, it needs a prefab
+            model = new();
+
+            string modelJSON = SaveSystem.Load(fileName);
+            model = JsonUtility.FromJson<ModelSave>(modelJSON);
+          }
         base.OnInspectorGUI();
     }
 
