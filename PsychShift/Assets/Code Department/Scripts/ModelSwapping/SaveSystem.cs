@@ -19,8 +19,6 @@ namespace BrainSwapSaving
         public static string Load(string fileName)
         {
     #if UNITY_EDITOR
-            Debug.Log("In Editor");
-                Debug.Log(SAVE_FOLDER_Editor);
             if(File.Exists(SAVE_FOLDER_Editor + fileName + ".txt")) 
             {
                 string saveString = File.ReadAllText(SAVE_FOLDER_Editor + fileName + ".txt");

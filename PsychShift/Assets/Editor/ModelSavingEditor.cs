@@ -9,7 +9,28 @@ using Unity.Mathematics;
 [CustomEditor(typeof(ModelSaving), true)]
 public class ModelSavingEditor : Editor
 {
-    //public SerializedDictionary<int, string> boneProp;
+    public override void OnInspectorGUI()
+    {
+        // Display other inspector elements here
+
+        // Check if the button is pressed
+        if (GUILayout.Button("Test Save"))
+        {
+            ModelSaving script = (ModelSaving)target;
+
+            script.Save();
+        }
+
+        if (GUILayout.Button("Test Load"))
+        {
+            ModelSaving script = (ModelSaving)target;
+            
+            script.Load();
+          }
+        base.OnInspectorGUI();
+    }
+}
+    /* //public SerializedDictionary<int, string> boneProp;
     public ModelSave model;
     private string fileName;
     public override void OnInspectorGUI()
@@ -25,7 +46,7 @@ public class ModelSavingEditor : Editor
 
 
             model = new();
-            script.fileName.ToLower();
+
             fileName = script.fileName;
   
             Transform root = script.transform;
@@ -41,7 +62,8 @@ public class ModelSavingEditor : Editor
             // to the scriptable object, but the SO cant use this version of the transform, it needs a prefab
             model = new();
 
-            string modelJSON = SaveSystem.Load(fileName);
+            fileName = script.fileName;
+            string modelJSON = SaveSystem.Load("/" + fileName);
 
             Load(script, modelJSON);
             //model = JsonUtility.FromJson<ModelSave>(modelJSON);
@@ -73,16 +95,15 @@ public class ModelSavingEditor : Editor
                 if (obj != null && PrefabUtility.GetPrefabInstanceStatus(obj) == PrefabInstanceStatus.NotAPrefab)
                 {
                     //boneProp.Add(depth, prefabPath);
-                    props.Add(
-                        new PropSave
+                    PropSave save = new PropSave
                         (
                             child.parent.name,
                             prefabPath,
                             child.localPosition,
                             child.localEulerAngles,
                             child.localScale
-                        )
-                    );
+                        );
+                    props.Add(save);
                 }
                 else
                 {
@@ -96,12 +117,9 @@ public class ModelSavingEditor : Editor
     #endregion
 
     #region Loading
-    private void Load(ModelSaving script, string fileName)
+    private void Load(ModelSaving script, string file)
     {
-        string file = SaveSystem.Load(fileName);
-
         ModelSave modelSave = JsonUtility.FromJson<ModelSave>(file);
-
         // Now that we have the model info, we can modify the materials
         Transform root = script.transform;
 
@@ -110,15 +128,42 @@ public class ModelSavingEditor : Editor
 
         foreach(PropSave item in modelSave.props)
         {
-            Transform parent = root.Find(item.parent);
+
+            Transform parent = FindChildRecursively(root, item.parent);
             GameObject model = (GameObject)AssetDatabase.LoadAssetAtPath(item.prefabPath, typeof(GameObject));
             Transform instance = Instantiate(model, parent).transform;
             
+            instance.tag = "EnemyCosmetic";
             instance.localPosition = item.position;
             instance.localEulerAngles = item.rotation;
             instance.localScale = item.scale;
         }
 
+    }
+
+    private Transform FindChildRecursively(Transform root, string childName)
+    {
+        // Check if the current transform is the one we're looking for
+        if (root.name == childName)
+        {
+            return root;
+        }
+
+        // Iterate over all the children of the current transform
+        foreach (Transform child in root)
+        {
+            // Recurse on the child
+            Transform found = FindChildRecursively(child, childName);
+            
+            // If the child is the one we're looking for, return it
+            if (found != null)
+            {
+                return found;
+            }
+        }
+
+        // If none of the children were the one we're looking for, return null
+        return null;
     }
 
     int added = 0;
@@ -130,7 +175,7 @@ public class ModelSavingEditor : Editor
 
         for(int i = 0; i < numOfProps; i++)
         {
-            Destroy(props[i]);
+            DestroyImmediate(props[i]);
         }
     }
 
@@ -148,8 +193,8 @@ public class ModelSavingEditor : Editor
         }
     }
     #endregion
-}
-[System.Serializable]
+} */
+/* [System.Serializable]
 public class ModelSave
 {
     public ModelSave()
@@ -175,4 +220,10 @@ public class PropSave
     public Vector3 position;
     public Vector3 rotation;
     public Vector3 scale;
-}
+
+
+    public override string ToString()
+    {
+        return $"Parent Name: {parent}\nPrefab Path: {prefabPath}\nPosition: {position}\nRotation: {rotation}\nScale: {scale}";
+    }
+} */
