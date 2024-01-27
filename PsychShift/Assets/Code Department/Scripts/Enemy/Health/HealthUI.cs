@@ -12,6 +12,7 @@ public class HealthUI : MonoBehaviour
 
     bool isDamaged;
     float DamagedTimer;
+    internal static int currentHealth;
 
     void Start()
     {
@@ -36,6 +37,7 @@ public class HealthUI : MonoBehaviour
         healthBar.maxValue = maxHealth;
         healthBar.minValue = 0;
         healthBar.value = currentHealth;
+        
     }
 
     public void UpdateHealthBar(int damage)
