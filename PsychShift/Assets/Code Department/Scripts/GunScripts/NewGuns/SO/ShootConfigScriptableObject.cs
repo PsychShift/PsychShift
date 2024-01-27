@@ -15,6 +15,7 @@ namespace Guns
         public float RecoilRecoverySpeed = 1f;
         public float MaxSpreadTime = 1f;
         public float BulletWeight = 0.1f;
+        public GameObject HitMarker;
 
         public ShootType ShootType = ShootType.FromGun;
 
