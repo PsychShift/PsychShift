@@ -19,8 +19,8 @@ public class EnemySpawner : MonoBehaviour
     float spawnRate;
     List<GameObject> enemySpawned;
 
-    [SerializeField]
-    bool elimEnemies;
+    //[SerializeField]
+    //bool elimEnemies;
     /* [SerializeField]
     bool waveSpawn; */
     [SerializeField]
@@ -93,6 +93,7 @@ public class EnemySpawner : MonoBehaviour
     } */
     private void EnemyDeath(Transform enemTransform)
     {
+        Debug.Log("ACTIVATED");
         if(godBoxRef!= null && godBoxRef.puzzleComplete)
                 puzzleNotDone = false;
         if(puzzleNotDone == false)
@@ -100,6 +101,7 @@ public class EnemySpawner : MonoBehaviour
             if(enemySpawned.Count-2<=0)//WAS ONE MADE -2 FOR TEMP FIX
             {
                 godBoxActionRef.activateCount++;
+                
                 godBoxActionRef.ThisActivate();
             }
             

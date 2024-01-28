@@ -86,6 +86,7 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     GameObject[] activateObject;
     [SerializeField]
     GameObject[] deactivateObject;
+    public bool dissolveOBJ;
     public bool puzzleComplete;
     public AudioSource Beep;
     public AudioClip soundClip;
@@ -122,6 +123,10 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     public string NotePadwutHappensTostartObject = "These bools decide what happens to the puzzle object";
     public bool changeObject;
     private bool destructObject;
+
+    //Dissolve shaders
+    public float dissolveDuration = 2;
+    public float dissolveStrength;
 
     /* public float puzzleCompletionTimer;//
 public bool puzzleTimer;
@@ -304,6 +309,8 @@ public static event OnPuzzleDone PuzzleDone; */
                 }
                 else if(destructObject)
                     Destroy(this.gameObject);
+                else if(dissolveOBJ)
+                    StartDissolver();
                 //Change color or object
             }
         }
@@ -316,7 +323,7 @@ public static event OnPuzzleDone PuzzleDone; */
                 {
                     ActivateObject();
                 }
-                else if(deactivate)
+                if(deactivate)
                 {
                     DeactivateObject();
                 } 
@@ -382,5 +389,27 @@ public static event OnPuzzleDone PuzzleDone; */
             return;
         currentHealth = 0;
         ShootHitScan();
+    }
+
+    public void StartDissolver()
+    {
+        StartCoroutine(dissolver());
+    }
+
+    public IEnumerator dissolver()
+    {
+        float elapsedTime = 0;
+        Material dissolveMaterial = GetComponent<Renderer>().material;
+
+        while(elapsedTime < dissolveDuration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            dissolveStrength = Mathf.Lerp(0,1, elapsedTime / dissolveDuration);
+            dissolveMaterial.SetFloat("_DissolveStrength", dissolveStrength);
+
+            yield return null;
+        }
+        //potentially add disable collider functionality. 
     }
 }
