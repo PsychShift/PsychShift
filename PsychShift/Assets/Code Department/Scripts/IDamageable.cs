@@ -2,8 +2,10 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    public int CurrentHealth {get; }
-    public int MaxHealth {get; }
+    public int CurrentHealth { get; }
+    public int MaxHealth { get; }
+
+    public bool IsWeakPoint { get; }
 
     public delegate void TakeDamageEvent(int Damage);
     public event TakeDamageEvent OnTakeDamage;

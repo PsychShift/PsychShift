@@ -13,6 +13,7 @@ namespace Guns.Health
         public int CurrentHealth {get => _Health; private set => _Health = value; }
 
         public int MaxHealth {get => _MaxHealth; private set=> _MaxHealth = value; }
+        public bool IsWeakPoint { get; } = false;
         public event IDamageable.TakeDamageEvent OnTakeDamage;
         public event IDamageable.DeathEvent OnDeath;
 

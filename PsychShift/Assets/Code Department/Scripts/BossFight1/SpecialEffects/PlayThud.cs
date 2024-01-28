@@ -7,9 +7,10 @@ public class PlayThud : MonoBehaviour, IDamageable
 {
     public ImpactType impactType;
 
-    public int CurrentHealth => throw new NotImplementedException();
+    public int CurrentHealth  { get; }
 
-    public int MaxHealth => throw new NotImplementedException();
+    public int MaxHealth { get; }
+    public bool IsWeakPoint { get; } = false;
 
     public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;

@@ -12,6 +12,8 @@ public class ChildCollider : MonoBehaviour, IDamageable
     public int CurrentHealth { get; set; }
 
     public int MaxHealth { get; set; }
+    [SerializeField] private bool isWeakPoint;
+    public bool IsWeakPoint { get { return isWeakPoint; } set { isWeakPoint = value; } }
     private int critModifier = 1;
 
     public event IDamageable.TakeDamageEvent OnTakeDamage;

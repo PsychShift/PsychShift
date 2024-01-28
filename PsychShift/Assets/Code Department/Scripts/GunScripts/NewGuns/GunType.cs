@@ -7,13 +7,9 @@ namespace Guns
     /// </summary>
     public enum GunType
     {
-        Glock,
-        M4A1,
-        RocketLauncher,
-        Shotgun,
-        SniperRifle,
-        GrenadeLauncher,
-        AK47,
-        MP5
+        Pistol,
+        Rifle,
+        FrogGun,
+        None
     }
 }

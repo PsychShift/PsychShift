@@ -12,6 +12,7 @@ public class PuzzleDamage : MonoBehaviour, IDamageable
     public int CurrentHealth {get => _Health; private set => _Health = value; }
 
     public int MaxHealth {get => _MaxHealth; private set=> _MaxHealth = value; }
+    public bool IsWeakPoint { get; } = false;
 
     public float rotationSpeed = 1f;
 

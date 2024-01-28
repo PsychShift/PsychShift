@@ -1,23 +1,64 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using BrainSwapSaving;
-using UnityEditor;
 using UnityEngine;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 public class ModelSaving : MonoBehaviour
 {
+    public EnemyBrainSelector selector;
     public string fileName;
     public ModelSave model;
 
+    //private static readonly string SAVE_FOLDER = Application.dataPath + "/Design Department/CHARACTERS/ENEMY/EnemyModelPrefabs";
+    private static readonly string SAVE_FOLDER = "EnemyModels";
 
-    #region Saving
+    #region FileName
+    public void RecomendedFileName()
+    {
+        string gunTypeName = selector.GunName(selector.gunType);
+        string modifierName = selector.ModifierName(selector.modifier);
+
+        string recomendedFileName = gunTypeName + modifierName + "_EnemyModel";
+
+        fileName = recomendedFileName;
+        Debug.Log("The Recomended Filename is: " + fileName);
+    }
+    #endregion
+
+    #if UNITY_EDITOR
+
     public void Save()
     {
         model = new();
-        model.meshMaterials = transform.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterials;
-
+        GetMaterialPaths();
         CreateList(transform, ref model.props);
+    }
+    public void GetMaterialPaths()
+    {
+        // Get the SkinnedMeshRenderer component
+        SkinnedMeshRenderer skinnedMeshRenderer = transform.GetComponentInChildren<SkinnedMeshRenderer>();
+
+        // Get the shared materials of the SkinnedMeshRenderer
+        Material[] sharedMaterials = skinnedMeshRenderer.sharedMaterials;
+
+        // Initialize an array to hold the paths to the material assets
+        string[] materialPaths = new string[sharedMaterials.Length];
+        string[] materialNames = new string[sharedMaterials.Length];
+        // Loop through the shared materials and get the paths to the material assets
+        for (int i = 0; i < sharedMaterials.Length; i++)
+        {
+            // Get the path to the material asset
+            string materialPath = AssetDatabase.GetAssetPath(sharedMaterials[i]);
+
+            // Store the path in the array
+            string[] pathSplit = materialPath.Split('/');
+            string[] newSplit = pathSplit[pathSplit.Length-1].Split('.');
+            materialPaths[i] = materialPath;
+            materialNames[i] = newSplit[0];
+        }
+        model.materialPaths = materialPaths;
+        model.materialNames = materialNames;
     }
     public void CreateList(Transform root, ref List<PropSave> props)
     {
@@ -26,7 +67,7 @@ public class ModelSaving : MonoBehaviour
 
         string json = JsonUtility.ToJson(model);
 
-        SaveSystem.Save(json, "/" + fileName);
+        SaveSystem.Save(json, SAVE_FOLDER, fileName);
     }
     private void CreateListRecursive(Transform root, ref int depth, ref List<PropSave> props)
     {
@@ -39,26 +80,22 @@ public class ModelSaving : MonoBehaviour
                 string prefabPath;
                 Object obj;
 
-                #if UNITY_EDITOR
-                    gameObject2 = PrefabUtility.GetCorrespondingObjectFromSource(prefab);
-                    prefabPath = AssetDatabase.GetAssetPath(gameObject2);
-                    obj = AssetDatabase.LoadAssetAtPath<Object>(prefabPath);
-                #else
-                    gameObject2 = Resources.Load(prefab.name);
-                    prefabPath = "path/to/your/resources/folder/" + prefab.name;
-                    obj = Resources.Load(prefabPath);
-                #endif
+                gameObject2 = PrefabUtility.GetCorrespondingObjectFromSource(prefab);
+                prefabPath = AssetDatabase.GetAssetPath(gameObject2);
+                Debug.Log(prefabPath);
+                obj = AssetDatabase.LoadAssetAtPath<Object>(prefabPath);
 
                 if (obj != null)
                 {
-                    #if UNITY_EDITOR
-                        if (PrefabUtility.GetPrefabInstanceStatus(obj) == PrefabInstanceStatus.NotAPrefab)
-                    #endif
+                    if (PrefabUtility.GetPrefabInstanceStatus(obj) == PrefabInstanceStatus.NotAPrefab)
                     {
+                        string[] splitPath = prefabPath.Split('/');
+                        string[] newSplit = splitPath[splitPath.Length-1].Split('.');
                         PropSave save = new PropSave
                             (
                                 child.parent.name,
                                 prefabPath,
+                                newSplit[0],
                                 child.localPosition,
                                 child.localEulerAngles,
                                 child.localScale
@@ -76,29 +113,64 @@ public class ModelSaving : MonoBehaviour
         }
     }
 
-    #endregion
+    #endif
+
 
     #region Loading
-    public void Load()
+    public bool Load(string fileName, bool delete = true)
     {
         model = new();
-        string file = SaveSystem.Load("/" + fileName);
+        string file = SaveSystem.Load(SAVE_FOLDER, fileName);
+        if(file == null)
+        {
+            Debug.Log(file + " " + fileName);
+            return false;
+        } 
         ModelSave modelSave = JsonUtility.FromJson<ModelSave>(file);
         Transform root = transform;
 
-        DeleteOldProps(root, modelSave.props.Count);
-        root.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterials = modelSave.meshMaterials;
+        if(delete)
+            DeleteOldProps(root, modelSave.props.Count);
+        //root.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterials = modelSave.meshMaterials;
+
+        SkinnedMeshRenderer skinnedMeshRenderer = root.GetComponentInChildren<SkinnedMeshRenderer>();
+        if (skinnedMeshRenderer != null)
+        {
+            // Initialize an array to hold the loaded materials
+            Material[] loadedMaterials = new Material[modelSave.materialPaths.Length];
+
+            // Loop through the saved materials and load each one
+            for (int i = 0; i < modelSave.materialPaths.Length; i++)
+            {
+                // Load the material from the Resources folder
+                /* Debug.Log(modelSave.materialPaths[i]);
+                Debug.Log(modelSave.materialNames[i]);
+
+                #if UNITY_EDITOR
+                    loadedMaterials[i] = (Material)AssetDatabase.LoadAssetAtPath(modelSave.materialPaths[i], typeof(Material));
+                    Debug.Log("Test EnemyMaterials/" + modelSave.materialNames[i]);
+                    Debug.Log(modelSave.materialPaths[i]);
+                #else */
+                    //loadedMaterials[i] = (Material)Resources.Load("EnemyMaterials/" + modelSave.materialNames[i], typeof(Material));
+                    loadedMaterials[i] = GameAssets.Instance.GetMaterial(modelSave.materialNames[i]);
+                //#endif
+            }
+
+            // Assign the loaded materials to the SkinnedMeshRenderer
+            skinnedMeshRenderer.sharedMaterials = loadedMaterials;
+        }
 
         foreach(PropSave item in modelSave.props)
         {
             Transform parent = FindChildRecursively(root, item.parent);
             GameObject model;
 
-            #if UNITY_EDITOR
-                model = (GameObject)AssetDatabase.LoadAssetAtPath(item.prefabPath, typeof(GameObject));
-            #else
-                model = (GameObject)Resources.Load("path/to/your/resources/folder/" + item.prefabPath);
-            #endif
+            //#if UNITY_EDITOR
+            //    model = (GameObject)AssetDatabase.LoadAssetAtPath(item.prefabPath, typeof(GameObject));
+            //#else
+            Debug.Log(item.prefabName);
+                model = GameAssets.Instance.GetPrefab(item.prefabName);
+            //#endif
 
             Transform instance = Instantiate(model, parent).transform;
             
@@ -107,6 +179,7 @@ public class ModelSaving : MonoBehaviour
             instance.localEulerAngles = item.rotation;
             instance.localScale = item.scale;
         }
+        return true;
     }
 
     private Transform FindChildRecursively(Transform root, string childName)
@@ -138,11 +211,11 @@ public class ModelSaving : MonoBehaviour
     {
         added = 0;
         GameObject[] props = new GameObject[numOfProps];
-        DeletePropsRecursive(root, ref props);
+        FindPropsRecursive(root, ref props);
 
         for(int i = 0; i < numOfProps; i++)
         {
-            Debug.Log(props[i]);
+            //Debug.Log(props[i]);
             #if UNITY_EDITOR
             DestroyImmediate(props[i]);
             #else
@@ -151,17 +224,16 @@ public class ModelSaving : MonoBehaviour
         }
     }
 
-    private void DeletePropsRecursive(Transform root, ref GameObject[] props)
+    private void FindPropsRecursive(Transform root, ref GameObject[] props)
     {
         foreach(Transform child in root)
         {
-            if(child.CompareTag("EnemyCosmetic") && !props.Contains(child.gameObject))
+            if(child.CompareTag("EnemyCosmetic"))
             {
                 props[added] = child.gameObject;
                 added++;
-                return;
             }
-            DeletePropsRecursive(child, ref props);
+            FindPropsRecursive(child, ref props);
         }
     }
     #endregion
@@ -174,22 +246,26 @@ public class ModelSave
     {
         props = new();
     }
-    public Material[] meshMaterials;
+    public string[] materialNames;
+    public string[] materialPaths;
     public List<PropSave> props;
 }
+
 [System.Serializable]
-public class PropSave
+public struct PropSave
 {
-    public PropSave(string parent, string prefabPath, Vector3 position, Vector3 rotation, Vector3 scale)
+    public PropSave(string parent, string prefabPath, string prefabName, Vector3 position, Vector3 rotation, Vector3 scale)
     {
         this.parent = parent;
         this.prefabPath = prefabPath;
+        this.prefabName = prefabName;
         this.position = position;
         this.rotation = rotation;
         this.scale = scale;
     }
     public string parent;
     public string prefabPath;
+    public string prefabName;
     public Vector3 position;
     public Vector3 rotation;
     public Vector3 scale;
@@ -200,3 +276,4 @@ public class PropSave
         return $"Parent Name: {parent}\nPrefab Path: {prefabPath}\nPosition: {position}\nRotation: {rotation}\nScale: {scale}";
     }
 }
+

@@ -13,6 +13,7 @@ public class CharacterInfoReference : MonoBehaviour
     [Header("VERY IMPORTANT MUST FILL IN IN EDITOR")]
     [Tooltip("This is a thing that does stuff")]
     public GameObject vCamPrefab;
+    public Transform cameraRoot;
 
     [Header("Filled in in editor ATM")]
     public CharacterMovementStatsSO movementStats;
@@ -43,7 +44,7 @@ public class CharacterInfoReference : MonoBehaviour
             vCam = vCamParent.GetComponent<CinemachineVirtualCamera>();
         }
 
-        _characterInfo = new CharacterInfo(gameObject, vCam, movementStats, characterStats);
+        _characterInfo = new CharacterInfo(this, vCam, movementStats, characterStats);
         vCam.Follow = characterInfo.cameraRoot;
         GetComponent<RigColliderManager>().SwapTag("Enemy");
     }

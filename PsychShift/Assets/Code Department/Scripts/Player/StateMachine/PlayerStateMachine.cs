@@ -308,11 +308,13 @@ namespace Player
         }
         void Update()
         {
-            RotatePlayer();
+            //RotatePlayer();
             //IsVaulting = CheckForVaultableObject();
             stateMachine.Tick();
             if (isSlowed)
                 SearchForInteractable();
+
+            currentCharacter.animator.SetFloat("speed", 0);
         }
         void FixedUpdate()
         {
@@ -331,6 +333,9 @@ namespace Player
             RaycastHit hit;
             if (Physics.BoxCast(cameraTransform.position, boxHalfExtents, cameraTransform.forward, out hit, boxRotation, swapDistance, swapableLayer))
             {
+                if(hit.collider == null) return null;
+                if(!IsObjectVisible(Camera.main, hit.collider.gameObject, hit)) return null;
+
                 if (hit.collider.CompareTag("Swapable") && hit.collider.gameObject != currentCharacter.characterContainer)
                 {
                     // No need for the second raycast, as BoxCast already checks for obstacles.
@@ -345,6 +350,50 @@ namespace Player
             // Return null if no valid object is found.
             return null;
         }
+
+        public bool IsObjectVisible(Camera cam, GameObject obj, RaycastHit firstHit)
+        {
+            // Calculate the direction from the camera to the object
+            Vector3 dir = firstHit.point - cam.transform.position;
+            dir.Normalize();
+            // Perform a raycast
+            RaycastHit hit;
+            if (Physics.Raycast(cam.transform.position + dir, dir, out hit))
+            {
+                // If the raycast hits the object, the object is potentially visible
+                return hit.collider.gameObject == obj;
+            }
+            
+            // If the raycast didn't hit anything, the object is not visible
+            return false;
+        }
+        /* public bool IsObjectVisible(GameObject obj)
+        {
+            Renderer renderer = FindRendererInChildren(obj.transform);
+            if(renderer == null) return false;
+            
+            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+            return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
+        }
+        private Renderer FindRendererInChildren(Transform parent)
+        {
+            Renderer renderer = parent.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                return renderer;
+            }
+
+            foreach (Transform child in parent)
+            {
+                renderer = FindRendererInChildren(child);
+                if (renderer != null)
+                {
+                    return renderer;
+                }
+            }
+
+            return null;
+        } */
         public void SwapCharacter(GameObject newCharacter)
         {
             
@@ -369,7 +418,12 @@ namespace Player
                     } */
                     playerAudio.PlayOneShot(mindswapBegin);
                     armsOff.SetActive(false);
-                    
+
+                    // Subscribe the hit effects to the new gun, unsubscribe the old gun
+                    // FYI, this doesn't work right yet, I need to make it do this for the current gun attached to the camera, not the enemy
+                    currentCharacter.gunHandler.ActiveGun.OnSomethingHit -= HitDamageable;
+                    newCharInfo.gunHandler.ActiveGun.OnSomethingHit += HitDamageable;
+
                     currentCharacter = newCharInfo;
                 }
             }
@@ -384,12 +438,28 @@ namespace Player
                 healthUI.SetHealthBarOnSwap(currentCharacter.enemyHealth.CurrentHealth, currentCharacter.enemyHealth.MaxHealth);
                 currentCharacter.enemyHealth.OnTakeDamage += healthUI.UpdateHealthBar;
                 currentCharacter.enemyHealth.OnDeath += healthUI.HandleDeath;
+
+                // Subscribe the hit effects to the gun
+                //currentCharacter.gunHandler.ActiveGun.OnSomethingHit += HitDamageable;
             }
 
             PlayerMaster.Instance.currentChar = currentCharacter.characterContainer;
            
 
         }
+
+        private void HitDamageable(IDamageable hitDamageable)
+        {
+            if(!hitDamageable.IsWeakPoint)
+            {
+                // normal hit effects
+            }
+            else
+            {
+                // crit hit effects
+            }
+        }
+
         public void SwapCharacter(GameObject newChar, Transform position)//checkpoint stuff 
         {
             //Debug.Log("WE ARE GIVING VAR TO CHAR" + checkPointL);
@@ -410,6 +480,8 @@ namespace Player
         // The movement of the camera is handled by Cinemachine, this is mostly for the particle effects and enabling/disabling the enemy ai.
         private IEnumerator SwapAnimation(Transform startTransform, Transform endTransform, CharacterInfoReference startCharacter, CharacterInfoReference endCharacter)
         {
+            startCharacter.characterInfo.enemyBrain.StopAllCoroutines();
+            endCharacter.characterInfo.enemyBrain.StopAllCoroutines();
             
             //deactivate input
             isSwapping = true;
@@ -675,7 +747,7 @@ namespace Player
             if(Application.isPlaying)
             {
                 bool isHit;
-                if(currentCharacter != null)
+                if(currentCharacter != null && stateMachine != null)
                 {
                     Gizmos.color = stateMachine.GetGizmoColor();
                     Gizmos.DrawCube(currentCharacter.characterContainer.transform.position + Vector3.up * 3f, Vector3.one);

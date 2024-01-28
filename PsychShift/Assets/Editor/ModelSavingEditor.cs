@@ -11,22 +11,26 @@ public class ModelSavingEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        // Display other inspector elements here
+        if (GUILayout.Button("Set to Recommended Filename"))
+        {
+            ModelSaving script = (ModelSaving)target;
 
-        // Check if the button is pressed
-        if (GUILayout.Button("Test Save"))
+            script.RecomendedFileName();
+        }
+
+        if (GUILayout.Button("Save"))
         {
             ModelSaving script = (ModelSaving)target;
 
             script.Save();
         }
 
-        if (GUILayout.Button("Test Load"))
+        if (GUILayout.Button("Load"))
         {
             ModelSaving script = (ModelSaving)target;
             
-            script.Load();
-          }
+            script.Load(script.fileName);
+        }
         base.OnInspectorGUI();
     }
 }

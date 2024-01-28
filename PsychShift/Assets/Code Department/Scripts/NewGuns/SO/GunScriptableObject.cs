@@ -41,6 +41,9 @@ namespace Guns
         private bool isEnemyMaybe;
         private Animator gunAnim;
 
+        public delegate void OnSomethingHitDelegate(IDamageable damageable);
+        public event OnSomethingHitDelegate OnSomethingHit;
+
         /// <summary>
         /// Spawns the Gun Model into the scene
         /// </summary>
@@ -548,6 +551,7 @@ namespace Guns
             int ObjectsPenetrated = 0)
         {
             if(HitCollider == null) return;
+            
             SurfaceManager.Instance.HandleImpact(
                 HitCollider.transform.root.gameObject,
                 HitLocation,
@@ -568,6 +572,7 @@ namespace Guns
                 }
                 //Debug.Log("damgeplez");
                 damageable.TakeDamage(DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage));
+                OnSomethingHit?.Invoke(damageable);
             }
 
             foreach (ICollisionHandler collisionHandler in BulletImpactEffects)

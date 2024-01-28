@@ -1592,7 +1592,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2392382793057758284}
-  - component: {fileID: 3901977824267059083}
+  - component: {fileID: 1548434094081613039}
   - component: {fileID: 3034052666354345378}
   - component: {fileID: 7267820795112519546}
   - component: {fileID: 5917110174640737060}
@@ -1623,13 +1623,12 @@ Transform:
   m_LocalScale: {x: 1.2387, y: 1.2387, z: 1.2387}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 709289860996885134}
   - {fileID: 3783660539169912434}
   - {fileID: 5350516959140199980}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3901977824267059083
+--- !u!114 &1548434094081613039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1638,10 +1637,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3185649951960435271}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a1c97686b6c26d4d998c8022819eb3a, type: 3}
+  m_Script: {fileID: 11500000, guid: d57f257ae37d0e140ab0d0cd9e60d8e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 0
+  gunType: {fileID: 0}
+  modifier: 0
 --- !u!114 &3034052666354345378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1655,6 +1656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vCamPrefab: {fileID: 6664049937413521787, guid: 8535b60c96f872b4dbc98092c04ba196, type: 3}
+  cameraRoot: {fileID: 709289860996885134}
   movementStats: {fileID: 11400000, guid: 6093f7d923c68114189090b1e5c00027, type: 2}
   characterStats: {fileID: 11400000, guid: 8bc2c5fcc110fcb4984da5a12cb56fb3, type: 2}
   vCamParent: {fileID: 0}
@@ -2294,7 +2296,7 @@ GameObject:
   - component: {fileID: 3465704121568561989}
   - component: {fileID: 2383996306990582533}
   - component: {fileID: 6904852814028750770}
-  - component: {fileID: 1771171184724645970}
+  - component: {fileID: 1630606505600078155}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -2565,7 +2567,7 @@ MonoBehaviour:
   - {fileID: 6707285669380664999}
   - {fileID: 6131622361187848098}
   - {fileID: 4562704924054189319}
---- !u!114 &1771171184724645970
+--- !u!114 &1630606505600078155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2574,10 +2576,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4596367185035848904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc84673a7c4789e4a90294744d04daa2, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a43ef87fedaa054981192b4c8bd1e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: Rifle
+  selector: {fileID: 1548434094081613039}
+  fileName: _EnemyModel
   model:
     meshMaterials: []
     props: []
@@ -2604,12 +2607,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4857405148150558559}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.052, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.0000006885545, y: 0.7071063, z: 0.00000026606577, w: 0.70710737}
+  m_LocalPosition: {x: -0, y: 0.408, z: 0.719}
+  m_LocalScale: {x: 1.3773056, y: 1.377306, z: 1.3773056}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2392382793057758284}
+  m_Father: {fileID: 7128865889732502769}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5087592110157715722
@@ -3175,6 +3178,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5456004188930351135}
+  - {fileID: 709289860996885134}
   m_Father: {fileID: 7594353184833211787}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

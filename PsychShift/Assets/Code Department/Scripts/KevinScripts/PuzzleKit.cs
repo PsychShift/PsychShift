@@ -105,6 +105,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
 
     public int MaxHealth { get { return 1; } }
 
+    public bool IsWeakPoint { get; } = false;
+
 
     //ON AWAKE STUFF
     [TextArea]

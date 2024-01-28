@@ -39,14 +39,27 @@ namespace Player
             enemyHealth = characterContainer.GetComponent<EnemyHealth>();
             animMaster = model.GetComponent<EnemyAnimatorMaster>();
         }
-        public CharacterInfo(GameObject characterContainer, Cinemachine.CinemachineVirtualCamera vCam, CharacterMovementStatsSO movementStats, CharacterStatsSO characterStats)
+        public CharacterInfo(CharacterInfoReference charRef)
         {
-            this.characterContainer = characterContainer;
+            this.characterContainer = charRef.gameObject;
+            model = characterContainer.transform.Find("Model").gameObject;
+            wallCheck = characterContainer.transform.Find("WallCheck");
+            cameraRoot = charRef.cameraRoot;
+            enemyBrain = characterContainer.GetComponent<EnemyBrain>();
+            gunHandler = characterContainer.GetComponent<EnemyGunSelector>();
+            animator = model.GetComponent<Animator>();
+            enemyHealth = characterContainer.GetComponent<EnemyHealth>();
+            animMaster = model.GetComponent<EnemyAnimatorMaster>();
+        }
+        public CharacterInfo(CharacterInfoReference charRef, Cinemachine.CinemachineVirtualCamera vCam, CharacterMovementStatsSO movementStats, CharacterStatsSO characterStats)
+        {
+
+            this.characterContainer = charRef.gameObject;
             model = characterContainer.transform.Find("Model").gameObject;
             if(model == null) Debug.LogError($"Model is null: Confirm the Character {characterContainer.name} has a child named Model!");
             wallCheck = characterContainer.transform.Find("WallCheck");
             if(wallCheck == null) Debug.LogError($"WallCheck is null: Confirm the Character {characterContainer.name} has a child named WallCheck!");
-            cameraRoot = characterContainer.transform.Find("CameraRoot");
+            cameraRoot = charRef.cameraRoot;
             if(cameraRoot == null) Debug.LogError($"CameraRoot is null: Confirm the Character {characterContainer.name} has a child named CameraRoot!");
 
             controller = characterContainer.GetComponent<CharacterController>();
@@ -62,7 +75,6 @@ namespace Player
             this.movementStats = movementStats;
             this.characterStats = characterStats;
         }
-
         public override string ToString()
         {
             return $"CharacterInfo:\n" +

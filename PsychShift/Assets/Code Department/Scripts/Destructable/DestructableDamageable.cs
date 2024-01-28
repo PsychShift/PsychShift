@@ -7,6 +7,7 @@ public class DestructableDamageable : MonoBehaviour, IDamageable
     public int CurrentHealth { get; set; }
 
     public int MaxHealth { get; set; }
+    public bool IsWeakPoint { get; } = false;
     private TestBreakObjectCode implodeThing;
     private new Collider collider;
 
