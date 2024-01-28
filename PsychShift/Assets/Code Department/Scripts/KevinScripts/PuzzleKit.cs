@@ -321,7 +321,7 @@ public static event OnPuzzleDone PuzzleDone; */
                 {
                     ActivateObject();
                 }
-                else if(deactivate)
+                if(deactivate)
                 {
                     DeactivateObject();
                 } 
