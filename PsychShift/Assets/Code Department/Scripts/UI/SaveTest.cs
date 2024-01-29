@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SaveTest : MonoBehaviour
-{/* 
+{
     public SaveObject saveObject;
     public int CurrentSceneIndex;
     public int sceneToContinue;
@@ -24,7 +24,7 @@ public class SaveTest : MonoBehaviour
             SceneManager.LoadScene(sceneToContinue);
         else
             return;
-    } */
+    }
 
     // Save the current character game object
     // the current character health characterInfoReference.enemyHealth.CurrentHealth

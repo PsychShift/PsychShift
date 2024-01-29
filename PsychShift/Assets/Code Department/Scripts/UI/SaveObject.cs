@@ -9,11 +9,11 @@ using CharacterInfo = Player.CharacterInfo;
 using UnityEditor.SearchService;
 
 
-/* [System.Serializable]
+[System.Serializable]
 
 public class SaveObject
 {
   public CharacterInfo currentCharacter;
   public Transform Savepoint;
   //public Scene GetScene
-} */
+}
