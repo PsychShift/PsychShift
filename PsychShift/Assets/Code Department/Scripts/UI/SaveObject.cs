@@ -6,6 +6,7 @@ using Player;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using CharacterInfo = Player.CharacterInfo;
+using UnityEditor.SearchService;
 
 
 [System.Serializable]
@@ -13,5 +14,6 @@ using CharacterInfo = Player.CharacterInfo;
 public class SaveObject
 {
   public CharacterInfo currentCharacter;
-  
+  public Transform Savepoint;
+  //public Scene GetScene
 }
