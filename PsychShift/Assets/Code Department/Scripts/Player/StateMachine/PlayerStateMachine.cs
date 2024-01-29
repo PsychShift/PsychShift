@@ -120,6 +120,7 @@ namespace Player
         public CharacterInfo currentCharacter;
         private static Vector3 checkPointL;
         #region Monobehaviours
+        public HitEffects hitMarkerSRef;
         private void Awake()
         {
             if(instance != null)
@@ -450,13 +451,16 @@ namespace Player
 
         private void HitDamageable(IDamageable hitDamageable)
         {
+            Debug.Log("HITTTTTTT");
             if(!hitDamageable.IsWeakPoint)
             {
                 // normal hit effects
+                hitMarkerSRef.HitReaction(false);
             }
             else
             {
                 // crit hit effects
+                hitMarkerSRef.HitReaction(true);
             }
         }
 
