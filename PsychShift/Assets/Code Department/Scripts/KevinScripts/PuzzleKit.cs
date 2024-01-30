@@ -340,6 +340,8 @@ public static event OnPuzzleDone PuzzleDone; */
                 {
                     bossContainerRef.AddPuzzle();
                 }
+                if(dissolveOBJ)
+                    StartDissolver();
             }
         }
     }
@@ -396,17 +398,18 @@ public static event OnPuzzleDone PuzzleDone; */
         StartCoroutine(dissolver());
     }
 
-    public IEnumerator dissolver()
+    public IEnumerator dissolver()//CAN DO MULTIPLE WITH GO ARRAY
     {
+        
         float elapsedTime = 0;
         Material dissolveMaterial = GetComponent<Renderer>().material;
-
+        this.GetComponent<Collider>().enabled= false;
         while(elapsedTime < dissolveDuration)
         {
             elapsedTime += Time.deltaTime;
-
             dissolveStrength = Mathf.Lerp(0,1, elapsedTime / dissolveDuration);
             dissolveMaterial.SetFloat("_DissolveStrength", dissolveStrength);
+            
 
             yield return null;
         }
