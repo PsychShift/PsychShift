@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace VigilPathfinding
 {
+    [System.Serializable]
     public class PathNode
     {
         public int G;
@@ -11,9 +12,9 @@ namespace VigilPathfinding
         public bool isBlocked;
         public PathNode previousNode;
 
-        public Vector2Int position;
+        public Vector3Int position;
 
-        public PathNode(Vector2Int position, bool isBlocked)
+        public PathNode(Vector3Int position, bool isBlocked)
         {
             this.position = position;
             this.isBlocked = isBlocked;

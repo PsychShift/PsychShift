@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -61,10 +62,18 @@ namespace Guns.Health
                     //Destroy(gameObject);
                     //gameObject.SetActive(false);
                 }
-
-
-            
             }
+        }
+
+        private IEnumerator DestroyDelay()
+        {
+            // Do ragdoll
+            // wait
+            
+            // play effect
+            // wait
+
+            return null;
         }
 
     }
