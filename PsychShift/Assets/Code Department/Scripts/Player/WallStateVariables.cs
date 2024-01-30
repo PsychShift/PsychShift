@@ -67,21 +67,21 @@ namespace Player
 
         public void LeftRightCheck()
         {
-            WallRight = DirectionHits[Vector3.right].normal.magnitude > 0 || DirectionHits[Vector3.right + Vector3.forward].normal.magnitude > 0 || DirectionHits[Vector3.right - Vector3.forward].normal.magnitude > 0;
-            WallLeft = DirectionHits[Vector3.left].normal.magnitude > 0 || DirectionHits[Vector3.left + Vector3.forward].normal.magnitude > 0 || DirectionHits[Vector3.left - Vector3.forward].normal.magnitude > 0;
+            WallRight = DirectionHits[Vector3.right].normal.sqrMagnitude > 0 || DirectionHits[Vector3.right + Vector3.forward].normal.sqrMagnitude > 0 || DirectionHits[Vector3.right - Vector3.forward].normal.magnitude > 0;
+            WallLeft = DirectionHits[Vector3.left].normal.sqrMagnitude > 0 || DirectionHits[Vector3.left + Vector3.forward].normal.sqrMagnitude > 0 || DirectionHits[Vector3.left - Vector3.forward].normal.magnitude > 0;
         }
         public Vector3 RightWallNormal()
         {
-            return DirectionHits[Vector3.right].normal.magnitude > 0 ? DirectionHits[Vector3.right].normal :
-                   DirectionHits[Vector3.right + Vector3.forward].normal.magnitude > 0 ? DirectionHits[Vector3.right + Vector3.forward].normal :
-                   DirectionHits[Vector3.right - Vector3.forward].normal.magnitude > 0 ? DirectionHits[Vector3.right - Vector3.forward].normal :
+            return DirectionHits[Vector3.right].normal.sqrMagnitude > 0 ? DirectionHits[Vector3.right].normal :
+                   DirectionHits[Vector3.right + Vector3.forward].normal.sqrMagnitude > 0 ? DirectionHits[Vector3.right + Vector3.forward].normal :
+                   DirectionHits[Vector3.right - Vector3.forward].normal.sqrMagnitude > 0 ? DirectionHits[Vector3.right - Vector3.forward].normal :
                    Vector3.zero;
         }
         public Vector3 LeftWallNormal()
         {
-            return DirectionHits[Vector3.left].normal.magnitude > 0 ? DirectionHits[Vector3.left].normal :
-                   DirectionHits[Vector3.left + Vector3.forward].normal.magnitude > 0 ? DirectionHits[Vector3.left + Vector3.forward].normal :
-                   DirectionHits[Vector3.left - Vector3.forward].normal.magnitude > 0 ? DirectionHits[Vector3.left - Vector3.forward].normal :
+            return DirectionHits[Vector3.left].normal.sqrMagnitude > 0 ? DirectionHits[Vector3.left].normal :
+                   DirectionHits[Vector3.left + Vector3.forward].normal.sqrMagnitude > 0 ? DirectionHits[Vector3.left + Vector3.forward].normal :
+                   DirectionHits[Vector3.left - Vector3.forward].normal.sqrMagnitude > 0 ? DirectionHits[Vector3.left - Vector3.forward].normal :
                    Vector3.zero;
         }
 

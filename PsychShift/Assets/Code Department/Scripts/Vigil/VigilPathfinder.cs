@@ -9,7 +9,11 @@ namespace VigilPathfinding
 {
     public class VigilPathfinder
     {
-        /* public List<Vector2Int> Search(Hallway hallway, Dictionary<Vector2Int, PathNode> map)
+        public void InitializeMap()
+        {
+
+        }
+        /* public List<Vector3Int> Search(Hallway hallway, Dictionary<Vector3Int, PathNode> map)
         {
             if(!hallway.MultiConnectionHall)
             {
@@ -17,23 +21,23 @@ namespace VigilPathfinding
                 map[hallway.To].isBlocked = false;
 
                 List<PathNode> pathNodes = FindPath(map[hallway.From], map[hallway.To], map);
-                List<Vector2Int> pathPositions = pathNodes.Select(node => node.position).ToList();
+                List<Vector3Int> pathPositions = pathNodes.Select(node => node.position).ToList();
                 return pathPositions;
             }
             else
             {
-                Vector2Int fromRoomValue = hallway.MultiConnectionPointList.ElementAt(0).Value;
-                Vector2Int toRoomValue = hallway.MultiConnectionPointList.ElementAt(1).Value;
+                Vector3Int fromRoomValue = hallway.MultiConnectionPointList.ElementAt(0).Value;
+                Vector3Int toRoomValue = hallway.MultiConnectionPointList.ElementAt(1).Value;
                 map[fromRoomValue].isBlocked = false;
                 map[toRoomValue].isBlocked = false;
 
                 List<PathNode> pathNodes = FindPath(map[hallway.From], map[hallway.To], map);
-                List<Vector2Int> pathPositions = pathNodes.Select(node => node.position).ToList();
+                List<Vector3Int> pathPositions = pathNodes.Select(node => node.position).ToList();
 
                 for(int i = 2; i < hallway.MultiConnectionPointList.Count-1; i++)
                 {
-                    Vector2Int mapIndex = pathPositions[pathPositions.Count/2];
-                    Vector2Int toIndex = hallway.MultiConnectionPointList.ElementAt(i).Value;
+                    Vector3Int mapIndex = pathPositions[pathPositions.Count/2];
+                    Vector3Int toIndex = hallway.MultiConnectionPointList.ElementAt(i).Value;
                     map[mapIndex].isBlocked = false;
                     pathNodes.AddRange(FindPath(map[mapIndex], map[toIndex], map));
                     pathPositions = pathNodes.Select(node => node.position).ToList();
@@ -41,7 +45,7 @@ namespace VigilPathfinding
                 return pathPositions;    
             }
         } */
-        public List<PathNode> FindPath(PathNode startNode, PathNode endNode, Dictionary<Vector2Int, PathNode> map)
+        public List<PathNode> FindPath(PathNode startNode, PathNode endNode, Dictionary<Vector3Int, PathNode> map)
         {
             List<PathNode> openList = new List<PathNode>();
             List<PathNode> closedList = new List<PathNode>();
@@ -103,24 +107,27 @@ namespace VigilPathfinding
             return Mathf.Abs(startNode.position.x - neighbor.position.x) + Mathf.Abs(startNode.position.y - neighbor.position.y);
         }
 
-        private List<PathNode> GetNeighborNodes(PathNode currentNode, Dictionary<Vector2Int, PathNode> map)
+        private List<PathNode> GetNeighborNodes(PathNode currentNode, Dictionary<Vector3Int, PathNode> map)
         {
             List<PathNode> neighbors = new();
 
-            Vector2Int pos = currentNode.position;
+            Vector3Int pos = currentNode.position;
 
-            if(map.ContainsKey(pos+Vector2Int.up))
-                neighbors.Add(map[pos+Vector2Int.up]);
-            if(map.ContainsKey(pos+Vector2Int.down))
-                neighbors.Add(map[pos+Vector2Int.down]);
-            if(map.ContainsKey(pos+Vector2Int.left))
-                neighbors.Add(map[pos+Vector2Int.left]);
-            if(map.ContainsKey(pos+Vector2Int.right))
-                neighbors.Add(map[pos+Vector2Int.right]);
+            if(map.ContainsKey(pos+Vector3Int.up))
+                neighbors.Add(map[pos+Vector3Int.up]);
+            if(map.ContainsKey(pos+Vector3Int.down))
+                neighbors.Add(map[pos+Vector3Int.down]);
+            if(map.ContainsKey(pos+Vector3Int.left))
+                neighbors.Add(map[pos+Vector3Int.left]);
+            if(map.ContainsKey(pos+Vector3Int.right))
+                neighbors.Add(map[pos+Vector3Int.right]);
 
             return neighbors;
         }
 
-    
+        public void DrawGizmos()
+        {
+            
+        }
     }
 }

@@ -83,7 +83,7 @@ namespace Player
 
         private void HandleMovement()
         {
-            if ((currentCharacter.model.transform.forward - wallForward).magnitude > (currentCharacter.model.transform.forward - -wallForward).magnitude)
+            if ((playerStateMachine.cameraTransform.forward - wallForward).magnitude > (playerStateMachine.cameraTransform.forward - -wallForward).magnitude)
                 wallForward = -wallForward;
             
             playerStateMachine.AppliedMovementX = wallForward.x * WallSpeed;
@@ -94,7 +94,7 @@ namespace Player
 
         public Color GizmoColor()
         {
-            throw new System.NotImplementedException();
+            return Color.blue;
         }
     }
 }

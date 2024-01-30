@@ -309,7 +309,7 @@ namespace Player
         }
         void Update()
         {
-            //RotatePlayer();
+            RotatePlayer();
             //IsVaulting = CheckForVaultableObject();
             stateMachine.Tick();
             if (isSlowed)
