@@ -15,7 +15,7 @@ public class VigilAIEditor : Editor
         // Add a button to initialize all bools to true
         if (GUILayout.Button("Save Changes"))
         {
-            vigilAI.UpdateBoolArray();
+            vigilAI.SaveBoolArray();
             SceneView.RepaintAll();
         }
         if (GUILayout.Button("Load Changes"))
@@ -49,26 +49,18 @@ public class VigilAIEditor : Editor
 
         if (current.type == EventType.MouseDown)
         {
-
-            for (int x = 0; x < vigilAI.boolsMap.GetLength(0); x++)
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~0))
             {
-                for (int y = 0; y < vigilAI.boolsMap.GetLength(1); y++)
+                Handles.color = Color.red;
+                Handles.DrawLine(ray.origin, hit.point);
+                // Check if the ray intersects with the sphere
+                if (hit.collider.TryGetComponent(out VigilTileCollider vtc))
                 {
-                    Vector3 cubeCenter = vigilAI.pos + new Vector3((x + 0.5f) * vigilAI.gridScale.x, 0, (y + 0.5f) * vigilAI.gridScale.z);
-                    float sphereRadius = vigilAI.gridScale.x / 2f;
-
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~0))
-                    {
-                        // Check if the ray intersects with the sphere
-                        if ((hit.point - cubeCenter).sqrMagnitude <= sphereRadius * sphereRadius)
-                        {
-                            // The handle was clicked, invert the boolean value
-                            vigilAI.boolsMap[x, y] = !vigilAI.boolsMap[x, y];
-                            SceneView.RepaintAll();
-                            break;
-                        }
-                    }
+                    Vector2Int vec = vtc.GetTileVector2();
+                    // The handle was clicked, invert the boolean value
+                    vigilAI.boolsMap[vec.x, vec.y] = !vigilAI.boolsMap[vec.x, vec.y];
+                    SceneView.RepaintAll();
                 }
             }
         }

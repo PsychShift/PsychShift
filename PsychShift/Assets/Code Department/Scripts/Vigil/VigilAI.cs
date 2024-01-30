@@ -23,7 +23,7 @@ public class VigilAI : MonoBehaviour
     [SerializeField] private bool[] _boolArray;
     private Transform colliderParent;
     public BoxCollider[,] colliders;
-    public bool[] boolArray
+    [SerializeField] public bool[] boolArray
     {
         get { return _boolArray; }
         set
@@ -48,7 +48,7 @@ public class VigilAI : MonoBehaviour
             {
                 Gizmos.color = boolsMap[x,y] ? Color.green : Color.red;
                 Vector3 position = pos + new Vector3(x*gridScale.x, pos.y, y*gridScale.z);
-                Gizmos.DrawWireCube(position, gridScale);
+                Gizmos.DrawCube(position, gridScale);
                 Handles.Label(position, $"{i}");
                 i++;
             }
@@ -64,9 +64,10 @@ public class VigilAI : MonoBehaviour
                 boolsMap[x, y] = true;
             }
         }
+        SetColliders();
     }
 
-    public void UpdateBoolArray()
+    public void SaveBoolArray()
     {
         int i = 0;
         boolArray = new bool[gridSize.x * gridSize.y];
@@ -78,11 +79,11 @@ public class VigilAI : MonoBehaviour
                 i++;
             }
         }
+        SetColliders();
     }
 
     public void LoadBoolMap()
     {
-        SetColliders();
         boolsMap = new bool[gridSize.x, gridSize.y];
         int i = 0;
         for (int x = 0; x < boolsMap.GetLength(0); x++)
@@ -93,6 +94,7 @@ public class VigilAI : MonoBehaviour
                 i++;
             }
         }
+        SetColliders();
 
     }
 
@@ -102,18 +104,32 @@ public class VigilAI : MonoBehaviour
         
         if(colliderParent == null)
         {
-            colliderParent = Instantiate(new GameObject(), transform).transform;
+            colliderParent = new GameObject().transform;
+            colliderParent.parent = transform;
             colliderParent.name = "Collider Parent";
-        } 
+        }
+        else
+        {
+            DestroyImmediate(colliderParent.gameObject);
+            colliderParent = new GameObject().transform;
+            colliderParent.parent = transform;
+            colliderParent.name = "Collider Parent";
+        }
         
         for (int x = 0; x < colliders.GetLength(0); x++)
         {
             for (int y = 0; y < colliders.GetLength(1); y++)
             {
-                GameObject g = Instantiate(new GameObject(), pos + new Vector3(x * gridScale.x, pos.y, y * gridScale.y), Quaternion.identity, colliderParent);
+                GameObject g = new GameObject();
+                g.transform.position = pos + new Vector3(x * gridScale.x, pos.y, y * gridScale.z);
+                g.transform.rotation = Quaternion.identity;
+                g.transform.parent = colliderParent.transform;
                 g.name = "Collider: (" + x + ", " + y + ")";
                 colliders[x, y] = g.AddComponent<BoxCollider>();
                 colliders[x, y].size = gridScale;
+                VigilTileCollider vtc = g.AddComponent<VigilTileCollider>();
+                vtc.C = new Vector2Int(x, y);
+                g.layer = LayerMask.NameToLayer("VigilTile");
             }
         }
     }
