@@ -83,7 +83,7 @@ namespace Player
 
         private void HandleMovement()
         {
-            if ((playerStateMachine.cameraTransform.forward - wallForward).magnitude > (playerStateMachine.cameraTransform.forward - -wallForward).magnitude)
+            if ((currentCharacter.model.transform.forward - wallForward).magnitude > (currentCharacter.model.transform.forward - -wallForward).magnitude)
                 wallForward = -wallForward;
             
             playerStateMachine.AppliedMovementX = wallForward.x * WallSpeed;
