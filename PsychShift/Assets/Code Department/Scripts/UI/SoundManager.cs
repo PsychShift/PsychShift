@@ -14,6 +14,7 @@ public class SoundManager : MonoBehaviour
     }
 
     // Update is called once per frame
+    //save volume data
     void Update()
     {
         if(!PlayerPrefs.HasKey("musicVolume"))
