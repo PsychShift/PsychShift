@@ -30,6 +30,7 @@ namespace Guns.Health
 
         public void TakeDamage(int Damage)
         {
+            if (gameObject.layer == 15 && GodModeScript.Instance.GodMode) return;
             int damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
             
 
@@ -56,6 +57,7 @@ namespace Guns.Health
                 }
                 else if(gameObject.layer == 15)
                 {
+                    
                     OnDeath?.Invoke(transform);
                     //CURRENT SOLUTION NOT FINAL
                     //SceneManager.LoadScene(SceneManager.GetActiveScene().name); MIGHT BE A PROBLEM
