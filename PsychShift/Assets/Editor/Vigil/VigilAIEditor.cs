@@ -1,7 +1,6 @@
 using UnityEditor;
 using UnityEngine;
 
-
 [CustomEditor(typeof(VigilAI))]
 public class VigilAIEditor : Editor
 {
@@ -16,17 +15,25 @@ public class VigilAIEditor : Editor
         if (GUILayout.Button("Save Changes"))
         {
             vigilAI.SaveBoolArray();
+            EditorUtility.SetDirty(vigilAI); // Mark the object as dirty
             SceneView.RepaintAll();
         }
         if (GUILayout.Button("Load Changes"))
         {
             vigilAI.LoadBoolMap();
+            EditorUtility.SetDirty(vigilAI); // Mark the object as dirty
             SceneView.RepaintAll();
         }
         if (GUILayout.Button("RESET ALL TO TRUE"))
         {
             vigilAI.SetAllBoolsMapToTrue();
+            EditorUtility.SetDirty(vigilAI); // Mark the object as dirty
             SceneView.RepaintAll();
+        }
+        if(GUILayout.Button("Setup Colliders"))
+        {
+            vigilAI.SetColliders();
+            EditorUtility.SetDirty(vigilAI); // Mark the object as dirty
         }
     }
 
@@ -60,6 +67,7 @@ public class VigilAIEditor : Editor
                     Vector2Int vec = vtc.GetTileVector2();
                     // The handle was clicked, invert the boolean value
                     vigilAI.boolsMap[vec.x, vec.y] = !vigilAI.boolsMap[vec.x, vec.y];
+                    EditorUtility.SetDirty(vigilAI); // Mark the object as dirty
                     SceneView.RepaintAll();
                 }
             }
