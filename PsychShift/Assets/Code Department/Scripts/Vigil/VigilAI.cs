@@ -90,6 +90,7 @@ public class VigilAI : MonoBehaviour
         foreach(var point in path)
         {
             Vector3 targetPosition = point;
+            Debug.Log(targetPosition);
             while(Vector3.Distance(transform.position, targetPosition) > 0.1f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime);
@@ -219,20 +220,25 @@ public class VigilAI : MonoBehaviour
     {
         if(colliders == null) colliders = new BoxCollider[gridSize.x, gridSize.y];
 
-        GameObject parent = transform.Find("Collider Parent").gameObject;
-        if(parent != null) DestroyImmediate(parent);
+        //GameObject parent = transform.Find("Collider Parent").gameObject;
+        Transform parent = transform.parent;
+        Debug.Log(parent.name);
+        GameObject colParent = parent.Find("Collider Parent").gameObject;
+        Debug.Log(colParent.name);
+   
+        if (colParent != null) DestroyImmediate(colParent);
         
         if(colliderParent == null)
         {
             colliderParent = new GameObject().transform;
-            colliderParent.parent = transform;
+            colliderParent.parent = parent;
             colliderParent.name = "Collider Parent";
         }
         else
         {
             DestroyImmediate(colliderParent.gameObject);
             colliderParent = new GameObject().transform;
-            colliderParent.parent = transform;
+            colliderParent.parent = parent;
             colliderParent.name = "Collider Parent";
         }
         

@@ -1,3 +1,4 @@
+using Player;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.PlasticSCM.Editor.WebApi;
@@ -13,10 +14,18 @@ public class SaveTest : MonoBehaviour
 
     public void SaveData()
     {
+        Player.CharacterInfo charInfo = PlayerStateMachine.Instance.currentCharacter;
+        int health = charInfo.enemyHealth.CurrentHealth;
+
+        saveObject = new SaveObject();
+
+        saveObject.Savepoint = charInfo.characterContainer.transform;
+        saveObject.Character = charInfo;
         SaveManager.Save(saveObject);
         CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         PlayerPrefs.SetInt("SavedScene", CurrentSceneIndex);
     }
+    
     public void LoadData()
     {
         saveObject = SaveManager.Load();

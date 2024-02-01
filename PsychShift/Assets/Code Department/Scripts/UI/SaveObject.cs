@@ -15,5 +15,6 @@ public class SaveObject
 {
   //public CharacterInfo currentCharacter;
   public Transform Savepoint;
+  public Player.CharacterInfo Character;
   //public Scene GetScene
 }
