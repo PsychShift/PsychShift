@@ -154,7 +154,7 @@ public class VigilAI : MonoBehaviour
     }
     public bool[,] boolsMap;
 
-
+    #if UNITY_EDITOR
     void OnDrawGizmos()
     {
         if(!enableGUIEditor) return;
@@ -170,7 +170,7 @@ public class VigilAI : MonoBehaviour
                 i++;
             }
     }
-
+    #endif
     public void SetAllBoolsMapToTrue()
     {
         boolsMap = new bool[gridSize.x, gridSize.y];

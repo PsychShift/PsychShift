@@ -6,7 +6,7 @@ using Player;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 //using CharacterInfo = Player.CharacterInfo;
-using UnityEditor.SearchService;
+//using UnityEditor.SearchService;
 
 
 [System.Serializable]
