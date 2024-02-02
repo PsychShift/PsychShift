@@ -1,35 +1,49 @@
 using Player;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 
 public class MovingPlatform : MonoBehaviour
 {
-    protected Vector3 movementVector;
-    void OnTriggerEnter(Collider other)
+    private Dictionary<CharacterController, Vector3> characterLossyScale;
+    private void Awake()
     {
-        if(other.TryGetComponent(out CharacterController controller))
+        characterLossyScale = new Dictionary<CharacterController, Vector3>();
+        BoxCollider[] colliders = GetComponents<BoxCollider>();
+        if (colliders.Length > 0)
         {
-            //controller.transform.parent = transform;
+            foreach (var collider in colliders) 
+            { 
+                if (collider.isTrigger) return;
+            }
         }
+
+        BoxCollider triggerCollider = gameObject.AddComponent<BoxCollider>();
+        triggerCollider.isTrigger = true;
+        triggerCollider.size = colliders[0].size * 1.2f;
     }
-    private void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out CharacterController controller))
         {
-            //controller.transform.parent = transform;
-            if(other.tag == "Player")
-            {
-                PlayerStateMachine.Instance.ExternalMovement = movementVector;
-            }
+            //controller.transform.SetParent(transform, true);
+            characterLossyScale.Add(controller, controller.transform.lossyScale);
+            controller.transform.parent = transform;
+            Debug.Log("Added " + characterLossyScale.Count);
         }
     }
+
     void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.TryGetComponent(out CharacterController controller))
         {
-            PlayerStateMachine.Instance.ExternalMovement = Vector3.zero;
+            //controller.transform.SetParent(null, false);
+            controller.transform.parent = null;
+            controller.transform.localScale = characterLossyScale[controller];
+            characterLossyScale.Remove(controller);
+            Debug.Log("removed " + characterLossyScale.Count);
         }
     }
 }

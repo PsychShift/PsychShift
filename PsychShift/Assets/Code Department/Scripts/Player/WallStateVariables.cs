@@ -49,7 +49,7 @@ namespace Player
             {
                 Vector3 dir = charTransform.TransformDirection(item.Key);
                 RaycastHit hit;
-                Physics.Raycast(charTransform.position + Vector3.up, dir, out hit, 2.5f, wallLayer);
+                Physics.Raycast(charTransform.position + Vector3.up, dir, out hit, 2.5f, wallLayer, QueryTriggerInteraction.Ignore);
 
                 Color c = Color.red;
                 if(hit.normal != Vector3.zero)
@@ -112,7 +112,7 @@ namespace Player
         private float maxLedgeGrabDistance = 4.0f;
         public bool LedgeDetection(CharacterInfo currentCharacter, Transform cameraTransform)
         {
-            bool ledgeDetected = Physics.SphereCast(currentCharacter.characterContainer.transform.position + Vector3.up * 1f , ledgeSphereCastRadius, cameraTransform.forward, out RaycastHit ledgeHit, ledgeDetectionLength, WallholdLayers);
+            bool ledgeDetected = Physics.SphereCast(currentCharacter.characterContainer.transform.position + Vector3.up * 1f , ledgeSphereCastRadius, cameraTransform.forward, out RaycastHit ledgeHit, ledgeDetectionLength, WallholdLayers, QueryTriggerInteraction.Ignore);
 
             if (!ledgeDetected) return false;
 

@@ -321,7 +321,7 @@ namespace Player
         }
         void FixedUpdate()
         {
-            currentCharacter.controller.Move((appliedMovement * Time.deltaTime) + ExternalMovement);
+            currentCharacter.controller.Move((appliedMovement * Time.deltaTime));
         }
         #endregion
 
@@ -669,7 +669,7 @@ namespace Player
         }
         private bool CheckForVaultableObject()
         {
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var firstHit, 1f, vaultLayers))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var firstHit, 1f, vaultLayers, QueryTriggerInteraction.Ignore))
                 return true;
             return false;
         }
@@ -707,7 +707,7 @@ namespace Player
             {
                 Vector3 relativeDir = currentCharacter.model.transform.TransformDirection(dir);
                 Debug.DrawRay(currentCharacter.wallCheck.position, relativeDir, Color.blue, 0);
-                if (Physics.Raycast(currentCharacter.wallCheck.position, relativeDir, 2.5f, wallLayer))
+                if (Physics.Raycast(currentCharacter.wallCheck.position, relativeDir, 2.5f, wallLayer, QueryTriggerInteraction.Ignore))
                     return true;
             }
             return false;
@@ -721,7 +721,7 @@ namespace Player
         Vector3 boxSize = new Vector3(0.4f, 0.1f, 0.4f);
         private bool GroundedCheck()
         {
-            RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer);
+            RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer, QueryTriggerInteraction.Ignore);
             if(hits.Any(hit => hit.collider != null))
                 return true;
             
@@ -730,7 +730,7 @@ namespace Player
 
         private bool AboveGround()
         {
-            RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, 0.2f, groundLayer);
+            RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, 0.2f, groundLayer, QueryTriggerInteraction.Ignore);
             if(hits.Any(hit => hit.collider != null))
                 return false;
             

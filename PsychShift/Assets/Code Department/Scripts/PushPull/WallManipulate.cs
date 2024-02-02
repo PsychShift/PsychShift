@@ -71,10 +71,8 @@ public class ObjectManipulator : MovingPlatform, IManipulate
         while (Time.time < endTime)
         {
             float journeyFraction = (Time.time - startTime) / duration;
-            Vector3 newPosition = Vector3.Lerp(currentPosition, targetPosition, journeyFraction);
-            movementVector = newPosition - currentPosition;
+            transform.position = Vector3.Lerp(currentPosition, targetPosition, journeyFraction);
 
-            transform.position = newPosition;
             if (collisionDetection != null)
             {
                 Collider[] colliders = Physics.OverlapBox(collisionDetection.position, collisionDetectionSize / 2);
@@ -91,7 +89,6 @@ public class ObjectManipulator : MovingPlatform, IManipulate
             }
             yield return new WaitForFixedUpdate(); ;
         }
-
         transform.position = targetPosition;
         CanInteract = true;
     }
