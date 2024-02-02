@@ -19,5 +19,10 @@ namespace VigilPathfinding
             this.position = position;
             this.isBlocked = isBlocked;
         }
+
+        public override string ToString()
+        {
+            return $"Position: {position} \n Blocked: {isBlocked} \n (G - {G}, H - {H}, F - {F})";
+        }
     }
 }

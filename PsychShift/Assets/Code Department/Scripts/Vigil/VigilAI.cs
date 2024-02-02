@@ -8,10 +8,13 @@ using VigilPathfinding;
 
 public class VigilAI : MonoBehaviour
 {
+    public float speed = 10;
+    public float timeBetweenPlayerCheck = 10;
 
     void Awake()
     {
-        //characterController = transform.AddComponent<CharacterController>();
+        vigilPathfinder = new VigilPathfinder(gridScale);
+        characterController = transform.GetComponent<CharacterController>();
         SetColliders();
         LoadBoolMap();
         foreach(var collider in colliders)
@@ -21,11 +24,12 @@ public class VigilAI : MonoBehaviour
         colliderParent.parent = null;
 
         SetUpGridPathNodes();
-        Vector3Int newPos = grid.ElementAt(0).Key;
-        transform.position = newPos;
+        Vector3Int newPos = Vector3Int.FloorToInt(transform.position);
+        newPos.y = 0;
         SetPath(newPos);
     }
     #region AI
+    VigilPathfinder vigilPathfinder;
     private Dictionary<Vector3Int, PathNode> grid;
     private List<Vector3Int> currentPath;
     CharacterController characterController;
@@ -41,11 +45,11 @@ public class VigilAI : MonoBehaviour
             StopCoroutine(currentPathCoroutine);
         }
         Vector3 p = transform.position;
-        Vector3Int currentPos = new Vector3Int((int)p.x, (int)p.y, (int)p.z);
+        Vector3Int currentPos = Vector3Int.FloorToInt(p);
         Vector3Int endPos = grid.ElementAt(Random.Range(0, grid.Count)).Key;
 
         int attempt = 0;
-        while(!VigilPathfinder.FindPath(currentPos, endPos, grid, out currentPath))
+        while(!vigilPathfinder.FindPath(currentPos, endPos, grid, out currentPath))
         {
             endPos = grid.ElementAt(Random.Range(0, grid.Count)).Key;
             attempt++;
@@ -61,7 +65,6 @@ public class VigilAI : MonoBehaviour
 
     public void SetPath(Vector3Int currentPos)
     {
-        Debug.Log("setpath 1");
         if (currentPathCoroutine != null)
         {
             StopCoroutine(currentPathCoroutine);
@@ -71,11 +74,10 @@ public class VigilAI : MonoBehaviour
         Vector3Int endPos = grid.ElementAt(Random.Range(0, grid.Count)).Key;
 
         int attempt = 0;
-        while(!VigilPathfinder.FindPath(currentPos, endPos, grid, out currentPath))
+        while(!vigilPathfinder.FindPath(currentPos, endPos, grid, out currentPath))
         {
             endPos = grid.ElementAt(Random.Range(0, grid.Count)).Key;
             attempt++;
-            Debug.Log(attempt);
         }
 
         // Store the new coroutine
@@ -85,33 +87,26 @@ public class VigilAI : MonoBehaviour
         StartCoroutine(currentPathCoroutine);
     }
 
-    private IEnumerator MoveTo(List<Vector3Int> path)
+    IEnumerator MoveTo(List<Vector3Int> waypoints)
     {
-        foreach(var point in path)
+        int waypointIndex = 0;
+        while (waypointIndex < waypoints.Count)
         {
-            Vector3 targetPosition = point;
-            Debug.Log(targetPosition);
-            while(Vector3.Distance(transform.position, targetPosition) > 0.1f)
+            Vector3 waypoint = waypoints[waypointIndex];
+            Vector3 direction = (waypoint - characterController.transform.position).normalized;
+            float distanceToWaypoint = Vector3.Distance(characterController.transform.position, waypoint);
+            float travelTime = distanceToWaypoint / speed;
+
+            float elapsedTime = 0f;
+
+            while (elapsedTime < travelTime)
             {
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime);
+                characterController.Move(direction * speed * Time.deltaTime);
+                elapsedTime += Time.deltaTime;
                 yield return null;
             }
 
-            // Check if this was the last point in the path
-            if (point == path[path.Count - 1])
-            {
-                // Stop the previous coroutine
-                if (currentPathCoroutine != null)
-                {
-                    StopCoroutine(currentPathCoroutine);
-                }
-
-                // Store the new coroutine
-                currentPathCoroutine = MoveTo(currentPath);
-
-                // Start the new coroutine
-                StartCoroutine(currentPathCoroutine);
-            }
+            waypointIndex++;
         }
     }
     public void SetUpGridPathNodes()
@@ -122,8 +117,8 @@ public class VigilAI : MonoBehaviour
         for(int x = 0; x < boolsMap.GetLength(0); x++)
             for(int y = 0; y < boolsMap.GetLength(1); y++)
             {
-                Vector3Int gridPos = new Vector3Int(x, (int)pos.y, y);
-                grid[gridPos] = new PathNode(gridPos, boolsMap[x,y]);
+                Vector3Int gridPos = Vector3Int.FloorToInt(colliders[x, y].transform.position);
+                grid[gridPos] = new PathNode(gridPos, !boolsMap[x,y]);
                 i++;
             }
     }
@@ -136,7 +131,7 @@ public class VigilAI : MonoBehaviour
     [Tooltip("The x and y are how many tiles there are.")]
     public Vector2Int gridSize = Vector2Int.one;
     [Tooltip("The size of each tile")]
-    public Vector3 gridScale = new Vector3(10, 1, 10);
+    public Vector3Int gridScale = new Vector3Int(10, 1, 10);
 
     [SerializeField] private bool[] _boolArray;
     private Transform colliderParent;
@@ -165,9 +160,9 @@ public class VigilAI : MonoBehaviour
             for(int y = 0; y < boolsMap.GetLength(1); y++)
             {
                 Gizmos.color = boolsMap[x,y] ? Color.green : Color.red;
-                Vector3 position = pos + new Vector3(x*gridScale.x, pos.y, y*gridScale.z);
+                Vector3 position = colliderParent.position + new Vector3(x*gridScale.x, pos.y, y*gridScale.z);
                 Gizmos.DrawCube(position, gridScale);
-                Handles.Label(position, $"{i}");
+                Handles.Label(position, $"{i} {position}");
                 i++;
             }
     }
@@ -222,9 +217,7 @@ public class VigilAI : MonoBehaviour
 
         //GameObject parent = transform.Find("Collider Parent").gameObject;
         Transform parent = transform.parent;
-        Debug.Log(parent.name);
         GameObject colParent = parent.Find("Collider Parent").gameObject;
-        Debug.Log(colParent.name);
    
         if (colParent != null) DestroyImmediate(colParent);
         
@@ -247,7 +240,7 @@ public class VigilAI : MonoBehaviour
             for (int y = 0; y < colliders.GetLength(1); y++)
             {
                 GameObject g = new GameObject();
-                g.transform.position = pos + new Vector3(x * gridScale.x, pos.y, y * gridScale.z);
+                g.transform.position = parent.position + new Vector3(x * gridScale.x, pos.y, y * gridScale.z);
                 g.transform.rotation = Quaternion.identity;
                 g.transform.parent = colliderParent.transform;
                 g.name = "Collider: (" + x + ", " + y + ")";
