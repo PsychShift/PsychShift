@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 
-public class ObjectManipulator : MonoBehaviour, IManipulate
+public class ObjectManipulator : MovingPlatform, IManipulate
 {
     public bool IsInteracted { get; set; }
     public bool CanInteract { get; set; }
@@ -71,8 +71,11 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
         while (Time.time < endTime)
         {
             float journeyFraction = (Time.time - startTime) / duration;
-            transform.position = Vector3.Lerp(currentPosition, targetPosition, journeyFraction);
-            if(collisionDetection != null)
+            Vector3 newPosition = Vector3.Lerp(currentPosition, targetPosition, journeyFraction);
+            movementVector = newPosition - currentPosition;
+
+            transform.position = newPosition;
+            if (collisionDetection != null)
             {
                 Collider[] colliders = Physics.OverlapBox(collisionDetection.position, collisionDetectionSize / 2);
                 foreach(Collider other in colliders)
@@ -86,7 +89,7 @@ public class ObjectManipulator : MonoBehaviour, IManipulate
                     }
                 }
             }
-            yield return null;
+            yield return new WaitForFixedUpdate(); ;
         }
 
         transform.position = targetPosition;

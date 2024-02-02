@@ -1,23 +1,35 @@
+using Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class MovingPlatform : MonoBehaviour
 {
+    protected Vector3 movementVector;
     void OnTriggerEnter(Collider other)
     {
-        string tag = other.gameObject.tag;
-        if(tag == "Enemy" || tag == "Player")
+        if(other.TryGetComponent(out CharacterController controller))
         {
-            other.transform.parent = transform;
+            //controller.transform.parent = transform;
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.TryGetComponent(out CharacterController controller))
+        {
+            //controller.transform.parent = transform;
+            if(other.tag == "Player")
+            {
+                PlayerStateMachine.Instance.ExternalMovement = movementVector;
+            }
         }
     }
     void OnTriggerExit(Collider other)
     {
-        string tag = other.gameObject.tag;
-        if(tag == "Enemy" || tag == "Player")
+        if (other.tag == "Player")
         {
-            other.transform.parent = null;
+            PlayerStateMachine.Instance.ExternalMovement = Vector3.zero;
         }
     }
 }

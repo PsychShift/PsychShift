@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateStopManipulatable : MonoBehaviour, IManipulate
+public class RotateStopManipulatable : MovingPlatform, IManipulate
 {
     [SerializeField] private float freezeTime = 1f;
     private float direction = 1f;
@@ -53,7 +53,7 @@ public class RotateStopManipulatable : MonoBehaviour, IManipulate
             float z = rotateZ ? rotateZSpeed * direction * Time.fixedDeltaTime : 0f;
             
             transform.Rotate(x, y, z, Space.Self);
-            yield return null;
+            yield return new WaitForFixedUpdate(); ;
         }
     }
     public IEnumerator Wait()

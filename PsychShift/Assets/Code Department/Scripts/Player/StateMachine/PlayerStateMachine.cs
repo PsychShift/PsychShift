@@ -36,6 +36,8 @@ namespace Player
         public float AppliedMovementZ { get { return appliedMovement.z; } set { appliedMovement.z = value; }}
         //public float CurrentMovementZ { get { return currentMovement.z; } set { currentMovement.z = value; }}
 
+        public Vector3 ExternalMovement { get; set; }
+
         public Vector3 InAirForward { get; set; }
         public Vector3 InAirRight { get; set; }
         [SerializeField] private float walkSpeed = 20;
@@ -319,7 +321,7 @@ namespace Player
         }
         void FixedUpdate()
         {
-            currentCharacter.controller.Move(appliedMovement * Time.deltaTime);
+            currentCharacter.controller.Move((appliedMovement * Time.deltaTime) + ExternalMovement);
         }
         #endregion
 
