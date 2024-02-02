@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-[CustomEditor(typeof(EnemyBrain), true)]
+/* [CustomEditor(typeof(EnemyBrain), true)]
 [CanEditMultipleObjects]
 public class EnemyBrainEditor : Editor
 {
@@ -71,4 +71,4 @@ public class EnemyBrainEditor : Editor
 
         return listFields;
     }
-}
+} */

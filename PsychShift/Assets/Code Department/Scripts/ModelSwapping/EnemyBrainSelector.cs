@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Guns;
 using Guns.Demo;
 using UnityEngine;
@@ -11,30 +13,30 @@ public class EnemyBrainSelector : MonoBehaviour
     public EBrainType enemyType;
     public GunScriptableObject gunType;
     [Header("Doesn't do anything yet")]
-    public EEnemyModifier modifier = EEnemyModifier.None;
+    public List<EEnemyModifier> modifiers = new List<EEnemyModifier> { EEnemyModifier.None };
     private EnemyBrain currentBrain;
 
-    public void SwapBrain(GunScriptableObject g)
+    public void SwapBrain(GunScriptableObject g, List<EEnemyModifier> modifiers)
     {
         currentBrain = GetComponent<EnemyBrain>();
         CharacterBrainSwappingInfo oldInfo = new CharacterBrainSwappingInfo(currentBrain.agression);
         EnemyBrain newBrain = ChooseNewBrain(enemyType);
         if (newBrain == null) return;
         currentBrain = newBrain;
-        TransferBrainData(oldInfo);
+        TransferBrainData(oldInfo, modifiers);
 
         // Now do gun swap and model changes
         EnemyGunSelector gunSelector = GetComponent<EnemyGunSelector>();
 
         gunSelector.StartGun = g;
-        SwapModel(g);
+        SwapModel(g, modifiers);
     }
-    private void SwapModel(GunScriptableObject g)
+    private void SwapModel(GunScriptableObject g, List<EEnemyModifier> modifiers)
     {
         // Given gun type and enemy modifier, select a file name to load a model
 
         string gunTypeName = GunName(g);
-        string modifierName = ModifierName(modifier);
+        string modifierName = ModifierName(modifiers);
 
         string fileName = gunTypeName + modifierName + "_EnemyModel";
         //Debug.Log(fileName);
@@ -56,7 +58,7 @@ public class EnemyBrainSelector : MonoBehaviour
         EnemyBrain newBrain = ChooseNewBrain(enemyType);
         if (newBrain == null) return;
         currentBrain = newBrain;
-        TransferBrainData(oldInfo);
+        TransferBrainData(oldInfo, modifiers);
 
         // Now do gun swap and model changes
         EnemyGunSelector gunSelector = GetComponent<EnemyGunSelector>();
@@ -71,7 +73,7 @@ public class EnemyBrainSelector : MonoBehaviour
         // Given gun type and enemy modifier, select a file name to load a model
 
         string gunTypeName = GunName(gunType);
-        string modifierName = ModifierName(modifier);
+        string modifierName = ModifierName(modifiers);
 
         string fileName = gunTypeName + modifierName + "_EnemyModel";
         //Debug.Log(fileName);
@@ -109,27 +111,40 @@ public class EnemyBrainSelector : MonoBehaviour
     }
 
 
-    public string ModifierName(EEnemyModifier modifier)
+    public string ModifierName(List<EEnemyModifier> modifiers)
     {
-        switch(modifier)
+        // Sort the list by the integer value of the enum
+        var sortedModifiers = modifiers.OrderBy(x => (int)x);
+
+        string names = "";
+        foreach (var modifier in sortedModifiers)
         {
-            case EEnemyModifier.None:
-                return "";
-            case EEnemyModifier.NonSwap:
-                return "NonSwap";
-            case EEnemyModifier.Keycard:
-                return "Keycard";
-            case EEnemyModifier.Explosive:
-                return "Explosive";
-            default:
-                return "";
+            switch (modifier)
+            {
+                case EEnemyModifier.NonSwap:
+                    names += "NonSwap";
+                    break;
+                case EEnemyModifier.Keycard:
+                    names += "Keycard";
+                    break;
+                case EEnemyModifier.Explosive:
+                    names += "Explosive";
+                    break;
+                case EEnemyModifier.None:
+                    names += "";
+                    break;
+                default:
+                    names += "";
+                    break;
+            }
         }
+        return names;
     }
 
 
-    private void TransferBrainData(CharacterBrainSwappingInfo oldInfo)
+    private void TransferBrainData(CharacterBrainSwappingInfo oldInfo, List<EEnemyModifier> modifiers)
     {
-        currentBrain.SetUpBrainSwap(oldInfo);
+        currentBrain.SetUpBrainSwap(oldInfo, modifiers);
     }
 
     private EnemyBrain ChooseNewBrain(EBrainType type)

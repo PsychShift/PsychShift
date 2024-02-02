@@ -4,6 +4,11 @@ using System;
 using CharacterInfo = Player.CharacterInfo;
 using UnityEngine.AI;
 using System.Collections;
+using Guns.Health;
+using System.Collections.Generic;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 [RequireComponent(typeof(CharacterInfoReference), typeof(TempGravity), typeof(FieldOfView))]
 [DisallowMultipleComponent]
 public abstract class EnemyBrain : MonoBehaviour
@@ -47,6 +52,9 @@ public abstract class EnemyBrain : MonoBehaviour
     public NavMeshAgent Agent => CharacterInfo.agent;
     public Transform Model => CharacterInfo.model.transform;
     public EnemyAnimatorMaster AnimMaster => CharacterInfo.animMaster;
+    public EnemyHealth EnemyHealth => CharacterInfo.enemyHealth;
+
+    protected List<AbstractEnemyModifier> modifiers;
     
     [HideInInspector] public Cover currentCover;
 
@@ -73,6 +81,11 @@ public abstract class EnemyBrain : MonoBehaviour
     {
         CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
         fovRef = GetComponent<FieldOfView>();
+        if(modifiers != null)
+            foreach(var mod in modifiers)
+            {
+                mod.ApplyModifier(this);
+            }
     }
 
     protected void HandleReactivation()
@@ -170,9 +183,36 @@ public abstract class EnemyBrain : MonoBehaviour
     }
 
 
-    public void SetUpBrainSwap(CharacterBrainSwappingInfo info)
+    public void SetUpBrainSwap(CharacterBrainSwappingInfo info, List<EEnemyModifier> modifiers)
     {
         agression = info.AIAgression;
+        this.modifiers = new();
+        foreach(var mod in modifiers)
+        {
+            
+            switch(mod)
+            {
+                case EEnemyModifier.None : 
+                    break;
+                case EEnemyModifier.Explosive : 
+                Debug.Log("boom boom");
+                    AbstractEnemyModifier expMod = gameObject.AddComponent<ExplosiveDeathModifier>();
+                    this.modifiers.Add(expMod);
+                    break;
+                case EEnemyModifier.Keycard :
+                    AbstractEnemyModifier keyMod = gameObject.AddComponent<ExplosiveDeathModifier>();
+                    this.modifiers.Add(keyMod);
+                    break;
+                case EEnemyModifier.NonSwap :
+                    Debug.Log("Doesn't work yet");
+                    break;
+                default :
+                    break;
+            }
+        }
+        #if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+        #endif
     }
 }
 /*     private IEnumerator WaitTillGrounded()
