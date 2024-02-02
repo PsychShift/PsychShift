@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SettingsScript : MonoBehaviour
 {
     public Dropdown resolutionDropdown;
+    public Toggle vsyncTog;
 
     Resolution[] resolutions;
 
@@ -33,11 +34,30 @@ public class SettingsScript : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+        if (QualitySettings.vSyncCount == 0)
+        {
+            vsyncTog.isOn = false;
+        }
+        else
+        {
+            vsyncTog.isOn = true;
+        }
     }
 
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
+    }
+    public void ApplyGraphics()
+    {
+        if (vsyncTog.isOn)
+        {
+            QualitySettings.vSyncCount = 1;
+        }
+        else
+        {
+            QualitySettings.vSyncCount = 0;
+        }
     }
 
     public void SetResolution (int resolutionIndex)
