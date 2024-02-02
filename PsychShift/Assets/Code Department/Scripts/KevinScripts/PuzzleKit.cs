@@ -7,96 +7,90 @@ using UnityEngine;
 
 public class PuzzleKit : MonoBehaviour, IDamageable
 {
-    [TextArea]
-    public string Notes = "Use this script for creating puzzles. Select the bools at the bottom. One for action another for reaction. Use this script again on a new object for new puzzles"; 
-    //USE THIS SCRIPT FOR EVERY PUZZLE. YOU WILL NEED A NEW OBJECT WITH THIS SCRIPT FOR FOLLOW UP PUZZLES 
+    
+    [Header("All objects need these")]
+    public AudioSource Beep;
+    public AudioClip soundClip;
 
-    //EFFECTS FOR SHOOT AND PLATE
+    [Header("Add and select these for action obj")]
+    [SerializeField]
+    PuzzleKit godBoxRef;
     public ParticleSystem effectForAct;
 
-    //EFFECT FOR REACTION
-    public ParticleSystem effectForGod;
-    [TextArea]
-    public string Notepad = "Add the god puzzle kit object here, mainly used for interaction puzzles.";
-    //god box var
-    [SerializeField]
-    PuzzleKit godBoxRef;//if this is on an item it knows it's the god box
-    private bool godBox;
-
-
-    [TextArea]
-    public string Notes2 = "Actions below, pressurePlate/shoot needs a collider set to trigger to work, set a count number to tell code how many objects need to be activated before reaction.";
+    
     //Actions
-    [SerializeField]
-    private bool stopSpawn;
+    [Header("How do you wanna interact?")]
     [SerializeField]
     private bool interact;
     [SerializeField]
     private bool pressurePlate;
     [SerializeField]
     private bool shootObj;
+
+    [Header("Add and select these for GOD obj")]
+    public ParticleSystem effectForGod;
     [SerializeField]//Add this number on god box
     int amountToActivate;
-    private bool activated;
     public int activateCount=0;
 
-    [TextArea]
-    public string Notes3 = "Reactions below";
-    //Reactions
+    [Header("What do you want god to do?(can do multiple)")]
+    [Header("Move options")]
     [SerializeField]
     private bool move;
+    
+    [SerializeField] private Vector3 endPosition;
+
+    [SerializeField]
+    float speedOfMove; 
+
+
+    [Header("Spawn options")]
     [SerializeField]
     private bool spawn;
-    [SerializeField]
-    private bool activate;
-    [SerializeField]
-    private bool deactivate;
-    private bool fall;
-
-    [TextArea]
-    public string moveVariables = "Variables that need to be filled in for move below";
-    //Move variables 
-    //[SerializeField]
-    //Transform targetLocation;
-    //[SerializeField] private Vector3 startPosition; // Initial position of the object
-    [SerializeField] private Vector3 endPosition; 
-    [SerializeField]
-    float speedOfMove;
-    private float startTime;
-    private float journeyLength;
-    private bool movingActivated;
-
-    [TextArea]
-    public string spawnVariables = "Variables that need to be filled in for Spawn below, set objects and location in godBox";
-    //Spawn variables
+    
     [SerializeField]
     GameObject[] spawnObjects;
     [SerializeField]
     Transform locationOfSpawn;
     [SerializeField]
-    bool isSpawnInf;
-    [SerializeField]
     int howManySpawn;
-    int spawnCount;
 
-    //shut off spawners after a bit 
+
+    [Header("Activate Options")]
     [SerializeField]
-    GameObject[] spawnPoints;
+    private bool activate;
+    
     [SerializeField]
     GameObject[] activateObject;
+
+    [Header("Deactivate Options")]
+    [SerializeField]
+    private bool deactivate;
+    
     [SerializeField]
     GameObject[] deactivateObject;
-    public bool dissolveOBJ;
-    public bool puzzleComplete;
-    public AudioSource Beep;
-    public AudioClip soundClip;
 
-    //Boss scuff
-    [TextArea]
-    public string NotepadBoss = "Variables for Boss stuff";
-    public bool isBossBox;
-    public EncounterTracker bossContainerRef;
-    public bool isAnim;
+    [Header("Dissolve Options")]
+    [SerializeField]
+    private bool dissolveOBJ;
+    
+    public float dissolveDuration = 2;
+    public float dissolveStrength;
+    
+
+    [Header("THIS IS FOR CHANGING BUTTON COLOR AND STUFF WHEN ACTIVATED")]
+    [SerializeField]
+    private bool changeObject;
+    [Tooltip("GO is what it turns into")]
+    [SerializeField]
+    GameObject activatedObject;//WHAT WAS I THINKING AAAAAAAAAAAAAAAAAAAAAAAAAA
+
+
+
+    //these are in script only
+    private bool godBox;
+    private bool activated;
+    public bool puzzleComplete;
 
     public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;
@@ -108,40 +102,16 @@ public class PuzzleKit : MonoBehaviour, IDamageable
 
     public bool IsWeakPoint { get; } = false;
 
-
-    //ON AWAKE STUFF
-    [TextArea]
-    public string NotePadStart = "In case u want something to move to a location on start";
-    public bool moveOnStart;
-    [SerializeField]
-    private Vector3 endPointStart;
-    [SerializeField]
-    float speedOfStart;
-    [SerializeField]
-    GameObject activatedObject;
-    [TextArea]
-    public string NotePadwutHappensTostartObject = "These bools decide what happens to the puzzle object";
-    public bool changeObject;
     private bool destructObject;
 
-    //Dissolve shaders
-    public float dissolveDuration = 2;
-    public float dissolveStrength;
+    
+    //Move Vars
+    private float startTime;
+    private float journeyLength;
+    private bool movingActivated;
 
-    /* public float puzzleCompletionTimer;//
-public bool puzzleTimer;
-private bool puzzleTimeBegan; */
 
-    /* public delegate void OnPuzzleDone();
-public static event OnPuzzleDone PuzzleDone; */
-    //Actions
-    //Interact
-    //Pressure plate
-    //shoot it
-    //Re actions
-    //Move object
-    //Spawn object
-    //count down to how many need activating//also deactivates this one
+    //VARIABLE THAT NEED ORGANIZING
     private void Awake() 
     {
         if(godBoxRef!= null)
@@ -212,7 +182,13 @@ public static event OnPuzzleDone PuzzleDone; */
         }
         if(soundClip!=null)
                 Beep.PlayOneShot(soundClip);
-        if(isAnim)
+        
+
+        movingActivated = true;
+        puzzleComplete = true;
+        #region 
+        
+        /* if(isAnim)
         {
             //PLAY animation here
             Debug.Log("Trying ANim");
@@ -220,12 +196,11 @@ public static event OnPuzzleDone PuzzleDone; */
             godBoxAnim.SetBool("Move", true);
         }
         else
-        {
-            movingActivated = true;
-            puzzleComplete = true;
-        }
+        { */ //GARBO CODE that I'm hoarding
+        
         //Moves object forward and back
         //PuzzleDone?.Invoke();
+        #endregion
     }
 
     private void SpawnObject()
@@ -273,13 +248,7 @@ public static event OnPuzzleDone PuzzleDone; */
             deactivateObject[i].SetActive(false);
         } 
     }
-    private void StopSpawn()
-    {
-        for(int i =0; i<spawnPoints.Length;i++)
-        {
-            spawnPoints[i].SetActive(false);
-        }
-    }
+    
 
     public void ThisActivate()
     {
@@ -326,7 +295,11 @@ public static event OnPuzzleDone PuzzleDone; */
                 if(deactivate)
                 {
                     DeactivateObject();
-                } 
+                }
+                else if(dissolveOBJ)
+                    StartDissolver(); 
+
+                
                 if(move)
                 {
                     Debug.Log("Move");
@@ -336,12 +309,11 @@ public static event OnPuzzleDone PuzzleDone; */
                 {
                     SpawnObject();
                 }
-                if(isBossBox)
+                /* if(isBossBox)
                 {
                     bossContainerRef.AddPuzzle();
-                }
-                if(dissolveOBJ)
-                    StartDissolver();
+                } */
+                
             }
         }
     }
@@ -415,4 +387,14 @@ public static event OnPuzzleDone PuzzleDone; */
         }
         //potentially add disable collider functionality. 
     }
+
+
+    //Functions not being used
+    /* private void StopSpawn()
+    {
+        for(int i =0; i<spawnPoints.Length;i++)
+        {
+            spawnPoints[i].SetActive(false);
+        }
+    } */
 }
