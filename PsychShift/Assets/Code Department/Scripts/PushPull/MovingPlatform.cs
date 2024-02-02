@@ -31,7 +31,6 @@ public class MovingPlatform : MonoBehaviour
             //controller.transform.SetParent(transform, true);
             characterLossyScale.Add(controller, controller.transform.lossyScale);
             controller.transform.parent = transform;
-            Debug.Log("Added " + characterLossyScale.Count);
         }
     }
 
@@ -43,7 +42,6 @@ public class MovingPlatform : MonoBehaviour
             controller.transform.parent = null;
             controller.transform.localScale = characterLossyScale[controller];
             characterLossyScale.Remove(controller);
-            Debug.Log("removed " + characterLossyScale.Count);
         }
     }
 }

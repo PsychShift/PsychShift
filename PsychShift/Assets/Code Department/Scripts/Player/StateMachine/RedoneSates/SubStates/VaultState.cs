@@ -27,7 +27,6 @@ namespace Player
 
         public void OnEnter()
         {
-            Debug.Log("Entered Vault State");
             currentCharacter = playerStateMachine.currentCharacter;
             time = 0f;
             CheckVault();
