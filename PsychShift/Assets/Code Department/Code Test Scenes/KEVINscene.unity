@@ -170,56 +170,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 1853279236}
-  effectForGod: {fileID: 1853279236}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: 3833ef27e5ed09c4185f4d7f605c8a8c, type: 3}
   godBoxRef: {fileID: 0}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 1853279236}
   interact: 0
   pressurePlate: 0
   shootObj: 0
+  effectForGod: {fileID: 1853279236}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 1
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 104.17598, y: -7, z: -1478.1}
   speedOfMove: 1
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: 3833ef27e5ed09c4185f4d7f605c8a8c, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &774371
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1818,56 +1795,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 1853279236}
-  effectForGod: {fileID: 0}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: f3a26b19971e92f4193e563bbca32395, type: 3}
   godBoxRef: {fileID: 1358678867}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 1853279236}
   interact: 0
   pressurePlate: 0
   shootObj: 1
+  effectForGod: {fileID: 0}
   amountToActivate: 0
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 0, y: 0, z: 0}
   speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: f3a26b19971e92f4193e563bbca32395, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!54 &206056297
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2386,6 +2340,124 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 238505245}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &251747530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 251747535}
+  - component: {fileID: 251747534}
+  - component: {fileID: 251747533}
+  - component: {fileID: 251747532}
+  - component: {fileID: 251747531}
+  m_Layer: 25
+  m_Name: KeyCardDoor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &251747531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251747530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ffdf7d2fbcc6e14cb7d7c8dcf035f91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &251747532
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251747530}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &251747533
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251747530}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 921bd6ab767e8a84588c038630f6ff56, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &251747534
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251747530}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &251747535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251747530}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 119.13576, y: -15.62, z: -1432.9164}
+  m_LocalScale: {x: 0.41871092, y: 6.675854, z: 6.279762}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &269285128
 GameObject:
   m_ObjectHideFlags: 0
@@ -3452,56 +3524,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 1853279236}
-  effectForGod: {fileID: 1853279236}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: 3833ef27e5ed09c4185f4d7f605c8a8c, type: 3}
   godBoxRef: {fileID: 0}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 1853279236}
   interact: 0
   pressurePlate: 0
   shootObj: 0
+  effectForGod: {fileID: 1853279236}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 1
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 127.54001, y: -8, z: -1475.2599}
   speedOfMove: 1
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: 3833ef27e5ed09c4185f4d7f605c8a8c, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &348408559
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3758,56 +3807,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 0}
-  effectForGod: {fileID: 0}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 0}
+  soundClip: {fileID: 0}
   godBoxRef: {fileID: 0}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 0}
   interact: 0
   pressurePlate: 0
   shootObj: 0
+  effectForGod: {fileID: 0}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 1
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 40.81, y: -32.67, z: -1409.57}
   speedOfMove: 1
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 0}
-  soundClip: {fileID: 0}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 1
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &432675217
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4226,57 +4252,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 0}
-  effectForGod: {fileID: 1858128656}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: 3833ef27e5ed09c4185f4d7f605c8a8c, type: 3}
   godBoxRef: {fileID: 0}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 0}
   interact: 0
   pressurePlate: 0
   shootObj: 0
+  effectForGod: {fileID: 1858128656}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 0
-  activate: 0
-  deactivate: 1
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 0, y: 0, z: 0}
   speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 1
   deactivateObject:
   - {fileID: 514339385}
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: 3833ef27e5ed09c4185f4d7f605c8a8c, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &514339387
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5925,56 +5928,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 1853279236}
-  effectForGod: {fileID: 0}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
   godBoxRef: {fileID: 774370}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 1853279236}
   interact: 0
   pressurePlate: 0
   shootObj: 1
+  effectForGod: {fileID: 0}
   amountToActivate: 0
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 0, y: 0, z: 0}
   speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!54 &693514723
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6120,57 +6100,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 0}
-  effectForGod: {fileID: 1853279236}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: f3a26b19971e92f4193e563bbca32395, type: 3}
   godBoxRef: {fileID: 0}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 0}
   interact: 0
   pressurePlate: 0
   shootObj: 0
+  effectForGod: {fileID: 1853279236}
   amountToActivate: 3
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 1
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 0, y: 0, z: 0}
   speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 1
   spawnObjects:
   - {fileID: 206056294}
   locationOfSpawn: {fileID: 699492430}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: f3a26b19971e92f4193e563bbca32395, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &699492432
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6859,56 +6816,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 1853279236}
-  effectForGod: {fileID: 0}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
   godBoxRef: {fileID: 348408558}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 1853279236}
   interact: 0
   pressurePlate: 0
   shootObj: 1
+  effectForGod: {fileID: 0}
   amountToActivate: 0
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 0, y: 0, z: 0}
   speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!54 &841932363
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7444,56 +7378,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 1853279236}
-  effectForGod: {fileID: 1853279236}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
   godBoxRef: {fileID: 699492431}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 1853279236}
   interact: 0
   pressurePlate: 1
   shootObj: 0
+  effectForGod: {fileID: 1853279236}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 0, y: 0, z: 0}
   speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &938689379
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8134,56 +8045,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 0}
-  effectForGod: {fileID: 0}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 0}
+  soundClip: {fileID: 0}
   godBoxRef: {fileID: 0}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 0}
   interact: 0
   pressurePlate: 0
   shootObj: 0
+  effectForGod: {fileID: 0}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 0, y: 0, z: 0}
   speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 1
-  puzzleComplete: 0
-  Beep: {fileID: 0}
-  soundClip: {fileID: 0}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &1031873289
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8443,56 +8331,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 1853279236}
-  effectForGod: {fileID: 0}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
   godBoxRef: {fileID: 1449079905}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 1853279236}
   interact: 0
   pressurePlate: 0
   shootObj: 1
+  effectForGod: {fileID: 0}
   amountToActivate: 0
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 0, y: 0, z: 0}
   speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!54 &1051253366
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9137,56 +9002,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 0}
-  effectForGod: {fileID: 1853279236}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 0}
+  soundClip: {fileID: 8300000, guid: 06e2fd292ef1531439d43bcc5fb8cea2, type: 3}
   godBoxRef: {fileID: 0}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 0}
   interact: 0
   pressurePlate: 0
   shootObj: 0
+  effectForGod: {fileID: 1853279236}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 1
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 115.58, y: 39.2, z: -1600.83}
   speedOfMove: 1
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 0}
-  soundClip: {fileID: 8300000, guid: 06e2fd292ef1531439d43bcc5fb8cea2, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &1113626830
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9702,56 +9544,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 0}
-  effectForGod: {fileID: 1853279236}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: 06e2fd292ef1531439d43bcc5fb8cea2, type: 3}
   godBoxRef: {fileID: 0}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 0}
   interact: 0
   pressurePlate: 0
   shootObj: 0
+  effectForGod: {fileID: 1853279236}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 1
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 115, y: -5, z: -1535}
   speedOfMove: 1
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: 06e2fd292ef1531439d43bcc5fb8cea2, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &1181462057
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11093,56 +10912,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 1853279236}
-  effectForGod: {fileID: 0}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 1306437982}
+  soundClip: {fileID: 8300000, guid: c4bb49cc4da49344ca857ec6b75ed92e, type: 3}
   godBoxRef: {fileID: 1181462056}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 1853279236}
   interact: 0
   pressurePlate: 1
   shootObj: 0
+  effectForGod: {fileID: 0}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 0, y: 0, z: 0}
   speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 1306437982}
-  soundClip: {fileID: 8300000, guid: c4bb49cc4da49344ca857ec6b75ed92e, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &1306437984
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11482,56 +11278,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 0}
-  effectForGod: {fileID: 1853279236}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: 3833ef27e5ed09c4185f4d7f605c8a8c, type: 3}
   godBoxRef: {fileID: 0}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 0}
   interact: 0
   pressurePlate: 0
   shootObj: 0
+  effectForGod: {fileID: 1853279236}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 1
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 128.85, y: -8.258835, z: -1527}
   speedOfMove: 0.5
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: 3833ef27e5ed09c4185f4d7f605c8a8c, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &1358678868
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11886,57 +11659,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 0}
-  effectForGod: {fileID: 1853279236}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: c4bb49cc4da49344ca857ec6b75ed92e, type: 3}
   godBoxRef: {fileID: 0}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 0}
   interact: 0
   pressurePlate: 0
   shootObj: 0
+  effectForGod: {fileID: 1853279236}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 1
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 0, y: 0, z: 0}
   speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 1
   spawnObjects:
   - {fileID: 1306437980}
   locationOfSpawn: {fileID: 1449079904}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: c4bb49cc4da49344ca857ec6b75ed92e, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &1449079906
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13434,56 +13184,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 1853279236}
-  effectForGod: {fileID: 0}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: f3a26b19971e92f4193e563bbca32395, type: 3}
   godBoxRef: {fileID: 432675216}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 1853279236}
   interact: 0
   pressurePlate: 0
   shootObj: 1
+  effectForGod: {fileID: 0}
   amountToActivate: 0
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 0, y: 0, z: 0}
   speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: f3a26b19971e92f4193e563bbca32395, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!54 &1649894045
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15358,56 +15085,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 1853279236}
-  effectForGod: {fileID: 1853279236}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
   godBoxRef: {fileID: 699492431}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 1853279236}
   interact: 0
   pressurePlate: 1
   shootObj: 0
+  effectForGod: {fileID: 1853279236}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 0, y: 0, z: 0}
   speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &1839808433
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17587,56 +17291,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 1853279236}
-  effectForGod: {fileID: 1853279236}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 300687070}
+  soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
   godBoxRef: {fileID: 699492431}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 1853279236}
   interact: 0
   pressurePlate: 1
   shootObj: 0
+  effectForGod: {fileID: 1853279236}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 0
-  activate: 0
-  deactivate: 0
-  moveVariables: Variables that need to be filled in for move below
   endPosition: {x: 0, y: 0, z: 0}
   speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
   activateObject: []
+  deactivate: 0
   deactivateObject: []
   dissolveOBJ: 0
-  puzzleComplete: 0
-  Beep: {fileID: 300687070}
-  soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
-  NotePadStart: In case u want something to move to a location on start
-  moveOnStart: 0
-  endPointStart: {x: 0, y: 0, z: 0}
-  speedOfStart: 0
-  activatedObject: {fileID: 0}
-  NotePadwutHappensTostartObject: These bools decide what happens to the puzzle object
-  changeObject: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  puzzleComplete: 0
 --- !u!65 &2049789408
 BoxCollider:
   m_ObjectHideFlags: 0
