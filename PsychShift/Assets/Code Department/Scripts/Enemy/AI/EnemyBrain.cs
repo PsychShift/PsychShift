@@ -124,7 +124,75 @@ public abstract class EnemyBrain : MonoBehaviour
         }
     }
 
-    /*private bool IsPlayerInSight()
+    private bool wasHit = false;
+    private void TookDamage(int dmg)
+    {
+        wasHit = true;
+        StartCoroutine(NotAngryAfterHit());
+    }
+    IEnumerator NotAngryAfterHit()
+    {
+        yield return new WaitForSeconds(5f);
+        wasHit = false;
+    }
+    protected abstract void SetUp();
+
+    void OnEnable()
+    {
+        SetUp();
+        characterInfo.enemyHealth.OnTakeDamage += TookDamage;
+        /*CharacterInfo.agent.enabled = true;
+        if(!CharacterInfo.controller.isGrounded)
+        {
+            CharacterInfo.agent.enabled = false;
+            GetComponent<TempGravity>().enabled = true;
+            StartCoroutine(WaitTillGrounded());
+        } */
+    }
+
+    void OnDisable()
+    {
+        CharacterInfo.agent.enabled = false;
+        characterInfo.enemyHealth.OnTakeDamage -= TookDamage;
+    }
+
+    private bool IsPlayerInRange()
+    {
+        float distance = Vector3.SqrMagnitude(transform.position - CharacterInfo.characterContainer.transform.position);
+        return distance <= agression.DetectionRange;
+    }
+
+    public void CreateDebugSphere()
+    {
+        // create a sphere at the transform position
+        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphere.transform.position = transform.position;
+    }
+
+
+    public void SetUpBrainSwap(CharacterBrainSwappingInfo info)
+    {
+        agression = info.AIAgression;
+    }
+}
+/*     private IEnumerator WaitTillGrounded()
+    {
+        while(!CharacterInfo.controller.isGrounded)
+        {
+            yield return null;
+        }
+        GetComponent<TempGravity>().enabled = false;
+        CharacterInfo.agent.enabled = true;
+    } */
+    /* void OnDrawGizmos()
+    {
+        if(!Application.isPlaying || !isActive) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(characterInfo.cameraRoot.position, characterInfo.cameraRoot.position + (characterInfo.cameraRoot.forward * agression.SphereCastDetectionRadius));
+        Gizmos.color = Color.blue;
+
+    } */
+/*private bool IsPlayerInSight()
     {
         Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius, 
         CharacterInfo.cameraRoot.forward, out RaycastHit hit, agression.DetectionRange, layerMask: playerLayer);
@@ -174,76 +242,3 @@ public abstract class EnemyBrain : MonoBehaviour
 
         return false;
     }*/
-    private bool wasHit = false;
-    private void TookDamage(int dmg)
-    {
-        wasHit = true;
-        StartCoroutine(NotAngryAfterHit());
-    }
-    IEnumerator NotAngryAfterHit()
-    {
-        yield return new WaitForSeconds(5f);
-        wasHit = false;
-    }
-    protected abstract void SetUp();
-
-    void OnEnable()
-    {
-        SetUp();
-        characterInfo.enemyHealth.OnTakeDamage += TookDamage;
-        /*CharacterInfo.agent.enabled = true;
-        if(!CharacterInfo.controller.isGrounded)
-        {
-            CharacterInfo.agent.enabled = false;
-            GetComponent<TempGravity>().enabled = true;
-            StartCoroutine(WaitTillGrounded());
-        } */
-    }
-
-
-    void OnDisable()
-    {
-        CharacterInfo.agent.enabled = false;
-        characterInfo.enemyHealth.OnTakeDamage -= TookDamage;
-    }
-/*     private IEnumerator WaitTillGrounded()
-    {
-        while(!CharacterInfo.controller.isGrounded)
-        {
-            yield return null;
-        }
-        GetComponent<TempGravity>().enabled = false;
-        CharacterInfo.agent.enabled = true;
-    } */
-
-
-    private bool IsPlayerInRange()
-    {
-        float distance = Vector3.SqrMagnitude(transform.position - CharacterInfo.characterContainer.transform.position);
-        return distance <= agression.DetectionRange;
-    }
-
-
-
-    /* void OnDrawGizmos()
-    {
-        if(!Application.isPlaying || !isActive) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(characterInfo.cameraRoot.position, characterInfo.cameraRoot.position + (characterInfo.cameraRoot.forward * agression.SphereCastDetectionRadius));
-        Gizmos.color = Color.blue;
-
-    } */
-
-    public void CreateDebugSphere()
-    {
-        // create a sphere at the transform position
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.position = transform.position;
-    }
-
-
-    public void SetUpBrainSwap(CharacterBrainSwappingInfo info)
-    {
-        agression = info.AIAgression;
-    }
-}

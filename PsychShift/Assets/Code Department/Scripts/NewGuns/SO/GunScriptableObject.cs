@@ -190,6 +190,8 @@ namespace Guns
 
             if (Time.time > ShootConfig.FireRate + LastShootTime)
             {
+                // for ShootConfig.BulletsPerShot
+                // Do this
                 LastShootTime = Time.time;
                 if (AmmoConfig.CurrentClipAmmo == 0)
                 {

@@ -16,4 +16,9 @@ public class VigilTileCollider : MonoBehaviour
     {
         return C;
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        
+    }
 }

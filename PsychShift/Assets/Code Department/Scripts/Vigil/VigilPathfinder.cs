@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace VigilPathfinding
 {
-    public static class VigilPathfinder
+    public class VigilPathfinder
     {
         /* public List<Vector3Int> Search(Hallway hallway, Dictionary<Vector3Int, PathNode> map)
         {
@@ -41,8 +41,13 @@ namespace VigilPathfinding
                 return pathPositions;    
             }
         } */
-        
-        public static bool FindPath(Vector3Int currentPos, Vector3Int endPos, Dictionary<Vector3Int, PathNode> map, out List<Vector3Int> path)
+        Vector3Int gridScale;
+        Vector3Int lastDirection;
+        public VigilPathfinder(Vector3Int gridScale)
+        {
+            this.gridScale = gridScale;
+        }
+        public bool FindPath(Vector3Int currentPos, Vector3Int endPos, Dictionary<Vector3Int, PathNode> map, out List<Vector3Int> path)
         {
             if(map[endPos].isBlocked)
             {
@@ -53,8 +58,9 @@ namespace VigilPathfinding
             path = pathNodes.Select(node => node.position).ToList();
             return true;
         }
-        private static List<PathNode> FindPath(PathNode startNode, PathNode endNode, Dictionary<Vector3Int, PathNode> map)
+        private List<PathNode> FindPath(PathNode startNode, PathNode endNode, Dictionary<Vector3Int, PathNode> map)
         {
+            Debug.Log(startNode + "\n" + endNode);
             List<PathNode> openList = new List<PathNode>();
             List<PathNode> closedList = new List<PathNode>();
 
@@ -73,10 +79,13 @@ namespace VigilPathfinding
                 }
 
                 var neighborNodes = GetNeighborNodes(currentNode, map);
-                foreach(var neighbor in neighborNodes)
+                foreach(var neighborDict in neighborNodes)
                 {
+                    var neighbor = neighborDict.Key;
                     if(neighbor.isBlocked || closedList.Contains(neighbor))
+                    {
                         continue;
+                    }
                        
                     neighbor.G = GetManhattenDistance(startNode, neighbor);
                     neighbor.H = GetManhattenDistance(endNode, neighbor);
@@ -85,15 +94,15 @@ namespace VigilPathfinding
 
                     if(!openList.Contains(neighbor))
                     {
+                        lastDirection = neighborDict.Value;
                         openList.Add(neighbor);
                     }
                 }
             }
-
             return new List<PathNode>();
         }
 
-        private static List<PathNode> GetFinishedList(PathNode startNode, PathNode endNode)
+        private List<PathNode> GetFinishedList(PathNode startNode, PathNode endNode)
         {
             List<PathNode> finishedList = new();
 
@@ -110,26 +119,25 @@ namespace VigilPathfinding
             return finishedList;
         }
 
-        private static int GetManhattenDistance(PathNode startNode, PathNode neighbor)
+        private int GetManhattenDistance(PathNode startNode, PathNode neighbor)
         {
             return Mathf.Abs(startNode.position.x - neighbor.position.x) + Mathf.Abs(startNode.position.y - neighbor.position.y);
         }
 
-        private static List<PathNode> GetNeighborNodes(PathNode currentNode, Dictionary<Vector3Int, PathNode> map)
+        private Dictionary<PathNode, Vector3Int> GetNeighborNodes(PathNode currentNode, Dictionary<Vector3Int, PathNode> map)
         {
-            List<PathNode> neighbors = new();
+            Dictionary<PathNode, Vector3Int> neighbors = new();
 
             Vector3Int pos = currentNode.position;
 
-            if(map.ContainsKey(pos+Vector3Int.up))
-                neighbors.Add(map[pos+Vector3Int.up]);
-            if(map.ContainsKey(pos+Vector3Int.down))
-                neighbors.Add(map[pos+Vector3Int.down]);
-            if(map.ContainsKey(pos+Vector3Int.left))
-                neighbors.Add(map[pos+Vector3Int.left]);
-            if(map.ContainsKey(pos+Vector3Int.right))
-                neighbors.Add(map[pos+Vector3Int.right]);
-
+            if(map.ContainsKey(pos+Vector3Int.forward*10))
+                neighbors.Add(map[pos+Vector3Int.forward*10], Vector3Int.forward*1);
+            if(map.ContainsKey(pos-Vector3Int.forward*10))
+                neighbors.Add(map[pos-Vector3Int.forward*10], Vector3Int.forward*10);
+            if(map.ContainsKey(pos+Vector3Int.left*10))
+                neighbors.Add(map[pos+Vector3Int.left*10], Vector3Int.left*10);
+            if(map.ContainsKey(pos+Vector3Int.right*10))
+                neighbors.Add(map[pos+Vector3Int.right*10], Vector3Int.right*10);
             return neighbors;
         }
     }
