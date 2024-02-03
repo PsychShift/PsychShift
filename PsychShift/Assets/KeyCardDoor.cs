@@ -8,22 +8,25 @@ public class KeyCardDoor : MonoBehaviour
     private MeshRenderer meshStuff;
     public Material locked;
     public Material opened;
+    private AudioSource doorAudio;
+    public AudioClip soundEffect;
     private void Awake() {
         //locked = this.GetComponent<Material>();
         meshStuff = this.GetComponent<MeshRenderer>();
+        doorAudio = this.GetComponent<AudioSource>();
     }
     public void OpenDaNoor()
     {
         this.GetComponent<Collider>().enabled = false;
         meshStuff.material = opened;
-        
-        Debug.Log("OPen na door");
+        doorAudio.PlayOneShot(soundEffect);
         StartCoroutine(CloseDaNoor());
     }
     IEnumerator CloseDaNoor()
     {
         yield return new WaitForSeconds(3);
         this.GetComponent<Collider>().enabled = true;
+        doorAudio.PlayOneShot(soundEffect);
         meshStuff.material = locked;
     }
 }
