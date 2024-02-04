@@ -10,7 +10,7 @@ public class ExplosiveDeathModifier : AbstractEnemyModifier
     public override void ApplyModifier(EnemyBrain brain)
     {
         this.brain = brain;
-        StartCoroutine(WaitForEnemyHealth());
+        //StartCoroutine(WaitForEnemyHealth());
     }
     IEnumerator WaitForEnemyHealth()
     {

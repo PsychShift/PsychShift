@@ -6,10 +6,9 @@ public class ChaseState : ShootingSuperState, ICoroutineRestarter
 {
     Transform gunParent;
 
-    public ChaseState(EnemyBrain brain, AIAgression agression)
+    public ChaseState(EnemyBrain brain)
     {
         this.brain = brain;
-        this.agression = agression;
     }
 
     public override void OnEnter()
@@ -65,8 +64,15 @@ public class ChaseState : ShootingSuperState, ICoroutineRestarter
     {
         while (true)
         {
-            brain.Agent.SetDestination(brain.player.transform.position);
-            yield return new WaitForSeconds(0.1f);
+            if(brain.Agent.isOnNavMesh)
+            {
+                brain.Agent.SetDestination(brain.player.transform.position);
+                yield return new WaitForSeconds(0.1f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
         }
     }
 }

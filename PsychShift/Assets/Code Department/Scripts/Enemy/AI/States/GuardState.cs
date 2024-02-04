@@ -7,15 +7,13 @@ using UnityEngine.AI;
 public class GuardState : IState
 {
     private EnemyBrain brain;
-    private AIAgression agression;
     private Vector3 startPosition;
     private float rotationSpeed;
 
     private Player.CharacterInfo currentCharacterInfo;
-    public GuardState(EnemyBrain brain, AIAgression agression, Vector3 startPosition)
+    public GuardState(EnemyBrain brain, Vector3 startPosition)
     {
         this.brain = brain;
-        this.agression = agression;
         this.startPosition = startPosition;
     }
 

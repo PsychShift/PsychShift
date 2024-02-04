@@ -168,8 +168,8 @@ public class ModelSaving : MonoBehaviour
             //#if UNITY_EDITOR
             //    model = (GameObject)AssetDatabase.LoadAssetAtPath(item.prefabPath, typeof(GameObject));
             //#else
-            Debug.Log(item.prefabName);
-                model = GameAssets.Instance.GetPrefab(item.prefabName);
+            //Debug.Log(item.prefabName);
+            model = GameAssets.Instance.GetPrefab(item.prefabName);
             //#endif
 
             Transform instance = Instantiate(model, parent).transform;

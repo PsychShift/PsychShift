@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class AtCoverState : ShootingSuperState
 {
-    public AtCoverState(EnemyBrain brain, AIAgression agression)
+    public AtCoverState(EnemyBrain brain)
     {
-        SetUp(brain, agression);
+        SetUp(brain);
     }
     public override void OnEnter()
     {

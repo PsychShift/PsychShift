@@ -5,12 +5,10 @@ using UnityEngine;
 public class RunToCoverState : IState
 {
     private EnemyBrain brain;
-    private AIAgression agression;
     private Player.CharacterInfo currentCharacterInfo;
-    public RunToCoverState(EnemyBrain brain, AIAgression agression)
+    public RunToCoverState(EnemyBrain brain)
     {
         this.brain = brain;
-        this.agression = agression;
     }
     Transform target;
 

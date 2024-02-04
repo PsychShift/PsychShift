@@ -6,18 +6,17 @@ using UnityEngine;
 public class LookAroundState : IState
 {
     EnemyBrain brain;
-    AIAgression agression;
 
-    public LookAroundState(EnemyBrain brain, AIAgression agression)
+    public LookAroundState(EnemyBrain brain)
     {
         this.brain = brain;
-        this.agression = agression;
     }
 
     float endAt = 0f;
     public void OnEnter()
     {
-        endAt = Time.time + UnityEngine.Random.Range(agression.WaitAroundTime.x, agression.WaitAroundTime.y);
+        float time = brain.agression == null ? 1f : UnityEngine.Random.Range(brain.agression.WaitAroundTime.x, brain.agression.WaitAroundTime.y);
+        endAt = Time.time + time;
         brain.Agent.velocity = Vector3.zero;
         brain.Agent.isStopped = true;
         brain.Animator.SetFloat("speed", 0f);
@@ -27,7 +26,7 @@ public class LookAroundState : IState
 
     public void OnExit()
     {
-        brain.CharacterInfo.agent.isStopped = false;
+        brain.Agent.isStopped = false;
     }
 
     public void Tick()

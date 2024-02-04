@@ -15,6 +15,7 @@ public class BasicEnemy : EnemyBrain
     
     protected override void SetUp()
     {
+        Agent.enabled = true;
         VariableSetup();
         StateMachineSetup();
     }
@@ -29,9 +30,9 @@ public class BasicEnemy : EnemyBrain
     {
         stateMachine = new StateMachine.StateMachine();
 
-        var patrolState = new PatrolState(this, agression, patrolPoints);
-        var guardState = new GuardState(this, agression, transform.position);
-        var chaseState = new ChaseState(this, agression);
+        var patrolState = new PatrolState(this, patrolPoints);
+        var guardState = new GuardState(this, transform.position);
+        var chaseState = new ChaseState(this);
 
         
         AT(patrolState, chaseState, PlayerInSight());

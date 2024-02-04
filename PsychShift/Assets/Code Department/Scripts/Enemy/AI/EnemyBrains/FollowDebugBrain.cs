@@ -5,6 +5,7 @@ public class FollowDebugBrain : EnemyBrain
     public Transform target;
     protected override void SetUp()
     {
+        Agent.enabled = true;
         VariableSetup();
         StateMachineSetup();
     }

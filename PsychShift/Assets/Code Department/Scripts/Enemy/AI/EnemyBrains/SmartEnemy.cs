@@ -13,6 +13,7 @@ public class SmartEnemy : EnemyBrain
     
     protected override void SetUp()
     {
+        Agent.enabled = true;
         VariableSetup();
         StateMachineSetup();
     }
@@ -28,9 +29,9 @@ public class SmartEnemy : EnemyBrain
         stateMachine = new StateMachine.StateMachine();
 
 
-        var runToCoverState = new RunToCoverState(this, agression);
+        var runToCoverState = new RunToCoverState(this);
         var delayState = new DelayState(2f);
-        var coverState = new AtCoverState(this, agression);
+        var coverState = new AtCoverState(this);
         var debugState = new DebugState();
 
         AT(runToCoverState, delayState, HasReachedDestination());

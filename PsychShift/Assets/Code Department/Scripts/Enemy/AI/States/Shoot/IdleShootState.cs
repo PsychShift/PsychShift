@@ -6,26 +6,24 @@ using UnityEngine;
 public class IdleShootState : IState
 {
     private EnemyBrain brain;
-    private AIAgression agression;
 
-    public IdleShootState(EnemyBrain brain, AIAgression agression)
+    public IdleShootState(EnemyBrain brain)
     {
         this.brain = brain;
-        this.agression = agression;
     }
 
     float waitToShoot = 0f;
     public void OnEnter()
     {
         //brain.Animator.SetBool("shooting", false);
-        waitToShoot = Time.time + UnityEngine.Random.Range(FireRateAgro.FireRates[agression.FireRateAgression].MinWaitTime, FireRateAgro.FireRates[agression.FireRateAgression].MaxWaitTime);
-        brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(0f, .2f));
+        waitToShoot = Time.time + UnityEngine.Random.Range(FireRateAgro.FireRates[brain.agression.FireRateAgression].MinWaitTime, FireRateAgro.FireRates[brain.agression.FireRateAgression].MaxWaitTime);
+        //brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(0f, .2f));
     }
 
     public void OnExit()
     {
-        brain.AnimMaster.StopCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
-        brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
+        //brain.AnimMaster.StopCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
+        //brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
     }
 
     public void Tick()

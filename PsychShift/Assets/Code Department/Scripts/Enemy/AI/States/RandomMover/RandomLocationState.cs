@@ -6,18 +6,17 @@ public class RandomLocationState : IState
 {
     public Vector3 Destination { get; set; }
     private EnemyBrain brain;
-    private AIAgression agression;
     float walkRadius = 30f;
-    public RandomLocationState(EnemyBrain brain, AIAgression agression)
+    public RandomLocationState(EnemyBrain brain)
     {
         this.brain = brain;
-        this.agression = agression;
     }
     float endAt = 0f;
     public void OnEnter()
     {
         PickRandomLocation();
-        endAt = Time.time + UnityEngine.Random.Range(agression.GoSomewhereTime.x, agression.GoSomewhereTime.y);
+        float time = brain.agression == null ? 1f : UnityEngine.Random.Range(brain.agression.WaitAroundTime.x, brain.agression.WaitAroundTime.y);
+        endAt = Time.time + time;
         brain.Animator.SetFloat("speed", 1f);
     }
 

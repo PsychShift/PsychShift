@@ -33,7 +33,7 @@ public class CharacterInfoReference : MonoBehaviour
 
     [HideInInspector]public GameObject vCamParent;
     private CinemachineVirtualCamera vCam;
-    private void SetUp()
+    public CharacterInfo SetUp()
     {
         if(vCamPrefab == null) Debug.LogError("vCamPrefab is null, please fill in in editor. Otherwise the game won't work. Which is bad. Please fix it now. Thank you. Have you done it yet? Ok good. \n It's located at Assets/Code Department/Scripts/Player/Swapping");
         else
@@ -47,6 +47,8 @@ public class CharacterInfoReference : MonoBehaviour
         _characterInfo = new CharacterInfo(this, vCam, movementStats, characterStats);
         vCam.Follow = characterInfo.cameraRoot;
         GetComponent<RigColliderManager>().SwapTag("Enemy");
+
+        return _characterInfo;
     }
 
 

@@ -6,18 +6,16 @@ using UnityEngine;
 public class ActiveShootState : IState
 {
     private EnemyBrain brain;
-    private AIAgression agression;
     Vector3 defaultGunPosition;
-    public ActiveShootState(EnemyBrain brain, AIAgression agression)
+    public ActiveShootState(EnemyBrain brain)
     {
         this.brain = brain;
-        this.agression = agression;
         defaultGunPosition = brain.AnimMaster.GetDefaultGunPosition();
     }
     float shootForSeconds = 0f;
     public void OnEnter()
     {        
-        shootForSeconds = Time.time + UnityEngine.Random.Range(FireRateAgro.FireRates[agression.FireRateAgression].MinWaitTime, FireRateAgro.FireRates[agression.FireRateAgression].MaxWaitTime);
+        shootForSeconds = Time.time + UnityEngine.Random.Range(FireRateAgro.FireRates[brain.agression.FireRateAgression].MinWaitTime, FireRateAgro.FireRates[brain.agression.FireRateAgression].MaxWaitTime);
         brain.AnimMaster.SetGunHandPosition(defaultGunPosition);
         brain.Animator.SetBool("shooting", true);
         brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
@@ -26,9 +24,9 @@ public class ActiveShootState : IState
     public void OnExit()
     {
         brain.Animator.SetBool("shooting", false);
-        brain.AnimMaster.StopCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
-        brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(0f, .2f));
-        brain.AnimMaster.SetGunHandPosition(defaultGunPosition);
+        //brain.AnimMaster.StopCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
+        //brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(0f, .2f));
+        //brain.AnimMaster.SetGunHandPosition(defaultGunPosition);
     }
 
     public void Tick()

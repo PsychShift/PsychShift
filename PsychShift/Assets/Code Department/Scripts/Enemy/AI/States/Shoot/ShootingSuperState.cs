@@ -7,16 +7,14 @@ public class ShootingSuperState : IState
 {
     protected StateMachine.StateMachine stateMachine;
     protected EnemyBrain brain;
-    protected AIAgression agression;
-    protected void SetUp(EnemyBrain brain, AIAgression agression)
+    protected void SetUp(EnemyBrain brain)
     {
         this.brain = brain;
-        this.agression = agression;
         stateMachine = new StateMachine.StateMachine();
 
-        var idleShootState = new IdleShootState(brain, agression);
-        var activeShootState = new ActiveShootState(brain, agression);
-        var reloadState = new ReloadState(brain, agression);
+        var idleShootState = new IdleShootState(brain);
+        var activeShootState = new ActiveShootState(brain);
+        var reloadState = new ReloadState(brain);
 
         // Transitions
         AT(idleShootState, activeShootState, idleShootState.IsDone());
@@ -33,7 +31,7 @@ public class ShootingSuperState : IState
     protected void Any(IState from, Func<bool> condition) => stateMachine.AddAnyTransition(from, condition);
     public virtual void OnEnter()
     {
-        SetUp(brain, agression);
+        SetUp(brain);
         //brain.AnimMaster.SetWeaponTarget(brain.player);
         //brain.Animator.SetBool("Combat", true);
         //brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));

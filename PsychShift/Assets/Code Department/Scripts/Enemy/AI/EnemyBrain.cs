@@ -6,6 +6,8 @@ using UnityEngine.AI;
 using System.Collections;
 using Guns.Health;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -36,7 +38,20 @@ public abstract class EnemyBrain : MonoBehaviour
     }
     //[SerializeField] protected LayerMask playerLayer;
     protected StateMachine.StateMachine stateMachine;
-    public AIAgression agression;
+    [SerializeField] private AIAgression _agression;
+    public AIAgression agression
+    {
+        get
+        {
+            return _agression;
+        }
+        set
+        {
+            UpdateAgression(value);
+            _agression = value;
+        }
+    }
+
     private CharacterInfo characterInfo = null;
     public CharacterInfo CharacterInfo {
         get {
@@ -72,6 +87,23 @@ public abstract class EnemyBrain : MonoBehaviour
         } 
         set { _player = value; } 
     }
+    private bool _spawnerEnemy;
+    public bool SpawnerEnemy
+    {
+        get
+        {
+            return _spawnerEnemy;
+        }
+
+        set
+        {
+            if(value)
+            {
+                StateMachineSetup();
+            }
+            _spawnerEnemy = value;
+        }
+    }
 
     /// <summary>
     /// Any variables that require initialization before a Func<bool> is used should be initialized here.
@@ -80,12 +112,19 @@ public abstract class EnemyBrain : MonoBehaviour
     protected void VariableSetup()
     {
         CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
-        fovRef = GetComponent<FieldOfView>();
+        if(!TryGetComponent(out fovRef))
+        {
+            fovRef = gameObject.AddComponent<FieldOfView>();
+        }
         if(modifiers != null)
+        {
             foreach(var mod in modifiers)
             {
                 mod.ApplyModifier(this);
             }
+        }
+        UpdateAgression(agression);
+        characterInfo = gameObject.GetComponent<CharacterInfoReference>().SetUp();
     }
 
     protected void HandleReactivation()
@@ -153,7 +192,7 @@ public abstract class EnemyBrain : MonoBehaviour
     void OnEnable()
     {
         SetUp();
-        characterInfo.enemyHealth.OnTakeDamage += TookDamage;
+        CharacterInfo.enemyHealth.OnTakeDamage += TookDamage;
         /*CharacterInfo.agent.enabled = true;
         if(!CharacterInfo.controller.isGrounded)
         {
@@ -166,7 +205,7 @@ public abstract class EnemyBrain : MonoBehaviour
     void OnDisable()
     {
         CharacterInfo.agent.enabled = false;
-        characterInfo.enemyHealth.OnTakeDamage -= TookDamage;
+        CharacterInfo.enemyHealth.OnTakeDamage -= TookDamage;
     }
 
     private bool IsPlayerInRange()
@@ -182,6 +221,13 @@ public abstract class EnemyBrain : MonoBehaviour
         sphere.transform.position = transform.position;
     }
 
+    private void UpdateAgression(AIAgression agression)
+    {
+        if(agression == null || fovRef == null) return;
+
+        fovRef.radius = agression.DetectionRange;
+    }
+
 
     public void SetUpBrainSwap(CharacterBrainSwappingInfo info, List<EEnemyModifier> modifiers)
     {
@@ -195,12 +241,11 @@ public abstract class EnemyBrain : MonoBehaviour
                 case EEnemyModifier.None : 
                     break;
                 case EEnemyModifier.Explosive : 
-                Debug.Log("boom boom");
                     AbstractEnemyModifier expMod = gameObject.AddComponent<ExplosiveDeathModifier>();
                     this.modifiers.Add(expMod);
                     break;
                 case EEnemyModifier.Keycard :
-                    AbstractEnemyModifier keyMod = gameObject.AddComponent<ExplosiveDeathModifier>();
+                    AbstractEnemyModifier keyMod = gameObject.AddComponent<KeyCardModifier>();
                     this.modifiers.Add(keyMod);
                     break;
                 case EEnemyModifier.NonSwap :
@@ -211,7 +256,8 @@ public abstract class EnemyBrain : MonoBehaviour
             }
         }
         #if UNITY_EDITOR
-        EditorUtility.SetDirty(this);
+        if(!Application.isPlaying)
+            EditorUtility.SetDirty(this);
         #endif
     }
 }

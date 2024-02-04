@@ -6,15 +6,13 @@ using UnityEngine;
 public class PatrolState : IState
 {
     private EnemyBrain brain;
-    private AIAgression agression;
     private Player.CharacterInfo currentCharacterInfo;
     private List<Vector3> patrolPoints;
     private int wpIndex = 0;
 
-    public PatrolState(EnemyBrain brain, AIAgression agression, List<Vector3> patrolPoints)
+    public PatrolState(EnemyBrain brain, List<Vector3> patrolPoints)
     {
         this.brain = brain;
-        this.agression = agression;
         this.patrolPoints = patrolPoints;
     }
 

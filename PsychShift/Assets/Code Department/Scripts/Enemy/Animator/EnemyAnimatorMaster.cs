@@ -165,6 +165,7 @@ public class EnemyAnimatorMaster : MonoBehaviour
     }
     public Vector3 GetDefaultGunPosition()
     {
+        if(rightArmConstraint == null) GetRigComponents();
         return rightArmConstraint.data.target.position;
     }
 

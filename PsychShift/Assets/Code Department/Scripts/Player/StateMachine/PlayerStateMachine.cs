@@ -453,7 +453,6 @@ namespace Player
 
         private void HitDamageable(IDamageable hitDamageable)
         {
-            Debug.Log("HITTTTTTT");
             if(!hitDamageable.IsWeakPoint)
             {
                 // normal hit effects

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class StationaryBrain : EnemyBrain
 {
-    public bool spawnerEnemy = false;
     [Tooltip("If this enemy is placed manually, you don't need to set this value. \n If it comes from a spawner, the spawner will set the value.")]
     public Vector3 guardPosition;
     protected override void SetUp()
     {
+        Agent.enabled = true;
         VariableSetup();
         StateMachineSetup();
     }
@@ -16,12 +16,12 @@ public class StationaryBrain : EnemyBrain
     {
         stateMachine = new StateMachine.StateMachine();
 
-        if(!spawnerEnemy)
+        if(!SpawnerEnemy)
             guardPosition = transform.position;
 
         var returnToStationState = new SetLocationState(this, guardPosition);
-        var chaseState = new ChaseState(this, agression);
-        var lookAroundState = new LookAroundState(this, agression);
+        var chaseState = new ChaseState(this);
+        var lookAroundState = new LookAroundState(this);
 
 
         AT(lookAroundState, chaseState, PlayerInSight());
@@ -30,7 +30,7 @@ public class StationaryBrain : EnemyBrain
         AT(returnToStationState, chaseState, PlayerInSight());
 
 
-        if (spawnerEnemy)
+        if (SpawnerEnemy)
         {
             stateMachine.SetState(returnToStationState);
         }

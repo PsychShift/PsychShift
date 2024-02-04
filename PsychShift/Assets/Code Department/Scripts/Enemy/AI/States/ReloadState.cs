@@ -6,11 +6,9 @@ public class ReloadState : IState
 {
 
     EnemyBrain brain;
-    AIAgression agression;
-    public ReloadState(EnemyBrain brain, AIAgression agression)
+    public ReloadState(EnemyBrain brain)
     {
         this.brain = brain;
-        this.agression = agression;
     }
     public void OnEnter()
     {

@@ -6,6 +6,7 @@ public class RandomBrain : EnemyBrain
 {
     protected override void SetUp()
     {
+        Agent.enabled = true;
         VariableSetup();
         StateMachineSetup();
     }
@@ -15,11 +16,11 @@ public class RandomBrain : EnemyBrain
         stateMachine = new StateMachine.StateMachine();
 
 
-        var pickRandom = new RandomLocationState(this, agression);
-        var moveToDestination = new MoveToDestinationState(this, agression, () => pickRandom.Destination);
+        var pickRandom = new RandomLocationState(this);
+        var moveToDestination = new MoveToDestinationState(this, () => pickRandom.Destination);
         
-        var lookAround = new LookAroundState(this, agression);
-        var chaseState = new ChaseState(this, agression);
+        var lookAround = new LookAroundState(this);
+        var chaseState = new ChaseState(this);
 
         stateMachine.AddTransition(pickRandom, lookAround, pickRandom.IsDone());
         stateMachine.AddTransition(lookAround, pickRandom, lookAround.IsDone());

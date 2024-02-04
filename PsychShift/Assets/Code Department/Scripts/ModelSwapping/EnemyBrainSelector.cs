@@ -16,6 +16,22 @@ public class EnemyBrainSelector : MonoBehaviour
     public List<EEnemyModifier> modifiers = new List<EEnemyModifier> { EEnemyModifier.None };
     private EnemyBrain currentBrain;
 
+    public void SwapBrain(GunScriptableObject gun, EBrainType brainType, List<EEnemyModifier> modifiers, AIAgression agression, bool spawnerEnemy = false)
+    {
+        currentBrain = GetComponent<EnemyBrain>();
+        CharacterBrainSwappingInfo oldInfo = new CharacterBrainSwappingInfo(agression);
+        EnemyBrain newBrain = ChooseNewBrain(brainType);
+        if (newBrain == null) return;
+        currentBrain = newBrain;
+        TransferBrainData(oldInfo, modifiers);
+
+        // Now do gun swap and model changes
+        EnemyGunSelector gunSelector = GetComponent<EnemyGunSelector>();
+
+        gunSelector.StartGun = gun;
+        SwapModel(gun, modifiers);
+        currentBrain.SpawnerEnemy = spawnerEnemy;
+    }
     public void SwapBrain(GunScriptableObject g, List<EEnemyModifier> modifiers)
     {
         currentBrain = GetComponent<EnemyBrain>();
