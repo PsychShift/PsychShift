@@ -717,7 +717,7 @@ namespace Player
 
         Vector3 castDirection = Vector3.down;
         float castDistance = 0.0f;
-        Vector3 boxSize = new Vector3(0.4f, 0.1f, 0.4f);
+        Vector3 boxSize = new Vector3(1f, 0.1f, 1f);//GROUND KEVIN CHANGE .4F .1F,.4F Old nums
         private bool GroundedCheck()
         {
             RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer, QueryTriggerInteraction.Ignore);
