@@ -14,7 +14,7 @@ public class KeyCardModifier : AbstractEnemyModifier
     {
         this.brain = brain;
         keyCardScript = gameObject.AddComponent<KeyCardScript>();
-        /* // add a new box collider
+        // add a new box collider
         colliderParent = new GameObject().transform;
         colliderParent.parent = transform;
 
@@ -24,6 +24,6 @@ public class KeyCardModifier : AbstractEnemyModifier
 
         // set its tag
         colliderParent.tag = "KeyCard";
-        colliderParent.gameObject.layer = LayerMask.NameToLayer("KeyCard"); */
+        colliderParent.gameObject.layer = LayerMask.NameToLayer("KeyCard");
     }
 }
