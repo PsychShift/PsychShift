@@ -14,6 +14,7 @@ public class EnemyBrainSelectorEditor : Editor
             EnemyBrainSelector selector = (EnemyBrainSelector)target;
             // Call your function when the button is pressed
             selector.SwapBrain();
+            EditorUtility.SetDirty(target);
         }
         base.OnInspectorGUI();
     }

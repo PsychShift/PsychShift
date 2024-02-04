@@ -16,7 +16,7 @@ public class KeyCardScript : MonoBehaviour
         if(this.tag == "Player" && alreadyActivated == false)
         {
             wasPlayer = true;
-            KeyCardUI.SetActive(true);
+            KeycardUI.Instance.SetActive(true);
             alreadyActivated = true;
         }
         else if(this.tag != "Player" && wasPlayer == true)
