@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[DefaultExecutionOrder(-1)] // Ensures this script runs first
 public class KeycardUI : MonoBehaviour
 {
     private static KeycardUI instance;
@@ -10,23 +11,24 @@ public class KeycardUI : MonoBehaviour
         {
             return instance;
         }
-        set
+        private set
         {
             instance = value;
         }
     }
-
 
     void Awake()
     {
         if(Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject); // Persists across scene changes
         }
         else
         {
             Destroy(gameObject);
         }
+        SetActive(false);
     }
 
     public void SetActive(bool active)

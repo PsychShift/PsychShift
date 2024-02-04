@@ -119,15 +119,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   godBoxRef: {fileID: 0}
-  enemyType:
-  - {fileID: 5905654126347321776, guid: 96d598813e377274bb4b307fdd9fedf0, type: 3}
-  - {fileID: 3185649951960435271, guid: 32895d64b4deeab4c959abb2d28b336b, type: 3}
-  randomEnemySpawn: 1
-  whatEnemytoSpawn: 0
+  enemyPrefab: {fileID: 0}
+  enemyTypes: 03000000
+  gunTypes:
+  - {fileID: 11400000, guid: 29cb4dc3750135b42813e37fb213d896, type: 2}
+  - {fileID: 11400000, guid: 13f32ffad930d8447be9c072f0e96087, type: 2}
+  enemyModifiers:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys: 000000000000000000000000
+    _Values: 000000000000000000000000
+  agressionLevels:
+  - {fileID: 11400000, guid: b11693b8e2be01a418452a964a9584b0, type: 2}
   howManySpawn: 5
-  elimEnemies: 1
+  spawnRate: 3
   gapBetweenSpawns: {x: 0, y: 2}
-  moveVariables: TURN THIS OFF MANUALLY FOR KILL EVERYONE SECTIONS
   puzzleNotDone: 1
   godBoxActionRef: {fileID: 0}
   spawnFX: {fileID: 0}

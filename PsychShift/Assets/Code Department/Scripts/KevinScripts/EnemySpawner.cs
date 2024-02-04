@@ -6,7 +6,7 @@ using Guns;
 using System;
 public class EnemySpawner : MonoBehaviour
 {
-    private static System.Random rand = new System.Random();
+    public static System.Random Rand = new System.Random();
     [SerializeField]
     PuzzleKit godBoxRef;
     [SerializeField] private GameObject enemyPrefab;
@@ -66,8 +66,9 @@ public class EnemySpawner : MonoBehaviour
             List<EEnemyModifier> selectedModifiers = new();
             foreach(var mod in enemyModifiers)
             {
-                float chance = mod.Value / 100f;
-                if(rand.NextDouble() < chance)
+                int val = Rand.Next(100);
+                int chance = mod.Value;
+                if(val < chance)
                 {
                     selectedModifiers.Add(mod.Key);
                 }
@@ -83,6 +84,11 @@ public class EnemySpawner : MonoBehaviour
             // subscribe to death event
             enemy.GetComponent<EnemyHealth>().OnDeath += EnemyDeath;
             enemySpawned.Add(enemy);
+
+            string gunTypeName = selector.GunName(gun);
+            string modifierName = selector.ModifierName(selectedModifiers);
+
+            enemy.name = gunTypeName + modifierName + "_EnemyModel";
             
             // Special effects on spawn
             Instantiate(spawnFX, transform.position, Quaternion.identity);
@@ -90,6 +96,7 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(UnityEngine.Random.Range(gapBetweenSpawns.x, gapBetweenSpawns.y));//gap between spawns 
         }
     } 
+
     
     /* private IEnumerator SpawnIn()
     {

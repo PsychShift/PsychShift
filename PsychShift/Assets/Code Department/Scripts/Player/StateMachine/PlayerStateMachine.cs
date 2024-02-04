@@ -485,6 +485,14 @@ namespace Player
         // The movement of the camera is handled by Cinemachine, this is mostly for the particle effects and enabling/disabling the enemy ai.
         private IEnumerator SwapAnimation(Transform startTransform, Transform endTransform, CharacterInfoReference startCharacter, CharacterInfoReference endCharacter)
         {
+            if(startCharacter.characterInfo.characterContainer.TryGetComponent(out KeyCardScript startKeycardEnemy))
+            {
+                startKeycardEnemy.SwapOut();
+            }
+            if(endCharacter.characterInfo.characterContainer.TryGetComponent(out KeyCardScript endKeycardEnemy))
+            {
+                endKeycardEnemy.SwapIn();
+            }
             startCharacter.characterInfo.enemyBrain.StopAllCoroutines();
             endCharacter.characterInfo.enemyBrain.StopAllCoroutines();
             

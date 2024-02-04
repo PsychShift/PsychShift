@@ -29,6 +29,8 @@ public class EnemyBrainSelector : MonoBehaviour
         EnemyGunSelector gunSelector = GetComponent<EnemyGunSelector>();
 
         gunSelector.StartGun = gun;
+        gunSelector.DespawnActiveGun();
+        gunSelector.SetupGun(gun);
         SwapModel(gun, modifiers);
         currentBrain.SpawnerEnemy = spawnerEnemy;
     }

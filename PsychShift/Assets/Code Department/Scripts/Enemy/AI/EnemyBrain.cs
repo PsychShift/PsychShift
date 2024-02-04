@@ -255,6 +255,10 @@ public abstract class EnemyBrain : MonoBehaviour
                     break;
             }
         }
+        if(Application.isPlaying)
+        {
+            VariableSetup();
+        }
         #if UNITY_EDITOR
         if(!Application.isPlaying)
             EditorUtility.SetDirty(this);
