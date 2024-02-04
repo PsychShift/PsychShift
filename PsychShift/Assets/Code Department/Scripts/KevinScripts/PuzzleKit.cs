@@ -41,7 +41,7 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     [SerializeField] private Vector3 endPosition;
 
     [SerializeField]
-    float speedOfMove; 
+    float timeOfMove = 2; 
 
 
     [Header("Spawn options")]
@@ -155,23 +155,72 @@ public class PuzzleKit : MonoBehaviour, IDamageable
             }
         } */
 
-        if(movingActivated && godBox)
+        /* if(movingActivated && godBox)
         {
+            
             Vector3.Lerp(transform.position, endPosition, speedOfMove);
             float distCovered = (Time.time - startTime) * speedOfMove;
             float fracJourney = distCovered / journeyLength;
             transform.position = Vector3.Lerp(transform.position, endPosition, fracJourney);
-            
             if(fracJourney >= 1)
             {
                 movingActivated = false;
             }
-        }
+            
+        } */
         /* if(puzzleTimeBegan)
         {
 
         } */
     }
+
+    private IEnumerator MoveObject(Vector3 targetPosition, float duration)
+    {
+        //CanInteract = false;
+        float startTime = Time.time;
+        float endTime = startTime + duration;
+        Vector3 currentPosition = transform.position;
+
+        while (Time.time < endTime)
+        {
+            float journeyFraction = (Time.time - startTime) / duration;
+            transform.position = Vector3.Lerp(currentPosition, targetPosition, journeyFraction);
+
+            /* if (collisionDetection != null)
+            {
+                Collider[] colliders = Physics.OverlapBox(collisionDetection.position, collisionDetectionSize / 2);
+                foreach(Collider other in colliders)
+                {
+                    if(other.tag == "Destructable")
+                    {
+                        if(other.TryGetComponent(out IDamageable damageable))
+                        {
+                            damageable.TakeDamage(999);
+                        }
+                    }
+                }
+            } */
+            yield return new WaitForFixedUpdate(); 
+        }
+        transform.position = targetPosition;
+        //CanInteract = true;
+    }
+    /* IEnumerator MoveFunct()
+    {
+                Vector3.Lerp(transform.position, endPosition, speedOfMove);
+                float distCovered = (Time.time - startTime) * speedOfMove;
+                float fracJourney = distCovered / journeyLength;
+                transform.position = Vector3.Lerp(transform.position, endPosition, fracJourney);
+                if(fracJourney >= 1)
+                {
+                    movingActivated = false;
+                }
+            
+            if(movingActivated == true)
+                StartCoroutine(MoveFunct());
+            else
+                yield return null;
+    } */
 
 
     private void Move()
@@ -186,6 +235,20 @@ public class PuzzleKit : MonoBehaviour, IDamageable
 
         movingActivated = true;
         puzzleComplete = true;
+        StartCoroutine(MoveObject(endPosition, timeOfMove));
+        //StartCoroutine(MoveFunct());
+        /* while(movingActivated == true)
+        {
+            Vector3.Lerp(transform.position, endPosition, speedOfMove);
+            float distCovered = (Time.time - startTime) * speedOfMove;
+            float fracJourney = distCovered / journeyLength;
+            transform.position = Vector3.Lerp(transform.position, endPosition, fracJourney);
+            if(fracJourney >= 1)
+            {
+                movingActivated = false;
+            }
+        } */
+                
         #region 
         
         /* if(isAnim)

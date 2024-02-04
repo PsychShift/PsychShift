@@ -37,8 +37,8 @@ public class AIVigilScuff : MonoBehaviour
     bool m_PlayerNear;                              
     bool m_IsPatrol;                                
     bool m_CaughtPlayer;  
-    bool shutDown = false;                          
- 
+    bool shutDown = false;
+
     void Start()
     {
         m_PlayerPosition = Vector3.zero;
@@ -62,9 +62,8 @@ public class AIVigilScuff : MonoBehaviour
  
     private void Update()
     {
+        this.transform.rotation = Quaternion.identity;
         EnviromentView();                       
-        if(shutDown == false)
-        {
             if (!m_IsPatrol)
             {
                 Chasing();
@@ -73,11 +72,7 @@ public class AIVigilScuff : MonoBehaviour
             {
                 Patrolling();
             }
-        }
-        else
-        {
-            ShutDown();
-        }
+        
     }
  
     private void Chasing()
@@ -199,30 +194,6 @@ public class AIVigilScuff : MonoBehaviour
                 m_WaitTime -= Time.deltaTime;
             }
         }
-    }
-    public void ShutDown()
-    {
-        Debug.Log("Shutting Down");
-        if(robotDown>=0)
-        {
-            shutDown = true;
-            Stop();
-            robotDown-=Time.deltaTime;
-        }
-        else
-        {
-            Move(speedWalk);
-            //navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
-            shutDown = false;
-            robotDown = robotDownOG;
-            
-        }
-        
-        /*
-        speedRun = speedRunOG;
-        speedWalk = speedWalkOG;
-        shutDown = false;*/
-
     }
  
     void EnviromentView()
