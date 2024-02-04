@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7570,7 +7570,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1287021766
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7786,6 +7786,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveObject:
     Savepoint: {fileID: 0}
+    Character:
+      characterContainer: {fileID: 0}
+      model: {fileID: 0}
+      wallCheck: {fileID: 0}
+      cameraRoot: {fileID: 0}
+      vCam: {fileID: 0}
+      controller: {fileID: 0}
+      agent: {fileID: 0}
+      animator: {fileID: 0}
+      animMaster: {fileID: 0}
+      gunHandler: {fileID: 0}
+      enemyHealth: {fileID: 0}
+      movementStats: {fileID: 0}
+      characterStats: {fileID: 0}
+      enemyBrain: {fileID: 0}
   CurrentSceneIndex: 0
   sceneToContinue: 0
 --- !u!1 &1302966641
@@ -8102,7 +8117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddbf2758a30fce2459a7254a17cc0f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resolutionDropdown: {fileID: 1593710255}
+  vsyncTog: {fileID: 0}
 --- !u!114 &1326419081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8138,6 +8153,7 @@ MonoBehaviour:
   PauseMenuFirst: {fileID: 0}
   PauseMenuSettings: {fileID: 2003734476}
   PauseMenuSettingsFirst: {fileID: 0}
+  checkPointReset: {fileID: 0}
 --- !u!114 &1326419083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8243,6 +8259,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveObject:
     Savepoint: {fileID: 0}
+    Character:
+      characterContainer: {fileID: 0}
+      model: {fileID: 0}
+      wallCheck: {fileID: 0}
+      cameraRoot: {fileID: 0}
+      vCam: {fileID: 0}
+      controller: {fileID: 0}
+      agent: {fileID: 0}
+      animator: {fileID: 0}
+      animMaster: {fileID: 0}
+      gunHandler: {fileID: 0}
+      enemyHealth: {fileID: 0}
+      movementStats: {fileID: 0}
+      characterStats: {fileID: 0}
+      enemyBrain: {fileID: 0}
   CurrentSceneIndex: 0
   sceneToContinue: 0
 --- !u!1 &1336689159
@@ -11829,7 +11860,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Boss
+  m_text: Level 2 boss
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -12073,7 +12104,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Intro lobby
+  m_text: Level 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

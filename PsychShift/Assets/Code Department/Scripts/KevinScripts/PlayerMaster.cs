@@ -62,13 +62,13 @@ public class PlayerMaster : MonoBehaviour
             
         }
     } */
-    public void SetCheckPoint(Transform position, GameObject character)
+    public void SetCheckPoint(Transform position, GameObject character)//Call this with transform.zero to reset checkpoint when player quits
     {
         Debug.Log("Info set PM");
         checkPointLocation= position;
         checkPointLocationTWO=checkPointLocation;
         Debug.Log("CheckLoc "+ checkPointLocation.position);
-        playerRef.PleaseSetLocationGODPLEASE(checkPointLocation);
+        playerRef.PleaseSetLocationGODPLEASE(checkPointLocation, false);
         //charAtLastCheck = character;
         
 

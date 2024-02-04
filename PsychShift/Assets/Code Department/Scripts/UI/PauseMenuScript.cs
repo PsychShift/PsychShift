@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using Player;
 
 public class PauseMenuScript : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PauseMenuScript : MonoBehaviour
     public GameObject PauseMenuSettings;
     public GameObject PauseMenuSettingsFirst;
     public static bool GameIsPaused = false;
+    public PlayerStateMachine checkPointReset;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +49,7 @@ public class PauseMenuScript : MonoBehaviour
     public void Quit()
     {
         Time.timeScale = 1f;
+        checkPointReset.PleaseSetLocationGODPLEASE(PauseMenu.transform, true);
         SceneManager.LoadScene("Main Menu VS");
     }
     public void OpenPauseSettings()
