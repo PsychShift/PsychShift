@@ -25,7 +25,7 @@ public class ChaseState : ShootingSuperState, ICoroutineRestarter
         brain.Animator.SetFloat("speed", 0f);
         /* brain.Animator.SetFloat("speedForward", 0f);
         brain.Animator.SetFloat("speedRight", 0f); */
-        brain.Agent.stoppingDistance = brain.agression.DestinationStoppingDistance;
+        //brain.Agent.stoppingDistance = brain.agression.DestinationStoppingDistance;
         brain.StopCoroutine(ChasePlayer());
     }
 
