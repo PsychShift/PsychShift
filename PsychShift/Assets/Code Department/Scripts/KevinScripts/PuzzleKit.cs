@@ -229,8 +229,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
         {
             Instantiate(effectForGod,transform.position, Quaternion.identity);
         }
-        if(soundClip!=null)
-                Beep.PlayOneShot(soundClip);
+        /* if(soundClip!=null)
+                Beep.PlayOneShot(soundClip); */
         
 
         movingActivated = true;
