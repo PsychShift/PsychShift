@@ -4,13 +4,13 @@ using Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class keyc : MonoBehaviour
+public class WinScriptLevel2 : MonoBehaviour
 {
     // Start is called before the first frame update
     public PlayerStateMachine checkpointRest;
-    void Awake()
+    void OnEnable()
     {
         SceneManager.LoadScene("WinScreen");
-        checkpointRest.PleaseSetLocationGODPLEASE(this.transform, true);
+        checkpointRest.SetLocation(transform);
     }
 }

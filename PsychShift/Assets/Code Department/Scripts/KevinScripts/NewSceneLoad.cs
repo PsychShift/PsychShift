@@ -17,7 +17,7 @@ public class NewSceneLoad : MonoBehaviour
         {
             if(trevor)
             {
-                resetCheckpoint.PleaseSetLocationGODPLEASE(this.gameObject.transform, true);
+                resetCheckpoint.SetLocation(transform);
                 SceneManager.LoadScene("TREVOR ROOM");
             }
                 

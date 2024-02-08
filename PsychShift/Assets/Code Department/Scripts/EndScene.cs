@@ -12,7 +12,7 @@ public class EndScene : MonoBehaviour
         if(other.tag == "Player")
         {
             SceneManager.LoadScene("Outro"); 
-            checkpointRest.PleaseSetLocationGODPLEASE(this.transform, true);
+            checkpointRest.SetLocation(transform);
         }
             
 

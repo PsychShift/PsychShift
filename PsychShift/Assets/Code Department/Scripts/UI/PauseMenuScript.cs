@@ -49,7 +49,7 @@ public class PauseMenuScript : MonoBehaviour
     public void Quit()
     {
         Time.timeScale = 1f;
-        checkPointReset.PleaseSetLocationGODPLEASE(PauseMenu.transform, true);
+        checkPointReset.SetLocation(null);
         SceneManager.LoadScene("Main Menu VS");
     }
     public void OpenPauseSettings()

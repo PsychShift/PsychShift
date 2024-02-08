@@ -25,11 +25,11 @@ public class Checkpoints : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter(Collider other) 
     {
-        if(other.tag == "Player"&& !hitCheck)
+        if(other.tag == "Player" && !hitCheck)
         {
             Debug.Log("Checkpoint hit");
             hitCheck = true;
-            PlayerMaster.Instance.SetCheckPoint(gameObject.transform, other.gameObject);
+            PlayerMaster.Instance.SetCheckPoint(transform);
             StartCoroutine(checkPointReach());
         }
     }

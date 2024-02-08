@@ -795,9 +795,9 @@ namespace Player
                 Gizmos.DrawSphere(normal, 0.1f);
            }
         }
-        public void PleaseSetLocationGODPLEASE(Transform location, bool isQuit)
+        public void SetLocation(Transform location)
         {
-            if(isQuit == false)
+            if(location != null)
                 checkPointL = location.position;
             else
                 checkPointL = Vector3.zero;
