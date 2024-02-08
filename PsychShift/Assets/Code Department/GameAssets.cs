@@ -19,6 +19,7 @@ public class GameAssets : MonoBehaviour
 
         [Header("Assets for the Resource folder")]
         [Header("Prefabs")]
+        public GameObject EnemyPrefab;
         public List<GameObject> prefabs;
         public GameObject GetPrefab(string name)
         {

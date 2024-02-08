@@ -229,7 +229,7 @@ public abstract class EnemyBrain : MonoBehaviour
     }
 
 
-    public void SetUpBrainSwap(CharacterBrainSwappingInfo info, List<EEnemyModifier> modifiers)
+    public void SetUpBrainSwap(CharacterBrainSwappingInfo info, EEnemyModifier[] modifiers)
     {
         agression = info.AIAgression;
         this.modifiers = new();

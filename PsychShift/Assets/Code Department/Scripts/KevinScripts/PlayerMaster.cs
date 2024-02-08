@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BrainSwapSaving;
 using Player;
 using UnityEngine;
 using UnityEngine.Events;
@@ -30,6 +31,10 @@ public class PlayerMaster : MonoBehaviour
     // Start is called before the first frame update
     private void OnEnable()
     {
+        if(true) // check if a static variable is set to true, this will likely by on a seperate script, and will be set by ui
+        {
+            Load();
+        }
         //Debug.Log("ChecPointLTwo "+ checkPointLocationTWO.position);
         if(checkPointLocationTWO!= null)
         {
@@ -69,7 +74,41 @@ public class PlayerMaster : MonoBehaviour
         checkPointLocationTWO=checkPointLocation;
         playerRef.SetLocation(checkPointLocation);
 
+        SaveInfo();
+    }
+
+
+    private void SaveInfo()
+    {
+        // use transform, current character info
+        Transform checkPoint = checkPointLocation;
+        int health = charInfo.enemyHealth.CurrentHealth;
+
+        AIAgression aIAgression = charInfo.enemyBrain.agression;
+        // we need enemy type as well
+        EnemyBrainSelector brainSelector = charInfo.characterContainer.GetComponent<EnemyBrainSelector>();
+        EBrainType enemyType = brainSelector.enemyType;
+        Guns.GunScriptableObject gunType = brainSelector.gunType;
+        EEnemyModifier[] modifiers = brainSelector.modifiers;
         
-        // 
+
+        SaveObject saveObject = new(checkPoint, health, aIAgression, enemyType, gunType, modifiers);
+
+        string json = JsonUtility.ToJson(saveObject);
+        SaveSystem.Save(json, "Saves", "Save");
+    }
+
+
+    // loading, for enemy prefab use GameAssets.Instance.EnemyPrefab
+    private void Load()
+    {
+        string json = SaveSystem.Load("Saves", "Save");
+        SaveObject saveObject = JsonUtility.FromJson<SaveObject>(json);
+        GameObject Enemy = GameAssets.Instance.EnemyPrefab;
+        EnemyBrainSelector brainSelector = Enemy.GetComponent<EnemyBrainSelector>();
+
+        brainSelector.SwapBrain(saveObject.GunType, saveObject.EnemyType, saveObject.Modifiers, saveObject.AIAgression);
+    
+        
     }
 }

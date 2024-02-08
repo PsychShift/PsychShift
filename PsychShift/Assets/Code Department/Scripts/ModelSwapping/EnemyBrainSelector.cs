@@ -13,10 +13,10 @@ public class EnemyBrainSelector : MonoBehaviour
     public EBrainType enemyType;
     public GunScriptableObject gunType;
     [Header("Doesn't do anything yet")]
-    public List<EEnemyModifier> modifiers = new List<EEnemyModifier> { EEnemyModifier.None };
+    public EEnemyModifier[] modifiers = new EEnemyModifier[] { EEnemyModifier.None };
     private EnemyBrain currentBrain;
 
-    public void SwapBrain(GunScriptableObject gun, EBrainType brainType, List<EEnemyModifier> modifiers, AIAgression agression, bool spawnerEnemy = false)
+    public void SwapBrain(GunScriptableObject gun, EBrainType brainType, EEnemyModifier[] modifiers, AIAgression agression, bool spawnerEnemy = false)
     {
         currentBrain = GetComponent<EnemyBrain>();
         CharacterBrainSwappingInfo oldInfo = new CharacterBrainSwappingInfo(agression);
@@ -34,7 +34,7 @@ public class EnemyBrainSelector : MonoBehaviour
         SwapModel(gun, modifiers);
         currentBrain.SpawnerEnemy = spawnerEnemy;
     }
-    public void SwapBrain(GunScriptableObject g, List<EEnemyModifier> modifiers)
+    public void SwapBrain(GunScriptableObject g, EEnemyModifier[] modifiers)
     {
         currentBrain = GetComponent<EnemyBrain>();
         CharacterBrainSwappingInfo oldInfo = new CharacterBrainSwappingInfo(currentBrain.agression);
@@ -49,7 +49,7 @@ public class EnemyBrainSelector : MonoBehaviour
         gunSelector.StartGun = g;
         SwapModel(g, modifiers);
     }
-    private void SwapModel(GunScriptableObject g, List<EEnemyModifier> modifiers)
+    private void SwapModel(GunScriptableObject g, EEnemyModifier[] modifiers)
     {
         // Given gun type and enemy modifier, select a file name to load a model
 
@@ -129,7 +129,7 @@ public class EnemyBrainSelector : MonoBehaviour
     }
 
 
-    public string ModifierName(List<EEnemyModifier> modifiers)
+    public string ModifierName(EEnemyModifier[] modifiers)
     {
         // Sort the list by the integer value of the enum
         var sortedModifiers = modifiers.OrderBy(x => (int)x);
@@ -160,7 +160,7 @@ public class EnemyBrainSelector : MonoBehaviour
     }
 
 
-    private void TransferBrainData(CharacterBrainSwappingInfo oldInfo, List<EEnemyModifier> modifiers)
+    private void TransferBrainData(CharacterBrainSwappingInfo oldInfo, EEnemyModifier[] modifiers)
     {
         currentBrain.SetUpBrainSwap(oldInfo, modifiers);
     }

@@ -20,7 +20,7 @@ public class SaveTest : MonoBehaviour
         saveObject = new SaveObject();
 
         saveObject.Savepoint = charInfo.characterContainer.transform;
-        saveObject.Character = charInfo;
+        //saveObject.Character = charInfo;
         SaveManager.Save(saveObject);
         CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         PlayerPrefs.SetInt("SavedScene", CurrentSceneIndex);
