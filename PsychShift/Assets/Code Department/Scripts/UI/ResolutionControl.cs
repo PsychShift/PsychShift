@@ -14,7 +14,8 @@ public class ResolutionControl : MonoBehaviour
     private int currentResolutionIndex = 0;
 
     // Start is called before the first frame update
-    //[System.Obsolete]
+    [System.Obsolete]
+
     void Start()
     {
         resolutions = Screen.resolutions;
