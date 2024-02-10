@@ -10,6 +10,7 @@ namespace Guns
         Pistol,
         Rifle,
         FrogGun,
+        ShotGun,
         None
     }
 }
