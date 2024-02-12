@@ -119,7 +119,7 @@ public class PlayerMaster : MonoBehaviour
         SaveObject saveObject = JsonUtility.FromJson<SaveObject>(json);
         Debug.Log(saveObject);
         // if not unity editor, load the scene from the file
-        SceneManager.LoadScene(saveObject.Scene);
+        SceneManager.LoadScene(saveObject.Scene, LoadSceneMode.Additive);
         Debug.Log("scene loaded");
         GameObject Enemy = Instantiate(GameAssets.Instance.GetEnemyPrefab());
         PlayerStateMachine.Instance.tempCharacter = Enemy;
