@@ -12,6 +12,12 @@ public class RigColliderManager : MonoBehaviour
         foreach (Collider collider in children)
         {
             if(collider.gameObject == gameObject) continue;
+            if(collider.gameObject.TryGetComponent(out ChildCollider premadeScript))
+            {
+                premadeScript.SetUp(premadeScript);
+                childColliders.Add(premadeScript);
+                continue;
+            }
             ChildCollider childCollider = collider.gameObject.AddComponent<ChildCollider>();
             childCollider.SetUp(parentDamageable);
             childColliders.Add(childCollider);

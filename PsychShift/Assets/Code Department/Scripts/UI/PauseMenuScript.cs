@@ -14,7 +14,6 @@ public class PauseMenuScript : MonoBehaviour
     public GameObject PauseMenuSettings;
     public GameObject PauseMenuSettingsFirst;
     public static bool GameIsPaused = false;
-    public PlayerStateMachine checkPointReset;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,14 +23,6 @@ public class PauseMenuScript : MonoBehaviour
         PauseMenuSettings.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKey("escape"))
-        {
-            Application.Quit();
-        }
-    }
     public void Resume()
     {
         PauseMenu.SetActive(false);
@@ -49,7 +40,7 @@ public class PauseMenuScript : MonoBehaviour
     public void Quit()
     {
         Time.timeScale = 1f;
-        checkPointReset.SetLocation(null);
+        PlayerStateMachine.Instance.SetLocation(null);
         SceneManager.LoadScene("Main Menu VS");
     }
     public void OpenPauseSettings()
@@ -67,14 +58,21 @@ public class PauseMenuScript : MonoBehaviour
     }
     private void PausePressed()
     {
-        TimeManager.Instance.UndoSlowmotion();
-        PauseMenu.SetActive(true);
-        PauseMenuSettings.SetActive(false);
-        Cursor.lockState = CursorLockMode.Confined;
-        Time.timeScale = 0f;
-        GameIsPaused = true;
-        Cursor.visible = true;
-        EventSystem.current.SetSelectedGameObject(PauseMenuFirst);
+        if(GameIsPaused)
+        {
+            Resume();
+        }
+        else
+        {
+            TimeManager.Instance.UndoSlowmotion();
+            PauseMenu.SetActive(true);
+            PauseMenuSettings.SetActive(false);
+            Cursor.lockState = CursorLockMode.Confined;
+            Time.timeScale = 0f;
+            GameIsPaused = true;
+            Cursor.visible = true;
+            EventSystem.current.SetSelectedGameObject(PauseMenuFirst);
+        }
         
     }
     private void OnEnable() 

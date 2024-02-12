@@ -26,8 +26,8 @@ namespace Player
         private float currentSenseY;
         #endregion
 
-
-        void Start()
+        public bool IsActive { get; set; }
+        public void Awake()
         {
             camera = Camera.main;
         }
@@ -43,11 +43,6 @@ namespace Player
                 currentSenseX = controllerSensitivityX;
                 currentSenseY = controllerSensitivityY;
             }
-        }
-
-        void Update()
-        {
-            
         }
 
         public void RotatePlayer()

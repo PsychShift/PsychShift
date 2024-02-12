@@ -1,34 +1,31 @@
 using Guns;
 using UnityEngine;
-using Guns.Demo;
-using Guns.Health;
-using Player;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System.Collections.Generic;
-//using CharacterInfo = Player.CharacterInfo;
-//using UnityEditor.SearchService;
-
 
 [System.Serializable]
 
-public struct SaveObject
+public class SaveObject
 {
-  public Transform Savepoint;
+  public int Scene;
+  public Vector3 Savepoint;
   public int Health;
   public AIAgression AIAgression;
   public EBrainType EnemyType;
-  public Guns.GunScriptableObject GunType;
+  public GunType GunType;
   public EEnemyModifier[] Modifiers;
 
-  public SaveObject(Transform savePoint, int health, AIAgression aIAgression, EBrainType enemyType,  
-                    Guns.GunScriptableObject gunType, EEnemyModifier[] modifiers)
+  public SaveObject(int scene, Vector3 savePoint, int health, AIAgression aIAgression, EBrainType enemyType,  
+                    GunType gunType, EEnemyModifier[] modifiers)
   {
+    Scene = scene;
     Savepoint = savePoint;
     Health = health;
     AIAgression = aIAgression;
     EnemyType = enemyType;
     GunType = gunType;
     Modifiers = modifiers;
+  }
+  public SaveObject()
+  {
+
   }
 }

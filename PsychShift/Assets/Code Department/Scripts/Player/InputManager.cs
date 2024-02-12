@@ -11,8 +11,10 @@ public class InputManager : MonoBehaviour
     //[SerializeField] private CinemachinePOVExtension cinemachinePOVExtension;
     private static InputManager _instance;
     
-    public static InputManager Instance {
-        get {
+    public static InputManager Instance 
+    {
+        get 
+        {
             return _instance;
         }
     }
@@ -68,43 +70,25 @@ public class InputManager : MonoBehaviour
     public InputAction ShaderIsPressed{get; private set;}
     public InputAction ShaderIsPressedSlow{get; private set;}
 
-    private void Awake() {
-        PlayerInput = GetComponent<PlayerInput>();
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
     bool switchFromKeyboard = false;
     bool switchFromController = false;
-    private void Update()
-    {
-        /* if(PlayerInput.currentControlScheme == "Keyboard" && switchFromController)
-        {
-            // Set to PC sensitivity
-            cinemachinePOVExtension.horizontalSpeed = 10f;
-            cinemachinePOVExtension.verticalSpeed = 10f;
-            switchFromController = false;
-            switchFromKeyboard = true;
-        }
-        else if(PlayerInput.currentControlScheme == "Controller" && switchFromKeyboard)
-        {
-            // Set to Controller sensitivity
-            cinemachinePOVExtension.horizontalSpeed = 180f;
-            cinemachinePOVExtension.verticalSpeed = 140f;
-            switchFromController = true;
-            switchFromKeyboard = false;
-        } */
-    }
 
-    private void OnEnable() {
-        if(_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
+    public void OnEnable()
+    {
+        if(Instance == null)
         {
             _instance = this;
         }
+        else
+        {
+            Debug.Log("Destroying the InputManager");
+            Destroy(this);
+            return;
+        }
+        PlayerInput = GetComponent<PlayerInput>();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         StandardActionMap = PlayerInput.actions.FindActionMap("Controls");
         SlowActionMap = PlayerInput.actions.FindActionMap("Slow");
         UIActionMap = PlayerInput.actions.FindActionMap("UI");
@@ -165,7 +149,9 @@ public class InputManager : MonoBehaviour
         // Camera Sensitivity Stuff
         switchFromController = true;
     }
-    private void OnDisable() {
+    
+    private void OnDisable() 
+    {
         StandardJumpAction.performed -= OnJump;
         StandardJumpAction.canceled -= OnJump;
         SlowJumpAction.performed -= OnJump;

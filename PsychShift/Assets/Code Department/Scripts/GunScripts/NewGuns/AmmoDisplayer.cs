@@ -7,8 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class AmmoDisplayer : MonoBehaviour
 {
-    [SerializeField]
-    private PlayerGunSelector GunSelector;
+
     private TextMeshProUGUI AmmoText;
     private void Awake()
     {
@@ -16,6 +15,6 @@ public class AmmoDisplayer : MonoBehaviour
     }
     private void Update()
     {
-        AmmoText.SetText($"{GunSelector.ActiveGun.AmmoConfig.CurrentClipAmmo}" );
+        AmmoText.SetText($"{PlayerGunSelector.Instance.ActiveGun.AmmoConfig.CurrentClipAmmo}" );
     }
 }

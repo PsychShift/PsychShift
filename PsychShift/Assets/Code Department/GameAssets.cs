@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Guns;
 using UnityEngine;
 
 public class GameAssets : MonoBehaviour
@@ -25,6 +26,10 @@ public class GameAssets : MonoBehaviour
         {
             return prefabs.FirstOrDefault(go => go.name == name);
         }
+        public GameObject GetEnemyPrefab()
+        {
+            return EnemyPrefab;
+        }
 
 
         [Header("Materials")]
@@ -32,6 +37,13 @@ public class GameAssets : MonoBehaviour
         public Material GetMaterial(string name)
         {
             return materials.FirstOrDefault(ma => ma.name == name);
+        }
+
+        [Header("Guns")]
+        public GunScriptableObject[] guns;
+        public GunScriptableObject GetGun(GunType gunType)
+        {
+            return guns.FirstOrDefault(gun => gun.Type == gunType);
         }
 
 }

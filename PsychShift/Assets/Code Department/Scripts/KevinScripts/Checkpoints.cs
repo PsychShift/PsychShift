@@ -27,7 +27,6 @@ public class Checkpoints : MonoBehaviour
     {
         if(other.tag == "Player" && !hitCheck)
         {
-            Debug.Log("Checkpoint hit");
             hitCheck = true;
             PlayerMaster.Instance.SetCheckPoint(transform);
             StartCoroutine(checkPointReach());

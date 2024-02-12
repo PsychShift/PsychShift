@@ -18,6 +18,9 @@ public class EnemyBrainSelector : MonoBehaviour
 
     public void SwapBrain(GunScriptableObject gun, EBrainType brainType, EEnemyModifier[] modifiers, AIAgression agression, bool spawnerEnemy = false)
     {
+        gunType = gun;
+        enemyType = brainType;
+        this.modifiers = modifiers;
         currentBrain = GetComponent<EnemyBrain>();
         CharacterBrainSwappingInfo oldInfo = new CharacterBrainSwappingInfo(agression);
         EnemyBrain newBrain = ChooseNewBrain(brainType);

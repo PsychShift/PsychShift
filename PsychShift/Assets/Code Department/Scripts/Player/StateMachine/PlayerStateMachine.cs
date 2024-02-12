@@ -10,8 +10,14 @@ namespace Player
     [RequireComponent(typeof(InputManager))]
     public class PlayerStateMachine : MonoBehaviour
     {
-        private static PlayerStateMachine instance;
-        public static PlayerStateMachine Instance { get { return instance; } }
+        private static PlayerStateMachine instance = null;
+        public static PlayerStateMachine Instance 
+        { 
+            get 
+            { 
+                return instance; 
+            }
+        }
         //AUDIO SOURCE HERE
         [SerializeField] public AudioSource playerAudio;
         #region References
@@ -22,19 +28,21 @@ namespace Player
         [SerializeField] private PlayerGunSelector gunSelector;
         public Transform cameraTransform;
         private ParticleMaster particleMaster;
-        [SerializeField] private HealthUI healthUI;
         #endregion
-
         #region Movement Variables
         [Header("Movement Variables")]
         private Vector3 currentMovement;
         private Vector3 appliedMovement;
+        //private Vector2 currentInput;
         public float AppliedMovementX { get { return appliedMovement.x; } set { appliedMovement.x = value; }}
         //public float CurrentMovementX { get { return currentMovement.x; } set { currentMovement.x = value; }}
         public float AppliedMovementY { get { return appliedMovement.y; } set { appliedMovement.y = value; }}
         public float CurrentMovementY { get { return currentMovement.y; } set { currentMovement.y = value; }}
         public float AppliedMovementZ { get { return appliedMovement.z; } set { appliedMovement.z = value; }}
-        //public float CurrentMovementZ { get { return currentMovement.z; } set { currentMovement.z = value; }}
+
+
+        /* public float CurrentMovementX { get { return currentInput.x; } set { currentInput.x = value; }}
+        public float CurrentMovementZ { get { return currentInput.y; } set { currentInput.y = value; }} */
 
         public Vector3 ExternalMovement { get; set; }
 
@@ -76,6 +84,8 @@ namespace Player
         #endregion
 
         [Header("Jump Variables")]
+        /* [SerializeField] private Vector3 gravityDirection;
+        public Vector3 GravityDirection { get { return gravityDirection; } set { gravityDirection = value; } } */
         [SerializeField] private float jumpForce = 1f;
         public float JumpForce { get { return jumpForce; } }
         
@@ -113,30 +123,26 @@ namespace Player
         bool playingDuring;
         [SerializeField] AudioClip mindswapEnd;
         bool playingEnd;
-        #endregion
-        
+        #endregion        
         #region  Slow Variables
         private bool isSlowed = false;
         #endregion
-        [SerializeField] private GameObject tempCharacter;
+        public GameObject tempCharacter;
         public CharacterInfo currentCharacter;
-        private static Vector3 checkPointL;
+        private static Vector3 checkPoint;
         #region Monobehaviours
         public HitEffects hitMarkerSRef;
-        private void Awake()
+
+        void OnEnable()
         {
-            if(instance != null)
-            {
-                Debug.LogError("More than one PlayerStateMachine active in the scene! Destroying latest one: " + name);
-                Destroy(gameObject);
-                return;
-            }
             instance = this;
+            Debug.Log("PlayerStateMachine OnEnable()");
             WallStateVariables.Instance.wallLayer = wallLayer;
             WallStateVariables.Instance.WallholdLayers = wallholdLayers;
             WallStateVariables.Instance.WallSpeed = wallSpeed;
             boxRotation = Camera.main.transform.rotation;
             SetJumpVariables();
+
             cameraTransform = Camera.main.transform;
             cameraTransform.GetComponent<CinemachineBrain>().m_IgnoreTimeScale = false;
             particleMaster = GetComponentInChildren<ParticleMaster>();
@@ -145,7 +151,7 @@ namespace Player
 
             
             currentCharacter = null;
-            SwapCharacter(tempCharacter, PlayerMaster.Instance.checkPointLocation);
+            SwapCharacter(tempCharacter, tempCharacter.transform);
             // This is the first character, if it has a the FirstEnemy script, subrsribe its Swap function to the OnSwapPlayer event.
             if(currentCharacter != null)
             {
@@ -155,9 +161,6 @@ namespace Player
                     OnSwapPlayer += firstEnemy.Swap;
                 }
             }
-
-            //virtualCamera.Follow = currentCharacter.cameraRoot;
-
             
             stateMachine = new StateMachine.StateMachine();
 
@@ -169,12 +172,6 @@ namespace Player
             #endregion
 
             // Create instances of root states
-            /* var groundState = new GroundedState(this, stateMachine);
-            var fallState = new FallState(this, stateMachine);
-            var jumpState = new JumpState(this, stateMachine);
-            var wallFlowState = new WallFlowState(this, stateMachine);
-            var wallStaticState = new WallStaticState(this, stateMachine);
-            var wallJumpState = new WallJumpState(this, stateMachine); */
             var groundState = new GroundedState(this);
             var fallState = new FallState(this);
             var jumpState = new JumpState(this);
@@ -183,16 +180,6 @@ namespace Player
             var wallJumpState = new WallJumpState(this, wallJumpForce, wallJumpAngle);
             var wallFallState = new WallFallState(this, wallJumpForce, wallJumpAngle);
 
-           /*  // Create instances of sub-states
-            var idleState = new IdleState(this);
-            var walkState = new WalkState(this);
-
-            var wallRunState = new WallRunState(this, this);
-            var vaultState = new VaultState(this);
-            var mantleState = new MantleState(this);
-            var wallHangState = new WallHangState(this); */
-
-            // Makes it easier to add transitions (less text per line)
             void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition); // If a condition meets switch from 'from' state to 'to' state (Root state only)
             //void AAt(IState to, Func<bool> condition) => stateMachine.AddAnyTransition(to, condition); // If 
 
@@ -230,53 +217,7 @@ namespace Player
             AT(wallFallState, fallState, wallFallState.IsDone());
             #endregion
 
-            /* #region Standard Transitions
-            AT(idleState, walkState, Walked());
-            AT(walkState, idleState, Stopped());
-            #endregion
-            #region Wall Sub State Transitions
-            AT(wallRunState, idleState, Stopped());
-            AT(idleState, wallRunState, WallRun());
-
-            AT(wallHangState, vaultState, ClimbUpLedge());
-            AT(vaultState, wallRunState, WallRun());
-            
-            #endregion */
-
-            #region Assign Substates to Rootstates
-            /* groundState.AddSubState(idleState);
-            groundState.AddSubState(walkState);
-            groundState.PrepareSubStates();
-            groundState.SetDefaultSubState(idleState);
-
-            jumpState.AddSubState(idleState);
-            jumpState.AddSubState(walkState);
-            jumpState.PrepareSubStates();
-            jumpState.SetDefaultSubState(idleState);
-
-            fallState.AddSubState(idleState);
-            fallState.AddSubState(walkState);
-            fallState.PrepareSubStates();
-            fallState.SetDefaultSubState(idleState);
-
-            wallFlowState.AddSubState(wallRunState);
-            wallFlowState.AddSubState(idleState);
-            wallFlowState.PrepareSubStates();
-            wallFlowState.SetDefaultSubState(wallRunState);
-
-            wallStaticState.AddSubState(wallHangState);
-            wallStaticState.AddSubState(vaultState);
-            //wallStaticState.AddSubState(idleState);
-            wallStaticState.PrepareSubStates();
-            wallStaticState.SetDefaultSubState(wallHangState);
-
-            wallJumpState.AddSubState(idleState);
-            wallJumpState.AddSubState(walkState);
-            wallJumpState.PrepareSubStates();
-            wallJumpState.SetDefaultSubState(idleState); */
-            #endregion
-
-            // Root State Conditions
+            #region Conditions
             Func<bool> Jumped() => () => InputManager.Instance.IsJumpPressed && GroundedCheck();
             Func<bool> Falling() => () => AppliedMovementY < 0 && !GroundedCheck();
             Func<bool> Grounded() => () => GroundedCheck();
@@ -287,22 +228,14 @@ namespace Player
             Func<bool> WallJump() => () => InputManager.Instance.IsJumpPressed && WallStateVariables.Instance.TimeOnWall > 0.4f;
             Func<bool> WallFall() => () => AppliedMovementY < 0 && !GroundedCheck() && WallStateVariables.Instance.TimeOffWall > 0.2f;
             Func<bool> Swapped() => () => isSwapping;
-
-            /* // Sub State Conditions
-            Func<bool> Walked() => () => InputManager.Instance.GetPlayerMovement().magnitude != 0;
-            Func<bool> Stopped() => () => InputManager.Instance.GetPlayerMovement().magnitude == 0;
-
-            //Func<bool> ForwardWall() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.GetPlayerMovement().magnitude == 0;
-            Func<bool> WallRun() => () => WallStateVariables.Instance.WallRight || WallStateVariables.Instance.WallLeft;
-            //Func<bool> Ledge() => () => WallStateVariables.Instance.LedgeDetection(currentCharacter, cameraTransform) && WallStateVariables.Instance.ForwardWall && StaticMode;
-            Func<bool> ClimbUpLedge() => () => WallStateVariables.Instance.ForwardWall && InputManager.Instance.IsJumpPressed && StaticMode; */
+            #endregion
 
             stateMachine.SetState(groundState);
         }
         void OnDisable()
         {
-            currentCharacter.enemyHealth.OnTakeDamage -= healthUI.UpdateHealthBar;
-            currentCharacter.enemyHealth.OnDeath -= healthUI.HandleDeath;
+            currentCharacter.enemyHealth.OnTakeDamage -= HealthUI.Instance.UpdateHealthBar;
+            currentCharacter.enemyHealth.OnDeath -= HealthUI.Instance.HandleDeath;
             OnSwapPlayer -= EnemyTargetManager.Instance.SetPlayer;
             InputManager.Instance.OnSlowActionStateChanged -= SlowMotion;
             InputManager.Instance.OnSwapPressed -= SwapPressed;
@@ -321,7 +254,7 @@ namespace Player
         }
         void FixedUpdate()
         {
-            currentCharacter.controller.Move((appliedMovement * Time.deltaTime));
+            currentCharacter.controller.Move(appliedMovement * Time.deltaTime);
         }
         #endregion
 
@@ -370,33 +303,7 @@ namespace Player
             // If the raycast didn't hit anything, the object is not visible
             return false;
         }
-        /* public bool IsObjectVisible(GameObject obj)
-        {
-            Renderer renderer = FindRendererInChildren(obj.transform);
-            if(renderer == null) return false;
-            
-            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
-            return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
-        }
-        private Renderer FindRendererInChildren(Transform parent)
-        {
-            Renderer renderer = parent.GetComponent<Renderer>();
-            if (renderer != null)
-            {
-                return renderer;
-            }
 
-            foreach (Transform child in parent)
-            {
-                renderer = FindRendererInChildren(child);
-                if (renderer != null)
-                {
-                    return renderer;
-                }
-            }
-
-            return null;
-        } */
         public void SwapCharacter(GameObject newCharacter)
         {
             
@@ -438,9 +345,9 @@ namespace Player
                 OnSwapPlayer?.Invoke(currentCharacter.characterContainer.transform);
                 gunSelector.SetupGun(currentCharacter.gunHandler.StartGun);
                 // Setup healthbar ui
-                healthUI.SetHealthBarOnSwap(currentCharacter.enemyHealth.CurrentHealth, currentCharacter.enemyHealth.MaxHealth);
-                currentCharacter.enemyHealth.OnTakeDamage += healthUI.UpdateHealthBar;
-                currentCharacter.enemyHealth.OnDeath += healthUI.HandleDeath;
+                HealthUI.Instance.SetHealthBarOnSwap(currentCharacter.enemyHealth.CurrentHealth, currentCharacter.enemyHealth.MaxHealth);
+                currentCharacter.enemyHealth.OnTakeDamage += HealthUI.Instance.UpdateHealthBar;
+                currentCharacter.enemyHealth.OnDeath += HealthUI.Instance.HandleDeath;
 
                 // Subscribe the hit effects to the gun
                 //currentCharacter.gunHandler.ActiveGun.OnSomethingHit += HitDamageable;
@@ -465,19 +372,14 @@ namespace Player
             }
         }
 
-        public void SwapCharacter(GameObject newChar, Transform position)//checkpoint stuff 
+        public void SwapCharacter(GameObject newChar, Transform position)
         {
-            //Debug.Log("WE ARE GIVING VAR TO CHAR" + checkPointL);
-            //Debug.Log("Location in PM " + PlayerMaster.Instance.checkPointLocation.position);
-            //newChar.transform.position = position.position;
             SwapCharacter(newChar);
-            //Debug.Log(newChar.transform.position);
-            //Debug.Log("StateMachineInfo");
-            if(checkPointL!=Vector3.zero)
+
+            if(checkPoint!=Vector3.zero)
             {
                 currentCharacter.controller.enabled = false;
-                newChar.transform.position = checkPointL;
-                //Debug.Log("WE ARE GIVING VAR TO CHAR" + newChar.transform.position);
+                newChar.transform.position = checkPoint;
                 currentCharacter.controller.enabled = true;
             }
         }
@@ -517,9 +419,9 @@ namespace Player
             startCharacter.characterInfo.agent.enabled = false;
             endCharacter.characterInfo.agent.enabled = false;
 
-            healthUI.Enabled(false);
-            startCharacter.characterInfo.enemyHealth.OnTakeDamage -= healthUI.UpdateHealthBar;
-            startCharacter.characterInfo.enemyHealth.OnDeath -= healthUI.HandleDeath;
+            HealthUI.Instance.Enabled(false);
+            startCharacter.characterInfo.enemyHealth.OnTakeDamage -= HealthUI.Instance.UpdateHealthBar;
+            startCharacter.characterInfo.enemyHealth.OnDeath -= HealthUI.Instance.HandleDeath;
             playerAudio.PlayOneShot(mindswapDuring);
             playerAudio.loop = true;
 
@@ -580,10 +482,10 @@ namespace Player
             endCharacter.characterInfo.characterContainer.transform.rotation = endCharacter.characterInfo.model.transform.rotation;
             startCharacter.characterInfo.enemyBrain.enabled = true;
 
-            healthUI.SetHealthBarOnSwap(endCharacter.characterInfo.enemyHealth.CurrentHealth, endCharacter.characterInfo.enemyHealth.MaxHealth);
-            endCharacter.characterInfo.enemyHealth.OnTakeDamage += healthUI.UpdateHealthBar;
-            endCharacter.characterInfo.enemyHealth.OnDeath += healthUI.HandleDeath;
-            healthUI.Enabled(true);
+            HealthUI.Instance.SetHealthBarOnSwap(endCharacter.characterInfo.enemyHealth.CurrentHealth, endCharacter.characterInfo.enemyHealth.MaxHealth);
+            endCharacter.characterInfo.enemyHealth.OnTakeDamage += HealthUI.Instance.UpdateHealthBar;
+            endCharacter.characterInfo.enemyHealth.OnDeath += HealthUI.Instance.HandleDeath;
+            HealthUI.Instance.Enabled(true);
 
             gunSelector.SetupGun(endCharacter.characterInfo.gunHandler.StartGun);
             isSwapping = false;
@@ -747,13 +649,7 @@ namespace Player
 
         public void SwitchMode(bool trySetStatic)
         {
-            //if(StaticBar.instance.currentStatic >= 1)
-            //{
-                StaticMode = trySetStatic;
-            //}
-
-
-            //trySetStatic = false;
+            StaticMode = trySetStatic;
         }
         void OnDrawGizmos()
         {                
@@ -798,9 +694,9 @@ namespace Player
         public void SetLocation(Transform location)
         {
             if(location != null)
-                checkPointL = location.position;
+                checkPoint = location.position;
             else
-                checkPointL = Vector3.zero;
+                checkPoint = Vector3.zero;
         }
 
         void OnValidate()

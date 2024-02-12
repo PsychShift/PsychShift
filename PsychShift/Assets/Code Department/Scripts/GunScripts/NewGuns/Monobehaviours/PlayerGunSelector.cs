@@ -9,7 +9,14 @@ namespace Guns.Demo
     public class PlayerGunSelector : MonoBehaviour
     {
         public Camera Camera;
-
+        private static PlayerGunSelector instance;
+        public static PlayerGunSelector Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
 
         [SerializeField] private Transform GunParent;
 
@@ -23,13 +30,20 @@ namespace Guns.Demo
         /// If you are configuring this separately using <see cref="SetupGun"/> then set this to false.
         /// </summary>
         [SerializeField] private bool InitializeOnStart = false;
-
+        
+        void Awake()
+        {
+            if(Instance == null)
+            {
+                instance = this;
+            }
+        }
         public void SetupGun(GunScriptableObject Gun)
         {
             ActiveBaseGun = Gun;
             ActiveGun = Gun.Clone() as GunScriptableObject;
             ActiveGun.Spawn(GunParent, this, Camera);
-
+            ActiveGun.ShootConfig.ShootType = ShootType.FromCamera;
             /* InverseKinematics.SetGunStyle(ActiveGun.Type == GunType.Glock);
             InverseKinematics.Setup(GunParent); */
         }

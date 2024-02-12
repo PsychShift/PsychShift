@@ -52,6 +52,7 @@ public class WinLoseButtons : MonoBehaviour
     public void Quit()
     {
         Time.timeScale = 1f;
+        PlayerMaster.Instance.SetIsMenu(true);
         SceneManager.LoadScene("Main Menu VS");
     }
     public void CloseGame()
@@ -59,3 +60,33 @@ public class WinLoseButtons : MonoBehaviour
         Application.Quit();
     }
 }
+
+
+/* public void Retry()
+    {
+        StartCoroutine(ReloadSceneCoroutine());
+    }
+    private IEnumerator ReloadSceneCoroutine()
+    {
+        Scene oldScene = SceneManager.GetActiveScene();
+
+        // Load the scene additively
+        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(oldScene.buildIndex, LoadSceneMode.Additive);
+
+        // Wait for the scene to load
+        while (!loadOperation.isDone)
+        {
+            Debug.Log("loading");
+            yield return new WaitForEndOfFrame();
+        }
+
+        // Unload the old scene
+        AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(oldScene);
+
+        // Optionally, you can wait for the unload operation to complete
+        while (!unloadOperation.isDone)
+        {
+            Debug.Log("unloading");
+            yield return new WaitForEndOfFrame();
+        }
+    } */

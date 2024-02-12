@@ -11,18 +11,24 @@ public class CoverArea : MonoBehaviour
     {
         get
         {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<CoverArea>();
-            }
             return instance;
         }
     }
+
+
     private List<Cover> allCover = new();
 
     void Awake()
     {
-        //coverMask = LayerMask.NameToLayer("Cover");
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+        allCover.Clear();
         allCover.AddRange(FindObjectsOfType<Cover>());
     }
     

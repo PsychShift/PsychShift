@@ -7,8 +7,6 @@ using TMPro;
 public class UIscript : MonoBehaviour
 {
     [SerializeField]
-    private PlayerStateMachine uiRef;
-    [SerializeField]
     TextMeshProUGUI statFlowText;
     public GameObject StaticImage;
     
@@ -18,12 +16,6 @@ public class UIscript : MonoBehaviour
     {
         InputManager.Instance.OnSwitchPressed += SwitchMode;//Do the thing when dis pressed
         StaticImage.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //if(uiRef.StaticMode == true)
     }
 
     void OnDisable()
@@ -45,6 +37,5 @@ public class UIscript : MonoBehaviour
             statFlowText.text = "LT/L shift:Flow";
             StaticImage.SetActive(false);
         }
-
     }
 }

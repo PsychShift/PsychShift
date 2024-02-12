@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class HealthUI : MonoBehaviour
 {
+    public static HealthUI Instance { get; private set; }
     public Slider healthBar;
     public GameObject LoseUI;
     public GameObject LoseUIFirst;
@@ -13,23 +15,20 @@ public class HealthUI : MonoBehaviour
     bool isDamaged;
     float DamagedTimer;
     internal static int currentHealth;
+    private Coroutine damageCoroutine;
 
-    void Start()
+    private void Awake()
     {
-        DamageUI.SetActive(false);
-    }
-    void Update()
-    {
-        if (isDamaged)
+        if (Instance == null)
         {
-            DamagedTimer -= Time.deltaTime;
-            DamageUI.SetActive(true);
-            if (DamagedTimer < 0)
-            {
-                isDamaged = false;
-                DamageUI.SetActive(false);
-            }
+            Instance = this;
         }
+        else
+        {
+            Destroy(gameObject); // If another instance already exists, destroy this one
+        }
+
+        DamageUI.SetActive(false);
     }
 
     public void SetHealthBarOnSwap(int currentHealth, int maxHealth)
@@ -42,21 +41,33 @@ public class HealthUI : MonoBehaviour
 
     public void UpdateHealthBar(int damage)
     {
-        if(healthBar.value - damage < 0) damage = 0;
-        {
+        if(healthBar.value - damage <  0) damage =  0;
         healthBar.value -= damage;
         isDamaged = true;
-            DamagedTimer = timeDamaged;
+        DamagedTimer = timeDamaged;
+
+        // Stop any existing coroutine to prevent overlap
+        if (damageCoroutine != null)
+        {
+            StopCoroutine(damageCoroutine);
         }
 
-        /* if(healthBar.value == 0)
+        // Start the new coroutine
+        damageCoroutine = StartCoroutine(UpdateUICoroutine());
+    }
+    IEnumerator UpdateUICoroutine()
+    {
+        while (isDamaged)
         {
-            LoseUI.SetActive(true);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
-            EventSystem.current.SetSelectedGameObject(LoseUIFirst);
-            Time.timeScale = 0f;
-        } */
+            DamagedTimer -= Time.deltaTime;
+            DamageUI.SetActive(true);
+            if (DamagedTimer <=  0)
+            {
+                isDamaged = false;
+                DamageUI.SetActive(false);
+            }
+            yield return null; // Wait until the next frame
+        }
     }
     public void Enabled(bool enabled)
     {
@@ -76,6 +87,11 @@ public class HealthUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         EventSystem.current.SetSelectedGameObject(LoseUIFirst);
         TimeManager.Instance.Pause();
+    }
+
+    void OnDestroy()
+    {
+        Instance = null;
     }
     
 }
