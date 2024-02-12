@@ -28,4 +28,9 @@ public class SaveObject
   {
 
   }
+
+    public override string ToString()
+    {
+        return $"Scene: {Scene}, \nSavePoint: {Savepoint}, \nHealth: {Health}";
+    }
 }
