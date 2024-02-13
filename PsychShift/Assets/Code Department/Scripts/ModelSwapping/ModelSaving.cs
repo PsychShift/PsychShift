@@ -130,7 +130,7 @@ public class ModelSaving : MonoBehaviour
         Transform root = transform;
 
         if(delete)
-            DeleteOldProps(root, modelSave.props.Count);
+            DestroyAllChildrenWithTag(root);
         //root.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterials = modelSave.meshMaterials;
 
         SkinnedMeshRenderer skinnedMeshRenderer = root.GetComponentInChildren<SkinnedMeshRenderer>();
@@ -207,20 +207,28 @@ public class ModelSaving : MonoBehaviour
     }
 
     int added = 0;
-    private void DeleteOldProps(Transform root, int numOfProps)
-    {
-        added = 0;
-        GameObject[] props = new GameObject[numOfProps];
-        FindPropsRecursive(root, ref props);
 
-        for(int i = 0; i < numOfProps; i++)
+    void DestroyAllChildrenWithTag(Transform parentTransform)
+    {
+        // Iterate over each child of the parent
+        for (int i = parentTransform.childCount -  1; i >=  0; i--)
         {
-            //Debug.Log(props[i]);
-            #if UNITY_EDITOR
-            DestroyImmediate(props[i]);
-            #else
-            Destroy(props[i]);
-            #endif
+            Transform child = parentTransform.GetChild(i);
+
+            // Check if the current child has the target tag
+            if (child.CompareTag("EnemyCosmetic"))
+            {
+                #if UNITY_EDITOR
+                DestroyImmediate(child.gameObject);
+                #else
+                Destroy(child.gameObject);
+                #endif
+            }
+            else
+            {
+                // If the child does not have the target tag, check its children recursively
+                DestroyAllChildrenWithTag(child);
+            }
         }
     }
 

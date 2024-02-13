@@ -51,9 +51,8 @@ namespace Guns.Health
                     {
                         SceneManager.LoadScene("Outro");
                     }
-                    //CURRENT SOLUTION NOT FINAL
-                    Destroy(gameObject);
-                    //gameObject.SetActive(false); 
+                    
+                    StartCoroutine(DestroyDelay());
                 }
                 else if(gameObject.layer == 15)
                 {
@@ -70,12 +69,15 @@ namespace Guns.Health
         private IEnumerator DestroyDelay()
         {
             // Do ragdoll
+            GetComponent<RigColliderManager>().EnableRagdoll();
             // wait
-            
+            yield return new WaitForSeconds(10f);
             // play effect
-            // wait
 
-            return null;
+            // wait
+            yield return new WaitForSeconds(1f);
+
+            Destroy(gameObject);
         }
 
     }

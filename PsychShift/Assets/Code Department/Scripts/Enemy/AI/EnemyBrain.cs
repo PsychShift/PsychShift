@@ -7,6 +7,8 @@ using System.Collections;
 using Guns.Health;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine.Events;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -105,6 +107,10 @@ public abstract class EnemyBrain : MonoBehaviour
         }
     }
 
+    public delegate void OnSwappedDelegate(Transform t);
+    public OnSwappedDelegate onSwappedIn;
+    public OnSwappedDelegate onSwappedOut;
+
     /// <summary>
     /// Any variables that require initialization before a Func<bool> is used should be initialized here.
     /// Call this function in the Awake() method of the inheriting class.
@@ -116,15 +122,20 @@ public abstract class EnemyBrain : MonoBehaviour
         {
             fovRef = gameObject.AddComponent<FieldOfView>();
         }
-        if(modifiers != null)
+        foreach(var mod in GetComponents<AbstractEnemyModifier>())
         {
-            foreach(var mod in modifiers)
-            {
-                mod.ApplyModifier(this);
-            }
+            mod.ApplyModifier(this);
         }
         UpdateAgression(agression);
         characterInfo = gameObject.GetComponent<CharacterInfoReference>().SetUp();
+        EnemyHealth.OnDeath += Died;
+    }
+    private void Died(Transform idk)
+    {
+        EnemyHealth.OnDeath -= Died;
+        IsActive = false;
+        Agent.isStopped = true;
+        this.enabled = false;
     }
 
     protected void HandleReactivation()
@@ -233,6 +244,22 @@ public abstract class EnemyBrain : MonoBehaviour
     {
         agression = info.AIAgression;
         this.modifiers = new();
+        Component[] allComponents = GetComponents<Component>();
+
+        // Iterate backwards to avoid issues with modifying the array during iteration
+        for (int i = allComponents.Length -  1; i >=  0; i--)
+        {
+            // Check if the component implements IModifier
+            if (allComponents[i] is AbstractEnemyModifier)
+            {
+                // Destroy the component
+                #if UNITY_EDITOR
+                DestroyImmediate(allComponents[i]);
+                #else
+                Destroy(allComponents[i]);
+                #endif
+            }
+        }
         foreach(var mod in modifiers)
         {
             
@@ -249,7 +276,8 @@ public abstract class EnemyBrain : MonoBehaviour
                     this.modifiers.Add(keyMod);
                     break;
                 case EEnemyModifier.NonSwap :
-                    Debug.Log("Doesn't work yet");
+                    AbstractEnemyModifier nonswapMod = gameObject.AddComponent<NonSwapModifier>();
+                    this.modifiers.Add(nonswapMod);
                     break;
                 default :
                     break;

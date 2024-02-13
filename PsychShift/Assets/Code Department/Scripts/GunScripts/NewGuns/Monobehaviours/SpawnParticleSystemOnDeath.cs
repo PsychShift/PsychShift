@@ -34,7 +34,7 @@ namespace Guns.Demo
         private void Damageable_OnDeath(Transform Position)
         {
             Instantiate(DeathSystem, Position.position + particleOffset, Quaternion.identity);
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
 
         private void PlayAudioEffectFromList()

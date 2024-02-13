@@ -498,6 +498,8 @@ namespace Player
             HealthUI.Instance.Enabled(true);
 
             gunSelector.SetupGun(endCharacter.characterInfo.gunHandler.StartGun);
+            startCharacter.characterInfo.enemyBrain.onSwappedOut.Invoke(startTransform);
+            endCharacter.characterInfo.enemyBrain.onSwappedIn.Invoke(startTransform);
             isSwapping = false;
         }
         #endregion

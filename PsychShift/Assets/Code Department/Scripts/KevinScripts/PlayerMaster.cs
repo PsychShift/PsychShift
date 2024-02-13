@@ -57,7 +57,6 @@ public class PlayerMaster : MonoBehaviour
         {
             _instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log(_instance);
         }
         else
         {

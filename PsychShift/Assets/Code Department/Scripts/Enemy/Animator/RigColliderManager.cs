@@ -5,11 +5,22 @@ using UnityEngine;
 public class RigColliderManager : MonoBehaviour
 {
     public List<ChildCollider> childColliders;
+
+    private Animator Animator;
+    private Transform RagdollRoot;
+    private Rigidbody[] Rigidbodies;
+    private CharacterJoint[] Joints;
+    private Collider[] Colliders;
     public void SetUp(IDamageable parentDamageable)
     {
+        RagdollRoot = transform.GetChild(0);
+        Animator = RagdollRoot.GetComponent<Animator>();
         childColliders = new List<ChildCollider>();
-        Collider[] children = GetComponentsInChildren<Collider>();
-        foreach (Collider collider in children)
+        Colliders = RagdollRoot.GetComponentsInChildren<Collider>();
+        Rigidbodies = RagdollRoot.GetComponentsInChildren<Rigidbody>();
+        Joints = RagdollRoot.GetComponentsInChildren<CharacterJoint>();
+
+        foreach (Collider collider in Colliders)
         {
             if(collider.gameObject == gameObject) continue;
             if(collider.gameObject.TryGetComponent(out ChildCollider premadeScript))
@@ -22,6 +33,8 @@ public class RigColliderManager : MonoBehaviour
             childCollider.SetUp(parentDamageable);
             childColliders.Add(childCollider);
         }
+
+        EnableAnimator();
     }
 
     public void SwapTag(string tag)
@@ -38,6 +51,43 @@ public class RigColliderManager : MonoBehaviour
         foreach (var collider in childColliders)
         {
             collider.SwapLayer(layer);
+        }
+    }
+
+    public void EnableRagdoll()
+    {
+        Animator.enabled = false;
+        foreach (CharacterJoint joint in Joints)
+        {
+            joint.enableCollision = true;
+        }
+        /* foreach (Collider collider in Colliders)
+        {
+            collider.enabled = true;
+        } */
+        foreach (Rigidbody rigidbody in Rigidbodies)
+        {
+            rigidbody.velocity = Vector3.zero;
+            rigidbody.detectCollisions = true;
+            rigidbody.useGravity = true;
+        }
+    }
+
+    public void EnableAnimator()
+    {
+        Animator.enabled = true;
+        foreach (CharacterJoint joint in Joints)
+        {
+            joint.enableCollision = false;
+        }
+        /* foreach (Collider collider in Colliders)
+        {
+            collider.enabled = false;
+        } */
+        foreach (Rigidbody rigidbody in Rigidbodies)
+        {
+            //rigidbody.detectCollisions = false;
+            rigidbody.useGravity = false;
         }
     }
 }
