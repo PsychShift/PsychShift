@@ -81,7 +81,6 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Destroying the InputManager");
             Destroy(this);
             return;
         }

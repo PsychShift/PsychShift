@@ -136,7 +136,16 @@ namespace Player
         void OnEnable()
         {
             instance = this;
-            Debug.Log("PlayerStateMachine OnEnable()");
+            if(PlayerMaster.Instance == null)
+            {
+                GameObject playerMaster = new GameObject();
+                playerMaster.name = "PlayerMaster";
+                playerMaster.AddComponent<PlayerMaster>();
+                Load();
+            }
+        }
+        public void Load()
+        {
             WallStateVariables.Instance.wallLayer = wallLayer;
             WallStateVariables.Instance.WallholdLayers = wallholdLayers;
             WallStateVariables.Instance.WallSpeed = wallSpeed;
@@ -234,6 +243,7 @@ namespace Player
         }
         void OnDisable()
         {
+            instance = null;
             currentCharacter.enemyHealth.OnTakeDamage -= HealthUI.Instance.UpdateHealthBar;
             currentCharacter.enemyHealth.OnDeath -= HealthUI.Instance.HandleDeath;
             OnSwapPlayer -= EnemyTargetManager.Instance.SetPlayer;

@@ -10,28 +10,27 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMaster : MonoBehaviour
 {
-    private static PlayerMaster _instance;
-    private static readonly object _lock = new object();
+    private static PlayerMaster _instance = null;
+    //private static readonly object _lock = new object();
 
     public static PlayerMaster Instance
     {
         get
         {
-            if (_instance == null)
+            /* if (_instance == null)
             {
-                lock (_lock)
+
+                if (_instance == null)
                 {
-                    if (_instance == null)
-                    {
-                        var obj = new GameObject();
-                        obj.name = "PlayerMaster";
-                        obj.transform.localPosition = Vector3.zero;
-                        obj.hideFlags = HideFlags.DontSave | HideFlags.HideInHierarchy;
-                        _instance = obj.AddComponent<PlayerMaster>();
-                        DontDestroyOnLoad(obj);
-                    }
+                    var obj = new GameObject();
+                    obj.name = "PlayerMaster";
+                    obj.transform.localPosition = Vector3.zero;
+                    obj.hideFlags = HideFlags.DontSave | HideFlags.HideInHierarchy;
+                    _instance = obj.AddComponent<PlayerMaster>();
+                    DontDestroyOnLoad(obj);
                 }
-            }
+                
+            } */
             return _instance;
         }
     }
@@ -40,18 +39,17 @@ public class PlayerMaster : MonoBehaviour
     [HideInInspector] public GameObject currentChar;
     //public GameObject charAtLastCheck;
     [HideInInspector]public GameObject charDouble;
-    private PlayerStateMachine playerStateMachine;
+    //private PlayerStateMachine playerStateMachine;
     public Player.CharacterInfo charInfo => PlayerStateMachine.Instance == null ? null : PlayerStateMachine.Instance.currentCharacter;
     public Transform checkPointLocation;
+    private bool isLoadingSceneFromLoadMethod = false;
+    private SaveObject loadedInfo;
     public void SetIsMenu(bool menu)
     {
         isMenu = menu;
     }
     // Start is called before the first frame update
-    private void OnEnable()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
+
 
     void Awake()
     {
@@ -59,16 +57,13 @@ public class PlayerMaster : MonoBehaviour
         {
             _instance = this;
             DontDestroyOnLoad(gameObject);
+            Debug.Log(_instance);
         }
-        else if (_instance != this)
+        else
         {
             Destroy(gameObject);
         }
-        playerStateMachine = PlayerStateMachine.Instance;
-        if(!isMenu)
-        {
-            Load();
-        }
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
 
@@ -98,9 +93,9 @@ public class PlayerMaster : MonoBehaviour
         scene = SceneManager.GetActiveScene().buildIndex;
         
 
-        SaveObject saveObject = new(scene, checkPoint, health, aIAgression, enemyType, gunType, modifiers);
+        SaveObject loadedInfo = new(scene, checkPoint, health, aIAgression, enemyType, gunType, modifiers);
 
-        string json = JsonUtility.ToJson(saveObject);
+        string json = JsonUtility.ToJson(loadedInfo);
         Debug.Log(json);
         SaveSystem.Save(json, "Saves", "Save");
     }
@@ -112,23 +107,31 @@ public class PlayerMaster : MonoBehaviour
         string json = SaveSystem.Load("Saves", "Save");
         if(json == null)
         {
-            //PlayerStateMachine.Instance.enabled = true;
             Debug.Log("waaaaaaaaaaaaa");
+            loadedInfo = null;
             return;
         }
-        SaveObject saveObject = JsonUtility.FromJson<SaveObject>(json);
-        Debug.Log(saveObject);
-        // if not unity editor, load the scene from the file
-        SceneManager.LoadScene(saveObject.Scene, LoadSceneMode.Additive);
-        Debug.Log("scene loaded");
-        GameObject Enemy = Instantiate(GameAssets.Instance.GetEnemyPrefab());
-        PlayerStateMachine.Instance.tempCharacter = Enemy;
-        EnemyBrainSelector brainSelector = Enemy.GetComponent<EnemyBrainSelector>();
-        GunScriptableObject gun = GameAssets.Instance.GetGun(saveObject.GunType);
-        brainSelector.SwapBrain(gun, saveObject.EnemyType, saveObject.Modifiers, saveObject.AIAgression);
-        
-        PlayerStateMachine.Instance.enabled = true;
-        Debug.Log("done");
+        loadedInfo = JsonUtility.FromJson<SaveObject>(json);
+        isLoadingSceneFromLoadMethod = true;
+        SceneManager.LoadScene(loadedInfo.Scene, LoadSceneMode.Single);
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Only perform actions if the scene was loaded from the Load method
+        if (isLoadingSceneFromLoadMethod && scene.buildIndex == loadedInfo.Scene)
+        {
+            // Reset the flag after performing the actions
+            isLoadingSceneFromLoadMethod = false;
+
+            GameObject Enemy = Instantiate(GameAssets.Instance.GetEnemyPrefab());
+            Enemy.transform.position = loadedInfo.Savepoint;
+            Enemy.name = "RespawnEnemy";
+            EnemyBrainSelector brainSelector = Enemy.GetComponent<EnemyBrainSelector>();
+            GunScriptableObject gun = GameAssets.Instance.GetGun(loadedInfo.GunType);
+            brainSelector.SwapBrain(gun, loadedInfo.EnemyType, loadedInfo.Modifiers, loadedInfo.AIAgression);
+            PlayerStateMachine.Instance.tempCharacter = Enemy;
+        }
+        PlayerStateMachine.Instance.Load();
     }
 
     public void StartNew()
@@ -138,5 +141,11 @@ public class PlayerMaster : MonoBehaviour
         {
             File.Delete(fullPath);
         }
+    }
+
+    void OnDestroy()
+    {
+        // Unsubscribe from the scene loaded event
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
