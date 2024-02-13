@@ -19,15 +19,7 @@ public class KeycardUI : MonoBehaviour
 
     void Awake()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // Persists across scene changes
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
         SetActive(false);
     }
 

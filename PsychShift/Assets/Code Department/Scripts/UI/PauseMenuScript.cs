@@ -35,7 +35,8 @@ public class PauseMenuScript : MonoBehaviour
     }
     public void Retry()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        PlayerMaster.Instance.Load();
     }
     public void Quit()
     {
@@ -58,7 +59,7 @@ public class PauseMenuScript : MonoBehaviour
     }
     private void PausePressed()
     {
-        if(GameIsPaused)
+        if(PauseMenu.activeSelf)
         {
             Resume();
         }
