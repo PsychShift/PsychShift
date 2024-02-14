@@ -56,6 +56,7 @@ public class RigColliderManager : MonoBehaviour
 
     public void EnableRagdoll()
     {
+        transform.tag = "Untagged";
         Animator.enabled = false;
         foreach (CharacterJoint joint in Joints)
         {

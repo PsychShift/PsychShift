@@ -54,7 +54,7 @@ namespace Guns.Health
                     
                     StartCoroutine(DestroyDelay());
                 }
-                else if(gameObject.layer == 15)
+                else
                 {
                     
                     OnDeath?.Invoke(transform);
