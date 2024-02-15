@@ -11,6 +11,7 @@ namespace Guns
         public float BulletSpawnForce = 100;
         public LayerMask HitMask;
         public float FireRate = 0.25f;
+        public int BulletsPerShot = 1;
         public BulletSpreadType SpreadType = BulletSpreadType.Simple;
         public float RecoilRecoverySpeed = 1f;
         public float MaxSpreadTime = 1f;

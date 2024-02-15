@@ -101,6 +101,22 @@ public class MainMenuScript : MonoBehaviour
         MainMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
     }
+    public void ILab()
+    {
+        SceneManager.LoadScene("TOMAS");
+    }
+    public void DLab()
+    {
+        SceneManager.LoadScene("Tesla_Coil");
+    }
+    public void TLab()
+    {
+        SceneManager.LoadScene("LAB CENTER");
+    }
+    public void CLab()
+    {
+        SceneManager.LoadScene("FINAL BOSS");
+    }
 
     public void Quit()
     {
