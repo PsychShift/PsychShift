@@ -135,7 +135,7 @@ public abstract class EnemyBrain : MonoBehaviour
         EnemyHealth.OnDeath -= Died;
         //IsActive = false;
         Agent.isStopped = true;
-        this.enabled = false;
+        //enabled = false;
     }
 
     protected void HandleReactivation()

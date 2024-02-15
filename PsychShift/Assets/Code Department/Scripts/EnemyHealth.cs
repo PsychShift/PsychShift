@@ -44,24 +44,15 @@ namespace Guns.Health
 
             if(CurrentHealth == 0 && damageTaken != 0)
             {
+                OnDeath?.Invoke(transform);
                 if(this.gameObject.layer == 6)//EDIT IF LAYER ORDER IS CHANGED
                 {
-                    OnDeath?.Invoke(transform);
                     if(gameObject.tag == "Boss")
                     {
                         SceneManager.LoadScene("Outro");
                     }
                     
                     StartCoroutine(DestroyDelay());
-                }
-                else
-                {
-                    
-                    OnDeath?.Invoke(transform);
-                    //CURRENT SOLUTION NOT FINAL
-                    //SceneManager.LoadScene(SceneManager.GetActiveScene().name); MIGHT BE A PROBLEM
-                    //Destroy(gameObject);
-                    //gameObject.SetActive(false);
                 }
             }
         }
