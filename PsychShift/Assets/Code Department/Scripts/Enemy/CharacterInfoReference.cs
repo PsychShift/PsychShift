@@ -6,6 +6,7 @@ using Player;
 using CharacterInfo = Player.CharacterInfo;
 using UnityEngine.AI;
 using Guns.Demo;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(CharacterController), typeof(EnemyGunSelector), typeof(NavMeshAgent))]
 public class CharacterInfoReference : MonoBehaviour
@@ -36,7 +37,7 @@ public class CharacterInfoReference : MonoBehaviour
     public CharacterInfo SetUp()
     {
         if(vCamPrefab == null) Debug.LogError("vCamPrefab is null, please fill in in editor. Otherwise the game won't work. Which is bad. Please fix it now. Thank you. Have you done it yet? Ok good. \n It's located at Assets/Code Department/Scripts/Player/Swapping");
-        else
+        else if(vCam == null)
         {
             vCamParent = Instantiate(vCamPrefab);
             vCamParent.transform.SetParent(transform);

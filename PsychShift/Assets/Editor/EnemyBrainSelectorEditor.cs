@@ -1,3 +1,5 @@
+using Guns.Demo;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,9 +14,11 @@ public class EnemyBrainSelectorEditor : Editor
         if (GUILayout.Button("Swap Enemy Brain"))
         {
             EnemyBrainSelector selector = (EnemyBrainSelector)target;
+            EnemyGunSelector gunSelector = target.GetComponent<EnemyGunSelector>();
             // Call your function when the button is pressed
             selector.SwapBrain();
             EditorUtility.SetDirty(target);
+            EditorUtility.SetDirty(gunSelector);
         }
         base.OnInspectorGUI();
     }
