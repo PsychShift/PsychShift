@@ -110,6 +110,14 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     private float journeyLength;
     private bool movingActivated;
 
+    //Saving variables
+    public delegate void PuzzleCompleted(int num);
+    public event PuzzleCompleted OnPuzzleFinish;
+    [HideInInspector]
+    public bool puzzleDone;
+    [HideInInspector]
+    public int puzzleIndex;
+
 
     //VARIABLE THAT NEED ORGANIZING
     private void Awake() 
@@ -141,8 +149,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
         
 
     }
-    public void Update()
-    {
+    //public void Update()
+    //{
         /* if(moveOnStart)
         {
             Vector3.Lerp(transform.position, endPosition, speedOfStart);
@@ -172,7 +180,7 @@ public class PuzzleKit : MonoBehaviour, IDamageable
         {
 
         } */
-    }
+    //}
 
     private IEnumerator MoveObject(Vector3 targetPosition, float duration)
     {
@@ -348,8 +356,9 @@ public class PuzzleKit : MonoBehaviour, IDamageable
         }
         else if(godBox == true)
         {
-            if(activateCount == amountToActivate)//runs when called to check if everything is activated
+            if(activateCount == amountToActivate || puzzleDone == true)//runs when called to check if everything is activated
             {
+                puzzleDone = true;
                 //Do whatever action is marked
                 if(activate)
                 {
