@@ -123,6 +123,8 @@ public class EnemyBrainSelector : MonoBehaviour
                 return "Rifle";
             case GunType.Pistol:
                 return "Pistol";
+            case GunType.ShotGun:
+                return "ShotGun";
             case GunType.FrogGun:
                 return "Frog";
             case GunType.None:
