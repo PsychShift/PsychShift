@@ -203,35 +203,41 @@ namespace Guns
                 ShootSystem.Play();
                 AudioConfig.PlayShootingClip(ShootingAudioSource, AmmoConfig.CurrentClipAmmo == 1);
 
-                Vector3 spreadAmount = ShootConfig.GetSpread(Time.time - InitialClickTime);
-
-                Vector3 shootDirection = Vector3.zero;
-                Model.transform.forward += Model.transform.TransformDirection(spreadAmount);
-                if (ShootConfig.ShootType == ShootType.FromGun)
-                {
-                    shootDirection = ShootSystem.transform.forward + new Vector3(
-                    Random.Range(-ShootConfig.Spread.x,ShootConfig.Spread.x),
-                    Random.Range(-ShootConfig.Spread.y,ShootConfig.Spread.y),
-                    Random.Range(-ShootConfig.Spread.z, ShootConfig.Spread.z)
-                );
-                }
-                else
-                {
-                    shootDirection = ActiveCamera.transform.forward +
-                                     ActiveCamera.transform.TransformDirection(spreadAmount);
-                }
-
                 if(!isEnemy)
-                    AmmoConfig.CurrentClipAmmo--;
+                        AmmoConfig.CurrentClipAmmo--;
 
-                if (ShootConfig.IsHitscan)
+                for(int i = 0; i<ShootConfig.BulletsPerShot; i++)
                 {
-                    DoHitscanShoot(shootDirection, GetRaycastOrigin(), ShootSystem.transform.position);
+                    Vector3 spreadAmount = ShootConfig.GetSpread(Time.time - InitialClickTime);
+
+                    Vector3 shootDirection = Vector3.zero;
+                    //Model.transform.forward += Model.transform.TransformDirection(spreadAmount); FOR NOW
+                    if (ShootConfig.ShootType == ShootType.FromGun)
+                    {
+                        shootDirection = ShootSystem.transform.forward; /* + new Vector3(
+                        Random.Range(-ShootConfig.Spread.x,ShootConfig.Spread.x),
+                        Random.Range(-ShootConfig.Spread.y,ShootConfig.Spread.y),
+                        Random.Range(-ShootConfig.Spread.z, ShootConfig.Spread.z)
+                    ); */
+                    }
+                    else
+                    {
+                        shootDirection = ActiveCamera.transform.forward +
+                                        ActiveCamera.transform.TransformDirection(spreadAmount);
+                    }
+
+                    
+
+                    if (ShootConfig.IsHitscan)
+                    {
+                        DoHitscanShoot(shootDirection, GetRaycastOrigin(), ShootSystem.transform.position);
+                    }
+                    else
+                    {
+                        DoProjectileShoot(shootDirection);
+                    }
                 }
-                else
-                {
-                    DoProjectileShoot(shootDirection);
-                }
+                
             }
         }
 

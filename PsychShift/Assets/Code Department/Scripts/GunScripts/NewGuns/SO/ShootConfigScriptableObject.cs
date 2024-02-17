@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Linq;
 
+
 namespace Guns
 {
     [CreateAssetMenu(fileName = "Shoot Config", menuName = "Guns/Shoot Config", order = 2)]
@@ -27,6 +28,7 @@ namespace Guns
         /// </summary>
         [Header("Simple Spread")]
         public Vector3 Spread = new Vector3(0.1f, 0.1f, 0.1f);
+        public Vector3 MinSpread = Vector3.zero;
         [Header("Texture-Based Spread")]
         /// <summary>
         /// Multiplier applied to the vector from the center of <see cref="SpreadTexture"/> and the chosen pixel. 
@@ -54,7 +56,11 @@ namespace Guns
             if (SpreadType == BulletSpreadType.Simple)
             {
                 spread = Vector3.Lerp(
-                    Vector3.zero,
+                    new Vector3(
+                        Random.Range(-MinSpread.x, MinSpread.x),
+                        Random.Range(-MinSpread.y, MinSpread.y),
+                        Random.Range(-MinSpread.z, MinSpread.z)
+                    ),
                     new Vector3(
                         Random.Range(-Spread.x, Spread.x),
                         Random.Range(-Spread.y, Spread.y),
