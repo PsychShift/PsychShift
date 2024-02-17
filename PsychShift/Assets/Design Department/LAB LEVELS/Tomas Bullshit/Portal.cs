@@ -15,7 +15,7 @@ public class teleport : MonoBehaviour
   }
  } */
 
- void OnTriggerEnter(Collider other)
+ /* void OnTriggerEnter(Collider other)
  {
     if(other.CompareTag("Player"))
     {
@@ -25,8 +25,24 @@ public class teleport : MonoBehaviour
         Transform playerPosition = playerObj.GetComponent<Transform>();
         playerPosition = destination;
         playerC.enabled = true;
-        gameObject.SetActive(false);
-        
+        gameObject.SetActive(false);  
     }
- }
+ } */
+
+ void OnTriggerEnter(Collider other)
+{
+    if(other.CompareTag("Player"))
+    {
+        CharacterController playerC = other.GetComponent<CharacterController>();
+        if (playerC != null)
+        {
+            playerC.enabled = false;
+            // Assuming 'destination' is a Vector3 defined elsewhere in your script
+            other.transform.position = destination.position;
+            playerC.enabled = true;
+        }
+        // If you want to deactivate the teleporter after use, uncomment the line below
+        // gameObject.SetActive(false);
+    }
+}
 }
