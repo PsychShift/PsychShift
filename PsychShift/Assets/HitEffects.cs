@@ -14,11 +14,21 @@ public class HitEffects : MonoBehaviour
     // Update is called once per frame
     //function
     //Plays anim
-    public Animator hitMarker;
-    public void HitReaction(bool crit)
+    public GameObject hitMarker;
+    public AudioClip hitMarkerSound;
+    public AudioSource hitSource;
+    /* public void HitReaction(bool crit)
     {
-        hitMarker.SetBool("Hit", true);
-        hitMarker.SetBool("Hit", false);
+        Debug.Log("Hit");
+        hitMarker.SetActive(true);
+        hitMarker.SetActive(false);
+    } */
+    public IEnumerator HitReaction()
+    {
+        hitMarker.SetActive(true);
+        hitSource.PlayOneShot(hitMarkerSound);
+        yield return new WaitForSeconds(.05f); 
+        hitMarker.SetActive(false);
     }
 
 }

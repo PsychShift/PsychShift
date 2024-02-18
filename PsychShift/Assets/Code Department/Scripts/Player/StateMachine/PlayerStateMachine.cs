@@ -341,10 +341,12 @@ namespace Player
 
                     // Subscribe the hit effects to the new gun, unsubscribe the old gun
                     // FYI, this doesn't work right yet, I need to make it do this for the current gun attached to the camera, not the enemy
-                    currentCharacter.gunHandler.ActiveGun.OnSomethingHit -= HitDamageable;
-                    newCharInfo.gunHandler.ActiveGun.OnSomethingHit += HitDamageable;
+                    //currentCharacter.gunHandler.ActiveGun.OnSomethingHit -= HitDamageable;
+                    //newCharInfo.gunHandler.ActiveGun.OnSomethingHit += HitDamageable;
 
                     currentCharacter = newCharInfo;
+                    //currentCharacter.gunHandler.ActiveGun.OnSomethingHit += HitDamageable;
+                    
                 }
             }
             else
@@ -358,9 +360,14 @@ namespace Player
                 HealthUI.Instance.SetHealthBarOnSwap(currentCharacter.enemyHealth.CurrentHealth, currentCharacter.enemyHealth.MaxHealth);
                 currentCharacter.enemyHealth.OnTakeDamage += HealthUI.Instance.UpdateHealthBar;
                 currentCharacter.enemyHealth.OnDeath += HealthUI.Instance.HandleDeath;
-
+                Debug.Log(currentCharacter.gunHandler);
+                Debug.Log(currentCharacter.gunHandler.ActiveGun);
                 // Subscribe the hit effects to the gun
                 //currentCharacter.gunHandler.ActiveGun.OnSomethingHit += HitDamageable;
+                
+                
+                
+                
             }
 
             PlayerMaster.Instance.currentChar = currentCharacter.characterContainer;
@@ -368,8 +375,9 @@ namespace Player
 
         }
 
-        private void HitDamageable(IDamageable hitDamageable)
+        /* private void HitDamageable(IDamageable hitDamageable)
         {
+            Debug.Log("HIT?");
             if(!hitDamageable.IsWeakPoint)
             {
                 // normal hit effects
@@ -380,7 +388,7 @@ namespace Player
                 // crit hit effects
                 hitMarkerSRef.HitReaction(true);
             }
-        }
+        } */
 
         public void SwapCharacter(GameObject newChar, Transform position)
         {

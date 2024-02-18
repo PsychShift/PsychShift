@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Guns.Demo
 {
     [DisallowMultipleComponent]
-    public class PlayerGunSelector : MonoBehaviour
+    public class PlayerGunSelector : MonoBehaviour, IGunSelector
     {
         public Camera Camera;
         private static PlayerGunSelector instance;
@@ -30,6 +30,7 @@ namespace Guns.Demo
         /// If you are configuring this separately using <see cref="SetupGun"/> then set this to false.
         /// </summary>
         [SerializeField] private bool InitializeOnStart = false;
+        public HitEffects hitRef;
         
         void Awake()
         {
@@ -42,7 +43,7 @@ namespace Guns.Demo
         {
             ActiveBaseGun = Gun;
             ActiveGun = Gun.Clone() as GunScriptableObject;
-            ActiveGun.Spawn(GunParent, this, Camera);
+            ActiveGun.Spawn(GunParent, this,this, Camera);
             ActiveGun.ShootConfig.ShootType = ShootType.FromCamera;
             /* InverseKinematics.SetGunStyle(ActiveGun.Type == GunType.Glock);
             InverseKinematics.Setup(GunParent); */
@@ -73,6 +74,11 @@ namespace Guns.Demo
             {
                 modifier.Apply(ActiveGun);
             }
+        }
+
+        public void Hit()
+        {
+            StartCoroutine(hitRef.HitReaction());//IF WE GET CRIT CHANGE DIS
         }
     }
 }

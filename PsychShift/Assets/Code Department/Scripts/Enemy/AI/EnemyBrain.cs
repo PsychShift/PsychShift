@@ -133,8 +133,8 @@ public abstract class EnemyBrain : MonoBehaviour
     private void Died(Transform idk)
     {
         EnemyHealth.OnDeath -= Died;
-        //IsActive = false;
-        Agent.isStopped = true;
+        IsActive = false;
+        Agent.isStopped = false;
         //enabled = false;
     }
 

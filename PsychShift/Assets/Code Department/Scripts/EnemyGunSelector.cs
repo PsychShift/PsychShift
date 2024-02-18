@@ -6,7 +6,7 @@ using UnityEngine.Animations.Rigging;
 namespace Guns.Demo
 {
     [DisallowMultipleComponent]
-    public class EnemyGunSelector : MonoBehaviour
+    public class EnemyGunSelector : MonoBehaviour, IGunSelector
     {
         public Camera Camera;
 
@@ -44,7 +44,7 @@ namespace Guns.Demo
         {
             ActiveBaseGun = Gun;
             ActiveGun = Gun.Clone() as GunScriptableObject;
-            ActiveGun.Spawn(GunParent, this, Camera);
+            ActiveGun.Spawn(GunParent, this, this, Camera);
             ActiveGun.ShootConfig.SpreadType = BulletSpreadType.Simple;
             ActiveGun.ShootConfig.SpreadMultiplier = 10f;
             ActiveGun.ShootConfig.ShootType = ShootType.FromGun;
@@ -91,6 +91,11 @@ namespace Guns.Demo
         public void EnemyShoot()
         {
             ActiveGun.TryToShoot(true);
+        }
+
+        public void Hit()
+        {
+            
         }
     }
 }
