@@ -41,8 +41,10 @@ namespace Guns
         private bool isEnemyMaybe;
         private Animator gunAnim;
 
-        public delegate void OnSomethingHitDelegate(IDamageable damageable);
-        public event OnSomethingHitDelegate OnSomethingHit;
+        /* public delegate void OnSomethingHitDelegate(IDamageable damageable);
+        public event OnSomethingHitDelegate OnSomethingHit; */
+        private IGunSelector gunSelector;
+
 
         /// <summary>
         /// Spawns the Gun Model into the scene
@@ -52,9 +54,10 @@ namespace Guns
         /// <param name="Camera">The camera to raycast from. Required if <see cref="ShootConfigScriptableObject.ShootType"/> = <see cref="ShootType.FromCamera"/></paramref>
         /// The input handling script is a good candidate for this.
         /// </param>
-        public void Spawn(Transform Parent, MonoBehaviour ActiveMonoBehaviour, Camera Camera = null)
+        public void Spawn(Transform Parent, MonoBehaviour ActiveMonoBehaviour, IGunSelector gunSelector ,Camera Camera = null)
         {
             this.ActiveMonoBehaviour = ActiveMonoBehaviour;
+            this.gunSelector = gunSelector;
 
             TrailPool = new ObjectPool<TrailRenderer>(CreateTrail);
             if (!ShootConfig.IsHitscan)
@@ -580,7 +583,10 @@ namespace Guns
                 }
                 //Debug.Log("damgeplez");
                 damageable.TakeDamage(DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage));
-                OnSomethingHit?.Invoke(damageable);
+                /* OnSomethingHit?.Invoke(damageable);
+                if(OnSomethingHit== null)
+                    Debug.Log("NULL AF"); */
+                gunSelector.Hit();
             }
 
             foreach (ICollisionHandler collisionHandler in BulletImpactEffects)
