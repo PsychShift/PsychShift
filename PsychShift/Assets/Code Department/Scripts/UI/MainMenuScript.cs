@@ -9,15 +9,21 @@ using TMPro;
 public class MainMenuScript : MonoBehaviour
 {
     public GameObject LoadMenu;
-    public CanvasGroup MainMenu;
+    public GameObject MainMenu;
+    public CanvasGroup MainMenuCG;
     public GameObject MainMenuFirst;
     public GameObject SettingsMenu;
+    public CanvasGroup SettingsMenuCG;
     public GameObject SettingsMenuFirst;
     public GameObject CreditsMenu;
     public CanvasGroup CreditsMenuCG;
     public GameObject CreditsMenuFirst;
-    [SerializeField] private bool fadeIn = false;
-    [SerializeField] private bool fadeOut = false;
+    [SerializeField] private bool fadeInCredits = false;
+    [SerializeField] private bool fadeOutCredits = false;
+    [SerializeField] private bool fadeInSettings = false;
+    [SerializeField] private bool fadeOutSettings = false;
+    [SerializeField] private bool fadeInMenu = false;
+    [SerializeField] private bool fadeOutMenu = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +36,8 @@ public class MainMenuScript : MonoBehaviour
         Cursor.visible = true;
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
         CreditsMenuCG.alpha = 0;
+        SettingsMenuCG.alpha = 0;
+        MainMenuCG.alpha = 1;
     }
 
     // Update is called once per frame
@@ -38,25 +46,47 @@ public class MainMenuScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
 
-        if (fadeIn)
+        if (fadeInCredits)
         {
             if (CreditsMenuCG.alpha < 1)
             {
                 CreditsMenuCG.alpha += Time.deltaTime;
                 if (CreditsMenuCG.alpha >= 1)
                 {
-                    fadeIn = false;
+                    fadeInCredits = false;
                 }
             }
         }
-        if (fadeOut)
+        if (fadeOutCredits)
         {
             if (CreditsMenuCG.alpha >= 0)
             {
                 CreditsMenuCG.alpha -= Time.deltaTime;
                 if (CreditsMenuCG.alpha == 0)
                 {
-                    fadeOut = false;
+                    fadeOutCredits = false;
+                }
+            }
+        }
+        if (fadeInMenu)
+        {
+            if (MainMenuCG.alpha < 1)
+            {
+                MainMenuCG.alpha += Time.deltaTime;
+                if (MainMenuCG.alpha >= 1)
+                {
+                    fadeInMenu = false;
+                }
+            }
+        }
+        if (fadeOutMenu)
+        {
+            if (MainMenuCG.alpha >= 0)
+            {
+                MainMenuCG.alpha -= Time.deltaTime;
+                if (MainMenuCG.alpha == 0)
+                {
+                    fadeOutMenu = false;
                 }
             }
         }
@@ -104,32 +134,38 @@ public class MainMenuScript : MonoBehaviour
     }
     public void OpenCredits()
     {
-        fadeIn = true;
+        fadeInCredits = true;
+        fadeOutMenu = true;
         CreditsMenu.SetActive(true);
         //CreditsMenu.alpha = 1;
-        //MainMenu.SetActive(false);
+        MainMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(CreditsMenuFirst);
     }
     public void CloseCredits()
     {
-        fadeOut = true;
-        CreditsMenuCG.alpha = 0;
+        fadeOutCredits = true;
+        fadeInMenu = true;
+        //CreditsMenuCG.alpha = 0;
         CreditsMenu.SetActive(false);
-        //MainMenu.SetActive(true);
+        MainMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
     }
 
     public void OpenSettings()
     {
+        fadeInSettings = true;
+        fadeOutMenu = true;
         SettingsMenu.SetActive(true);
-        //MainMenu.SetActive(false);
+        MainMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
     }
 
     public void CloseSettings()
     {
+        fadeOutSettings = true;
+        fadeInMenu = true;
         SettingsMenu.SetActive(false);
-        //MainMenu.SetActive(true);
+        MainMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
     }
     public void ILab()
