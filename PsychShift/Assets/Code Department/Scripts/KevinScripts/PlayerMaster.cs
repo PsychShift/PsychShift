@@ -44,6 +44,7 @@ public class PlayerMaster : MonoBehaviour
     public Transform checkPointLocation;
     private bool isLoadingSceneFromLoadMethod = false;
     private SaveObject loadedInfo;
+    public bool noSavePlez;
     public void SetIsMenu(bool menu)
     {
         isMenu = menu;
@@ -53,16 +54,21 @@ public class PlayerMaster : MonoBehaviour
 
     void Awake()
     {
-        if (_instance == null)
+        if(noSavePlez == false)
         {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
+            if (_instance == null)
+            {
+                _instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Debug.Log("Destroy?");
+                Destroy(gameObject);
+            }
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        
     }
 
 
@@ -116,12 +122,13 @@ public class PlayerMaster : MonoBehaviour
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("Destroy? Ello");//FOUND IT
         // Only perform actions if the scene was loaded from the Load method
         if (isLoadingSceneFromLoadMethod && scene.buildIndex == loadedInfo.Scene)
         {
             // Reset the flag after performing the actions
             isLoadingSceneFromLoadMethod = false;
-
+            
             GameObject Enemy = Instantiate(GameAssets.Instance.GetEnemyPrefab());
             Enemy.transform.position = loadedInfo.Savepoint;
             Enemy.name = "RespawnEnemy";
