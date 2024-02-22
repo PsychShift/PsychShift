@@ -18,6 +18,8 @@ public class MainMenuScript : MonoBehaviour
     public GameObject CreditsMenu;
     public CanvasGroup CreditsMenuCG;
     public GameObject CreditsMenuFirst;
+    private WaitForSeconds MenuTick = new WaitForSeconds(0.1f);
+    private Coroutine WaitforFade;
     [SerializeField] private bool fadeInCredits = false;
     [SerializeField] private bool fadeOutCredits = false;
     [SerializeField] private bool fadeInSettings = false;
@@ -138,17 +140,19 @@ public class MainMenuScript : MonoBehaviour
         fadeOutMenu = true;
         CreditsMenu.SetActive(true);
         //CreditsMenu.alpha = 1;
-        MainMenu.SetActive(false);
+        //MainMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(CreditsMenuFirst);
+        WaitforFade = StartCoroutine(FadeMenu());
     }
     public void CloseCredits()
     {
         fadeOutCredits = true;
         fadeInMenu = true;
         //CreditsMenuCG.alpha = 0;
-        CreditsMenu.SetActive(false);
+        //CreditsMenu.SetActive(false);
         MainMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
+        WaitforFade = StartCoroutine(FadeCredits());
     }
 
     public void OpenSettings()
@@ -156,17 +160,37 @@ public class MainMenuScript : MonoBehaviour
         fadeInSettings = true;
         fadeOutMenu = true;
         SettingsMenu.SetActive(true);
-        MainMenu.SetActive(false);
+        //MainMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+        WaitforFade = StartCoroutine(FadeMenu());
     }
 
     public void CloseSettings()
     {
         fadeOutSettings = true;
         fadeInMenu = true;
-        SettingsMenu.SetActive(false);
+        //SettingsMenu.SetActive(false);
         MainMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
+        WaitforFade = StartCoroutine(FadeSettings());
+    }
+    private IEnumerator FadeMenu()
+    {
+        yield return new WaitForSeconds(5);
+        MainMenu.SetActive(false);
+        
+    }
+    private IEnumerator FadeCredits()
+    {
+        yield return new WaitForSeconds(5);
+        CreditsMenu.SetActive(false);
+        
+    }
+    private IEnumerator FadeSettings()
+    {
+        yield return new WaitForSeconds(5);
+        SettingsMenu.SetActive(false);
+        
     }
     public void ILab()
     {
