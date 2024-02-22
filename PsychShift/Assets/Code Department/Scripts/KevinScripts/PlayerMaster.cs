@@ -63,7 +63,6 @@ public class PlayerMaster : MonoBehaviour
             }
             else
             {
-                Debug.Log("Destroy?");
                 Destroy(gameObject);
             }
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -112,7 +111,6 @@ public class PlayerMaster : MonoBehaviour
         string json = SaveSystem.Load("Saves", "Save");
         if(json == null)
         {
-            Debug.Log("waaaaaaaaaaaaa");
             loadedInfo = null;
             return;
         }
@@ -122,7 +120,6 @@ public class PlayerMaster : MonoBehaviour
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("Destroy? Ello");//FOUND IT
         // Only perform actions if the scene was loaded from the Load method
         if (isLoadingSceneFromLoadMethod && scene.buildIndex == loadedInfo.Scene)
         {

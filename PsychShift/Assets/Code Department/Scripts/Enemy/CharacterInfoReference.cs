@@ -44,6 +44,9 @@ public class CharacterInfoReference : MonoBehaviour
             vCamParent.SetActive(false);
             vCam = vCamParent.GetComponent<CinemachineVirtualCamera>();
         }
+        // get the name of the level, based on the name, spawn
+
+        //
 
         _characterInfo = new CharacterInfo(this, vCam, movementStats, characterStats);
         vCam.Follow = characterInfo.cameraRoot;

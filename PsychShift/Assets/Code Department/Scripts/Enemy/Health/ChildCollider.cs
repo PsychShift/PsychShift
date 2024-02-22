@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class ChildCollider : MonoBehaviour, IDamageable
 {
-    IDamageable parentDamageable;
+    [HideInInspector] public IDamageable parentDamageable;
 
     public int CurrentHealth { get; set; }
 

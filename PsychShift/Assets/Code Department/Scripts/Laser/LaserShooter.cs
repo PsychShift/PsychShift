@@ -18,6 +18,7 @@ public class LaserShooter : MonoBehaviour
     void Awake()
     {
         laserLine = GetComponent<LineRenderer>();
+        laserLine.positionCount = 2;
         laserLine.enabled = false;
         cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         cylinder.SetActive(false);

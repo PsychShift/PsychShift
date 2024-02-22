@@ -111,12 +111,19 @@ public abstract class EnemyBrain : MonoBehaviour
     public OnSwappedDelegate onSwappedIn;
     public OnSwappedDelegate onSwappedOut;
 
+    protected RagdollState ragdollState;
+    protected StandupState standupState;
+
     /// <summary>
     /// Any variables that require initialization before a Func<bool> is used should be initialized here.
     /// Call this function in the Awake() method of the inheriting class.
     /// </summary> 
     protected void VariableSetup()
     {
+        RigColliderManager rgm = GetComponent<RigColliderManager>();
+        ragdollState = new RagdollState(rgm);
+        standupState = new StandupState(rgm);
+
         CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
         if(!TryGetComponent(out fovRef))
         {

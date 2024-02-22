@@ -1,9 +1,9 @@
-using Guns.Health;
 using System.Collections;
 using System.Collections.Generic;
+using Guns.Health;
 using UnityEngine;
 
-public class OmegaBeam : MonoBehaviour
+public class TeslaBeam : MonoBehaviour
 {
     public LaserBeamStats defaultStats;
     
@@ -11,12 +11,15 @@ public class OmegaBeam : MonoBehaviour
 
     [SerializeField] float targetCheckRadius = 1000;
     LineRenderer lineRenderer;
+    public bool test;
 
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-
-        StartCoroutine(ShootLaser(defaultStats));
+        if(test)
+            ShootLaserInstant();
+        else
+            StartCoroutine(ShootLaser(defaultStats));
     }
     public List<Vector3> GetTargets()
     {
@@ -37,6 +40,15 @@ public class OmegaBeam : MonoBehaviour
         positions.Sort(new RadialSorter(transform.position));
 
         return positions;
+    }
+
+    public void ShootLaserInstant()
+    {
+        lineRenderer.enabled = true;
+        List<Vector3> positions = GetTargets();
+        positions.Insert(0, transform.position);
+        lineRenderer.positionCount = positions.Count;
+        lineRenderer.SetPositions(positions.ToArray());
     }
 
     IEnumerator ShootLaser(LaserBeamStats currentStats)
@@ -161,22 +173,4 @@ public class OmegaBeam : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, targetCheckRadius);
     }
     #endif
-}
-
-public class RadialSorter : IComparer<Vector3>
-{
-    private readonly Vector3 _center;
-
-    public RadialSorter(Vector3 center)
-    {
-        _center = center;
-    }
-
-    public int Compare(Vector3 a, Vector3 b)
-    {
-        float angleA = Mathf.Atan2(a.z - _center.z, a.x - _center.x);
-        float angleB = Mathf.Atan2(b.z - _center.z, b.x - _center.x);
-
-        return angleA.CompareTo(angleB);
-    }
 }
