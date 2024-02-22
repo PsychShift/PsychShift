@@ -194,7 +194,7 @@ public class MainMenuScript : MonoBehaviour
     }
     public void ILab()
     {
-        SceneManager.LoadScene("TOMAS");
+        SceneManager.LoadScene("GREG 2");
     }
     public void DLab()
     {
