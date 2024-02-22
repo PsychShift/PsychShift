@@ -35,7 +35,7 @@ public class RandomBrain : EnemyBrain
 
     void Update()
     {
-        if(IsActive)
+        if(IsActive && stateMachine != null)
             stateMachine.Tick();
     }
 

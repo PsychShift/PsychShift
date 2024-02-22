@@ -11,6 +11,10 @@ namespace Guns
         Rifle,
         FrogGun,
         ShotGun,
+        SMG,
+        Minigun,
+        Sniper,
+        Revolver,
         None
     }
 }

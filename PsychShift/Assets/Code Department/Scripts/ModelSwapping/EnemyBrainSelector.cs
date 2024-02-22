@@ -125,6 +125,8 @@ public class EnemyBrainSelector : MonoBehaviour
                 return "Pistol";
             case GunType.ShotGun:
                 return "ShotGun";
+            case GunType.SMG:
+                return "SMG";
             case GunType.FrogGun:
                 return "Frog";
             case GunType.None:
