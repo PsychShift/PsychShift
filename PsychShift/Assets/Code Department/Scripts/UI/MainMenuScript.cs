@@ -92,6 +92,28 @@ public class MainMenuScript : MonoBehaviour
                 }
             }
         }
+        if (fadeInSettings)
+        {
+            if (SettingsMenuCG.alpha < 1)
+            {
+                SettingsMenuCG.alpha += Time.deltaTime;
+                if (SettingsMenuCG.alpha >= 1)
+                {
+                    fadeInSettings = false;
+                }
+            }
+        }
+        if (fadeOutSettings)
+        {
+            if (SettingsMenuCG.alpha >= 0)
+            {
+                SettingsMenuCG.alpha -= Time.deltaTime;
+                if (SettingsMenuCG.alpha == 0)
+                {
+                    fadeOutSettings = false;
+                }
+            }
+        }
     }
 
     public void NewGame()
@@ -176,19 +198,19 @@ public class MainMenuScript : MonoBehaviour
     }
     private IEnumerator FadeMenu()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         MainMenu.SetActive(false);
         
     }
     private IEnumerator FadeCredits()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         CreditsMenu.SetActive(false);
         
     }
     private IEnumerator FadeSettings()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         SettingsMenu.SetActive(false);
         
     }
