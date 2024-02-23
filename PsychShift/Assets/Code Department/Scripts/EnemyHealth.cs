@@ -51,26 +51,9 @@ namespace Guns.Health
                     {
                         SceneManager.LoadScene("Outro");
                     }
-                    
-                    StartCoroutine(DestroyDelay());
                 }
             }
         }
-
-        private IEnumerator DestroyDelay()
-        {
-            // Do ragdoll
-            GetComponent<RigColliderManager>().EnableRagdoll();
-            // wait
-            yield return new WaitForSeconds(10f);
-            // play effect
-
-            // wait
-            yield return new WaitForSeconds(1f);
-
-            Destroy(gameObject);
-        }
-
     }
 
 }

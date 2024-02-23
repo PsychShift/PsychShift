@@ -113,7 +113,9 @@ public abstract class EnemyBrain : MonoBehaviour
 
     protected RagdollState ragdollState;
     protected StandupState standupState;
-    Action EnterRagdoll;
+    public delegate void OnRagdollUpdate();
+    public OnRagdollUpdate enterRagdoll;
+    
 
     /// <summary>
     /// Any variables that require initialization before a Func<bool> is used should be initialized here.
@@ -122,10 +124,12 @@ public abstract class EnemyBrain : MonoBehaviour
     protected void VariableSetup()
     {
         RigColliderManager rgm = GetComponent<RigColliderManager>();
-        ragdollState = new RagdollState(rgm);
+        ragdollState = new RagdollState(this, rgm);
         standupState = new StandupState(rgm);
 
-        
+        // PUT THE TRANSITION FROM RAGDOLL TO STANDING HERE
+
+        enterRagdoll += Ragdoll;
 
         CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
         if(!TryGetComponent(out fovRef))
@@ -142,14 +146,20 @@ public abstract class EnemyBrain : MonoBehaviour
     }
     private void Ragdoll()
     {
-
+        stateMachine.EventTransition(ragdollState, null);
     }
+
+    public void DestroyMe()
+    {
+        Destroy(gameObject);
+    }
+
     private void Died(Transform idk)
     {
+        ragdollState.IsDead = true;
+        stateMachine.EventTransition(ragdollState, null);
+        stateMachine.Tick();
         EnemyHealth.OnDeath -= Died;
-        IsActive = false;
-        Agent.isStopped = false;
-        //enabled = false;
     }
 
     protected void HandleReactivation()
@@ -231,6 +241,7 @@ public abstract class EnemyBrain : MonoBehaviour
     {
         CharacterInfo.agent.enabled = false;
         CharacterInfo.enemyHealth.OnTakeDamage -= TookDamage;
+        EnemyHealth.OnDeath -= Died;
     }
 
     private bool IsPlayerInRange()
