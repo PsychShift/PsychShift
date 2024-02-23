@@ -127,6 +127,7 @@ public abstract class EnemyBrain : MonoBehaviour
     /// </summary> 
     protected void VariableSetup()
     {
+        stateMachine = new StateMachine.StateMachine();
         RigColliderManager rgm = GetComponent<RigColliderManager>();
         ragdollState = new RagdollState(this, rgm);
         standupState = new StandupState(this, rgm);

@@ -18,9 +18,6 @@ public class FollowDebugBrain : EnemyBrain
 
     public override void StateMachineSetup()
     {
-        stateMachine = new StateMachine.StateMachine();
-
-
         var followState = new FollowState(this, agression, target);
         
         stateMachine.SetState(followState, true);

@@ -28,8 +28,6 @@ public class BasicEnemy : EnemyBrain
 
     public override void StateMachineSetup()
     {
-        stateMachine = new StateMachine.StateMachine();
-
         var patrolState = new PatrolState(this, patrolPoints);
         var guardState = new GuardState(this, transform.position);
         var chaseState = new ChaseState(this);

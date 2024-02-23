@@ -13,9 +13,6 @@ public class RandomBrain : EnemyBrain
 
     public override void StateMachineSetup()
     {
-        stateMachine = new StateMachine.StateMachine();
-
-
         var pickRandom = new RandomLocationState(this);
         var moveToDestination = new MoveToDestinationState(this, () => pickRandom.Destination);
         

@@ -12,9 +12,6 @@ public class RandomEnemy : EnemyBrain
 
     public override void StateMachineSetup()
     {
-        stateMachine = new StateMachine.StateMachine();
-
-
         var pickRandom = new RandomLocationState(this);
         var lookAround = new LookAroundState(this);
         var chaseState = new ChaseState(this);

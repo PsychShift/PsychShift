@@ -26,9 +26,6 @@ public class SmartEnemy : EnemyBrain
 
     public override void StateMachineSetup()
     {
-        stateMachine = new StateMachine.StateMachine();
-
-
         var runToCoverState = new RunToCoverState(this);
         var delayState = new DelayState(2f);
         var coverState = new AtCoverState(this);

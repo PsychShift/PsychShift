@@ -14,8 +14,6 @@ public class StationaryBrain : EnemyBrain
     }
     public override void StateMachineSetup()
     {
-        stateMachine = new StateMachine.StateMachine();
-
         if(!SpawnerEnemy)
             guardPosition = transform.position;
 
