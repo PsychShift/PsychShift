@@ -10,7 +10,7 @@ public class WinScriptLevel2 : MonoBehaviour
     public PlayerStateMachine checkpointRest;
     void OnEnable()
     {
-        SceneManager.LoadScene("WinScreen");
+        SceneManager.LoadScene("LAB CENTER");
         checkpointRest.SetLocation(transform);
     }
 }
