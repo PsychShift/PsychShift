@@ -111,10 +111,9 @@ public abstract class EnemyBrain : MonoBehaviour
     public delegate void OnSwappedDelegate(Transform t);
     public OnSwappedDelegate onSwappedIn;
     public OnSwappedDelegate onSwappedOut;
-
     protected RagdollState ragdollState;
     protected StandupState standupState;
-    //protected ChaseState chaseState;
+    protected ChaseState chaseState;
     /* public delegate void OnRagdollUpdate();
     public OnRagdollUpdate enterRagdoll; */
 
@@ -135,10 +134,12 @@ public abstract class EnemyBrain : MonoBehaviour
         // PUT THE TRANSITION FROM RAGDOLL TO STANDING HERE 
 
         
-        
+        Debug.Log("why");
         ANY(ragdollState, IsGrounded());
-        AT(ragdollState, standupState, IsStanding()); 
+        Debug.Log("u no work");
+        //AT(ragdollState, standupState, IsStanding()); 
         //AT(standupState, chaseState, BackToChase());
+
 
         //enterRagdoll += Ragdoll;
         //enterStand+= StandUp;
