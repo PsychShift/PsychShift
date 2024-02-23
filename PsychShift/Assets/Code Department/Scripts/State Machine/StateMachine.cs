@@ -65,6 +65,21 @@ namespace StateMachine
             _anyTransitions.Add(item:new Transition(state, predicate));
         }
 
+        /// <summary>
+        /// Subscribe a state transition to an event.
+        /// <para> Action myAction </para>
+        /// <para> myAction => () => stateMachine.EventTransition(myToState, (optional)myFromState); </para>
+        /// </summary>
+        public void EventTransition(IState to, IState from = null)
+        {
+            if(from != null)
+            {
+                if(_currentState == from) SetState(to);
+                return;
+            }
+            SetState(to);
+        }
+
         public List<Transition> FindStateTransitions(IState state)
         {
             List<Transition> stateTransitions;

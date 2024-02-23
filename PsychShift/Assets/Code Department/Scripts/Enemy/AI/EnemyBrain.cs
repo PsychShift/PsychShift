@@ -113,6 +113,7 @@ public abstract class EnemyBrain : MonoBehaviour
 
     protected RagdollState ragdollState;
     protected StandupState standupState;
+    Action EnterRagdoll;
 
     /// <summary>
     /// Any variables that require initialization before a Func<bool> is used should be initialized here.
@@ -123,6 +124,8 @@ public abstract class EnemyBrain : MonoBehaviour
         RigColliderManager rgm = GetComponent<RigColliderManager>();
         ragdollState = new RagdollState(rgm);
         standupState = new StandupState(rgm);
+
+        
 
         CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
         if(!TryGetComponent(out fovRef))
@@ -136,6 +139,10 @@ public abstract class EnemyBrain : MonoBehaviour
         UpdateAgression(agression);
         characterInfo = gameObject.GetComponent<CharacterInfoReference>().SetUp();
         EnemyHealth.OnDeath += Died;
+    }
+    private void Ragdoll()
+    {
+
     }
     private void Died(Transform idk)
     {
