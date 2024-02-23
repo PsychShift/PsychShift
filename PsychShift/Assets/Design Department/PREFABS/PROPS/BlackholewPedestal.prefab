@@ -5362,6 +5362,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1572066317442874372, guid: ecc64b9669b858144b478ecaaa98b93e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 80059373489222970}
+    - targetCorrespondingSourceObject: {fileID: 1572066317442874372, guid: ecc64b9669b858144b478ecaaa98b93e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 535601003086081618}
   m_SourcePrefab: {fileID: 100100000, guid: ecc64b9669b858144b478ecaaa98b93e, type: 3}
 --- !u!4 &4716998986808174807 stripped
 Transform:
@@ -5388,7 +5391,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -5396,6 +5399,19 @@ CapsuleCollider:
   m_Height: 0.3785631
   m_Direction: 1
   m_Center: {x: 0.0000000037426826, y: 0.01629989, z: -0.00000011976584}
+--- !u!114 &535601003086081618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5349701564730995309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b05105e86a8a14e408f28f16d897bfcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  godModeRespawnPoint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8142911590911377034
 PrefabInstance:
   m_ObjectHideFlags: 0

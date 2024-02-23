@@ -132,7 +132,7 @@ Transform:
   - {fileID: 456324727229629997}
   - {fileID: 5190706202684615393}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7171495999978954336
 MonoBehaviour:
@@ -176,8 +176,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas(Menus) (Updated)
       objectReference: {fileID: 0}
+    - target: {fileID: 2652486268819579052, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5932577556348543793}
+    - target: {fileID: 2652486268819579052, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Retry
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652486268819579052, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WinLoseButtons, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3937352303501123144, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4859372456174688523, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5601824668801610391, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
@@ -547,6 +563,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4370762566339769169, guid: 38ab5629df2ed5143a713c36beaf5acf, type: 3}
   m_PrefabInstance: {fileID: 4250590518703977852}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5932577556348543793 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7541733137179629133, guid: 38ab5629df2ed5143a713c36beaf5acf, type: 3}
+  m_PrefabInstance: {fileID: 4250590518703977852}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827de6335df9b48459eba55dbfc080f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7033626393811542972 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6584637030822352576, guid: 38ab5629df2ed5143a713c36beaf5acf, type: 3}
