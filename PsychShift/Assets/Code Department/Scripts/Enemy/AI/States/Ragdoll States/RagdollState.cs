@@ -13,7 +13,7 @@ public class RagdollState : IState
     private float onGroundForSeconds = 10f;
     float endTime = 0;
 
-    private bool isDone = false;
+    public bool isDone = false;
     public Func<bool> IsDone => () => isDone;
     public RagdollState(EnemyBrain brain, RigColliderManager rigColliderManager)
     {
@@ -32,7 +32,8 @@ public class RagdollState : IState
 
     public void OnExit()
     {
-        brain.Agent.isStopped = true;
+        //Turn everything back on once enemy is standing again
+        //brain.Agent.isStopped = true;
     }
 
     public void Tick()
@@ -53,7 +54,11 @@ public class RagdollState : IState
                 }
                 else
                 {
+                    //call rig collider 
+                    //don't exit until stand anim is done
+                    //sfadfvsdafsad
                     isDone = true;
+                    //brain.RagdollNotDead();
                 }
             }
         }

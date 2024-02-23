@@ -17,6 +17,7 @@ using UnityEditor;
 [DisallowMultipleComponent]
 public abstract class EnemyBrain : MonoBehaviour
 {
+    public bool ragDoll;
     [SerializeField] private bool _isActive = true;
     public bool IsActive {
         get 
@@ -113,8 +114,12 @@ public abstract class EnemyBrain : MonoBehaviour
 
     protected RagdollState ragdollState;
     protected StandupState standupState;
-    public delegate void OnRagdollUpdate();
-    public OnRagdollUpdate enterRagdoll;
+    //protected ChaseState chaseState;
+    /* public delegate void OnRagdollUpdate();
+    public OnRagdollUpdate enterRagdoll; */
+
+    /* public delegate void OnStandUpdate();
+    public OnStandUpdate enterStand; */
     
 
     /// <summary>
@@ -125,11 +130,19 @@ public abstract class EnemyBrain : MonoBehaviour
     {
         RigColliderManager rgm = GetComponent<RigColliderManager>();
         ragdollState = new RagdollState(this, rgm);
-        standupState = new StandupState(rgm);
+        standupState = new StandupState(this, rgm);
 
-        // PUT THE TRANSITION FROM RAGDOLL TO STANDING HERE
+        // PUT THE TRANSITION FROM RAGDOLL TO STANDING HERE 
 
-        enterRagdoll += Ragdoll;
+        
+        
+        ANY(ragdollState, IsGrounded());
+        AT(ragdollState, standupState, IsStanding()); 
+        //AT(standupState, chaseState, BackToChase());
+
+        //enterRagdoll += Ragdoll;
+        //enterStand+= StandUp;
+
 
         CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
         if(!TryGetComponent(out fovRef))
@@ -144,10 +157,17 @@ public abstract class EnemyBrain : MonoBehaviour
         characterInfo = gameObject.GetComponent<CharacterInfoReference>().SetUp();
         EnemyHealth.OnDeath += Died;
     }
-    private void Ragdoll()
+
+    /* private void Ragdoll()
     {
-        stateMachine.EventTransition(ragdollState, null);
-    }
+        ragdollState.IsDead = false;
+        stateMachine.EventTransition(ragdollState,null);
+        stateMachine.Tick();
+    }  */
+   /*  private void StandUp()
+    {
+        stateMachine.EventTransition(standupState,null);
+    } */
 
     public void DestroyMe()
     {
@@ -161,6 +181,7 @@ public abstract class EnemyBrain : MonoBehaviour
         stateMachine.Tick();
         EnemyHealth.OnDeath -= Died;
     }
+    
 
     protected void HandleReactivation()
     {
@@ -185,6 +206,10 @@ public abstract class EnemyBrain : MonoBehaviour
     protected Func<bool> FoundCover() => () => FindCover() != null;
     protected Func<bool> HasReachedDestination() => () => CharacterInfo.agent.remainingDistance <= 0.1f;
     protected Func<bool> WasDamaged() => () => wasHit;
+    protected Func<bool> IsGrounded() => () => characterInfo.controller.isGrounded;
+    protected Func<bool> IsStanding() => () => ragdollState.isDone;
+    protected Func<bool> BackToChase() => () => standupState.isStanding; 
+    
 
     float time = 0f;
     public Cover FindCover()

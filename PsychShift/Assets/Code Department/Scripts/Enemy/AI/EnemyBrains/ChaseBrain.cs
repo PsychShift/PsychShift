@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChaseBrain : EnemyBrain
 {
-    ChaseState chaseState;
+    ChaseState chaseState;//Started Happening because of AT statement in enemy brain from standing to chase
     protected override void SetUp()
     {
         Agent.enabled = true;

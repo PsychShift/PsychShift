@@ -29,6 +29,7 @@ namespace StateMachine
         
         public void SetState(IState state)
         {
+            
             if(state == _currentState) // If the new state is the same as the last return
                 return;
             
@@ -90,6 +91,7 @@ namespace StateMachine
 
         private Transition GetTransition()
         {
+            
             if (_anyTransitions != null)
             {
                 foreach(var transition in _anyTransitions)

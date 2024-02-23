@@ -11,6 +11,10 @@ public class RigColliderManager : MonoBehaviour
     private Rigidbody[] Rigidbodies;
     private CharacterJoint[] Joints;
     private Collider[] Colliders;
+    private float _timeToWakeUp;
+   // private float animationTimeBack;
+    private float animationTime;
+    public bool isDoneStanding;
     public void SetUp(IDamageable parentDamageable)
     {
         RagdollRoot = transform.GetChild(0);
@@ -56,6 +60,7 @@ public class RigColliderManager : MonoBehaviour
 
     public void EnableRagdoll()
     {
+        //check health to see if ded 
         transform.tag = "Untagged";
         Animator.enabled = false;
         foreach (CharacterJoint joint in Joints)
@@ -66,16 +71,20 @@ public class RigColliderManager : MonoBehaviour
         {
             collider.enabled = true;
         } */
+        //_timeToWakeUp = Random.Range(5,10);
         foreach (Rigidbody rigidbody in Rigidbodies)
         {
             rigidbody.velocity = Vector3.zero;
             rigidbody.detectCollisions = true;
             rigidbody.useGravity = true;
         }
+        //if not ded 
+        //StartCoroutine(StandUp());
     }
 
     public void EnableAnimator()
     {
+        isDoneStanding = false;
         Animator.enabled = true;
         foreach (CharacterJoint joint in Joints)
         {
@@ -90,5 +99,22 @@ public class RigColliderManager : MonoBehaviour
             //rigidbody.detectCollisions = false;
             rigidbody.useGravity = false;
         }
+        StartCoroutine(WaitForStandUpAnim());
+    }
+    //Coroutine 
+    //
+    /* private IEnumerator StandUp()
+    {
+
+        yield return new WaitForSeconds(_timeToWakeUp);
+        StartCoroutine(WaitForStandUpAnim());
+
+    } */
+    private IEnumerator WaitForStandUpAnim()
+    {
+        //playAnim stand up
+        yield return new WaitForSeconds(animationTime);
+        isDoneStanding= true;
+        //activate nonragdoll state
     }
 }
