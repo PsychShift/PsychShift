@@ -17,17 +17,21 @@ public class StandupState : IState
     public void OnEnter()
     {
         Debug.Log("StandUp");
+        //brain.CharacterInfo.controller.transform.position = brain.CharacterInfo.model.transform.position; 
         rigColliderManager.EnableAnimator();
         brain.Animator.SetBool("Standup", true);
         animTime = OGanimTime;
+        brain.gameObject.transform.position = brain.CharacterInfo.model.transform.position;
         
     }
 
     public void OnExit()
     {
+        /* Debug.Log("StandUpExit");
         brain.Animator.SetBool("Standup", false);
         brain.Agent.isStopped = true;
-        brain.CharacterInfo.controller.enabled = true;
+        //brain.CharacterInfo.controller.transform.position = brain.CharacterInfo.model.transform.position; 
+        brain.CharacterInfo.controller.enabled = true; */
         
     }
 
@@ -37,6 +41,10 @@ public class StandupState : IState
         if(animTime <= 0)
         {
             isStanding = true;
+            Debug.Log("StandUpExit");
+            brain.Animator.SetBool("Standup", false);
+            brain.Agent.isStopped = true;
+            brain.CharacterInfo.controller.enabled = true;
         }
     }
 
