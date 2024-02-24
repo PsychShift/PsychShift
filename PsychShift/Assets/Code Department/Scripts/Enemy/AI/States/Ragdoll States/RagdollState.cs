@@ -8,6 +8,7 @@ public class RagdollState : IState
 {
     RigColliderManager rigColliderManager;
     EnemyBrain brain;
+    TempGravity tempGravity;
     public bool IsDead;
     private bool hitGround;
     private float onGroundForSeconds = 10f;
@@ -15,10 +16,11 @@ public class RagdollState : IState
 
     public bool isDone = false;
     public Func<bool> IsDone => () => isDone;
-    public RagdollState(EnemyBrain brain, RigColliderManager rigColliderManager)
+    public RagdollState(EnemyBrain brain, RigColliderManager rigColliderManager, TempGravity tempGravity)
     {
         this.brain = brain;
         this.rigColliderManager = rigColliderManager;
+        this.tempGravity = tempGravity;
     }
     public void OnEnter()
     {
@@ -26,21 +28,26 @@ public class RagdollState : IState
         // activate the ragdoll
         hitGround = false;
         isDone = false;
-        brain.Agent.isStopped = false;
-        brain.CharacterInfo.controller.enabled = false;
+        brain.Agent.isStopped = true;
+        brain.Agent.enabled = false;
+        
+        tempGravity.enabled = true;
         rigColliderManager.EnableRagdoll();
     }
 
     public void OnExit()
     {
         Debug.Log("Ragdoll exit");
-        //Turn everything back on once enemy is standing again
-        //brain.Agent.isStopped = true;
+        brain.Model.transform.parent = null;
+        brain.transform.position = brain.Model.transform.position;
+        brain.Model.transform.parent = brain.transform;
+        brain.CharacterInfo.controller.enabled = true;
+        tempGravity.enabled = true;
     }
 
     public void Tick()
     {
-        if(!hitGround && GroundedCheck())
+        if(!hitGround && brain.GroundedCheck())
         {
             hitGround = true;
             endTime = Time.time + onGroundForSeconds;
@@ -56,13 +63,7 @@ public class RagdollState : IState
                 }
                 else
                 {
-                    //call rig collider 
-                    //don't exit until stand anim is done
-                    //sfadfvsdafsad
-                    //isDone = true;
-                    //Debug.Log("Works?");
-                    //brain.RagdollNotDead();
-                    brain.StandUp();
+                    isDone = true;
                 }
             }
         }
@@ -71,17 +72,5 @@ public class RagdollState : IState
     public Color GizmoColor()
     {
         return Color.black;
-    }
-    LayerMask groundLayer = ~0;
-    Vector3 castDirection = Vector3.down;
-    float castDistance = 0.0f;
-    Vector3 boxSize = new Vector3(1f, 0.1f, 1f);//GROUND KEVIN CHANGE .4F .1F,.4F Old nums
-    private bool GroundedCheck()
-    {
-        RaycastHit[] hits = Physics.BoxCastAll(brain.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer, QueryTriggerInteraction.Ignore);
-        if(hits.Any(hit => hit.collider != null))
-            return true;
-        
-        return false;
     }
 }

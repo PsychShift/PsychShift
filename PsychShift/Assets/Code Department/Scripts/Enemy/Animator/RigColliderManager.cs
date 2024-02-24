@@ -48,6 +48,7 @@ public class RigColliderManager : MonoBehaviour
         {
             collider.SwapTag(tag);
         }
+        SwapLayer("Enemy");
     }
 
     public void SwapLayer(string layer)

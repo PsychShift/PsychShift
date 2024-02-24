@@ -32,7 +32,10 @@ public class DestructableDamageable : MonoBehaviour, IDamageable
     }
     private void DeactivateNavMesh()
     {
-        disObjectNav.enabled = false;
+        Debug.Log("removed navmesh data?");
+        //disObjectNav.enabled = false;
+        disObjectNav.RemoveData();
+        //NavMesh.RemoveNavMeshData(disObjectNav.cl);
     }
 
 }

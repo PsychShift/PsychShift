@@ -134,21 +134,11 @@ public abstract class EnemyBrain : MonoBehaviour
     {
         stateMachine = new StateMachine.StateMachine();
         RigColliderManager rgm = GetComponent<RigColliderManager>();
-        ragdollState = new RagdollState(this, rgm);
-        standupState = new StandupState(this, rgm);
-
-        // PUT THE TRANSITION FROM RAGDOLL TO STANDING HERE 
-        //if(Agent.isOnNavMesh == false)
-            
+        ragdollState = new RagdollState(this, rgm, GetComponent<TempGravity>());
+        standupState = new StandupState(this, rgm);           
         
         ANY(ragdollState, NotGrounded());
-        //ANY(standupState, IsStanding()); 
-        //AT(standupState, chaseState, BackToChase());
-
-
-        //enterRagdoll += Ragdoll;
-        //enterStand+= StandUp;
-
+        AT(ragdollState, standupState, () => ragdollState.IsDone());
 
         CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
         if(!TryGetComponent(out fovRef))
@@ -200,7 +190,6 @@ public abstract class EnemyBrain : MonoBehaviour
 
     protected void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition);
     protected void ANY(IState from, Func<bool> condition) => stateMachine.AddAnyTransition(from, condition);
-    protected void SET(IState from) => stateMachine.SetState(from);
 
     public abstract void StateMachineSetup();
 
@@ -258,6 +247,7 @@ public abstract class EnemyBrain : MonoBehaviour
 
     void OnEnable()
     {
+        if(groundLayer == 0) groundLayer = LayerMask.GetMask(layerNames);
         SetUp();
         CharacterInfo.enemyHealth.OnTakeDamage += TookDamage;
         /*CharacterInfo.agent.enabled = true;
@@ -349,12 +339,13 @@ public abstract class EnemyBrain : MonoBehaviour
             EditorUtility.SetDirty(this);
         #endif
     }
-    [Header("Ground Variables")]
-    [SerializeField] private LayerMask groundLayer;
+    private static readonly string[] layerNames = { "Default", "Manipulateable", "WallHoldLayer", "RunnableWallLayer", "Damageable", "Metal Detector", "Non-Wallrun", "Factured", "Destructable" };
+
+    private static LayerMask groundLayer = 0;
     Vector3 castDirection = Vector3.down;
     float castDistance = 0.0f;
     Vector3 boxSize = new Vector3(1f, 0.1f, 1f);//GROUND KEVIN CHANGE .4F .1F,.4F Old nums
-    private bool GroundedCheck()
+    public bool GroundedCheck()
     {
         RaycastHit[] hits = Physics.BoxCastAll(characterInfo.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer, QueryTriggerInteraction.Ignore);
         if(hits.Any(hit => hit.collider != null))
@@ -362,9 +353,13 @@ public abstract class EnemyBrain : MonoBehaviour
         
         return false;
     }
-    public void StandUp()
+
+    private void OnDrawGizmos()
     {
-        SET(standupState);
+        if(!Application.isPlaying) return;        
+        // Draw a wireframe box to represent the ground check area
+        Gizmos.color = GroundedCheck() ? Color.green : Color.red; // Set the color of the gizmo
+        Gizmos.DrawWireCube(transform.position, boxSize); // Draw the box at the current object's position
     }
 }
 

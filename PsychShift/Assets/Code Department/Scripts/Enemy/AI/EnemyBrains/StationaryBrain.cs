@@ -45,10 +45,10 @@ public class StationaryBrain : EnemyBrain
             stateMachine.Tick();
     }
 
-    void OnDrawGizmos()
+    /* void OnDrawGizmos()
     {
         if (stateMachine == null) return;
         Gizmos.color = stateMachine.GetGizmoColor();
         Gizmos.DrawSphere(transform.position + Vector3.up * 6, 0.4f);
-    }
+    } */
 }
