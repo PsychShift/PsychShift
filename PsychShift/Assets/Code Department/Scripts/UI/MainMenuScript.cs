@@ -18,6 +18,8 @@ public class MainMenuScript : MonoBehaviour
     public GameObject CreditsMenu;
     public CanvasGroup CreditsMenuCG;
     public GameObject CreditsMenuFirst;
+    public GameObject MovementVideo;
+    public GameObject NeuroNetworkVideo;
     private WaitForSeconds MenuTick = new WaitForSeconds(0.1f);
     private Coroutine WaitforFade;
     [SerializeField] private bool fadeInCredits = false;
@@ -32,6 +34,8 @@ public class MainMenuScript : MonoBehaviour
         SettingsMenu.SetActive(false);
         LoadMenu.SetActive(false);
         CreditsMenu.SetActive(false);
+        MovementVideo.SetActive(false);
+        NeuroNetworkVideo.SetActive(false);
 
         // Jonathan plased this in the update state, dont know why. Undo it if I broke something.
         Cursor.lockState = CursorLockMode.Locked;
@@ -155,6 +159,22 @@ public class MainMenuScript : MonoBehaviour
     public void CloseLoad()
     {
         LoadMenu.SetActive(false);
+    }
+    public void OpenMovement()
+    {
+        MovementVideo.SetActive(true);
+    }
+    public void CloseMovement()
+    {
+        MovementVideo.SetActive(false);
+    }
+    public void OpenNeuro()
+    {
+        NeuroNetworkVideo.SetActive(true);
+    }
+    public void CloseNeuro()
+    {
+        NeuroNetworkVideo.SetActive(false);
     }
     public void OpenCredits()
     {
