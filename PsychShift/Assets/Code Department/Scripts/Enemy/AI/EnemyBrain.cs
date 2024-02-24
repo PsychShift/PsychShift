@@ -8,6 +8,10 @@ using Guns.Health;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine.Events;
+using System.Linq;
+using UnityEngine.PlayerLoop;
+
+
 
 
 #if UNITY_EDITOR
@@ -17,7 +21,8 @@ using UnityEditor;
 [DisallowMultipleComponent]
 public abstract class EnemyBrain : MonoBehaviour
 {
-    public bool ragDoll;
+    public bool ragDollDone;
+
     [SerializeField] private bool _isActive = true;
     public bool IsActive {
         get 
@@ -133,12 +138,11 @@ public abstract class EnemyBrain : MonoBehaviour
         standupState = new StandupState(this, rgm);
 
         // PUT THE TRANSITION FROM RAGDOLL TO STANDING HERE 
-
+        //if(Agent.isOnNavMesh == false)
+            
         
-        Debug.Log("why");
-        ANY(ragdollState, IsGrounded());
-        Debug.Log("u no work");
-        //AT(ragdollState, standupState, IsStanding()); 
+        ANY(ragdollState, NotGrounded());
+        //ANY(standupState, IsStanding()); 
         //AT(standupState, chaseState, BackToChase());
 
 
@@ -196,6 +200,7 @@ public abstract class EnemyBrain : MonoBehaviour
 
     protected void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition);
     protected void ANY(IState from, Func<bool> condition) => stateMachine.AddAnyTransition(from, condition);
+    protected void SET(IState from) => stateMachine.SetState(from);
 
     public abstract void StateMachineSetup();
 
@@ -208,8 +213,8 @@ public abstract class EnemyBrain : MonoBehaviour
     protected Func<bool> FoundCover() => () => FindCover() != null;
     protected Func<bool> HasReachedDestination() => () => CharacterInfo.agent.remainingDistance <= 0.1f;
     protected Func<bool> WasDamaged() => () => wasHit;
-    protected Func<bool> IsGrounded() => () => characterInfo.controller.isGrounded;
-    protected Func<bool> IsStanding() => () => ragdollState.isDone;
+    protected Func<bool> NotGrounded() => () => GroundedCheck() == false;
+    //protected Func<bool> IsStanding() => () => StandUp();
     protected Func<bool> BackToChase() => () => standupState.isStanding; 
     
 
@@ -344,7 +349,25 @@ public abstract class EnemyBrain : MonoBehaviour
             EditorUtility.SetDirty(this);
         #endif
     }
+    [Header("Ground Variables")]
+    [SerializeField] private LayerMask groundLayer;
+    Vector3 castDirection = Vector3.down;
+    float castDistance = 0.0f;
+    Vector3 boxSize = new Vector3(1f, 0.1f, 1f);//GROUND KEVIN CHANGE .4F .1F,.4F Old nums
+    private bool GroundedCheck()
+    {
+        RaycastHit[] hits = Physics.BoxCastAll(characterInfo.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer, QueryTriggerInteraction.Ignore);
+        if(hits.Any(hit => hit.collider != null))
+            return true;
+        
+        return false;
+    }
+    public void StandUp()
+    {
+        SET(standupState);
+    }
 }
+
 /*     private IEnumerator WaitTillGrounded()
     {
         while(!CharacterInfo.controller.isGrounded)

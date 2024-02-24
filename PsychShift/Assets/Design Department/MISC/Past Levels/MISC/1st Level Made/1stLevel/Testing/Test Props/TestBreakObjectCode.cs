@@ -37,7 +37,9 @@ public class TestBreakObjectCode : MonoBehaviour
 
     private IEnumerator DestroyAfterDelay(GameObject obj, float delayInSeconds)
     {
+        //Unbake navmesh here
         yield return new WaitForSeconds(delayInSeconds);
         Destroy(obj);
     }
+    
 }

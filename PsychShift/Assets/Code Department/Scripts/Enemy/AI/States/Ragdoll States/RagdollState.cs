@@ -27,11 +27,13 @@ public class RagdollState : IState
         hitGround = false;
         isDone = false;
         brain.Agent.isStopped = false;
+        brain.CharacterInfo.controller.enabled = false;
         rigColliderManager.EnableRagdoll();
     }
 
     public void OnExit()
     {
+        Debug.Log("Ragdoll exit");
         //Turn everything back on once enemy is standing again
         //brain.Agent.isStopped = true;
     }
@@ -57,8 +59,10 @@ public class RagdollState : IState
                     //call rig collider 
                     //don't exit until stand anim is done
                     //sfadfvsdafsad
-                    isDone = true;
+                    //isDone = true;
+                    //Debug.Log("Works?");
                     //brain.RagdollNotDead();
+                    brain.StandUp();
                 }
             }
         }
