@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DestructableDamageable : MonoBehaviour, IDamageable
 {
@@ -13,6 +15,7 @@ public class DestructableDamageable : MonoBehaviour, IDamageable
 
     public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;
+    public NavMeshSurface disObjectNav;
 
     void OnEnable()
     {
@@ -23,6 +26,13 @@ public class DestructableDamageable : MonoBehaviour, IDamageable
     public void TakeDamage(int Damage)
     {
         collider.enabled = false;
+        DeactivateNavMesh();
         implodeThing.BreakTheThing();
+        
     }
+    private void DeactivateNavMesh()
+    {
+        disObjectNav.enabled = false;
+    }
+
 }
