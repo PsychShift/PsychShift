@@ -42,6 +42,7 @@ public class PauseMenuScript : MonoBehaviour
     public void Retry()
     {
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("why");
         PlayerMaster.Instance.Load();
     }
     public void Quit()
