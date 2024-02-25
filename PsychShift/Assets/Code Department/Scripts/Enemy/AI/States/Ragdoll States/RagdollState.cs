@@ -12,6 +12,7 @@ public class RagdollState : IState
     public bool IsDead;
     private bool hitGround;
     private float onGroundForSeconds = 10f;
+    
     float endTime = 0;
 
     public bool isDone = false;
@@ -30,7 +31,6 @@ public class RagdollState : IState
         isDone = false;
         brain.Agent.isStopped = true;
         brain.Agent.enabled = false;
-        
         tempGravity.enabled = true;
         rigColliderManager.EnableRagdoll();
     }
@@ -39,10 +39,11 @@ public class RagdollState : IState
     {
         Debug.Log("Ragdoll exit");
         brain.Model.transform.parent = null;
-        brain.transform.position = brain.Model.transform.position;
-        brain.Model.transform.parent = brain.transform;
+        brain.CharacterInfo.controller.enabled = false;
+        brain.transform.position = brain.Model.transform.GetChild(1).position;
         brain.CharacterInfo.controller.enabled = true;
-        tempGravity.enabled = true;
+        brain.Model.transform.parent = brain.transform;
+        tempGravity.enabled = false;
     }
 
     public void Tick()
@@ -63,6 +64,7 @@ public class RagdollState : IState
                 }
                 else
                 {
+                    brain.CharacterInfo.controller.enabled = false;
                     isDone = true;
                 }
             }

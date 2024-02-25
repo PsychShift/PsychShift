@@ -202,7 +202,7 @@ public abstract class EnemyBrain : MonoBehaviour
     protected Func<bool> FoundCover() => () => FindCover() != null;
     protected Func<bool> HasReachedDestination() => () => CharacterInfo.agent.remainingDistance <= 0.1f;
     protected Func<bool> WasDamaged() => () => wasHit;
-    protected Func<bool> NotGrounded() => () => GroundedCheck() == false;
+    protected Func<bool> NotGrounded() => () => stateMachine._currentState != standupState && GroundedCheck() == false;//look for a better way
     //protected Func<bool> IsStanding() => () => StandUp();
     protected Func<bool> BackToChase() => () => standupState.isStanding; 
     
@@ -343,10 +343,11 @@ public abstract class EnemyBrain : MonoBehaviour
 
     private static LayerMask groundLayer = 0;
     Vector3 castDirection = Vector3.down;
-    float castDistance = 0.0f;
+    float castDistance = 3.0f;
     Vector3 boxSize = new Vector3(1f, 0.1f, 1f);//GROUND KEVIN CHANGE .4F .1F,.4F Old nums
     public bool GroundedCheck()
     {
+        //Ragdoll=>turn off groundcheck=> standup => turn on check again
         RaycastHit[] hits = Physics.BoxCastAll(characterInfo.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer, QueryTriggerInteraction.Ignore);
         if(hits.Any(hit => hit.collider != null))
             return true;

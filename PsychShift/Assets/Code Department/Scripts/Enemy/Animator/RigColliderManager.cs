@@ -100,7 +100,7 @@ public class RigColliderManager : MonoBehaviour
             //rigidbody.detectCollisions = false;
             rigidbody.useGravity = false;
         }
-        StartCoroutine(WaitForStandUpAnim());
+        //StartCoroutine(WaitForStandUpAnim());
     }
     //Coroutine 
     //
@@ -111,11 +111,11 @@ public class RigColliderManager : MonoBehaviour
         StartCoroutine(WaitForStandUpAnim());
 
     } */
-    private IEnumerator WaitForStandUpAnim()
+    /* private IEnumerator WaitForStandUpAnim()
     {
         //playAnim stand up
         yield return new WaitForSeconds(animationTime);
         isDoneStanding= true;
         //activate nonragdoll state
-    }
+    } */
 }

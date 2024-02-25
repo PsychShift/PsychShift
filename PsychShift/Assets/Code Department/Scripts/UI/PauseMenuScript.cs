@@ -13,6 +13,9 @@ public class PauseMenuScript : MonoBehaviour
     public GameObject PauseMenuFirst;
     public GameObject PauseMenuSettings;
     public GameObject PauseMenuSettingsFirst;
+    public GameObject TutorialMenu;
+    public GameObject MovementVideo;
+    public GameObject NeuroNetworkVideo;
     public static bool GameIsPaused = false;
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,9 @@ public class PauseMenuScript : MonoBehaviour
         
         PauseMenu.SetActive(false);
         PauseMenuSettings.SetActive(false);
+        MovementVideo.SetActive(false);
+        NeuroNetworkVideo.SetActive(false);
+        TutorialMenu.SetActive(false);
     }
 
     public void Resume()
@@ -58,6 +64,15 @@ public class PauseMenuScript : MonoBehaviour
         PauseMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(PauseMenuFirst);
     }
+    public void OpenLoad()
+    {
+        TutorialMenu.SetActive(true);
+    }
+
+    public void CloseLoad()
+    {
+        TutorialMenu.SetActive(false);
+    }
     private void PausePressed()
     {
         if(PauseMenu.activeSelf)
@@ -84,5 +99,21 @@ public class PauseMenuScript : MonoBehaviour
     private void OnDisable() 
     {
         InputManager.Instance.OnPausePressed-= PausePressed;
+    }
+    public void OpenMovement()
+    {
+        MovementVideo.SetActive(true);
+    }
+    public void CloseMovement()
+    {
+        MovementVideo.SetActive(false);
+    }
+    public void OpenNeuro()
+    {
+        NeuroNetworkVideo.SetActive(true);
+    }
+    public void CloseNeuro()
+    {
+        NeuroNetworkVideo.SetActive(false);
     }
 }
