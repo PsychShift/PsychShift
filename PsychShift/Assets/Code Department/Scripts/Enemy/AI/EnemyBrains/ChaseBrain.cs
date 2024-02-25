@@ -13,12 +13,13 @@ public class ChaseBrain : EnemyBrain
     public override void StateMachineSetup()
     {
         chaseState = new ChaseState(this);
-        chaseState.OnEnter();
+        stateMachine.SetState(chaseState);
+        //chaseState.OnEnter();
     }
-    void OnDestroy()
+    /* void OnDestroy()
     {
         chaseState.OnExit();
-    }
+    } */
 
     IEnumerator WaitPlease()
     {
