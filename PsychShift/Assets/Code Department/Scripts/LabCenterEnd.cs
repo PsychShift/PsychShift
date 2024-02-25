@@ -20,6 +20,7 @@ public class LabCenterEnd : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            PlayerMaster.Instance.StartNew();
             SceneManager.LoadScene("FINAL BOSS"); 
 
         }

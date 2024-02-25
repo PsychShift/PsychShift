@@ -11,6 +11,7 @@ public class EndScene : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            PlayerMaster.Instance.StartNew();
             SceneManager.LoadScene("Outro"); 
             checkpointRest.SetLocation(transform);
         }

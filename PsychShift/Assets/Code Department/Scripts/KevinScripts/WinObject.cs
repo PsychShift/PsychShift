@@ -8,6 +8,9 @@ public class WinObject : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.tag == "Player")
+        {
+            PlayerMaster.Instance.StartNew();
             SceneManager.LoadScene("WinScreen");
+        }
     }
 }
