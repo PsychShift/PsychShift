@@ -42,11 +42,11 @@ public class StandupState : IState
     {
         
         animTime-=Time.deltaTime;
-        Debug.Log(animTime);
+        //Debug.Log(animTime);
         if(animTime <= 0)
         {
             isStanding = true;
-            Debug.Log("StandUpExit");
+            //Debug.Log("StandUpExit");
             brain.Animator.SetBool("Standup", false);
             brain.Agent.isStopped = true;
             brain.CharacterInfo.controller.enabled = true;

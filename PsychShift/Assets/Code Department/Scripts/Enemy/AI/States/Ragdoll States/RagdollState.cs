@@ -25,7 +25,7 @@ public class RagdollState : IState
     }
     public void OnEnter()
     {
-        Debug.Log("raggidy");
+        //Debug.Log("raggidy");
         // activate the ragdoll
         hitGround = false;
         isDone = false;
@@ -37,7 +37,7 @@ public class RagdollState : IState
 
     public void OnExit()
     {
-        Debug.Log("Ragdoll exit");
+        //Debug.Log("Ragdoll exit");
         brain.Model.transform.parent = null;
         brain.CharacterInfo.controller.enabled = false;
         brain.transform.position = brain.Model.transform.GetChild(1).position;

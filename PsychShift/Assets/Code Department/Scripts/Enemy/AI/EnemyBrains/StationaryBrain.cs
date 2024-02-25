@@ -26,15 +26,18 @@ public class StationaryBrain : EnemyBrain
         AT(chaseState, returnToStationState, CanGuard());
         AT(returnToStationState, lookAroundState, returnToStationState.IsDone());
         AT(returnToStationState, chaseState, PlayerInSight());
+        AT(standupState, returnToStationState, BackToChase());
 
 
         if (SpawnerEnemy)
         {
             stateMachine.SetState(returnToStationState);
+            //stateMachine.defaultState = returnToStationState;
         }
         else
         {
-            stateMachine.SetState(lookAroundState);
+            stateMachine.SetState(lookAroundState,true);
+            //stateMachine.defaultState = lookAroundState;
         }
     }
 

@@ -25,6 +25,7 @@ public class RandomEnemy : EnemyBrain
         stateMachine.AddAnyTransition(chaseState, WasDamaged());
 
         stateMachine.SetState(pickRandom, true);
+        stateMachine.defaultState = pickRandom;
     }
 
     void Update()
