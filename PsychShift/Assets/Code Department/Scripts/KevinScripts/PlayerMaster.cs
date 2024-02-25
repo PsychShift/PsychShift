@@ -5,6 +5,7 @@ using BrainSwapSaving;
 using Guns;
 using Guns.Demo;
 using Player;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -75,7 +76,7 @@ public class PlayerMaster : MonoBehaviour
     public void SetCheckPoint(Transform position)//Call this with transform.zero to reset checkpoint when player quits
     {
         checkPointLocation = position;
-        PlayerStateMachine.Instance.SetLocation(checkPointLocation);
+        //PlayerStateMachine.Instance.SetLocation(checkPointLocation);
 
         SaveInfo();
     }
@@ -124,6 +125,7 @@ public class PlayerMaster : MonoBehaviour
         // Only perform actions if the scene was loaded from the Load method
         if (isLoadingSceneFromLoadMethod && scene.buildIndex == loadedInfo.Scene)
         {
+            Debug.Log("loading from save");
             // Reset the flag after performing the actions
             isLoadingSceneFromLoadMethod = false;
             
@@ -133,9 +135,11 @@ public class PlayerMaster : MonoBehaviour
             EnemyBrainSelector brainSelector = Enemy.GetComponent<EnemyBrainSelector>();
             GunScriptableObject gun = GameAssets.Instance.GetGun(loadedInfo.GunType);
             brainSelector.SwapBrain(gun, loadedInfo.EnemyType, loadedInfo.Modifiers, loadedInfo.AIAgression);
+            Destroy(PlayerStateMachine.Instance.tempCharacter);
             PlayerStateMachine.Instance.tempCharacter = Enemy;
         }
         PlayerStateMachine.Instance.Load();
+        Debug.Log(PlayerStateMachine.Instance.tempCharacter.name);
     }
 
     public void StartNew()
@@ -147,6 +151,7 @@ public class PlayerMaster : MonoBehaviour
         {
             Debug.Log("File exist");
             File.Delete(fullPath);
+            AssetDatabase.Refresh();
         }
     }
     

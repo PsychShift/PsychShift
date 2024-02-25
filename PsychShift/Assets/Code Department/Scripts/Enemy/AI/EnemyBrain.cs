@@ -349,7 +349,6 @@ public abstract class EnemyBrain : MonoBehaviour
     Vector3 boxSize = new Vector3(1f, 0.1f, 1f);//GROUND KEVIN CHANGE .4F .1F,.4F Old nums
     public bool GroundedCheck()
     {
-        Debug.Log("ground check"+ this.name);
         //Ragdoll=>turn off groundcheck=> standup => turn on check again
         RaycastHit[] hits = Physics.BoxCastAll(characterInfo.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer, QueryTriggerInteraction.Ignore);
         if(hits.Any(hit => hit.collider != null))
