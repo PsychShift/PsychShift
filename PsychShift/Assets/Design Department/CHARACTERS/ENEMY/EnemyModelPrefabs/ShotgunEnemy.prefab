@@ -2338,26 +2338,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selector: {fileID: 8848638947221337564}
-  fileName: Rifle_EnemyModel
+  fileName: ShotGun_EnemyModel
   model:
-    materialNames: []
-    materialPaths: []
+    materialNames:
+    - Enemy
+    - Outline_Material_Enemy 1 - Copy
+    materialPaths:
+    - Assets/Resources/EnemyMaterials/Enemy.mat
+    - Assets/Resources/EnemyMaterials/Outline_Material_Enemy 1 - Copy.mat
     props:
     - parent: mixamorig:HeadTop_End
-      prefabPath: Assets/Resources/EnemyGlassesProp.prefab
-      prefabName: 
+      prefabPath: Assets/Resources/EnemyModels/EnemyGlassesProp.prefab
+      prefabName: EnemyGlassesProp
       position: {x: 0.000118374825, y: -0.31760943, z: 0.26108688}
       rotation: {x: 285.02277, y: 342.42722, z: 112.48793}
       scale: {x: 9.355723, y: 9.355722, z: 9.355721}
     - parent: mixamorig:HeadTop_End
-      prefabPath: Assets/Resources/security_capv2 (55) Variant.prefab
-      prefabName: 
-      position: {x: -0.012845039, y: -0.23533332, z: -0.08554809}
-      rotation: {x: 2.1398575, y: 182.34581, z: 353.9448}
+      prefabPath: Assets/Resources/EnemyModels/security_capv2 (55) Variant.prefab
+      prefabName: security_capv2 (55) Variant
+      position: {x: -0.017537257, y: -0.23576352, z: -0.08534093}
+      rotation: {x: 2.1398585, y: 182.34581, z: 355.29742}
       scale: {x: 0.3396766, y: 0.3625759, z: 0.36257586}
     - parent: mixamorig:Hips
-      prefabPath: Assets/Resources/belt_UVd Variant.prefab
-      prefabName: 
+      prefabPath: Assets/Resources/EnemyModels/belt_UVd Variant.prefab
+      prefabName: belt_UVd Variant
       position: {x: 0.0035513975, y: 0.23587242, z: -0.13195194}
       rotation: {x: 1.5537558, y: 91.23805, z: 1.1135663}
       scale: {x: 2.556336, y: 3.3373506, z: 3.1041644}
@@ -4423,6 +4427,10 @@ PrefabInstance:
     - target: {fileID: 6610755562546579350, guid: 7bda1b37e3df6e44a81d1856815e211b, type: 3}
       propertyPath: m_Name
       value: Riot_Shield_Prop
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610755562546579350, guid: 7bda1b37e3df6e44a81d1856815e211b, type: 3}
+      propertyPath: m_TagString
+      value: EnemyCosmetic
       objectReference: {fileID: 0}
     - target: {fileID: 8247139037469123949, guid: 7bda1b37e3df6e44a81d1856815e211b, type: 3}
       propertyPath: m_Enabled
