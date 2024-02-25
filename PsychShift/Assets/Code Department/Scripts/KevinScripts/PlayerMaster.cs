@@ -149,7 +149,7 @@ public class PlayerMaster : MonoBehaviour
             File.Delete(fullPath);
         }
     }
-
+    
     void OnDestroy()
     {
         // Unsubscribe from the scene loaded event
