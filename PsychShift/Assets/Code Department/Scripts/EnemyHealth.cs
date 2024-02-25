@@ -45,13 +45,14 @@ namespace Guns.Health
             if(CurrentHealth == 0 && damageTaken != 0)
             {
                 OnDeath?.Invoke(transform);
-                if(this.gameObject.layer == 6)//EDIT IF LAYER ORDER IS CHANGED
+                /* if(this.gameObject.layer == 6)//EDIT IF LAYER ORDER IS CHANGED
                 {
                     if(gameObject.tag == "Boss")
                     {
+                        
                         SceneManager.LoadScene("Outro");
                     }
-                }
+                } */
             }
         }
     }
