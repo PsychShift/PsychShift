@@ -118,7 +118,7 @@ public abstract class EnemyBrain : MonoBehaviour
     public OnSwappedDelegate onSwappedOut;
     protected RagdollState ragdollState;
     protected StandupState standupState;
-    protected ChaseState chaseState;
+    //protected ChaseState chaseState;
     /* public delegate void OnRagdollUpdate();
     public OnRagdollUpdate enterRagdoll; */
 
@@ -139,6 +139,8 @@ public abstract class EnemyBrain : MonoBehaviour
         
         ANY(ragdollState, NotGrounded());
         AT(ragdollState, standupState, () => ragdollState.IsDone());
+        //AT(standupState, stateMachine.defaultState, BackToChase());
+        Debug.Log(stateMachine.defaultState);
 
         CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
         if(!TryGetComponent(out fovRef))
@@ -343,10 +345,11 @@ public abstract class EnemyBrain : MonoBehaviour
 
     private static LayerMask groundLayer = 0;
     Vector3 castDirection = Vector3.down;
-    float castDistance = 3.0f;
+    float castDistance = 3f;
     Vector3 boxSize = new Vector3(1f, 0.1f, 1f);//GROUND KEVIN CHANGE .4F .1F,.4F Old nums
     public bool GroundedCheck()
     {
+        Debug.Log("ground check"+ this.name);
         //Ragdoll=>turn off groundcheck=> standup => turn on check again
         RaycastHit[] hits = Physics.BoxCastAll(characterInfo.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer, QueryTriggerInteraction.Ignore);
         if(hits.Any(hit => hit.collider != null))

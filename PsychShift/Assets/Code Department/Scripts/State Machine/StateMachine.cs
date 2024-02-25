@@ -8,7 +8,7 @@ namespace StateMachine
 {
     public class StateMachine
     {
-        public IState defaultState { get; private set; }
+        public IState defaultState;
         public IState _currentState { get; private set; }
         private Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>(); // Saves all transitions
         private List<Transition> _currentTransitions = new List<Transition>(); // Switches out what transition is active

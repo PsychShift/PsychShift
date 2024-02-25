@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChaseState : ShootingSuperState, ICoroutineRestarter
 {
     Transform gunParent;
+    
 
     public ChaseState(EnemyBrain brain)
     {
@@ -14,6 +15,7 @@ public class ChaseState : ShootingSuperState, ICoroutineRestarter
     public override void OnEnter()
     {
         base.OnEnter();
+        
         brain.Agent.stoppingDistance = brain.agression.PlayerStoppingDistance;
         brain.StartCoroutine(ChasePlayer());
         brain.Animator.SetFloat("speed", 1f);
