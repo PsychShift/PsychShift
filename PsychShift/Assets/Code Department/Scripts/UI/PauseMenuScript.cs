@@ -26,6 +26,7 @@ public class PauseMenuScript : MonoBehaviour
         PauseMenuSettings.SetActive(false);
         MovementVideo.SetActive(false);
         NeuroNetworkVideo.SetActive(false);
+        TutorialMenu.SetActive(false);
     }
 
     public void Resume()
