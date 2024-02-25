@@ -52,7 +52,7 @@ public class PlayerMaster : MonoBehaviour
     // Start is called before the first frame update
 
 
-    void Awake()
+    void OnEnable()
     {
         if(noSavePlez == false)
         {
@@ -60,12 +60,13 @@ public class PlayerMaster : MonoBehaviour
             {
                 _instance = this;
                 DontDestroyOnLoad(gameObject);
+                SceneManager.sceneLoaded += OnSceneLoaded;
             }
             else
             {
                 Destroy(gameObject);
             }
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            //Debug.Log("scene loaded subscription");
         }
         
     }

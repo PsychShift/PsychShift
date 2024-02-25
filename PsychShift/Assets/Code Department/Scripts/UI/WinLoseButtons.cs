@@ -46,7 +46,8 @@ public class WinLoseButtons : MonoBehaviour
 
     public void Retry()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        PlayerMaster.Instance.Load();
     }
 
     public void Quit()
