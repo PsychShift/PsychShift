@@ -343,7 +343,7 @@ public abstract class EnemyBrain : MonoBehaviour
 
     private static LayerMask groundLayer = 0;
     Vector3 castDirection = Vector3.down;
-    float castDistance = 0.0f;
+    float castDistance = 3.0f;
     Vector3 boxSize = new Vector3(1f, 0.1f, 1f);//GROUND KEVIN CHANGE .4F .1F,.4F Old nums
     public bool GroundedCheck()
     {
