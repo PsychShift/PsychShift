@@ -186,8 +186,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6622891637778949594}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.143, y: 1.814, z: 16.87}
-  m_LocalScale: {x: 4.088815, y: 4.088815, z: 4.088815}
+  m_LocalPosition: {x: 0.143, y: 1.73, z: 17.25}
+  m_LocalScale: {x: 0.378852, y: 0.378852, z: 5.121854}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4203927908740226017}
@@ -220,7 +220,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -5089,7 +5089,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7412976288809772189, guid: ad09f271de7212a4d82e12bdd7b4184b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.11
+      value: -0.99
       objectReference: {fileID: 0}
     - target: {fileID: 7412976288809772189, guid: ad09f271de7212a4d82e12bdd7b4184b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5418,9 +5418,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d5d60efe4e7af28419d29cff29bd3d22, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2172089577293706640}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d5d60efe4e7af28419d29cff29bd3d22, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 4794259394070861044}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d5d60efe4e7af28419d29cff29bd3d22, type: 3}
       insertIndex: -1
@@ -5437,27 +5434,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d5d60efe4e7af28419d29cff29bd3d22, type: 3}
   m_PrefabInstance: {fileID: 4457969163120589834}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &2172089577293706640
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3538855707946221915}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 15.334426, y: 5.4171314, z: 1.9970703}
-  m_Center: {x: -0.053091843, y: 0.021238724, z: 0.010579427}
 --- !u!95 &4794259394070861044
 Animator:
   serializedVersion: 5
@@ -5466,7 +5442,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3538855707946221915}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 7b7d64c1c60ff684885d81714a4879a8, type: 3}
   m_Controller: {fileID: 9100000, guid: a285f4360a2020d439d18734e95a02a2, type: 2}
   m_CullingMode: 0
@@ -5486,7 +5462,7 @@ Animation:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3538855707946221915}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: baa5b39a0d9448b40be8735ea4016491, type: 2}
   m_Animations: []
@@ -5501,7 +5477,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3538855707946221915}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
