@@ -10,8 +10,12 @@ public class WinScriptLevel2 : MonoBehaviour
     public PlayerStateMachine checkpointRest;
     void OnEnable()
     {
+        StartCoroutine(Test());
+    }
+    private IEnumerator Test()
+    {
         PlayerMaster.Instance.StartNew();
+        yield return new WaitForSeconds(0.1f);
         SceneManager.LoadScene("LAB CENTER");
-        checkpointRest.SetLocation(transform);
     }
 }
