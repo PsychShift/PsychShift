@@ -151,7 +151,7 @@ public class PlayerMaster : MonoBehaviour
         {
             Debug.Log("File exist");
             File.Delete(fullPath);
-            AssetDatabase.Refresh();
+            //AssetDatabase.Refresh();
         }
     }
     
