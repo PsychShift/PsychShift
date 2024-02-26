@@ -52,14 +52,6 @@ public class ChaseState : ShootingSuperState, ICoroutineRestarter
             brain.Animator.SetFloat("speed", 1f);
             brain.Agent.isStopped = false;
         }
-
-        //AnimatorHelper.SetMovementVector(brain.Animator, brain.Agent.velocity, brain.Model, "speedForward", "speedRight");
-        
-        // aim at the player based on the gun forward
-        /* Vector3 direction = brain.player.position - gunParent.position;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        gunParent.rotation = Quaternion.Lerp(gunParent.rotation, lookRotation, Time.deltaTime * 10f); */
-
     }
 
     private IEnumerator ChasePlayer()

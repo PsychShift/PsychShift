@@ -139,8 +139,6 @@ public abstract class EnemyBrain : MonoBehaviour
         
         ANY(ragdollState, NotGrounded());
         AT(ragdollState, standupState, () => ragdollState.IsDone());
-        //AT(standupState, stateMachine.defaultState, BackToChase());
-        Debug.Log(stateMachine.defaultState);
 
         CharacterInfo.agent.speed = CharacterInfo.movementStats.moveSpeed;
         if(!TryGetComponent(out fovRef))
@@ -174,8 +172,11 @@ public abstract class EnemyBrain : MonoBehaviour
 
     private void Died(Transform idk)
     {
+        StopAllCoroutines();
         ragdollState.IsDead = true;
-        stateMachine.EventTransition(ragdollState, null);
+        wasHit = false;
+        //stateMachine.EventTransition(ragdollState);
+        stateMachine.SetState(ragdollState);
         stateMachine.Tick();
         EnemyHealth.OnDeath -= Died;
     }

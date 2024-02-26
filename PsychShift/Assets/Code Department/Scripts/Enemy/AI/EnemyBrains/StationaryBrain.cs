@@ -23,29 +23,29 @@ public class StationaryBrain : EnemyBrain
 
 
         AT(lookAroundState, chaseState, PlayerInSight());
-        AT(chaseState, returnToStationState, CanGuard());
+        //AT(chaseState, returnToStationState, CanGuard());
         AT(returnToStationState, lookAroundState, returnToStationState.IsDone());
         AT(returnToStationState, chaseState, PlayerInSight());
-        AT(standupState, returnToStationState, BackToChase());
 
-        stateMachine.AddAnyTransition(chaseState, WasDamaged());
+        AT(lookAroundState, chaseState, WasDamaged());
+        AT(returnToStationState, chaseState, WasDamaged());
 
 
         if (SpawnerEnemy)
         {
-            stateMachine.SetState(returnToStationState);
-            //stateMachine.defaultState = returnToStationState;
+            stateMachine.SetState(returnToStationState, true);
         }
         else
         {
             stateMachine.SetState(lookAroundState,true);
-            //stateMachine.defaultState = lookAroundState;
         }
+        AT(standupState, stateMachine.defaultState, BackToChase());
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(stateMachine._currentState);
         if(IsActive)
             stateMachine.Tick();
     }
