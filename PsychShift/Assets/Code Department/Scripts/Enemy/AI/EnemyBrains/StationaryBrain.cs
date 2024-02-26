@@ -28,6 +28,8 @@ public class StationaryBrain : EnemyBrain
         AT(returnToStationState, chaseState, PlayerInSight());
         AT(standupState, returnToStationState, BackToChase());
 
+        stateMachine.AddAnyTransition(chaseState, WasDamaged());
+
 
         if (SpawnerEnemy)
         {
