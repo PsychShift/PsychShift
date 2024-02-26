@@ -41,14 +41,15 @@ public class LabCenterEnd : MonoBehaviour
     {
         yield return new WaitForSeconds(45);
         Time.timeScale = 1f;
+        //SceneManager.LoadScene("FINAL BOSS");
         OFCanvas.SetActive(true);
-        SceneManager.LoadScene("FINAL BOSS");
+        //SceneManager.LoadScene("FINAL BOSS");
         
     }
     public void Skip()
     {
         Time.timeScale = 1f;
         OFCanvas.SetActive(true);
-        SceneManager.LoadScene("FINAL BOSS");
+        SceneManager.LoadScene("WinScreen");
     }
 }
