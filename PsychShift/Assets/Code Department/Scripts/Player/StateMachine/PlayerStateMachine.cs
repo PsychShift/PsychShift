@@ -4,6 +4,8 @@ using Cinemachine;
 using System.Linq;
 using System.Collections;
 using Guns.Demo;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
 
 namespace Player
 {
@@ -146,6 +148,8 @@ namespace Player
         }
         public void Load()
         {
+            Debug.Log("Name: " + gameObject.name + " Scene: " + SceneManager.GetActiveScene().name);
+            Debug.Log(tempCharacter.name);
             WallStateVariables.Instance.wallLayer = wallLayer;
             WallStateVariables.Instance.WallholdLayers = wallholdLayers;
             WallStateVariables.Instance.WallSpeed = wallSpeed;

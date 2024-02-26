@@ -26,7 +26,8 @@ public class DestructableDamageable : MonoBehaviour, IDamageable
     public void TakeDamage(int Damage)
     {
         collider.enabled = false;
-        DeactivateNavMesh();
+        if(disObjectNav!=null)
+            DeactivateNavMesh();
         implodeThing.BreakTheThing();
         
     }

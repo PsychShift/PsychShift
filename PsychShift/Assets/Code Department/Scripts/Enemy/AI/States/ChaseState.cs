@@ -38,7 +38,6 @@ public class ChaseState : ShootingSuperState, ICoroutineRestarter
 
     public override void Tick()
     {
-        Debug.Log("CHASE MEEEEE");
         base.Tick();
         if(brain.Agent.remainingDistance < brain.Agent.stoppingDistance)
         {

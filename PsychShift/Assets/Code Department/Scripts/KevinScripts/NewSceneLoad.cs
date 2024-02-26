@@ -17,11 +17,18 @@ public class NewSceneLoad : MonoBehaviour
         {
             if(trevor)
             {
-                PlayerMaster.Instance.StartNew();
-                //resetCheckpoint.SetLocation(transform);
-                SceneManager.LoadScene("TREVOR ROOM");
+                StartCoroutine(Test());
+                //PlayerMaster.Instance.StartNew();
+                //SceneManager.LoadScene("TREVOR ROOM");
             }
                 
         }
+    }
+
+    private IEnumerator Test()
+    {
+        PlayerMaster.Instance.StartNew();
+        yield return new WaitForSeconds(0.1f);
+        SceneManager.LoadScene("TREVOR ROOM");
     }
 }
