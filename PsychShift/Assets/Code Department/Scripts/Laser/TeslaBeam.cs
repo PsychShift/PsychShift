@@ -6,7 +6,7 @@ using UnityEngine;
 public class TeslaBeam : MonoBehaviour
 {
     public LaserBeamStats defaultStats;
-    
+    public float cooldownTimer = 10f;
     [SerializeField] float laserSpeed = 10f;
 
     [SerializeField] float targetCheckRadius = 1000;
@@ -164,6 +164,9 @@ public class TeslaBeam : MonoBehaviour
             yield return null;
         }
         lineRenderer.enabled = false;
+
+        yield return new WaitForSeconds(cooldownTimer);
+        StartCoroutine(ShootLaser(defaultStats));
     }
 
     #if UNITY_EDITOR

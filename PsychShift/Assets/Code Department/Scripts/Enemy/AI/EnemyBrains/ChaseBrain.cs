@@ -15,9 +15,6 @@ public class ChaseBrain : EnemyBrain
         chaseState = new ChaseState(this);
         stateMachine.SetState(chaseState);
         AT(standupState, chaseState, BackToChase());
-        //AT(chaseState,ragdollState, NotGrounded());doesnt work
-        //stateMachine.defaultState = chaseState;
-        //chaseState.OnEnter();
     }
     /* void OnDestroy()
     {
