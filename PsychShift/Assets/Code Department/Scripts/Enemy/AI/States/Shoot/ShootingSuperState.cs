@@ -53,6 +53,7 @@ public class ShootingSuperState : IState
         {
             // Calculate the direction to the target
             Vector3 directionToTarget = (brain.player.position - brain.transform.position).normalized;
+            directionToTarget.y = 0;
             // Create a rotation that looks in the direction of the target
             Quaternion lookRotation = Quaternion.LookRotation(directionToTarget);
             // Rotate the agent towards the target rotation over time
