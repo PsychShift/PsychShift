@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PanelScript : MonoBehaviour
-
 {
     // Animation component attached to the GameObject
     public Animation anim;
@@ -31,6 +29,10 @@ public class PanelScript : MonoBehaviour
         // Check if the trigger has already been used
         if (!hasBeenTriggered)
         {
+            // Enable the first GameObject
+            if (enableObject1 != null)
+                enableObject1.SetActive(true);
+
             // Trigger animation if there is an Animation component attached
             if (anim != null)
             {
@@ -70,15 +72,12 @@ public class PanelScript : MonoBehaviour
         if (disableObject1 != null)
             disableObject1.SetActive(false);
 
-        if (enableObject1 != null)
-            enableObject1.SetActive(true);
+        if (enableObject2 != null)
+            enableObject2.SetActive(true);
 
         yield return new WaitForSeconds(enableDisableDelay2 - enableDisableDelay1);
         
         if (disableObject2 != null)
             disableObject2.SetActive(false);
-
-        if (enableObject2 != null)
-            enableObject2.SetActive(true);
     }
 }
