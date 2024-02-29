@@ -6,6 +6,9 @@ public class StationaryBrain : EnemyBrain
 {
     [Tooltip("If this enemy is placed manually, you don't need to set this value. \n If it comes from a spawner, the spawner will set the value.")]
     public Vector3 guardPosition;
+    ChaseState chaseState;
+    SetLocationState returnToStationState;
+    LookAroundState lookAroundState;
     protected override void SetUp()
     {
         Agent.enabled = true;
@@ -14,12 +17,11 @@ public class StationaryBrain : EnemyBrain
     }
     public override void StateMachineSetup()
     {
-        if(!SpawnerEnemy)
-            guardPosition = transform.position;
+        guardPosition = transform.position;
 
-        var returnToStationState = new SetLocationState(this, guardPosition);
-        var chaseState = new ChaseState(this);
-        var lookAroundState = new LookAroundState(this);
+        returnToStationState = new SetLocationState(this, guardPosition);
+        chaseState = new ChaseState(this);
+        lookAroundState = new LookAroundState(this);
 
 
         AT(lookAroundState, chaseState, PlayerInSight());
@@ -30,30 +32,24 @@ public class StationaryBrain : EnemyBrain
         AT(lookAroundState, chaseState, WasDamaged());
         AT(returnToStationState, chaseState, WasDamaged());
 
-
-        if (SpawnerEnemy)
-        {
-            stateMachine.SetState(returnToStationState, true);
-        }
-        else
-        {
-            stateMachine.SetState(lookAroundState,true);
-        }
+        stateMachine.SetState(lookAroundState,true);
+        
         AT(standupState, stateMachine.defaultState, BackToChase());
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(stateMachine._currentState);
         if(IsActive)
             stateMachine.Tick();
     }
 
-    /* void OnDrawGizmos()
+    public void SpawnerSetup(Vector3 guardPos)
     {
-        if (stateMachine == null) return;
-        Gizmos.color = stateMachine.GetGizmoColor();
-        Gizmos.DrawSphere(transform.position + Vector3.up * 6, 0.4f);
-    } */
+        if(guardPos == Vector3.zero) return;
+        returnToStationState = new SetLocationState(this, guardPos);
+        AT(returnToStationState, lookAroundState, returnToStationState.IsDone());
+
+        stateMachine.SetState(returnToStationState);
+    }
 }

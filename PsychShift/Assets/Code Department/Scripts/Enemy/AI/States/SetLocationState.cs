@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SetLocationState : IState
 {
@@ -21,7 +22,8 @@ public class SetLocationState : IState
     public void OnEnter()
     {
         brain.Agent.isStopped = false;
-        brain.Agent.SetDestination(homePosition);
+        Vector3 closestNavMeshPosition = GetClosestNavMeshPosition(homePosition);
+        brain.Agent.SetDestination(closestNavMeshPosition);
         brain.Animator.SetFloat("speed", 1f);
     }
 
@@ -40,11 +42,25 @@ public class SetLocationState : IState
     public Func<bool> IsDone() => () => IsFinished();
     private bool IsFinished()
     {
-        if (brain.Agent.remainingDistance < 0.1f)
+        if (brain.Agent.remainingDistance < 0.5f)
         {
             return true;
         }
 
         return false;
+    }
+
+    private Vector3 GetClosestNavMeshPosition(Vector3 position)
+    {
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(position, out hit, 1.0f, NavMesh.AllAreas))
+        {
+            return hit.position;
+        }
+        else
+        {
+            Debug.LogError("No NavMesh found near the specified position.");
+            return position; // Fallback to the original position if no NavMesh found
+        }
     }
 }

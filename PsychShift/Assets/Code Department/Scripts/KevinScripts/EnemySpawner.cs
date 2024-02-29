@@ -4,6 +4,7 @@ using UnityEngine;
 using Guns.Health;
 using Guns;
 using System;
+using Unity.VisualScripting;
 public class EnemySpawner : MonoBehaviour
 {
     public static System.Random Rand = new System.Random();
@@ -32,11 +33,57 @@ public class EnemySpawner : MonoBehaviour
     public PuzzleKit godBoxActionRef;
     int deathCount=0;
     public ParticleSystem spawnFX;
+    
+
+    private Vector3 stationaryPos;
+    private Vector3 randomPos;
+    private Vector3 chasePos;
+    private Vector3[] patrolPositions;
 
     private void Start() 
     {
         enemySpawned = new();
+        SetupSpawnerInfo();
         StartCoroutine(SpawnIn());
+    }
+    private void SetupSpawnerInfo()
+    {
+        bool hasStationary = TryGetComponent(out StationarySpawnerInfo stationarySpawnerInfo);
+        bool hasChase = TryGetComponent(out ChaseSpawnerInfo chaseSpawnerInfo);
+        bool hasRandom = TryGetComponent(out RandomSpawnerInfo randomSpawnerInfo);
+        bool hasPatrol = TryGetComponent(out PatrolSpawnerInfo patrolSpawnerInfo);
+
+        if(hasStationary)
+        {
+            if(stationarySpawnerInfo.GuardPosition != null) 
+                stationaryPos = stationarySpawnerInfo.GuardPosition.position;
+        } 
+        if(hasChase)
+        {
+            if(chaseSpawnerInfo.GoHereBeforeStarting != null)
+                chasePos = chaseSpawnerInfo.GoHereBeforeStarting.position;
+        }
+        if(hasRandom)
+        {
+            if(randomSpawnerInfo.GoHereBeforeStarting != null)
+                randomPos = randomSpawnerInfo.GoHereBeforeStarting.position;
+        }
+        if(hasPatrol)
+        {
+            int len = patrolSpawnerInfo.PathToFollow.Length;
+            if(len > 0)
+            {
+                patrolPositions = new Vector3[len];
+
+                for(int i = 0; i < len; i++)
+                {
+                    patrolPositions[i] = patrolSpawnerInfo.PathToFollow[i].position;
+                    Debug.Log(patrolPositions[i]);
+                }
+
+                
+            }
+        }
     }
 
     private IEnumerator SpawnIn()
@@ -79,7 +126,7 @@ public class EnemySpawner : MonoBehaviour
 
             // Set enemy type
             EnemyBrainSelector selector = enemy.GetComponent<EnemyBrainSelector>();
-            selector.SwapBrain(gun, brain, selectedModifiers.ToArray(), agression, true);
+            selector.SwapBrain(gun, brain, selectedModifiers.ToArray(), agression);
 
             // subscribe to death event
             enemy.GetComponent<EnemyHealth>().OnDeath += EnemyDeath;
@@ -89,6 +136,22 @@ public class EnemySpawner : MonoBehaviour
             string modifierName = selector.ModifierName(selectedModifiers.ToArray());
 
             enemy.name = gunTypeName + modifierName + "_EnemyModel";
+
+            switch (brain)
+            {
+                case EBrainType.Stationary :
+                enemy.GetComponent<StationaryBrain>().SpawnerSetup(stationaryPos);
+                break;
+                case EBrainType.Chase :
+                enemy.GetComponent<ChaseBrain>().SpawnerSetup(chasePos);
+                break;
+                case EBrainType.Random :
+                enemy.GetComponent<RandomBrain>().SpawnerSetup(randomPos);
+                break;
+                case EBrainType.Patrol :
+                enemy.GetComponent<PatrolBrain>().SpawnerSetup(patrolPositions);
+                break;
+            }
             
             // Special effects on spawn
             Instantiate(spawnFX, transform.position, Quaternion.identity);
@@ -150,6 +213,58 @@ public class EnemySpawner : MonoBehaviour
     private void PuzzleFinished()
     {
         puzzleNotDone = false;
+    }
+
+    public void UpdateComponents()
+    {
+        bool hasStationary = TryGetComponent(out StationarySpawnerInfo stationarySpawnerInfo);
+        bool hasChase = TryGetComponent(out ChaseSpawnerInfo chaseSpawnerInfo);
+        bool hasRandom = TryGetComponent(out RandomSpawnerInfo randomSpawnerInfo);
+        bool hasPatrol = TryGetComponent(out PatrolSpawnerInfo patrolSpawnerInfo);
+
+        if (enemyTypes.Contains(EBrainType.Stationary))
+        {
+            if (!hasStationary)
+                gameObject.AddComponent<StationarySpawnerInfo>();
+        }
+        else
+        {
+            if (hasStationary)
+                DestroyImmediate(stationarySpawnerInfo);
+        }
+
+        if (enemyTypes.Contains(EBrainType.Chase))
+        {
+            if (!hasChase)
+                gameObject.AddComponent<ChaseSpawnerInfo>();
+        }
+        else
+        {
+            if (hasChase)
+                DestroyImmediate(chaseSpawnerInfo);
+        }
+
+        if (enemyTypes.Contains(EBrainType.Random))
+        {
+            if (!hasRandom)
+                gameObject.AddComponent<RandomSpawnerInfo>();
+        }
+        else
+        {
+            if (hasRandom)
+                DestroyImmediate(randomSpawnerInfo);
+        }
+
+        if (enemyTypes.Contains(EBrainType.Patrol))
+        {
+            if (!hasPatrol)
+                gameObject.AddComponent<PatrolSpawnerInfo>();
+        }
+        else
+        {
+            if (hasPatrol)
+                DestroyImmediate(patrolSpawnerInfo);
+        }
     }
     //[SerializeField]
     //bool elimEnemies;

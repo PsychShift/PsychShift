@@ -34,36 +34,6 @@ public class GuardState : IState
 
     }
 
-    public void SetField(object obj, string fieldName, object value)
-    {
-        var type = obj.GetType();
-        FieldInfo field = null;
-
-        while (field == null && type != null)
-        {
-            field = type.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-            type = type.BaseType;
-        }
-
-        if (field != null)
-        {
-            field.SetValue(obj, value);
-        }
-        else
-        {
-            Debug.LogError($"Object: {obj} does not have a field named {fieldName}");
-        }
-    }
-    public void GetField(object obj, string fieldName, object value)
-    {
-        var type = obj.GetType();
-        var field = type.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-        if (field != null)
-        {
-            field.SetValue(value, obj);
-        }
-    }
-
     public Color GizmoColor()
     {
         return Color.black;

@@ -7,6 +7,7 @@ public class TeslaBeam : MonoBehaviour
 {
     public LaserBeamStats defaultStats;
     public float cooldownTimer = 10f;
+    [SerializeField] Vector2Int maxNumOfTargets = new Vector2Int(3, 6);
     [SerializeField] float laserSpeed = 10f;
 
     [SerializeField] float targetCheckRadius = 1000;
@@ -26,15 +27,24 @@ public class TeslaBeam : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(transform.position, targetCheckRadius);
         if (hits.Length == 0) return null;
         List<Vector3> positions = new ();
+        int max = Random.Range(maxNumOfTargets.x, maxNumOfTargets.y+1);
+        int numOfTargets = hits.Length > max ? max : hits.Length;
+        int targetsAdded =  0; // Keep track of how many targets have been added
 
-        for(int i = 0; i < hits.Length; i++)
+        for(int i =  0; i < hits.Length; i++)
         {
+            if (targetsAdded >= numOfTargets) break; // Stop if max targets reached
+
             if (hits[i].transform.TryGetComponent(out IDamageable damageable))
             {
-                if(damageable is ChildCollider) continue;
+                if(damageable is ChildCollider)
+                {
+                    continue; // Skip ChildCollider
+                }  
                 Vector3 pos = hits[i].transform.position;
-                if(damageable is EnemyHealth) pos.y += 4.5f;
+                if(damageable is EnemyHealth) pos.y +=  4.5f;
                 positions.Add(pos);
+                targetsAdded++; // Increment the count of targets added
             }
         }
         positions.Sort(new RadialSorter(transform.position));

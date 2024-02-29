@@ -363,8 +363,6 @@ namespace Player
                 HealthUI.Instance.SetHealthBarOnSwap(currentCharacter.enemyHealth.CurrentHealth, currentCharacter.enemyHealth.MaxHealth);
                 currentCharacter.enemyHealth.OnTakeDamage += HealthUI.Instance.UpdateHealthBar;
                 currentCharacter.enemyHealth.OnDeath += HealthUI.Instance.HandleDeath;
-                Debug.Log(currentCharacter.gunHandler);
-                Debug.Log(currentCharacter.gunHandler.ActiveGun);
                 // Subscribe the hit effects to the gun
                 //currentCharacter.gunHandler.ActiveGun.OnSomethingHit += HitDamageable;
                 

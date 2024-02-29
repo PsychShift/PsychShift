@@ -15,9 +15,9 @@ public class EnemyBrainSelector : MonoBehaviour
     public GunScriptableObject gunType;
     [Header("Doesn't do anything yet")]
     public EEnemyModifier[] modifiers = new EEnemyModifier[] { EEnemyModifier.None };
-    private EnemyBrain currentBrain;
+    [HideInInspector] public EnemyBrain currentBrain;
 
-    public void SwapBrain(GunScriptableObject gun, EBrainType brainType, EEnemyModifier[] modifiers, AIAgression agression, bool spawnerEnemy = false)
+    public void SwapBrain(GunScriptableObject gun, EBrainType brainType, EEnemyModifier[] modifiers, AIAgression agression)
     {
         gunType = gun;
         enemyType = brainType;
@@ -36,7 +36,6 @@ public class EnemyBrainSelector : MonoBehaviour
         gunSelector.DespawnActiveGun();
         gunSelector.SetupGun(gun);
         SwapModel(gun, modifiers);
-        currentBrain.SpawnerEnemy = spawnerEnemy;
     }
     public void SwapBrain(GunScriptableObject g, EEnemyModifier[] modifiers)
     {

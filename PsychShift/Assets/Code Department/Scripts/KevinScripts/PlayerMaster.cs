@@ -139,7 +139,6 @@ public class PlayerMaster : MonoBehaviour
             PlayerStateMachine.Instance.tempCharacter = Enemy;
         }
         PlayerStateMachine.Instance.Load();
-        Debug.Log(PlayerStateMachine.Instance.tempCharacter.name);
     }
 
     public void StartNew()

@@ -95,23 +95,6 @@ public abstract class EnemyBrain : MonoBehaviour
         } 
         set { _player = value; } 
     }
-    private bool _spawnerEnemy;
-    public bool SpawnerEnemy
-    {
-        get
-        {
-            return _spawnerEnemy;
-        }
-
-        set
-        {
-            if(value)
-            {
-                StateMachineSetup();
-            }
-            _spawnerEnemy = value;
-        }
-    }
 
     public delegate void OnSwappedDelegate(Transform t);
     public OnSwappedDelegate onSwappedIn;

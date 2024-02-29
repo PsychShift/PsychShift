@@ -33,4 +33,15 @@ public class ChaseBrain : EnemyBrain
         if(IsActive && chaseState != null)
             stateMachine.Tick();
     }
+
+    public void SpawnerSetup(Vector3 guardPos)
+    {
+        if(guardPos == Vector3.zero) return;
+        var startHereState = new SetLocationState(this, guardPos);
+
+        AT(startHereState, chaseState, startHereState.IsDone());
+        AT(startHereState, chaseState, WasDamaged());
+
+        stateMachine.SetState(startHereState);
+    }
 }
