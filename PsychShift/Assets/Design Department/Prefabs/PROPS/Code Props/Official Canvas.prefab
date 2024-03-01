@@ -115,7 +115,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5022806022885834836
 Transform:
   m_ObjectHideFlags: 0
@@ -717,8 +717,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8013560390864988056, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8013560390864988056, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
+      propertyPath: m_MaxValue
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8013560390864988056, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
+      propertyPath: m_MinValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8013560390864988056, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 5884603622545007280}
+    - target: {fileID: 8013560390864988056, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AdjustSpeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 8013560390864988056, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SensitivityController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8473180373866709382, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
       propertyPath: m_Color.b
@@ -844,7 +864,10 @@ PrefabInstance:
     - {fileID: 5334696553366810392, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2285534541407767813, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5884603622545007280}
   m_SourcePrefab: {fileID: 100100000, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
 --- !u!1 &140172179937503128 stripped
 GameObject:
@@ -856,6 +879,25 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1508833400368557320, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
   m_PrefabInstance: {fileID: 3567224522158101963}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3330000998397974734 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2285534541407767813, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
+  m_PrefabInstance: {fileID: 3567224522158101963}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5884603622545007280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3330000998397974734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e063be390276094ab3380076517070d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 6824274474241503827}
+  mouseSensitivity: 100
 --- !u!1 &4345864324153020442 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 994960571912996305, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
@@ -866,6 +908,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8757324275450724138, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
   m_PrefabInstance: {fileID: 3567224522158101963}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6824274474241503827 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8013560390864988056, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
+  m_PrefabInstance: {fileID: 3567224522158101963}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4250590518703977852
 PrefabInstance:
   m_ObjectHideFlags: 0

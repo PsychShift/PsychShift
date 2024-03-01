@@ -10,7 +10,7 @@ public class SensitivityController : MonoBehaviour
 {
     public Slider slider;
     public float mouseSensitivity = 100f;
-    public Transform playerBody;
+    //public Transform playerBody;
     float xRotation = 0f;
 
     private static SensitivityController instance;
@@ -29,7 +29,7 @@ public class SensitivityController : MonoBehaviour
     //private Transform currentCharacter;
     //private Transform currentCameraRoot;
     //private CharacterInfo currentCharacterInfo;
-    public new Camera camera;
+    //public new Camera camera;
     public Action<float> UpdatedSpeed;
 
     void Start()
