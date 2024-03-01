@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,17 +13,29 @@ public class SensitivityController : MonoBehaviour
     public Transform playerBody;
     float xRotation = 0f;
 
-    public static SensitivityController Instance;
+    private static SensitivityController instance;
+    public static SensitivityController Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                instance = FindFirstObjectByType<SensitivityController>();
+            }
+            return instance;
+        }
+    }
 
     //private Transform currentCharacter;
     //private Transform currentCameraRoot;
     //private CharacterInfo currentCharacterInfo;
     public new Camera camera;
+    public Action<float> UpdatedSpeed;
 
     void Start()
     {
-        Instance = this;
         mouseSensitivity = PlayerPrefs.GetFloat("currentSensitivity", 100);
+        UpdatedSpeed.Invoke(mouseSensitivity);
         slider.value = mouseSensitivity/10;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -42,9 +55,10 @@ public class SensitivityController : MonoBehaviour
 
     public void AdjustSpeed(float newSpeed)
     {
-        mouseSensitivity = newSpeed;
+        mouseSensitivity = newSpeed * 10;
         Debug.Log(mouseSensitivity);
         PlayerPrefs.SetFloat("currentSensitivity", mouseSensitivity);
+        UpdatedSpeed.Invoke(mouseSensitivity);
     }
 }
 //}
