@@ -32,6 +32,7 @@ public class RagdollState : IState
         brain.Agent.isStopped = true;
         brain.Agent.enabled = false;
         tempGravity.enabled = true;
+        rigColliderManager._elapsedResetBonesTime = 0;
         rigColliderManager.EnableRagdoll();
     }
 
@@ -40,6 +41,10 @@ public class RagdollState : IState
         //Debug.Log("Ragdoll exit");
         brain.Model.transform.parent = null;
         brain.CharacterInfo.controller.enabled = false;
+        
+        
+        /* AlignRotationToHips();
+        AlignPositionToHips(); */
         brain.transform.position = brain.Model.transform.GetChild(1).position;
         brain.CharacterInfo.controller.enabled = true;
         brain.Model.transform.parent = brain.transform;
@@ -52,6 +57,7 @@ public class RagdollState : IState
         {
             hitGround = true;
             endTime = Time.time + onGroundForSeconds;
+            rigColliderManager.PopulateBoneTransforms(rigColliderManager._ragdollBoneTransforms);
         }
         if(hitGround)
         {
@@ -65,11 +71,41 @@ public class RagdollState : IState
                 else
                 {
                     brain.CharacterInfo.controller.enabled = false;
+                    //isDone = rigColliderManager.ResettingBonesBehavior();
                     isDone = true;
                 }
             }
         }
     }
+    private void AlignRotationToHips()
+    {
+        Vector3 originalHipsPosition = rigColliderManager._hipBones.position;
+        Quaternion originalHipsRotation = rigColliderManager._hipBones.rotation;
+
+        Vector3 desiredDirection = rigColliderManager._hipBones.up *-1;
+        desiredDirection.y = 0;
+        desiredDirection.Normalize();
+
+        Quaternion fromToRotation = Quaternion.FromToRotation(brain.transform.forward, desiredDirection);
+        brain.transform.rotation *= fromToRotation;
+
+        rigColliderManager._hipBones.position = originalHipsPosition;
+        rigColliderManager._hipBones.rotation = originalHipsRotation;
+    }
+    private void AlignPositionToHips()
+    {
+        Vector3 originalHipsPosition = rigColliderManager._hipBones.position;
+        brain.transform.position = rigColliderManager._hipBones.position;
+        Vector3 positionOffset = rigColliderManager._standUpBoneTransforms[0].Position;
+        positionOffset.y =0;
+        positionOffset = brain.transform.rotation * positionOffset;
+        brain.transform.position -= positionOffset;
+
+        Debug.Log("Aligning");
+        rigColliderManager._hipBones.position = originalHipsPosition;
+
+    }
+    
 
     public Color GizmoColor()
     {
