@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class RigColliderManager : MonoBehaviour
 {
+    //class added by Kevin for anim transition
+    public class BoneTransform
+    {
+        public Vector3 Position {get; set;} 
+        public Quaternion Rotation {get; set;}
+    }
     public List<ChildCollider> childColliders;
-
-    private Animator Animator;
+    [SerializeField]
+    public Animator Animator;//changed to public to access in standup state
+    public Transform _hipBones;
     private Transform RagdollRoot;
     private Rigidbody[] Rigidbodies;
     private CharacterJoint[] Joints;
@@ -15,6 +22,15 @@ public class RigColliderManager : MonoBehaviour
    // private float animationTimeBack;
     private float animationTime;
     public bool isDoneStanding;
+    //all dis for anim transition
+    public BoneTransform[] _standUpBoneTransforms;
+    public BoneTransform[] _ragdollBoneTransforms;
+    public Transform[] _bones;
+    [SerializeField]
+    private string _standUpClipName = "Stand Up";
+    [SerializeField]
+    private float _timeToResetBones= .5f;
+    public float _elapsedResetBonesTime;
     public void SetUp(IDamageable parentDamageable)
     {
         RagdollRoot = transform.GetChild(0);
@@ -23,6 +39,17 @@ public class RigColliderManager : MonoBehaviour
         Colliders = RagdollRoot.GetComponentsInChildren<Collider>();
         Rigidbodies = RagdollRoot.GetComponentsInChildren<Rigidbody>();
         Joints = RagdollRoot.GetComponentsInChildren<CharacterJoint>();
+        //everything for ragdoll stuff below
+        /* _hipBones = Animator.GetBoneTransform(HumanBodyBones.Hips);
+        _bones = _hipBones.GetComponentsInChildren<Transform>();
+        _standUpBoneTransforms = new BoneTransform[_bones.Length];
+        _ragdollBoneTransforms = new BoneTransform[_bones.Length];
+        for(int boneIndex = 0; boneIndex < _bones.Length; boneIndex++)
+        {
+            _standUpBoneTransforms[boneIndex] = new BoneTransform();
+            _ragdollBoneTransforms[boneIndex] = new BoneTransform();
+        }
+        PopulateAnimationStartBoneTransfroms(_standUpClipName, _standUpBoneTransforms); */
 
         foreach (Collider collider in Colliders)
         {
@@ -101,6 +128,59 @@ public class RigColliderManager : MonoBehaviour
             rigidbody.useGravity = false;
         }
         //StartCoroutine(WaitForStandUpAnim());
+    }
+
+    public void PopulateBoneTransforms(BoneTransform[] boneTransforms)//snap shot of current postion of bones
+    {
+        for(int boneIndex = 0; boneIndex <_bones.Length; boneIndex++)
+        {
+            boneTransforms[boneIndex].Position = _bones[boneIndex].localPosition;
+            boneTransforms[boneIndex].Rotation = _bones[boneIndex].localRotation;
+        }
+    }
+    public void PopulateAnimationStartBoneTransfroms(string clipName, BoneTransform[] boneTransforms)
+    {
+        Vector3 positionBeforeSampling = transform.position;
+        Quaternion rotationBeforeSampling = transform.rotation;
+       foreach(AnimationClip clip in Animator.runtimeAnimatorController.animationClips)
+       {
+        if(clip.name == clipName)
+        {
+            clip.SampleAnimation(gameObject, 0);
+            PopulateBoneTransforms(_standUpBoneTransforms);
+            break;
+        }
+        
+       }
+       transform.position = positionBeforeSampling;
+       transform.rotation = rotationBeforeSampling;
+    }
+
+    public bool ResettingBonesBehavior()
+    {
+        _elapsedResetBonesTime += Time.deltaTime;
+        float elapsedPercantage = _elapsedResetBonesTime / _timeToResetBones;
+
+        for(int boneIndex = 0; boneIndex < _bones.Length; boneIndex ++)
+        {
+            //Another LOOP???????????????
+            _bones[boneIndex].localPosition = Vector3.Lerp(
+                _ragdollBoneTransforms[boneIndex].Position,
+                _standUpBoneTransforms[boneIndex].Position,
+                elapsedPercantage
+            );
+            _bones[boneIndex].localRotation = Quaternion.Lerp(
+                _ragdollBoneTransforms[boneIndex].Rotation,
+                _standUpBoneTransforms[boneIndex].Rotation,
+                elapsedPercantage
+            );
+
+            if(elapsedPercantage >=1)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     //Coroutine 
     //
