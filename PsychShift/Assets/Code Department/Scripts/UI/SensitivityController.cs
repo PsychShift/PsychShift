@@ -12,6 +12,8 @@ public class SensitivityController : MonoBehaviour
     public Transform playerBody;
     float xRotation = 0f;
 
+    public static SensitivityController Instance;
+
     //private Transform currentCharacter;
     //private Transform currentCameraRoot;
     //private CharacterInfo currentCharacterInfo;
@@ -19,12 +21,13 @@ public class SensitivityController : MonoBehaviour
 
     void Start()
     {
+        Instance = this;
         mouseSensitivity = PlayerPrefs.GetFloat("currentSensitivity", 100);
         slider.value = mouseSensitivity/10;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Update()
+    /* void Update()
     {
         PlayerPrefs.SetFloat("currentSensitivity", mouseSensitivity);
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
@@ -35,11 +38,13 @@ public class SensitivityController : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);
-    }
+    } */
 
     public void AdjustSpeed(float newSpeed)
     {
-        mouseSensitivity = newSpeed * 10;
+        mouseSensitivity = newSpeed;
+        Debug.Log(mouseSensitivity);
+        PlayerPrefs.SetFloat("currentSensitivity", mouseSensitivity);
     }
 }
 //}
