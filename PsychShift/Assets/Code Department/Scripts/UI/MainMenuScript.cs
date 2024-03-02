@@ -20,6 +20,7 @@ public class MainMenuScript : MonoBehaviour
     public GameObject CreditsMenuFirst;
     public GameObject MovementVideo;
     public GameObject NeuroNetworkVideo;
+    public GameObject RemappingMenu;
     private WaitForSeconds MenuTick = new WaitForSeconds(0.1f);
     private Coroutine WaitforFade;
     [SerializeField] private bool fadeInCredits = false;
@@ -36,6 +37,7 @@ public class MainMenuScript : MonoBehaviour
         CreditsMenu.SetActive(false);
         MovementVideo.SetActive(false);
         NeuroNetworkVideo.SetActive(false);
+        RemappingMenu.SetActive(false);
 
         // Jonathan plased this in the update state, dont know why. Undo it if I broke something.
         Cursor.lockState = CursorLockMode.Locked;
@@ -254,6 +256,15 @@ public class MainMenuScript : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+    public void OpenRemap()
+    {
+        RemappingMenu.SetActive(true);
+    }
+
+    public void CloseRemap()
+    {
+        RemappingMenu.SetActive(false);
     }
     
 }
