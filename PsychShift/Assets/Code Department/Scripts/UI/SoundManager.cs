@@ -17,9 +17,9 @@ public class SoundManager : MonoBehaviour
     //save volume data
     void Update()
     {
-        if(!PlayerPrefs.HasKey("musicVolume"))
+        if(!PlayerPrefs.HasKey("masterVolume"))
         {
-            PlayerPrefs.SetFloat("musicVolume",1);
+            PlayerPrefs.SetFloat("masterVolume",1);
             Load();
         }
         else
@@ -34,10 +34,10 @@ public class SoundManager : MonoBehaviour
     }
     private void Save()
     {
-        PlayerPrefs.SetFloat("musicVolume", volumeSlider.value);
+        PlayerPrefs.SetFloat("masterVolume", volumeSlider.value);
     }
     private void Load()
     {
-        volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
+        volumeSlider.value = PlayerPrefs.GetFloat("masterVolume");
     }
 }
