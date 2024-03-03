@@ -112,6 +112,7 @@ public class RigColliderManager : MonoBehaviour
 
     public void EnableAnimator()
     {
+        transform.tag = "Swapable";
         isDoneStanding = false;
         Animator.enabled = true;
         foreach (CharacterJoint joint in Joints)
@@ -130,15 +131,15 @@ public class RigColliderManager : MonoBehaviour
         //StartCoroutine(WaitForStandUpAnim());
     }
 
-    public void PopulateBoneTransforms(BoneTransform[] boneTransforms)//snap shot of current postion of bones
+    /* public void PopulateBoneTransforms(BoneTransform[] boneTransforms)//snap shot of current postion of bones
     {
         for(int boneIndex = 0; boneIndex <_bones.Length; boneIndex++)
         {
             boneTransforms[boneIndex].Position = _bones[boneIndex].localPosition;
             boneTransforms[boneIndex].Rotation = _bones[boneIndex].localRotation;
         }
-    }
-    public void PopulateAnimationStartBoneTransfroms(string clipName, BoneTransform[] boneTransforms)
+    } */
+    /* public void PopulateAnimationStartBoneTransfroms(string clipName, BoneTransform[] boneTransforms)
     {
         Vector3 positionBeforeSampling = transform.position;
         Quaternion rotationBeforeSampling = transform.rotation;
@@ -155,7 +156,7 @@ public class RigColliderManager : MonoBehaviour
        transform.position = positionBeforeSampling;
        transform.rotation = rotationBeforeSampling;
     }
-
+ */
     public bool ResettingBonesBehavior()
     {
         _elapsedResetBonesTime += Time.deltaTime;

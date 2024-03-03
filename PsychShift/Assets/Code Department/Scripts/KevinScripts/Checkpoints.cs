@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Checkpoints : MonoBehaviour
 {
+    public string currentObjective;
+    public TextMeshProUGUI objectiveUI;
     [SerializeField]
     private Transform respawnPoint;
     private bool hitCheck;
@@ -30,6 +33,8 @@ public class Checkpoints : MonoBehaviour
             hitCheck = true;
             PlayerMaster.Instance.SetCheckPoint(transform);
             StartCoroutine(checkPointReach());
+            if(objectiveUI!= null)
+                objectiveUI.text = currentObjective ;
         }
     }
 

@@ -57,7 +57,7 @@ public class RagdollState : IState
         {
             hitGround = true;
             endTime = Time.time + onGroundForSeconds;
-            rigColliderManager.PopulateBoneTransforms(rigColliderManager._ragdollBoneTransforms);
+            //rigColliderManager.PopulateBoneTransforms(rigColliderManager._ragdollBoneTransforms);
         }
         if(hitGround)
         {
