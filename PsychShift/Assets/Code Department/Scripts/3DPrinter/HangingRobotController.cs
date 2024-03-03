@@ -5,10 +5,6 @@ using UnityEngine.AI;
 
 public class HangingRobotController : MonoBehaviour
 {
-    [Header("Debug State")]
-    public Transform chest;
-    private Renderer ren;
-    private Material mat;
     [Header("Everything Else")]
 
     // Lets start with movement, we need to keep track of the player's
@@ -28,9 +24,6 @@ public class HangingRobotController : MonoBehaviour
 
     void Awake()
     {
-        ren = chest.GetComponent<Renderer>();
-        mat = new Material(ren.sharedMaterial);
-        ren.sharedMaterial = mat;
         agent = GetComponent<NavMeshAgent>();
         filter.areaMask = NavMesh.GetAreaFromName("Hanging"); // this is the area mask for the Hanging NavMesh Surface
 
@@ -66,7 +59,6 @@ public class HangingRobotController : MonoBehaviour
     {
         stateMachine.Tick();
         //animController.RotateTowardsTarget(target.position);
-        mat.color = stateMachine.GetGizmoColor();
     }
 
     

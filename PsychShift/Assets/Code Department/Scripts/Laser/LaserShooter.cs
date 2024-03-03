@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(LineRenderer))]
 public class LaserShooter : MonoBehaviour
 {
     [SerializeField] private bool isOnTimer = false;
@@ -10,37 +9,20 @@ public class LaserShooter : MonoBehaviour
 
     private bool isActivelyShooting = false;
 
-    private GameObject cylinder;
 
-    [SerializeField] LineRenderer laserLine;
+    LineRenderer laserLine;
 
     void Awake()
     {
         laserLine = GetComponent<LineRenderer>();
-        laserLine.positionCount = 2;
         laserLine.enabled = false;
-        cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        cylinder.SetActive(false);
-        Destroy(cylinder.GetComponent<CapsuleCollider>());
+        laserLine.positionCount = 2;
         Vector3 pos = transform.position + transform.forward * defaultStats.MaxLength/2f;
-        SetCylinderValues(pos, defaultStats);
         
         if(isOnTimer)
         {
             Fire();
         }
-    }
-
-    private void SetCylinderValues(Vector3 endPoint, LaserBeamStats currentStats)
-    {
-        float length = Vector3.Distance(endPoint, transform.position);
-
-        cylinder.transform.localScale = new Vector3(currentStats.Width, length/2, currentStats.Width);
-        cylinder.transform.parent = transform;
-        cylinder.transform.up = transform.forward;
-
-        Vector3 desiredPosition = new Vector3(0, 0, length/2);
-        cylinder.transform.localPosition = desiredPosition;
     }
 
     /// <summary>
@@ -62,7 +44,6 @@ public class LaserShooter : MonoBehaviour
     public void CeaseFire()
     {
         StopAllCoroutines();
-        cylinder.SetActive(false);
         laserLine.enabled = false;
         isActivelyShooting = false;
     }
@@ -92,7 +73,6 @@ public class LaserShooter : MonoBehaviour
             laserLine.SetPosition(0, transform.position);
             laserLine.SetPosition(1, endPoint);
 
-            SetCylinderValues(endPoint, currentStats);
 
             foreach(var hit in hits)
             {
@@ -140,7 +120,6 @@ public class LaserShooter : MonoBehaviour
             laserLine.SetPosition(0, transform.position);
             laserLine.SetPosition(1, endPoint);
 
-            SetCylinderValues(endPoint, currentStats);
 
             foreach(var hit in hits)
             {
