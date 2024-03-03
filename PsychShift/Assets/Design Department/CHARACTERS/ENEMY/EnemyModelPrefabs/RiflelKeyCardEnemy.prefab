@@ -1642,6 +1642,7 @@ MonoBehaviour:
   enemyType: 0
   gunType: {fileID: 11400000, guid: 29cb4dc3750135b42813e37fb213d896, type: 2}
   modifiers: 02000000
+  currentBrain: {fileID: 0}
 --- !u!114 &3034052666354345378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1815,7 +1816,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childColliders: []
+  Animator: {fileID: 0}
+  _hipBones: {fileID: 0}
   isDoneStanding: 0
+  _bones: []
+  _standUpClipName: Stand Up
+  _timeToResetBones: 0.5
+  _elapsedResetBonesTime: 0
 --- !u!114 &499394063491182339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1832,6 +1839,7 @@ MonoBehaviour:
   _isActive: 1
   _agression: {fileID: 11400000, guid: 6e100eed3b47a3b41ae170096b62e4f1, type: 2}
   currentCover: {fileID: 0}
+  guardPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &3246458165115311550
 GameObject:
   m_ObjectHideFlags: 0
@@ -4177,6 +4185,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8706040795237242598}
     m_Modifications:
+    - target: {fileID: 209105517063130429, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054455589164353360, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 7004836451748900539, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
       propertyPath: m_RootOrder
       value: -1
