@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "ProceduralAnimationPractice/LaserBeamStats")]
+[CreateAssetMenu(menuName = "LaserBeamStats")]
 public class LaserBeamStats : ScriptableObject
 {
     [Header("General Stats")]

@@ -9,7 +9,7 @@ public class KeyCardModifier : AbstractEnemyModifier
     BoxCollider collider;
 
     KeyCardScript keyCardScript;
-    public EnemyBrain brain;
+    [HideInInspector]public EnemyBrain brain;
     public override void ApplyModifier(EnemyBrain brain)
     {
         this.brain = brain;

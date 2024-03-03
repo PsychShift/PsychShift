@@ -123,6 +123,7 @@ public class LaserShooter : MonoBehaviour
 
             foreach(var hit in hits)
             {
+                if((currentStats.DontHitTheseLayers.value & (1 << hit.transform.gameObject.layer)) != 0) continue;
                 if(hit.transform.TryGetComponent(out IDamageable hitObject))
                 {
                     // So the player doesn't get hit every frame
