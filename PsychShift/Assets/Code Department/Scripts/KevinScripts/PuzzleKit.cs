@@ -16,6 +16,7 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     [SerializeField]
     PuzzleKit godBoxRef;
     public ParticleSystem effectForAct;
+    public int index;
 
     
     //Actions
@@ -89,7 +90,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
 
     //these are in script only
     private bool godBox;
-    private bool activated;
+    [HideInInspector]
+    public bool activated;
     public bool puzzleComplete;
 
     public event IDamageable.TakeDamageEvent OnTakeDamage;
@@ -112,7 +114,7 @@ public class PuzzleKit : MonoBehaviour, IDamageable
 
     //Saving variables
     public delegate void PuzzleCompleted(int num);
-    public event PuzzleCompleted OnPuzzleFinish;
+    public event PuzzleCompleted OnActivated;
     [HideInInspector]
     public bool puzzleDone;
     [HideInInspector]
@@ -332,6 +334,7 @@ public class PuzzleKit : MonoBehaviour, IDamageable
             if(activated == false)//activates this object and sends number to godBox.
             {
                 activated = true;
+                OnActivated?.Invoke(index);
                 if(soundClip!=null)
                     Beep.PlayOneShot(soundClip);
                 if(effectForAct!=null)  
@@ -344,11 +347,17 @@ public class PuzzleKit : MonoBehaviour, IDamageable
                 //Destroy(this.gameObject);
                 if(changeObject)
                 {
+                    GetComponent<Collider>().enabled= false;
+                    GetComponent<MeshRenderer>().enabled = false;
                     activatedObject.SetActive(true);
-                    this.gameObject.SetActive(false);  
+                    //this.gameObject.SetActive(false);  
                 }
                 else if(destructObject)
-                    Destroy(this.gameObject);
+                {
+                    GetComponent<Collider>().enabled= false;
+                    GetComponent<MeshRenderer>().enabled = false;
+                }
+                    //Destroy(gameObject);
                 else if(dissolveOBJ)
                     StartDissolver();
                 //Change color or object
@@ -469,4 +478,7 @@ public class PuzzleKit : MonoBehaviour, IDamageable
             spawnPoints[i].SetActive(false);
         }
     } */
+    //Get a ref to the checkpoint related to the encounter
+    //Call this function to write the current objective
+    //New function that keeps track of what has been activated. Possibly ask for new ref in activate function that needs action ref. 
 }

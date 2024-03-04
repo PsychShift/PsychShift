@@ -4,32 +4,51 @@ using UnityEngine;
 
 public class PuzzleComplete : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public PuzzleKit[] puzzlesInLvl;
-    private bool[] puzzlesComplt;
-    private void Awake() {
+    [Tooltip("PUZZLE ACT INDEX NEEDS TO MATCH THE ORDER THEY ARE PLACED INTO HERE")]
+    public PuzzleKit[] actionsInLvl;
+    private int[] puzzlesComplt;
+    public int[] test= {1};
+    private void Start() 
+    {
+
+        puzzlesComplt= new int[actionsInLvl.Length];
         //subscribe
         //PuzzleComplete
-        for(int i = 0; i<puzzlesInLvl.Length; i++)
+        for(int i = 0; i<actionsInLvl.Length; i++)
         {
-            puzzlesInLvl[i].puzzleIndex = i;
-            puzzlesInLvl[i].OnPuzzleFinish += PuzzleFinish;
+            Debug.Log("Adding");
+            actionsInLvl[i].puzzleIndex = i;
+            actionsInLvl[i].OnActivated += ActivatedBox;//invoked event
         }
-    }
-    public void PuzzleFinish(int num)
-    {
-        puzzlesComplt[num] = true;
+        PuzzleActivation(test);//testing
 
     }
-    public void PuzzleActivation(int num)
+    public void ActivatedBox(int num)
     {
+        Debug.Log("SAVEDDDDDDD YESSSS");
+        puzzlesComplt[num] = 1;
+        Debug.Log("I think");
 
+    }
+    public void PuzzleActivation(int[] num)
+    {
+        for(int i = 0; i<actionsInLvl.Length; i++)
+        {
+
+            if(num[i]== 1)
+            {
+                //Debug.Log("ofduhofjhias");
+                actionsInLvl[i].ThisActivate();
+            }
+        }
+        
     }
     private void OnDisable() {
-        for(int i = 0; i<puzzlesInLvl.Length; i++)
+        for(int i = 0; i<actionsInLvl.Length; i++)
         {
-            puzzlesInLvl[i].puzzleIndex = i;
-            puzzlesInLvl[i].OnPuzzleFinish -= PuzzleFinish;
+            actionsInLvl[i].puzzleIndex = i;
+            actionsInLvl[i].OnActivated -= ActivatedBox;
         }
     }
+    //public funct that returns string 
 }
