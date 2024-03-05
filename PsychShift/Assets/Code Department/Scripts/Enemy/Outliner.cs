@@ -16,7 +16,7 @@ public class Outliner : MonoBehaviour
         if(UsesSkinnedMeshRenderer)
         {
             materials = GetComponentInChildren<SkinnedMeshRenderer>().materials;
-            outlineMaterial = materials[1];
+            outlineMaterial = materials[5];
         }
         else
         {
