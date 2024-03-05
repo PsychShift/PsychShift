@@ -7,7 +7,7 @@ public class PuzzleComplete : MonoBehaviour
     [Tooltip("PUZZLE ACT INDEX NEEDS TO MATCH THE ORDER THEY ARE PLACED INTO HERE")]
     public PuzzleKit[] actionsInLvl;
     private int[] puzzlesComplt;
-    public int[] test= {1};
+    //public int[] test= {1};
     private void Start() 
     {
 
@@ -20,7 +20,7 @@ public class PuzzleComplete : MonoBehaviour
             actionsInLvl[i].puzzleIndex = i;
             actionsInLvl[i].OnActivated += ActivatedBox;//invoked event
         }
-        PuzzleActivation(test);//testing
+        //PuzzleActivation(test);//testing
 
     }
     public void ActivatedBox(int num)

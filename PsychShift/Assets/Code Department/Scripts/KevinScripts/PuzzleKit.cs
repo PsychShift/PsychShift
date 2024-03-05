@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Guns.Health;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -27,6 +28,11 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     private bool pressurePlate;
     [SerializeField]
     private bool shootObj;
+    [SerializeField]
+    private bool killEnemy;
+    [Header("Add this if killing an enemy to activate")]
+    [SerializeField]
+    public EnemyHealth enemyTarget;
 
     [Header("Add and select these for GOD obj")]
     public ParticleSystem effectForGod;
@@ -77,6 +83,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     
     public float dissolveDuration = 2;
     public float dissolveStrength;
+    [Header("USE THIS IF ACT IS SEPERATE FROM OBJ YOU INTERACT WITH")]
+    public bool doNotReact;
     
 
     [Header("THIS IS FOR CHANGING BUTTON COLOR AND STUFF WHEN ACTIVATED")]
@@ -129,7 +137,7 @@ public class PuzzleKit : MonoBehaviour, IDamageable
             godBox = false;
             if(effectForAct== null)
             {
-                Debug.LogError("UH OH NO EFFECTS FOR THIS ACTION OBJ DETECTED LUL(HINT IM ONE OF THE PUZZLE KIT OBJ, I'M NOT THE GOD ONE THO) "+ gameObject.name);
+                //Debug.LogError("UH OH NO EFFECTS FOR THIS ACTION OBJ DETECTED LUL(HINT IM ONE OF THE PUZZLE KIT OBJ, I'M NOT THE GOD ONE THO) "+ gameObject.name);
             }
         }
         else
@@ -142,12 +150,16 @@ public class PuzzleKit : MonoBehaviour, IDamageable
             journeyLength = Vector3.Distance(transform.position, endPosition);
             if(effectForGod==null)
             {
-                Debug.LogError("UH OH YOU FORGOT GOD BOX EFFECT LUL: "+ gameObject.name);
+                //Debug.LogError("UH OH YOU FORGOT GOD BOX EFFECT LUL: "+ gameObject.name);
             } 
         }
         CurrentHealth = MaxHealth;
-        if(changeObject == false)
+        if(changeObject == false && doNotReact == false )
             destructObject = true;
+        if(killEnemy == true)
+        {
+            enemyTarget.OnDeath += ThisActivate;
+        }
         
 
     }
@@ -340,8 +352,10 @@ public class PuzzleKit : MonoBehaviour, IDamageable
                 if(effectForAct!=null)  
                     Instantiate(effectForAct,transform.position, Quaternion.identity); 
                 Collider turnOff=gameObject.GetComponent<Collider>();
+                if(turnOff!=null)
+                    turnOff.enabled = false;//moved this from below gBoxRef
                 godBoxRef.activateCount++;
-                turnOff.enabled = false;
+                
                 Debug.Log("Activated: " + godBoxRef.activateCount);
                 godBoxRef.ThisActivate();
                 //Destroy(this.gameObject);
@@ -357,9 +371,18 @@ public class PuzzleKit : MonoBehaviour, IDamageable
                     GetComponent<Collider>().enabled= false;
                     GetComponent<MeshRenderer>().enabled = false;
                 }
+                else if(doNotReact)
+                {
+                    //Does nothing to action object since the object is an empty game object//Usually used for killing enemies
+                }
+                
                     //Destroy(gameObject);
-                else if(dissolveOBJ)
-                    StartDissolver();
+                /* else if(dissolveOBJ)
+                    StartDissolver(); */
+                
+
+                    
+
                 //Change color or object
             }
         }
@@ -467,6 +490,15 @@ public class PuzzleKit : MonoBehaviour, IDamageable
             yield return null;
         }
         //potentially add disable collider functionality. 
+    }
+    public void ThisActivate(Transform transform)
+    {
+        enemyTarget.OnDeath-=ThisActivate;
+        ThisActivate();
+    }
+    private void OnDisable() 
+    {
+        enemyTarget.OnDeath -= ThisActivate;    
     }
 
 
