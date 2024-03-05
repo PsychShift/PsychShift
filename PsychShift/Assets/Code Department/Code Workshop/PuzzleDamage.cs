@@ -16,8 +16,10 @@ public class PuzzleDamage : MonoBehaviour, IDamageable
 
     public float rotationSpeed = 1f;
 
+    #pragma warning disable 67
     public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;
+    #pragma warning restore 67
 
     InteractWithMeImLonely please;
     float direction = 1f;

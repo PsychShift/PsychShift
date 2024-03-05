@@ -22,7 +22,7 @@ public class MovingPlatform : MonoBehaviour
 
         BoxCollider triggerCollider = gameObject.AddComponent<BoxCollider>();
         triggerCollider.isTrigger = true;
-        triggerCollider.size = colliders[0].size * 1.2f;
+        triggerCollider.size = colliders[0].size * 1.2f; 
     }
     void OnTriggerEnter(Collider other)
     {

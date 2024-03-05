@@ -14,8 +14,10 @@ public class GREG : MonoBehaviour, IDamageable
 
     public bool IsWeakPoint {get;set;}
 
+    #pragma warning disable 67
     public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;
+    #pragma warning restore 67
     public GameObject[] rooms; 
     private int currentRoomIndex;
 

@@ -55,6 +55,11 @@ namespace Guns.Health
                 } */
             }
         }
+
+        public void ResetHealth()
+        {
+            _Health = _MaxHealth;
+        }
     }
 
 }

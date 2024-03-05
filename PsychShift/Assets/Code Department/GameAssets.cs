@@ -50,4 +50,6 @@ public class GameAssets : MonoBehaviour
             return guns.FirstOrDefault(gun => gun.Type == gunType);
         }
 
+        [Header("AIAgression")]
+        public AIAgression[] Agressions;
 }

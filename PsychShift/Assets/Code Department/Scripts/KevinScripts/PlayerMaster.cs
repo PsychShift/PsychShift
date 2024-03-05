@@ -93,7 +93,7 @@ public class PlayerMaster : MonoBehaviour
         EnemyBrainSelector brainSelector = charInfo.characterContainer.GetComponent<EnemyBrainSelector>();
         EBrainType enemyType = brainSelector.enemyType;
         GunType gunType = brainSelector.gunType.Type;
-        EEnemyModifier[] modifiers = brainSelector.modifiers;
+        EEnemyModifier[] modifiers = new EEnemyModifier[] { brainSelector.modifier };
         int scene = 0;
  
         scene = SceneManager.GetActiveScene().buildIndex;
@@ -134,7 +134,7 @@ public class PlayerMaster : MonoBehaviour
             Enemy.name = "RespawnEnemy";
             EnemyBrainSelector brainSelector = Enemy.GetComponent<EnemyBrainSelector>();
             GunScriptableObject gun = GameAssets.Instance.GetGun(loadedInfo.GunType);
-            brainSelector.SwapBrain(gun, loadedInfo.EnemyType, loadedInfo.Modifiers, loadedInfo.AIAgression);
+            brainSelector.SwapBrain(gun, loadedInfo.EnemyType, loadedInfo.Modifiers[0], loadedInfo.AIAgression);
             Destroy(PlayerStateMachine.Instance.tempCharacter);
             PlayerStateMachine.Instance.tempCharacter = Enemy;
         }

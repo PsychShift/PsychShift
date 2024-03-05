@@ -6,6 +6,7 @@ using Guns.Demo;
 using Guns.Modifiers;
 using UnityEngine;
 
+
 public class EnemyBrainSelector : MonoBehaviour
 {
     // Buttons to choose what enemy brain this character will use
@@ -14,20 +15,20 @@ public class EnemyBrainSelector : MonoBehaviour
     public EBrainType enemyType;
     public GunScriptableObject gunType;
     [Header("Doesn't do anything yet")]
-    public EEnemyModifier[] modifiers = new EEnemyModifier[] { EEnemyModifier.None };
+    public EEnemyModifier modifier = EEnemyModifier.None;
     [HideInInspector] public EnemyBrain currentBrain;
 
-    public void SwapBrain(GunScriptableObject gun, EBrainType brainType, EEnemyModifier[] modifiers, AIAgression agression)
+    public void SwapBrain(GunScriptableObject gun, EBrainType brainType, EEnemyModifier modifier, AIAgression agression)
     {
         gunType = gun;
         enemyType = brainType;
-        this.modifiers = modifiers;
+        this.modifier = modifier;
         currentBrain = GetComponent<EnemyBrain>();
         CharacterBrainSwappingInfo oldInfo = new CharacterBrainSwappingInfo(agression);
         EnemyBrain newBrain = ChooseNewBrain(brainType);
         if (newBrain == null) return;
         currentBrain = newBrain;
-        TransferBrainData(oldInfo, modifiers);
+        TransferBrainData(oldInfo, modifier);
 
         // Now do gun swap and model changes
         EnemyGunSelector gunSelector = GetComponent<EnemyGunSelector>();
@@ -35,29 +36,29 @@ public class EnemyBrainSelector : MonoBehaviour
         gunSelector.StartGun = gun;
         gunSelector.DespawnActiveGun();
         gunSelector.SetupGun(gun);
-        SwapModel(gun, modifiers);
+        SwapModel(gun, modifier);
     }
-    public void SwapBrain(GunScriptableObject g, EEnemyModifier[] modifiers)
+    public void SwapBrain(GunScriptableObject g, EEnemyModifier modifier)
     {
         currentBrain = GetComponent<EnemyBrain>();
         CharacterBrainSwappingInfo oldInfo = new CharacterBrainSwappingInfo(currentBrain.agression);
         EnemyBrain newBrain = ChooseNewBrain(enemyType);
         if (newBrain == null) return;
         currentBrain = newBrain;
-        TransferBrainData(oldInfo, modifiers);
+        TransferBrainData(oldInfo, modifier);
 
         // Now do gun swap and model changes
         EnemyGunSelector gunSelector = GetComponent<EnemyGunSelector>();
 
         gunSelector.StartGun = g;
-        SwapModel(g, modifiers);
+        SwapModel(g, modifier);
     }
-    private void SwapModel(GunScriptableObject g, EEnemyModifier[] modifiers)
+    private void SwapModel(GunScriptableObject g, EEnemyModifier modifier)
     {
         // Given gun type and enemy modifier, select a file name to load a model
 
         string gunTypeName = GunName(g);
-        string modifierName = ModifierName(modifiers);
+        string modifierName = ModifierName(modifier);
 
         string fileName = gunTypeName + modifierName + "_EnemyModel";
         //Debug.Log(fileName);
@@ -79,7 +80,7 @@ public class EnemyBrainSelector : MonoBehaviour
         EnemyBrain newBrain = ChooseNewBrain(enemyType);
         if (newBrain == null) return;
         currentBrain = newBrain;
-        TransferBrainData(oldInfo, modifiers);
+        TransferBrainData(oldInfo, modifier);
 
         // Now do gun swap and model changes
         EnemyGunSelector gunSelector = GetComponent<EnemyGunSelector>();
@@ -94,7 +95,7 @@ public class EnemyBrainSelector : MonoBehaviour
         // Given gun type and enemy modifier, select a file name to load a model
 
         string gunTypeName = GunName(gunType);
-        string modifierName = ModifierName(modifiers);
+        string modifierName = ModifierName(modifier);
 
         string fileName = gunTypeName + modifierName + "_EnemyModel";
         //Debug.Log(fileName);
@@ -140,40 +141,27 @@ public class EnemyBrainSelector : MonoBehaviour
     }
 
 
-    public string ModifierName(EEnemyModifier[] modifiers)
+    public string ModifierName(EEnemyModifier modifier)
     {
-        // Sort the list by the integer value of the enum
-        var sortedModifiers = modifiers.OrderBy(x => (int)x);
-
-        string names = "";
-        foreach (var modifier in sortedModifiers)
+        switch (modifier)
         {
-            switch (modifier)
-            {
-                case EEnemyModifier.NonSwap:
-                    names += "NonSwap";
-                    break;
-                case EEnemyModifier.Keycard:
-                    names += "Keycard";
-                    break;
-                case EEnemyModifier.Explosive:
-                    names += "Explosive";
-                    break;
-                case EEnemyModifier.None:
-                    names += "";
-                    break;
-                default:
-                    names += "";
-                    break;
-            }
+            case EEnemyModifier.NonSwap:
+                return "NonSwap";
+            case EEnemyModifier.Keycard:
+                return "Keycard";
+            case EEnemyModifier.Explosive:
+                return "Explosive";
+            case EEnemyModifier.None:
+                return "";
+            default:
+                return "";
         }
-        return names;
     }
 
 
-    private void TransferBrainData(CharacterBrainSwappingInfo oldInfo, EEnemyModifier[] modifiers)
+    private void TransferBrainData(CharacterBrainSwappingInfo oldInfo, EEnemyModifier modifier)
     {
-        currentBrain.SetUpBrainSwap(oldInfo, modifiers);
+        currentBrain.SetUpBrainSwap(oldInfo, new EEnemyModifier[] { modifier });
     }
 
     private EnemyBrain ChooseNewBrain(EBrainType type)
@@ -192,6 +180,9 @@ public class EnemyBrainSelector : MonoBehaviour
             case EBrainType.Random:
                 DestroyImmediate(currentBrain);
                 return gameObject.AddComponent<RandomBrain>();
+            case EBrainType.FinalBoss:
+                DestroyImmediate(currentBrain);
+                return gameObject.AddComponent<BossFightBrain>();
             default:
                 Debug.LogError("Enemy (" + gameObject + ") doesn't have a brain");
                 return null;
@@ -204,7 +195,8 @@ public enum EBrainType
     Stationary,
     Patrol,
     Chase,
-    Random
+    Random,
+    FinalBoss
 }
 
 public enum EEnemyModifier

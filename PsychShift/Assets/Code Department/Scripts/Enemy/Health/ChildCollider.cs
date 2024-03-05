@@ -16,8 +16,10 @@ public class ChildCollider : MonoBehaviour, IDamageable
     public bool IsWeakPoint { get { return isWeakPoint; } set { isWeakPoint = value; } }
     private int critModifier = 1;
 
+    #pragma warning disable 67
     public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;
+    #pragma warning restore 67
 
     public void SetUp(IDamageable parentDamageable)
     {

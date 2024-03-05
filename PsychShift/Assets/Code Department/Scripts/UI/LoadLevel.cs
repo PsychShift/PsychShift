@@ -18,7 +18,7 @@ public class LoadLevel : MonoBehaviour
     void Update()
     {
         
-        if (loadLevel = true)
+        if (loadLevel)
         {
             loadLevel = false;
             StartCoroutine(LoadLevelAsync());

@@ -12,9 +12,10 @@ public class DestructableDamageable : MonoBehaviour, IDamageable
     public bool IsWeakPoint { get; } = false;
     private TestBreakObjectCode implodeThing;
     private new Collider collider;
-
+    #pragma warning disable 67
     public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;
+    #pragma warning restore 67
     public NavMeshSurface disObjectNav;
 
     void OnEnable()

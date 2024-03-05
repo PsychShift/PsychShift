@@ -62,7 +62,7 @@ public class SpineControllerIK : MonoBehaviour
         //var resetChestRotation = new HangBossSpine_ResetChestRotation_State(animController, chest, neck);
 
         void AT(IState from, IState to, Func<bool> condition) => animStateMachine.AddTransition(from, to, condition);
-        void AAT(IState to, Func<bool> condition) => animStateMachine.AddAnyTransition(to, condition);
+        //void AAT(IState to, Func<bool> condition) => animStateMachine.AddAnyTransition(to, condition);
         //void AET(Action transitionRequest, IState to) => animStateMachine.AddTransitionOnEvent(ref transitionRequest, to);
         
         //AAT(lookDown, TargetClose());
@@ -76,10 +76,10 @@ public class SpineControllerIK : MonoBehaviour
 
 
 
-        Func<bool> TargetClose() => () => CloseEnoughToLookDown();
+        //Func<bool> TargetClose() => () => CloseEnoughToLookDown();
         Func<bool> Chasing() => () => Moving;
         Func<bool> NotChasing() => () => !Moving;
-        Func<bool> NotChasingAndNotClose() => () => !Moving && !CloseEnoughToLookDown();
+        //Func<bool> NotChasingAndNotClose() => () => !Moving && !CloseEnoughToLookDown();
 
         animStateMachine.SetState(idleSpine);
     }    

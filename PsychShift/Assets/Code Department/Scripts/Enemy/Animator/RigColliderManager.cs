@@ -15,7 +15,7 @@ public class RigColliderManager : MonoBehaviour
     public Animator Animator;//changed to public to access in standup state
     public Transform _hipBones;
     private Transform RagdollRoot;
-    private Rigidbody[] Rigidbodies;
+    [HideInInspector] public Rigidbody[] Rigidbodies;
     private CharacterJoint[] Joints;
     private Collider[] Colliders;
     private float _timeToWakeUp;

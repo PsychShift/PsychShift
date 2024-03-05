@@ -78,7 +78,9 @@ public class GodBox : MonoBehaviour
 
     //Saving variables
     public delegate void PuzzleCompleted(int num);
+    #pragma warning disable 67
     public event PuzzleCompleted OnPuzzleFinish;
+    #pragma warning restore 67
     [HideInInspector]
     public bool puzzleDone;
     [HideInInspector]

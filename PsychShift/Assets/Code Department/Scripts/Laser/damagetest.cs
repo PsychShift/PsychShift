@@ -10,8 +10,10 @@ public class damagetest : MonoBehaviour, IDamageable
 
     public bool IsWeakPoint { get; set; } = false;
 
+    #pragma warning disable 67
     public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;
+    #pragma warning restore 67
     void Awake()
     {
         CurrentHealth = MaxHealth;

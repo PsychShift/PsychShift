@@ -17,7 +17,7 @@ public class ModelSaving : MonoBehaviour
     public void RecomendedFileName()
     {
         string gunTypeName = selector.GunName(selector.gunType);
-        string modifierName = selector.ModifierName(selector.modifiers);
+        string modifierName = selector.ModifierName(selector.modifier);
 
         string recomendedFileName = gunTypeName + modifierName + "_EnemyModel";
 

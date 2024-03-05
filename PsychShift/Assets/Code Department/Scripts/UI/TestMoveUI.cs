@@ -96,7 +96,6 @@ public class TestMoveUI : MonoBehaviour
         }
  
         //Move symbol
-        float moveTime = 10f;
         float speed = (Mathf.Abs(flyingSymbolLocation.x - maxMinLocation.x)) / .5f;
         if (direction < 0)
         {

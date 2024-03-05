@@ -23,7 +23,7 @@ public class SweepingLaserState : IState
         // TO DO - Make a state machine that does each part in steps
         stateMachine = new StateMachine.StateMachine();
 
-        void AT(IState to, IState from, System.Func<bool> condition) => stateMachine.AddTransition(to, from, condition);
+        //void AT(IState to, IState from, System.Func<bool> condition) => stateMachine.AddTransition(to, from, condition);
     }
     public Color GizmoColor()
     {

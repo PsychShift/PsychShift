@@ -12,8 +12,10 @@ public class PlayThud : MonoBehaviour, IDamageable
     public int MaxHealth { get; }
     public bool IsWeakPoint { get; } = false;
 
+    #pragma warning disable 67
     public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;
+    #pragma warning restore 67
 
     public void TakeDamage(int Damage)
     {

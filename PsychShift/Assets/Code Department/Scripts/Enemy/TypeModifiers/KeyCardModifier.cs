@@ -6,7 +6,7 @@ using UnityEngine;
 public class KeyCardModifier : AbstractEnemyModifier
 {
     Transform colliderParent;
-    BoxCollider collider;
+    BoxCollider _collider;
 
     KeyCardScript keyCardScript;
     [HideInInspector]public EnemyBrain brain;
@@ -18,9 +18,9 @@ public class KeyCardModifier : AbstractEnemyModifier
         colliderParent = new GameObject().transform;
         colliderParent.parent = transform;
 
-        collider = colliderParent.AddComponent<BoxCollider>();
+        _collider = colliderParent.AddComponent<BoxCollider>();
         // set to trigger
-        collider.isTrigger = true;
+        _collider.isTrigger = true;
 
         // set its tag
         colliderParent.tag = "KeyCard";

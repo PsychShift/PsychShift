@@ -27,8 +27,10 @@ public class ActionBox : MonoBehaviour, IDamageable
     GameObject activatedObject;
     
 
-     public event IDamageable.TakeDamageEvent OnTakeDamage;
+    #pragma warning disable 67
+    public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;
+    #pragma warning restore 67
 
     private int currentHealth;
     public int CurrentHealth { get => currentHealth; set => currentHealth = value;}

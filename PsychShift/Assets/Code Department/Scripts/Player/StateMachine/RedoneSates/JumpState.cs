@@ -17,7 +17,7 @@ namespace Player
         {
             this.playerStateMachine = playerStateMachine;
             void AT(IState from, IState to, Func<bool> condition) => subStateMachine.AddTransition(from, to, condition);
-            void Any(IState from, Func<bool> condition) => subStateMachine.AddAnyTransition(from, condition);
+            //void Any(IState from, Func<bool> condition) => subStateMachine.AddAnyTransition(from, condition);
 
             subStateMachine = new StateMachine.StateMachine();
             var idleState = new IdleState(playerStateMachine);

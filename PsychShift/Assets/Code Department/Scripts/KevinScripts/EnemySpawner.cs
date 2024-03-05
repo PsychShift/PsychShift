@@ -126,14 +126,14 @@ public class EnemySpawner : MonoBehaviour
 
             // Set enemy type
             EnemyBrainSelector selector = enemy.GetComponent<EnemyBrainSelector>();
-            selector.SwapBrain(gun, brain, selectedModifiers.ToArray(), agression);
+            selector.SwapBrain(gun, brain, selectedModifiers[0], agression);
 
             // subscribe to death event
             enemy.GetComponent<EnemyHealth>().OnDeath += EnemyDeath;
             enemySpawned.Add(enemy);
 
             string gunTypeName = selector.GunName(gun);
-            string modifierName = selector.ModifierName(selectedModifiers.ToArray());
+            string modifierName = selector.ModifierName(selectedModifiers[0]);
 
             enemy.name = gunTypeName + modifierName + "_EnemyModel";
 
