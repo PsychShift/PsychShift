@@ -21,12 +21,7 @@ public class ChaseBrain : EnemyBrain
         chaseState.OnExit();
     } */
 
-    IEnumerator WaitPlease()
-    {
-        yield return new WaitForSeconds(0.05f);
-        VariableSetup();
-        StateMachineSetup();
-    }
+    
     // Update is called once per frame
     void Update()
     {

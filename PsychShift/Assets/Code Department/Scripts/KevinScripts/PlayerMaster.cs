@@ -94,10 +94,7 @@ public class PlayerMaster : MonoBehaviour
         EBrainType enemyType = brainSelector.enemyType;
         GunType gunType = brainSelector.gunType.Type;
         EEnemyModifier[] modifiers = new EEnemyModifier[] { brainSelector.modifier };
-        int scene = 0;
- 
-        scene = SceneManager.GetActiveScene().buildIndex;
-        
+        int scene = SceneManager.GetActiveScene().buildIndex;
 
         SaveObject loadedInfo = new(scene, checkPoint, health, aIAgression, enemyType, gunType, modifiers);
 
@@ -143,7 +140,7 @@ public class PlayerMaster : MonoBehaviour
 
     public void StartNew()
     {
-        string fullPath = System.IO.Path.Combine(Application.streamingAssetsPath, /* SAVE_FOLDER, */ "Saves", "Save" + ".txt");
+        string fullPath = Path.Combine(Application.streamingAssetsPath, /* SAVE_FOLDER, */ "Saves", "Save" + ".txt");
         
         Debug.Log(fullPath);
         if(File.Exists(fullPath))

@@ -35,7 +35,7 @@ public class SensitivityController : MonoBehaviour
     void Start()
     {
         mouseSensitivity = PlayerPrefs.GetFloat("currentSensitivity", 100);
-        UpdatedSpeed.Invoke(mouseSensitivity);
+        UpdatedSpeed?.Invoke(mouseSensitivity);
         slider.value = mouseSensitivity/10;
         Cursor.lockState = CursorLockMode.Locked;
     }

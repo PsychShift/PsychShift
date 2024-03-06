@@ -13,6 +13,7 @@ public class StandupState : IState
     {
         this.brain = brain;
         this.rigColliderManager = rigColliderManager;
+        Debug.Log("Standup state constructor " + brain.gameObject.name);
     }
     public void OnEnter()
     {
@@ -23,10 +24,7 @@ public class StandupState : IState
         //brain.Animator.SetBool("Standup", true);
         animTime = OGanimTime;
         
-        brain.CharacterInfo.controller.enabled = false; 
-        
-        Debug.Log("StandUp");
-        
+        brain.CharacterInfo.controller.enabled = false;         
     }
 
     public void OnExit()

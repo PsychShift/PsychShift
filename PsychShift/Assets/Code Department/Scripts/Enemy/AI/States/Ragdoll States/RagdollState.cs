@@ -7,14 +7,14 @@ using UnityEngine.InputSystem;
 
 public class RagdollState : IState
 {
-    RigColliderManager rigColliderManager;
     EnemyBrain brain;
+    RigColliderManager rigColliderManager;
     TempGravity tempGravity;
     public bool IsDead;
     private bool hitGround;
-    private float onGroundForSeconds = 10f;
+    private const float onGroundForSeconds = 10f;
     
-    float endTime = 0;
+    float elapsedTime = 0;
 
     public bool isDone = false;
     public Func<bool> IsDone => () => isDone;
@@ -54,15 +54,16 @@ public class RagdollState : IState
 
     public void Tick()
     {
-        if(!hitGround && brain.GroundedCheck())
+        if(!hitGround && GroundedCheck())
         {
             hitGround = true;
-            endTime = Time.time + onGroundForSeconds;
+            elapsedTime = 0;
             //rigColliderManager.PopulateBoneTransforms(rigColliderManager._ragdollBoneTransforms);
         }
         if(hitGround)
         {
-            if(Time.time > endTime)
+            hitGround = GroundedCheck();
+            if(elapsedTime > onGroundForSeconds)
             {
                 // timer is done, should I stand or die???
                 if(IsDead)
@@ -76,9 +77,10 @@ public class RagdollState : IState
                     isDone = true;
                 }
             }
+            elapsedTime += Time.deltaTime;
         }
     }
-    private void AlignRotationToHips()
+    /* private void AlignRotationToHips()
     {
         Vector3 originalHipsPosition = rigColliderManager._hipBones.position;
         Quaternion originalHipsRotation = rigColliderManager._hipBones.rotation;
@@ -105,9 +107,20 @@ public class RagdollState : IState
         Debug.Log("Aligning");
         rigColliderManager._hipBones.position = originalHipsPosition;
 
-    }
+    } */
     
-
+    private static readonly Vector3 castDirection = Vector3.down;
+    private const float castDistance = 3f;
+    private static readonly Vector3 boxSize = new Vector3(1f, 0.1f, 1f);
+    public bool GroundedCheck()
+    {
+        //Ragdoll=>turn off groundcheck=> standup => turn on check again
+        RaycastHit[] hits = Physics.BoxCastAll(rigColliderManager.Rigidbodies[0].transform.position, boxSize, castDirection, Quaternion.identity, castDistance, EnemyBrain.groundLayer, QueryTriggerInteraction.Ignore);
+        if(hits.Any(hit => hit.collider != null))
+            return true;
+        
+        return false;
+    }
     public Color GizmoColor()
     {
         return Color.black;

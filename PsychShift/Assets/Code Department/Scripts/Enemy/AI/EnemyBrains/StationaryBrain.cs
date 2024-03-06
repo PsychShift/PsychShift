@@ -12,8 +12,7 @@ public class StationaryBrain : EnemyBrain
     protected override void SetUp()
     {
         Agent.enabled = true;
-        VariableSetup();
-        StateMachineSetup();
+        StartCoroutine(WaitPlease());
     }
     public override void StateMachineSetup()
     {
@@ -34,7 +33,7 @@ public class StationaryBrain : EnemyBrain
 
         stateMachine.SetState(lookAroundState,true);
         
-        AT(standupState, stateMachine.defaultState, BackToChase());
+        AT(standupState, chaseState, BackToChase());
     }
 
     // Update is called once per frame

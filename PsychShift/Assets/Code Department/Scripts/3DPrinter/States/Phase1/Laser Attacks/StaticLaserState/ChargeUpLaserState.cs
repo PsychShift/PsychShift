@@ -22,7 +22,6 @@ public class ChargeUpLaserState : IState
 
     public void OnEnter()
     {
-        Debug.Log("charge up laser");
         // play charge up particle effects
         isFinished = false;
         timer = 0f;

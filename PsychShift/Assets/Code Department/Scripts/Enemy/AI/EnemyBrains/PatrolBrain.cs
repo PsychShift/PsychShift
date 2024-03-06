@@ -11,8 +11,7 @@ public class PatrolBrain : EnemyBrain
     protected override void SetUp()
     {
         Agent.enabled = true;
-        VariableSetup();
-        StateMachineSetup();
+        StartCoroutine(WaitPlease());
     }
 
     public override void StateMachineSetup()

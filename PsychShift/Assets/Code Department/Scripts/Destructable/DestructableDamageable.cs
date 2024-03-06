@@ -28,16 +28,14 @@ public class DestructableDamageable : MonoBehaviour, IDamageable
     {
         collider.enabled = false;
         if(disObjectNav!=null)
-            DeactivateNavMesh();
+            StartCoroutine(DestroyNavmeshData());
         implodeThing.BreakTheThing();
         
     }
-    private void DeactivateNavMesh()
+    IEnumerator DestroyNavmeshData()
     {
-        Debug.Log("removed navmesh data?");
-        //disObjectNav.enabled = false;
+        yield return new WaitForSeconds(0.1f);
         disObjectNav.RemoveData();
-        //NavMesh.RemoveNavMeshData(disObjectNav.cl);
     }
 
 }

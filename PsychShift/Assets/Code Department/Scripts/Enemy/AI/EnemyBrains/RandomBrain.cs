@@ -9,8 +9,7 @@ public class RandomBrain : EnemyBrain
     protected override void SetUp()
     {
         Agent.enabled = true;
-        VariableSetup();
-        StateMachineSetup();
+        StartCoroutine(WaitPlease());
     }
 
     public override void StateMachineSetup()
@@ -27,10 +26,13 @@ public class RandomBrain : EnemyBrain
         AT(pickRandom, chaseState, PlayerInSight());
         AT(lookAround, chaseState, PlayerInSight());
 
+        AT(standupState, chaseState, BackToChase());
+
         ANY(chaseState, WasDamaged());
 
         stateMachine.SetState(pickRandom, true);
     }
+
 
     void Update()
     {

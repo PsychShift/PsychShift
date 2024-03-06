@@ -137,6 +137,13 @@ public abstract class EnemyBrain : MonoBehaviour
         EnemyHealth.OnDeath += Died;
     }
 
+    protected IEnumerator WaitPlease()
+    {
+        yield return new WaitForSeconds(0.05f);
+        VariableSetup();
+        StateMachineSetup();
+    }
+
     /* private void Ragdoll()
     {
         ragdollState.IsDead = false;
@@ -327,10 +334,10 @@ public abstract class EnemyBrain : MonoBehaviour
     }
     private static readonly string[] layerNames = { "Default", "Manipulateable", "WallHoldLayer", "RunnableWallLayer", "Damageable", "Metal Detector", "Non-Wallrun", "Factured", "Destructable" };
 
-    private static LayerMask groundLayer = 0;
-    Vector3 castDirection = Vector3.down;
-    float castDistance = 3f;
-    Vector3 boxSize = new Vector3(1f, 0.1f, 1f);//GROUND KEVIN CHANGE .4F .1F,.4F Old nums
+    public static LayerMask groundLayer = 0;
+    private static readonly Vector3 castDirection = Vector3.down;
+    private const float castDistance = 3f;
+    private static readonly Vector3 boxSize = new Vector3(1f, 0.1f, 1f);//GROUND KEVIN CHANGE .4F .1F,.4F Old nums
     public bool GroundedCheck()
     {
         //Ragdoll=>turn off groundcheck=> standup => turn on check again

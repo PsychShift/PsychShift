@@ -5,7 +5,9 @@ using UnityEngine;
 public class BossFightBrain : EnemyBrain
 {
     private RigColliderManager rigColliderManager;
-    ChaseState chaseState;//Started Happening because of AT statement in enemy brain from standing to chase
+    ChaseState chaseState;
+    LaunchedRagdollState _ragdollState;
+    
 
     public void Reset()
     {
@@ -20,16 +22,13 @@ public class BossFightBrain : EnemyBrain
     }
     public override void StateMachineSetup()
     {
+        stateMachine = new();
+        _ragdollState = new LaunchedRagdollState(this, rigColliderManager, GetComponent<TempGravity>(), rigColliderManager.Rigidbodies);
         chaseState = new ChaseState(this);
-        stateMachine.SetState(ragdollState);
+        
+        AT(ragdollState, chaseState, NotGrounded());
+        AT(_ragdollState, standupState, () => _ragdollState.IsDone());
         AT(standupState, chaseState, BackToChase());
-    }
-
-    IEnumerator WaitPlease()
-    {
-        yield return new WaitForSeconds(0.05f);
-        VariableSetup();
-        StateMachineSetup();
     }
     // Update is called once per frame
     void Update()
@@ -37,15 +36,11 @@ public class BossFightBrain : EnemyBrain
         if(IsActive && chaseState != null)
             stateMachine.Tick();
     }
-    public void Launch(Vector3 dir)
+    public IEnumerator Launch(Vector3 dir, float force)
     {
-        stateMachine.SetState(ragdollState);
-        int len = rigColliderManager.Rigidbodies.Length;
-
-        for(int i = 0; i < len; i++)
-        {
-            rigColliderManager.Rigidbodies[i].AddForce(dir * 100, ForceMode.Impulse);
-        }
+        yield return new WaitForSeconds(0.06f);
+        _ragdollState.force = dir*force;
+        stateMachine.SetState(_ragdollState);
     }
 
     public void SpawnerSetup(Vector3 guardPos)

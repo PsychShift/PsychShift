@@ -23,7 +23,6 @@ public class LaserShootState : IState
 
     public void OnEnter()
     {
-        Debug.Log("laser shoot");
         timer = 0;
         isFinished = false;
         laser.Fire(true, stats);
