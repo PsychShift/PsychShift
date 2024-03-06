@@ -370,11 +370,14 @@ public class PuzzleKit : MonoBehaviour, IDamageable
                 Debug.Log("Activated: " + godBoxRef.activateCount);
                 godBoxRef.ThisActivate();
                 //Destroy(this.gameObject);
-                
+                if(activate)
+                {
                     GetComponent<Collider>().enabled= false;
                     GetComponent<MeshRenderer>().enabled = false;
-                    if(activate)
-                        activatedObject.SetActive(true);
+                    
+                    activatedObject.SetActive(true);
+                }
+                    
                     //this.gameObject.SetActive(false);  
                 else if(destructObject)
                 {
@@ -454,10 +457,10 @@ public class PuzzleKit : MonoBehaviour, IDamageable
         }
         else if(leverPull)
         {
-            if(other.GetComponent<Collider>().gameObject.layer == LayerMask.NameToLayer("Player"))
+            /* if(other.GetComponent<Collider>().gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 LeverAction();
-            }
+            } */
         } 
     }
 
