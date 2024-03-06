@@ -12,12 +12,19 @@ public class PauseMenuScript : MonoBehaviour
     public GameObject PauseMenu;
     public GameObject PauseMenuFirst;
     public GameObject PauseMenuSettings;
+    public GameObject TutorialButton;
+    public GameObject RebindButton;
     public GameObject PauseMenuSettingsFirst;
     public GameObject TutorialMenu;
+    public GameObject TutorialMenuFirst;
     public GameObject MovementVideo;
+    public GameObject MovementVideoFirst;
     public GameObject NeuroNetworkVideo;
+    public GameObject NeuroNetworkVideoFirst;
     public GameObject RemappingMenu;
+    public GameObject RemappingMenuFirst;
     public static bool GameIsPaused = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,11 +76,15 @@ public class PauseMenuScript : MonoBehaviour
     public void OpenLoad()
     {
         TutorialMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(TutorialMenuFirst);
+        TutorialButton.SetActive(false);
     }
 
     public void CloseLoad()
     {
         TutorialMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(PauseMenuSettingsFirst);
+        TutorialButton.SetActive(true);
     }
     private void PausePressed()
     {
@@ -105,26 +116,34 @@ public class PauseMenuScript : MonoBehaviour
     public void OpenMovement()
     {
         MovementVideo.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(MovementVideoFirst);
     }
     public void CloseMovement()
     {
         MovementVideo.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(TutorialMenuFirst);
     }
     public void OpenNeuro()
     {
         NeuroNetworkVideo.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(NeuroNetworkVideoFirst);
     }
     public void CloseNeuro()
     {
         NeuroNetworkVideo.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(TutorialMenuFirst);
     }
     public void OpenRemap()
     {
         RemappingMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(RemappingMenuFirst);
+        TutorialButton.SetActive(false);
     }
 
     public void CloseRemap()
     {
         RemappingMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(PauseMenuSettingsFirst);
+        TutorialButton.SetActive(true);
     }
 }

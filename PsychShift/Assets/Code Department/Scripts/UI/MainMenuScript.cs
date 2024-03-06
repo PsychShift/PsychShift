@@ -9,6 +9,7 @@ using TMPro;
 public class MainMenuScript : MonoBehaviour
 {
     public GameObject LoadMenu;
+    public GameObject LoadMenuFirst;
     public GameObject MainMenu;
     public CanvasGroup MainMenuCG;
     public GameObject MainMenuFirst;
@@ -19,8 +20,11 @@ public class MainMenuScript : MonoBehaviour
     public CanvasGroup CreditsMenuCG;
     public GameObject CreditsMenuFirst;
     public GameObject MovementVideo;
+    public GameObject MovementVideoFirst;
     public GameObject NeuroNetworkVideo;
+    public GameObject NeuroNetworkVideoFirst;
     public GameObject RemappingMenu;
+    public GameObject RemappingMenuFirst;
     private WaitForSeconds MenuTick = new WaitForSeconds(0.1f);
     private Coroutine WaitforFade;
     [SerializeField] private bool fadeInCredits = false;
@@ -156,27 +160,35 @@ public class MainMenuScript : MonoBehaviour
     public void OpenLoad()
     {
         LoadMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(LoadMenuFirst);
+        SettingsMenu.SetActive(false);
     }
 
     public void CloseLoad()
     {
         LoadMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+        SettingsMenu.SetActive(true);
     }
     public void OpenMovement()
     {
         MovementVideo.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(MovementVideoFirst);
     }
     public void CloseMovement()
     {
         MovementVideo.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(LoadMenuFirst);
     }
     public void OpenNeuro()
     {
         NeuroNetworkVideo.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(NeuroNetworkVideoFirst);
     }
     public void CloseNeuro()
     {
         NeuroNetworkVideo.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(LoadMenuFirst);
     }
     public void OpenCredits()
     {
@@ -260,11 +272,13 @@ public class MainMenuScript : MonoBehaviour
     public void OpenRemap()
     {
         RemappingMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(RemappingMenuFirst);
     }
 
     public void CloseRemap()
     {
         RemappingMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
     }
     
 }
