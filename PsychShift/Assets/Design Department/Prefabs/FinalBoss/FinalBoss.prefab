@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1177573935762502058}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7711286232664149241}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Shoulder_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7247616909552198662}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Wrist_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5615494743557159068}
   - component: {fileID: 2197224634085622002}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder96
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8904775228540420652}
   - component: {fileID: 5456388513441733550}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder83
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,10 +287,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4110512495048083639}
+  - component: {fileID: 5527973046558807687}
   - component: {fileID: 1756946037349031504}
   - component: {fileID: 4645800518012850769}
+  - component: {fileID: 6271400514540290235}
+  - component: {fileID: 2292426197191925352}
   - component: {fileID: 4508876637721561745}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: FinalBossContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,14 +308,44 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298522004901927048}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 37.3, y: -26.4, z: 29.4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4200206803899535747}
+  - {fileID: 5130010001395754049}
   m_Father: {fileID: 4271911714800937376}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5527973046558807687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298522004901927048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cfbe2a3057672d449887f407a252524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
+  maxHealth: 1000
+  phases:
+  - TotalHealth: 300
+    Gates:
+    - Health: 250
+      Puzzle: {fileID: 0}
+    - Health: 200
+      Puzzle: {fileID: 0}
+  - TotalHealth: 200
+    Gates:
+    - Health: 0
+      Puzzle: {fileID: 0}
+  - TotalHealth: 200
+    Gates:
+    - Health: 0
+      Puzzle: {fileID: 0}
 --- !u!114 &1756946037349031504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,6 +390,56 @@ MonoBehaviour:
   z_Bound1: {fileID: 282009202297382010}
   z_Bound2: {fileID: 9073051211017591574}
   z_cushion: 10
+--- !u!136 &6271400514540290235
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298522004901927048}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 7.5
+  m_Height: 48
+  m_Direction: 1
+  m_Center: {x: 0, y: 4.09, z: 0}
+--- !u!54 &2292426197191925352
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298522004901927048}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!195 &4508876637721561745
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -366,7 +449,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 298522004901927048}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 7.52
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -375,8 +458,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
+  m_Height: 41
+  m_BaseOffset: 12.3
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 1
 --- !u!1 &361973379295311003
@@ -389,7 +472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5160633884465623383}
   - component: {fileID: 1686067501784085980}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder10_Dup_2_e_62_18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,7 +562,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1801770802955673527}
   - component: {fileID: 9139725086899620892}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder10_Dup_2_e_62_15_Ext_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -604,7 +687,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2076575536397857719}
   - component: {fileID: 276129722359221662}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder88
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -693,7 +776,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3562328491400834123}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -727,7 +810,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7767978662544204933}
   - component: {fileID: 3705138547930843111}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder10_Dup_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -816,7 +899,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1142797333310338980}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint26
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -850,7 +933,7 @@ GameObject:
   - component: {fileID: 2163321905559040486}
   - component: {fileID: 8817014629430214614}
   - component: {fileID: 2411889067180771083}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Armour_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -933,7 +1016,7 @@ GameObject:
   - component: {fileID: 7305345086701808990}
   - component: {fileID: 104413643821978120}
   - component: {fileID: 2434929520234536040}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Battery_Shell_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1015,7 +1098,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1966293723099335541}
   - component: {fileID: 7354828727105302542}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder76
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1107,7 +1190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9078352845057899821}
   - component: {fileID: 5929194618178470504}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder10_Dup_2_e_62_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1198,7 +1281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 69871792039678503}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1230,7 +1313,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5859961186350661807}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: SpineTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1262,7 +1345,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7621242416571041992}
   - component: {fileID: 8296401722390619826}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder94
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1352,7 +1435,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5182818453812724060}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1384,7 +1467,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1562591130423151858}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1417,7 +1500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4594777056414348307}
   - component: {fileID: 5176852096995114048}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder87
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1507,7 +1590,7 @@ GameObject:
   m_Component:
   - component: {fileID: 389063610591749213}
   - component: {fileID: 6580933224838766361}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1588,7 +1671,7 @@ GameObject:
   - component: {fileID: 3114825622254575738}
   - component: {fileID: 2420008230145177647}
   - component: {fileID: 8432628166336677141}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: TailLaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1737,7 +1820,7 @@ GameObject:
   - component: {fileID: 9220392106619351854}
   - component: {fileID: 1446109647190545372}
   - component: {fileID: 5776042171545982595}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: LeftArmLaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1886,7 +1969,7 @@ GameObject:
   - component: {fileID: 4237691232329747205}
   - component: {fileID: 1246493362056453583}
   - component: {fileID: 7636484212228124179}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder10_Dup_2_e_62_20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1971,7 +2054,7 @@ GameObject:
   - component: {fileID: 8944219304919248921}
   - component: {fileID: 3215737760202401907}
   - component: {fileID: 347677092098740129}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1986,7 +2069,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2279473278965310997}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -38.7, y: -0.94, z: -31}
+  m_LocalPosition: {x: 0, y: -45, z: 0}
   m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2085,7 +2168,8 @@ GameObject:
   - component: {fileID: 1739356626296828650}
   - component: {fileID: 160231741929990696}
   - component: {fileID: 419623713811675414}
-  m_Layer: 0
+  - component: {fileID: 1268985275486480498}
+  m_Layer: 4
   m_Name: Ball_Battery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2099,14 +2183,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2287802034355327312}
-  m_LocalRotation: {x: 2.8582732e-19, y: 6.640494e-17, z: -0.5992721, w: 0.80054545}
+  m_LocalRotation: {x: 0, y: 0, z: -0.5992751, w: 0.8005432}
   m_LocalPosition: {x: -0.76701677, y: 0.45378256, z: -0.0076285247}
   m_LocalScale: {x: 20.110739, y: 20.110746, z: 20.110739}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9054950358847086720}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -73.636}
 --- !u!33 &160231741929990696
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2157,6 +2241,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &1268985275486480498
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2287802034355327312}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eb30d75792d7b9145a81b36de4ac4641, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2329056752385399833
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,7 +2271,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3665180229772223260}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2199,7 +2304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4997242755728302743}
   - component: {fileID: 4389509357429179061}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder10_Dup_2_e_62_14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2280,6 +2385,111 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.5834523, y: -0.65598375, z: 0.036487833}
     m_Extent: {x: 0.045470774, y: 0.048667967, z: 0.03971888}
   m_DirtyAABB: 0
+--- !u!1 &2466123011165860481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5130010001395754049}
+  - component: {fileID: 8816794697324808416}
+  - component: {fileID: 1967352705138563288}
+  - component: {fileID: 553164241659769647}
+  m_Layer: 0
+  m_Name: BossForceField
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5130010001395754049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2466123011165860481}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -11.5, z: 0}
+  m_LocalScale: {x: 57.357, y: 57.357, z: 57.357}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4110512495048083639}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &8816794697324808416
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2466123011165860481}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1967352705138563288
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2466123011165860481}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 921bd6ab767e8a84588c038630f6ff56, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &553164241659769647
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2466123011165860481}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2531222098007046940
 GameObject:
   m_ObjectHideFlags: 0
@@ -2292,7 +2502,7 @@ GameObject:
   - component: {fileID: 3251865068393930284}
   - component: {fileID: 1794955144771452845}
   - component: {fileID: 6138843196502036541}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: SpineIK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2416,7 +2626,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7085113865119769878}
   - component: {fileID: 1256346470222022806}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder84
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2507,7 +2717,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6118411283025816723}
   - component: {fileID: 5213401817967756990}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder10_Dup_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2597,7 +2807,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8124695517051613566}
   - component: {fileID: 7608356936765256950}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Rigs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2645,7 +2855,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5108956326061765195}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2677,7 +2887,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8367403185766717236}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint28
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2708,7 +2918,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 81898295319842349}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: RightArmChainTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2741,7 +2951,7 @@ GameObject:
   - component: {fileID: 6044218639611209358}
   - component: {fileID: 7561904446326791645}
   - component: {fileID: 4898409413044637897}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Left Arm Chain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2845,7 +3055,7 @@ GameObject:
   - component: {fileID: 2559283341930022731}
   - component: {fileID: 2876595995613453352}
   - component: {fileID: 660913349770315184}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Tail_Piece_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2929,7 +3139,7 @@ GameObject:
   - component: {fileID: 4660356875117202637}
   - component: {fileID: 3762239547065233334}
   - component: {fileID: 3218698356283036577}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2999,7 +3209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7372399048083381609}
   - component: {fileID: 2856652433117643557}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Shoulder_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3090,7 +3300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6056446141451695602}
   - component: {fileID: 3589868787686336843}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Monitor_Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3183,7 +3393,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3234404406693578497}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3219,7 +3429,7 @@ GameObject:
   - component: {fileID: 1644223482971857480}
   - component: {fileID: 1013638556942712974}
   - component: {fileID: 2001661338023693869}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Right Arm Chain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3321,7 +3531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6797296700746945858}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3353,7 +3563,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8101562038717825858}
   - component: {fileID: 483427623569218871}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3447,7 +3657,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4806657321829347242}
   - component: {fileID: 6228712547489235004}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Monitor_Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3539,7 +3749,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7959466122410705622}
   - component: {fileID: 8976220386653712062}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder91
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3628,7 +3838,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2759128563032742556}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3662,7 +3872,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9041968785370309127}
   - component: {fileID: 5418409580715554343}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Stinger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3711,7 +3921,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5747302775826707836}
   - component: {fileID: 6185759201937361053}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder10_Dup_2_e_62_18_Ext_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3801,7 +4011,7 @@ GameObject:
   m_Component:
   - component: {fileID: 951422064689821760}
   - component: {fileID: 258734615951438093}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder90
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3890,7 +4100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9054950358847086720}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3926,7 +4136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1887567700716519160}
   - component: {fileID: 5380835764713218159}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder82
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4015,7 +4225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7848611350936295699}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Chest_Joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4081,7 +4291,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2662850850379080894}
   - component: {fileID: 4146019235949860156}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Wrist_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4095,14 +4305,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5574053368122769716}
-  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: -0.5}
-  m_LocalPosition: {x: 0.0972467, y: 3.8404577, z: 118.39514}
+  m_LocalRotation: {x: 0.5007744, y: 0.49787584, z: -0.5020203, w: -0.49931988}
+  m_LocalPosition: {x: 0.4063892, y: 4.4841146, z: 118.39764}
   m_LocalScale: {x: 2.0041916, y: 138.90811, z: 2.0041916}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3728379379383679532}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.012, y: -89.846, z: 90.321}
 --- !u!137 &4146019235949860156
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -4170,7 +4380,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3825209845066623304}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_TOP_Head_Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4203,7 +4413,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5566313283142298293}
   - component: {fileID: 4833196446704803771}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder85
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4294,7 +4504,7 @@ GameObject:
   - component: {fileID: 4440568230388629493}
   - component: {fileID: 5793097195373537191}
   - component: {fileID: 8839370231507034580}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Bicep_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4376,7 +4586,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2141079408082102772}
   - component: {fileID: 5579856254060454483}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder10_Dup_2_e_62_15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4466,7 +4676,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1912066515090959946}
   - component: {fileID: 3517430417059677674}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder93
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4555,7 +4765,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7907649175372734792}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: G_Connectors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4613,7 +4823,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3662410790353521744}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4645,7 +4855,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2802212281917226222}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4678,7 +4888,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6062714058230715112}
   - component: {fileID: 1634184992927734357}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Shoulder_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4769,7 +4979,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7567393880379787410}
   - component: {fileID: 8964463862821979644}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Wrist_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4858,7 +5068,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3728379379383679532}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: G_Wires
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4896,7 +5106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8911476221184155296}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Wrist_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4929,7 +5139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1648814486967476753}
   - component: {fileID: 4971961347331707868}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Main_Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5022,7 +5232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6892678058929907852}
   - component: {fileID: 5159644345802318377}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5068,7 +5278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5065532089370467945}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5100,7 +5310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 460197841814378749}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5132,7 +5342,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5404026295358766124}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5164,7 +5374,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7982366903228293745}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: LeftArmChainTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5195,7 +5405,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7941701170033824639}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: joint13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5228,7 +5438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8597325253129590616}
   - component: {fileID: 1730589363451120763}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Torso_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5325,7 +5535,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5056679314480825523}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Neck_Control
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5357,7 +5567,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4219584218412212289}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Top_Control
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5391,7 +5601,7 @@ GameObject:
   - component: {fileID: 8775062766423708182}
   - component: {fileID: 3394934618607709312}
   - component: {fileID: 3713175018876472908}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Tail_Sharp_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5473,7 +5683,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7621329433697825990}
   - component: {fileID: 6495842880780028892}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder10_Dup_2_e_62_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5565,7 +5775,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6547180941067687147}
   - component: {fileID: 866167381921264017}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder10_Dup_2_e_62_16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5654,7 +5864,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2231052023220394362}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: G_Parts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5689,7 +5899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5521531490937485949}
   - component: {fileID: 85860048911976736}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder97
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5781,7 +5991,7 @@ GameObject:
   - component: {fileID: 1783931602686327701}
   - component: {fileID: 3187629959117279721}
   - component: {fileID: 7109954173941437190}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Bicep_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5863,7 +6073,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2679169803034092340}
   - component: {fileID: 6115139616702514165}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5954,7 +6164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7394049452865894415}
   - component: {fileID: 3539444113061025139}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder10_Dup_2_e_62_19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6044,7 +6254,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8403644118883308819}
   - component: {fileID: 6718422740960271843}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder10_Dup_2_e_62_17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6133,7 +6343,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3225941538278672792}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Wire_Shoulder_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6166,7 +6376,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8510919056691618653}
   - component: {fileID: 1010325834319213222}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: pCylinder75
   m_TagString: Untagged
   m_Icon: {fileID: 0}
