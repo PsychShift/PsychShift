@@ -370,12 +370,13 @@ public class PuzzleKit : MonoBehaviour, IDamageable
                 Debug.Log("Activated: " + godBoxRef.activateCount);
                 godBoxRef.ThisActivate();
                 //Destroy(this.gameObject);
-                if(activate)
+                if(changeObject)
                 {
                     GetComponent<Collider>().enabled= false;
                     GetComponent<MeshRenderer>().enabled = false;
                     
                     activatedObject.SetActive(true);
+                    this.gameObject.SetActive(false); 
                 }
                     
                     //this.gameObject.SetActive(false);  
