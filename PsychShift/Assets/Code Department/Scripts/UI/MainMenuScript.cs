@@ -248,13 +248,13 @@ public class MainMenuScript : MonoBehaviour
         SettingsMenu.SetActive(false);
         
     }
-    public void ILab()
+    public void Level1()
     {
-        SceneManager.LoadScene("GREG 2");
+        SceneManager.LoadScene("LEVEL 1");
     }
-    public void DLab()
+    public void Level2()
     {
-        SceneManager.LoadScene("Tesla_Coil");
+        SceneManager.LoadScene("LEVEL 2");
     }
     public void TLab()
     {
