@@ -30,12 +30,14 @@ public class SensitivityController : MonoBehaviour
     //private Transform currentCameraRoot;
     //private CharacterInfo currentCharacterInfo;
     //public new Camera camera;
-    public Action<float> UpdatedSpeed;
+    //public Action<float> UpdatedSpeed;
 
     void Start()
     {
         mouseSensitivity = PlayerPrefs.GetFloat("currentSensitivity", 100);
-        UpdatedSpeed?.Invoke(mouseSensitivity);
+        //UpdatedSpeed?.Invoke(mouseSensitivity);
+        CinemachinePOVExtension.horizontalSpeed = mouseSensitivity;
+        CinemachinePOVExtension.verticalSpeed = mouseSensitivity;
         slider.value = mouseSensitivity/10;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -58,7 +60,9 @@ public class SensitivityController : MonoBehaviour
         mouseSensitivity = newSpeed * 10;
         Debug.Log(mouseSensitivity);
         PlayerPrefs.SetFloat("currentSensitivity", mouseSensitivity);
-        UpdatedSpeed.Invoke(mouseSensitivity);
+        CinemachinePOVExtension.horizontalSpeed = mouseSensitivity;
+        CinemachinePOVExtension.verticalSpeed = mouseSensitivity;
+        //UpdatedSpeed.Invoke(mouseSensitivity);
     }
 }
 //}
