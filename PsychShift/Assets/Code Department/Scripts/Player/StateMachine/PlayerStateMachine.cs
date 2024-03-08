@@ -147,8 +147,6 @@ namespace Player
         }
         public void Load()
         {
-            Debug.Log("Name: " + gameObject.name + " Scene: " + SceneManager.GetActiveScene().name);
-            Debug.Log(tempCharacter.name);
             WallStateVariables.Instance.wallLayer = wallLayer;
             WallStateVariables.Instance.WallholdLayers = wallholdLayers;
             WallStateVariables.Instance.WallSpeed = wallSpeed;

@@ -6,7 +6,8 @@ using System.Collections;
 
 public class FinalBossHealth : MonoBehaviour, IDamageable
 {
-    public Slider healthBar;
+    [SerializeField] private HangingRobotController BossController;
+    [SerializeField] private Slider healthBar;
     private int currentHealth;
     public int CurrentHealth { get { return currentHealth; } }
 
@@ -23,6 +24,7 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     
     int currentHealthGateIndex = 0;
     int currentHealthGateNumber;
+    EBossStates nextBossState = EBossStates.None;
     AbstractBossPuzzle currentHealthGatePuzzle;
 
     public void TakeDamage(int Damage)
@@ -62,6 +64,7 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     private void HealthGateSwitch()
     {
         currentHealthGatePuzzle?.OnHealthGateReached();
+        BossController.SwitchState(nextBossState);
         currentHealthGateIndex++;
         Debug.Log("HealthgateSwitch old index" + (currentHealthGateIndex - 1) + " new index " + currentHealthGateIndex);
         if(currentHealthGateIndex < phases[currentPhase].Gates.Length)
@@ -69,6 +72,7 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
             HealthGate gate = phases[currentPhase].Gates[currentHealthGateIndex];
             currentHealthGateNumber = gate.Health;
             currentHealthGatePuzzle = gate.Puzzle;
+            nextBossState = gate.BossState;
         }
     }
 
@@ -87,7 +91,6 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     {
         maxHealth = 0;
         int len = phases.Length;
-        Debug.Log(len);
         for(int i = 0; i < len; i++)
         {
             maxHealth += GetPhaseHealth(i);
@@ -127,9 +130,5 @@ public struct HealthGate
 {
     public int Health;
     public AbstractBossPuzzle Puzzle;
-}
-
-public abstract class AbstractBossPuzzle : MonoBehaviour
-{
-    public abstract void OnHealthGateReached();
+    public EBossStates BossState;
 }

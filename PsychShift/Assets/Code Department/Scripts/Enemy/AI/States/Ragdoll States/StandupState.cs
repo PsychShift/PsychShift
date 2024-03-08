@@ -13,7 +13,6 @@ public class StandupState : IState
     {
         this.brain = brain;
         this.rigColliderManager = rigColliderManager;
-        Debug.Log("Standup state constructor " + brain.gameObject.name);
     }
     public void OnEnter()
     {
@@ -49,7 +48,6 @@ public class StandupState : IState
             brain.Agent.enabled = true;
             brain.Agent.isStopped = false;
             
-            Debug.Log("Stopped");
             brain.CharacterInfo.controller.enabled = true;
             isStanding = true;
             
