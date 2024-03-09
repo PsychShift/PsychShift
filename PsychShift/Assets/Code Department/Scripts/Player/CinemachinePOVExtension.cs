@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;//Kevin added this
 
 public class CinemachinePOVExtension : CinemachineExtension
 {
-    public float horizontalSpeed = 10f;
-    public float verticalSpeed = 10f;
+    public static float horizontalSpeed = 10f;
+    public static float verticalSpeed = 10f;
     [SerializeField]
     private float clampAngle = 80f;
     private Vector3 startingRotation;
@@ -30,7 +30,7 @@ public class CinemachinePOVExtension : CinemachineExtension
         }
     }
     
-    protected override void OnEnable() {
+    /* protected override void OnEnable() {
         base.OnEnable();
         SetSens(SensitivityController.Instance.mouseSensitivity);
         SensitivityController.Instance.UpdatedSpeed += SetSens;
@@ -42,5 +42,5 @@ public class CinemachinePOVExtension : CinemachineExtension
     {
         horizontalSpeed = speed;
         verticalSpeed = speed;
-    }
+    } */
 }
