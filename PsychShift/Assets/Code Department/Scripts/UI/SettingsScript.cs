@@ -8,6 +8,8 @@ public class SettingsScript : MonoBehaviour
 {
     //public Dropdown resolutionDropdown;
     public Toggle vsyncTog;
+    public Toggle fsTog;
+    private int fullscreenValue;
 
     //Resolution[] resolutions;
 
@@ -43,23 +45,58 @@ public class SettingsScript : MonoBehaviour
         {
             vsyncTog.isOn = true;
         }
+        Load();
+        
+    }
+    void Update()
+    {
+        if (fsTog.isOn == true)
+        {
+            fullscreenValue = 1;
+            Save();
+        }
+        else
+        {
+            fullscreenValue = 0;
+            Save();
+        }
     }
 
     public void SetFullscreen(bool isFullscreen)
     {
-        Screen.fullScreen = isFullscreen;
+        if (fullscreenValue == 1)
+        {
+            Screen.fullScreen = isFullscreen;
+            Debug.Log ("I am on");
+        }
+        else
+        {
+            Screen.fullScreen = !isFullscreen;
+            Debug.Log ("I am off");
+        }
+        //Screen.fullScreen = isFullscreen;
     }
     public void ApplyGraphics()
     {
         if (vsyncTog.isOn)
         {
             QualitySettings.vSyncCount = 1;
+            
         }
         else
         {
             QualitySettings.vSyncCount = 0;
         }
     }
+    private void Save()
+    {
+        PlayerPrefs.SetInt("IsFullScreen" , fullscreenValue);
+    }
+     private void Load()
+    {
+        fullscreenValue = PlayerPrefs.GetInt("IsFullScreen");
+    }
+    
 
     //public void SetResolution (int resolutionIndex)
    // {
