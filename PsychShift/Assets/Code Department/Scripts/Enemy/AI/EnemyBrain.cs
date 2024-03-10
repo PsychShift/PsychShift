@@ -115,6 +115,7 @@ public abstract class EnemyBrain : MonoBehaviour
     /// </summary> 
     protected void VariableSetup()
     {
+        UpdateAgression(agression);
         stateMachine = new StateMachine.StateMachine();
         RigColliderManager rgm = GetComponent<RigColliderManager>();
         ragdollState = new RagdollState(this, rgm, GetComponent<TempGravity>());
@@ -188,7 +189,6 @@ public abstract class EnemyBrain : MonoBehaviour
 
     protected Func<bool> PlayerInSight() => () => fovRef.canSeePlayer;
     //protected Func<bool> PlayerInSightWide() => () => IsPlayerInSightWideView();
-    protected Func<bool> PlayerInAttackRange() => () => IsPlayerInRange();
     protected Func<bool> OutOfRangeForTooLong(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight);
     protected Func<bool> OutOfRangeForTooLongAndIsGuard(float maxTimeOutOfSight) => () => IsPlayerOutOfRangeForTooLong(maxTimeOutOfSight);
     protected Func<bool> CanGuard() => () => !fovRef.canSeePlayer;
@@ -259,11 +259,7 @@ public abstract class EnemyBrain : MonoBehaviour
         EnemyHealth.OnDeath -= Died;
     }
 
-    private bool IsPlayerInRange()
-    {
-        float distance = Vector3.SqrMagnitude(transform.position - CharacterInfo.characterContainer.transform.position);
-        return distance <= agression.DetectionRange;
-    }
+
 
     public void CreateDebugSphere()
     {
@@ -356,71 +352,3 @@ public abstract class EnemyBrain : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, boxSize); // Draw the box at the current object's position
     }
 }
-
-/*     private IEnumerator WaitTillGrounded()
-    {
-        while(!CharacterInfo.controller.isGrounded)
-        {
-            yield return null;
-        }
-        GetComponent<TempGravity>().enabled = false;
-        CharacterInfo.agent.enabled = true;
-    } */
-    /* void OnDrawGizmos()
-    {
-        if(!Application.isPlaying || !isActive) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(characterInfo.cameraRoot.position, characterInfo.cameraRoot.position + (characterInfo.cameraRoot.forward * agression.SphereCastDetectionRadius));
-        Gizmos.color = Color.blue;
-
-    } */
-/*private bool IsPlayerInSight()
-    {
-        Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius, 
-        CharacterInfo.cameraRoot.forward, out RaycastHit hit, agression.DetectionRange, layerMask: playerLayer);
-        if(hit.collider == null) return false;
-        if(hit.collider.tag == "Player")
-        {
-            player = hit.collider.transform;
-            return true;
-        }
-        return false;
-    }
-    private bool IsPlayerInSightWideView()
-    {
-        // Cast a sphere slightly to the left of transform.forward
-        Vector3 leftDirection = Quaternion.Euler(0, -20, 0) * transform.forward;
-
-
-        // Cast a sphere slightly to the right of transform.forward
-        Vector3 rightDirection = Quaternion.Euler(0, 20, 0) * transform.forward;
-
-        Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
-        CharacterInfo.cameraRoot.forward, out RaycastHit hit, agression.DetectionRange, layerMask: playerLayer);
-        if (hit.collider == null) return false;
-        if (hit.collider.tag == "Player")
-        {
-            player = hit.collider.transform;
-            return true;
-        }
-
-        Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
-        leftDirection, out hit, agression.DetectionRange, layerMask: playerLayer);
-        if (hit.collider == null) return false;
-        if (hit.collider.tag == "Player")
-        {
-            player = hit.collider.transform;
-            return true;
-        }
-
-        Physics.SphereCast(CharacterInfo.cameraRoot.position, agression.SphereCastDetectionRadius,
-        rightDirection, out hit, agression.DetectionRange, layerMask: playerLayer);
-        if (hit.collider == null) return false;
-        if (hit.collider.tag == "Player")
-        {
-            player = hit.collider.transform;
-            return true;
-        }
-
-        return false;
-    }*/

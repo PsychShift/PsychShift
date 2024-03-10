@@ -15,7 +15,7 @@ public class ActiveShootState : IState
     float shootForSeconds = 0f;
     public void OnEnter()
     {        
-        shootForSeconds = Time.time + UnityEngine.Random.Range(FireRateAgro.FireRates[brain.agression.FireRateAgression].MinWaitTime, FireRateAgro.FireRates[brain.agression.FireRateAgression].MaxWaitTime);
+        shootForSeconds = Time.time + UnityEngine.Random.Range(FireRateAgro.FireRates[(int)brain.agression.FireRateAgression].MinWaitTime, FireRateAgro.FireRates[(int)brain.agression.FireRateAgression].MaxWaitTime);
         brain.AnimMaster.SetGunHandPosition(defaultGunPosition);
         brain.Animator.SetBool("shooting", true);
         brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));

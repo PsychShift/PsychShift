@@ -35,17 +35,7 @@ public class HangingAnimatorController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            animator.Play("Curl");
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            animator.Play("UnCurl");
-        }
-    }
+
     [SerializeField] private float modelRotationDamping = 1f;
     public void RotateTowardsTarget(Vector3 targetPos)
     {
