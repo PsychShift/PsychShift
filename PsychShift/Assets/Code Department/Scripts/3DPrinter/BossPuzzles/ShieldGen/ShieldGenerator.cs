@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ShieldGenerator : MonoBehaviour, IDamageable
 {
+    public bool isHitable;
     private Animator anim;
     [SerializeField] private ActivateShield_BossPuzzle shieldScript;
     public ParticleSystem beam;
@@ -27,16 +28,19 @@ public class ShieldGenerator : MonoBehaviour, IDamageable
         {
             collider.SetUp(this);
         }
+        SetColliderEnabled(false);
     }
     public void Activate()
     {
-        Debug.Log("activate shield generator");
+        isHitable = true;
         anim.SetTrigger(activateAnimHash);
+        SetColliderEnabled(true);
     }
     public void Disable()
     {
-        Debug.Log("deactivate shield generator");
+        isHitable = false;
         anim.SetTrigger(deactivateAnimHash);
+        SetColliderEnabled(false);
     }
     public void Destoyed()
     {
@@ -44,9 +48,15 @@ public class ShieldGenerator : MonoBehaviour, IDamageable
         beam.Stop();
         Destroy(gameObject);
     }
+    private void SetColliderEnabled(bool condition)
+    {
+        for(int i = 0; i < Colliders.Length; i++)
+            Colliders[i].GetComponent<Collider>().enabled = condition;
+    }
 
     public void TakeDamage(int Damage)
     {
+        if(!isHitable) return;
         Destoyed();
     }
 }

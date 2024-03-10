@@ -66,7 +66,6 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
         currentHealthGatePuzzle?.OnHealthGateReached();
         BossController.SwitchState(nextBossState);
         currentHealthGateIndex++;
-        Debug.Log("HealthgateSwitch old index" + (currentHealthGateIndex - 1) + " new index " + currentHealthGateIndex);
         if(currentHealthGateIndex < phases[currentPhase].Gates.Length)
         {
             HealthGate gate = phases[currentPhase].Gates[currentHealthGateIndex];

@@ -4,7 +4,6 @@ using UnityEngine;
 public class StingerController : MonoBehaviour
 {
     [SerializeField] private Transform tailTip, tailBase;
-
     [SerializeField] private float timeToAimTip = 0.2f;
     public LaserShooter laserShooter;
     private const float amountToRotateY = 180;
@@ -12,6 +11,7 @@ public class StingerController : MonoBehaviour
     private static readonly Vector3 aimingRotTip = new Vector3(180, 0, -48f);
 
     [HideInInspector] public bool isDone = false;
+
     void OnEnable()
     {
         tailTip.localEulerAngles = normalRotTip;
@@ -22,9 +22,9 @@ public class StingerController : MonoBehaviour
         isDone = false;
         int rotDirNum = rotDir ? 1 : -1;
         float rotAmount = amountToRotateY * rotDirNum;
-        float elapsedTime =  0f;
-        
-        while(elapsedTime < timeToAimTip)
+        float elapsedTime = 0f;
+
+        while (elapsedTime < timeToAimTip)
         {
             tailTip.localEulerAngles = Vector3.Lerp(normalRotTip, aimingRotTip, elapsedTime / timeToAimTip);
             elapsedTime += Time.deltaTime;
@@ -34,12 +34,12 @@ public class StingerController : MonoBehaviour
 
         elapsedTime = 0f;
 
-        float halfTime = fireTime/2f;
+        float halfTime = fireTime / 2f;
         Quaternion startRotation = tailBase.rotation;
-        Quaternion halfRotation = Quaternion.Euler(0,  rotAmount, 0) * startRotation;
-        while(elapsedTime < halfTime)
+        Quaternion halfRotation = Quaternion.Euler(0, rotAmount, 0) * startRotation;
+        while (elapsedTime < halfTime)
         {
-            float t = elapsedTime / halfTime; // Calculate the interpolation factor
+            float t = elapsedTime / halfTime;
             tailBase.rotation = Quaternion.Lerp(startRotation, halfRotation, t);
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -47,9 +47,9 @@ public class StingerController : MonoBehaviour
 
         elapsedTime = 0f;
 
-        while(elapsedTime < halfTime)
+        while (elapsedTime < halfTime)
         {
-            float t = elapsedTime / halfTime; // Calculate the interpolation factor
+            float t = elapsedTime / halfTime;
             tailBase.rotation = Quaternion.Lerp(halfRotation, startRotation, t);
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -57,7 +57,7 @@ public class StingerController : MonoBehaviour
 
         elapsedTime = 0f;
 
-        while(elapsedTime < timeToAimTip)
+        while (elapsedTime < timeToAimTip)
         {
             tailTip.localEulerAngles = Vector3.Lerp(aimingRotTip, normalRotTip, elapsedTime / timeToAimTip);
             elapsedTime += Time.deltaTime;
@@ -66,6 +66,5 @@ public class StingerController : MonoBehaviour
         tailTip.localEulerAngles = normalRotTip;
         isDone = true;
     }
-
-
 }
+

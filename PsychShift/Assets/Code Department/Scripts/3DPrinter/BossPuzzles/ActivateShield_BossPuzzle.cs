@@ -27,7 +27,7 @@ public class ActivateShield_BossPuzzle : AbstractBossPuzzle
         {
             shieldGenerators[i].Activate();
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         for(int i = 0; i < shieldGeneratorsLength; i++)
         {
             shieldGenerators[i].beam.Play();
