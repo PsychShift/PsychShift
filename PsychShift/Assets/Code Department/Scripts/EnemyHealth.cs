@@ -33,7 +33,6 @@ namespace Guns.Health
             if (gameObject.layer == 15 && GodModeScript.Instance.GodMode) return;
             int damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
             
-
             CurrentHealth -= damageTaken;
             //healthBar.value = CurrenHealth;
             if(damageTaken !=0)

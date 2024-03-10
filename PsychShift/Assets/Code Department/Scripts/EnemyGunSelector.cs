@@ -8,12 +8,13 @@ namespace Guns.Demo
     [DisallowMultipleComponent]
     public class EnemyGunSelector : MonoBehaviour, IGunSelector
     {
+        public static float DamageReduction = 0.2f;
         public Camera Camera;
 
         public GunScriptableObject StartGun;
         public Transform GunParent;
 
-        [SerializeField] private PlayerIK InverseKinematics;
+        //[SerializeField] private PlayerIK InverseKinematics;
 
         [Space] 
         [Header("Runtime Filled")] 
@@ -48,7 +49,7 @@ namespace Guns.Demo
             ActiveGun.ShootConfig.SpreadType = BulletSpreadType.Simple;
             ActiveGun.ShootConfig.SpreadMultiplier = 10f;
             ActiveGun.ShootConfig.ShootType = ShootType.FromGun;
-            ActiveGun.DamageConfig.DamageCurve.constant /= 4;
+            ActiveGun.DamageConfig.DamageCurve.constant *= DamageReduction;
   
             ActiveGun.Model.AddComponent<RigTransform>();
             OnActiveGunSet?.Invoke();
