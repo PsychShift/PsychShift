@@ -2809,11 +2809,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5470400544569419525, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5470400544569419525, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: SetFullscreen
       objectReference: {fileID: 0}
     - target: {fileID: 5601824668801610391, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3204,6 +3204,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2285534541407767813, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5188897876018792355}
+    - targetCorrespondingSourceObject: {fileID: 2285534541407767813, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8533881206366658609}
   m_SourcePrefab: {fileID: 100100000, guid: e31211640e439254b829ce4a7791a8a6, type: 3}
 --- !u!1 &508415866835321808 stripped
 GameObject:
@@ -3229,6 +3232,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 7346897527119372697}
   mouseSensitivity: 100
+--- !u!114 &8533881206366658609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546801039020018436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14cf2db5bf8cd4a47b0ffd41406cf51e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullScreenToggle: {fileID: 4695647578395074820}
 --- !u!1 &2175516985922087689 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1508833400368557320, guid: e31211640e439254b829ce4a7791a8a6, type: 3}

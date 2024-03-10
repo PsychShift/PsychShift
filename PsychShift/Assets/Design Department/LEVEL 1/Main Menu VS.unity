@@ -10152,8 +10152,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1326419080}
         m_TargetAssemblyTypeName: SettingsScript, Assembly-CSharp
-        m_MethodName: SetFullscreen
-        m_Mode: 0
+        m_MethodName: 
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -13978,6 +13978,7 @@ GameObject:
   - component: {fileID: 1326419087}
   - component: {fileID: 1326419088}
   - component: {fileID: 1326419089}
+  - component: {fileID: 1326419090}
   m_Layer: 5
   m_Name: Canvas(All)
   m_TagString: Untagged
@@ -14012,7 +14013,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vsyncTog: {fileID: 1902101920}
-  fsTog: {fileID: 0}
 --- !u!114 &1326419081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14217,6 +14217,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c6339a6077d6b49a96e5e5138c7657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1326419090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326419078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14cf2db5bf8cd4a47b0ffd41406cf51e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullScreenToggle: {fileID: 841612417}
 --- !u!1 &1336401192
 GameObject:
   m_ObjectHideFlags: 0
@@ -21417,7 +21430,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1326419088}
         m_TargetAssemblyTypeName: ResolutionControl, Assembly-CSharp
         m_MethodName: SetResolution
         m_Mode: 0
