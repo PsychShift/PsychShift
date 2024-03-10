@@ -32,12 +32,6 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     public bool leverPull;
     [Header("Needed for level animation, ONLY parent panel and audio clips")]
     public GameObject leverParent;
-    private Transform[] leverChildren;
-    private GameObject beforeSwitch;
-    private GameObject afterSwitch;
-    private GameObject cutscene;
-    private GameObject greenButton;
-    [SerializeField]
     /* private bool killEnemy;
     [Header("Add this if killing an enemy to activate")]
     [SerializeField]
