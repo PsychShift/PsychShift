@@ -47,6 +47,10 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     [Header("Move options")]
     [SerializeField]
     private bool move;
+    [SerializeField]
+    private bool isAnim;
+    [SerializeField]
+    private string animVarName;
     
     [SerializeField] private Vector3 endPosition;
 
@@ -262,7 +266,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
 
         movingActivated = true;
         puzzleComplete = true;
-        StartCoroutine(MoveObject(endPosition, timeOfMove));
+        if(isAnim== false)
+            StartCoroutine(MoveObject(endPosition, timeOfMove));
         //StartCoroutine(MoveFunct());
         /* while(movingActivated == true)
         {
@@ -278,15 +283,14 @@ public class PuzzleKit : MonoBehaviour, IDamageable
                 
         #region 
         
-        /* if(isAnim)
+        if(isAnim)
         {
             //PLAY animation here
             Debug.Log("Trying ANim");
             Animator godBoxAnim = gameObject.GetComponent<Animator>();
-            godBoxAnim.SetBool("Move", true);
+            godBoxAnim.SetBool(animVarName, true);
         }
-        else
-        { */ //GARBO CODE that I'm hoarding
+         //GARBO CODE that I'm hoarding
         
         //Moves object forward and back
         //PuzzleDone?.Invoke();
