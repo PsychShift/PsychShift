@@ -315,14 +315,14 @@ namespace Guns
                     Iteration
                 );
                 
-                if(hit.collider.tag=="Swapable")
+                /* if(hit.collider.tag=="Swapable")
                 {
                     AudioConfig.PlayHitClip(ShootingAudioSource);
                     //Start UI animation if it came from player.
                     //Need UI reference 
                     // 
                     
-                }
+                } */
                     
                 /* else if(hit.collider.tag == "Player")
                     AudioConfig.PlayHitClipEnemy(ShootingAudioSource); */
