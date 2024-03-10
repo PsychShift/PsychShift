@@ -9,13 +9,17 @@ public class UIscript : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI statFlowText;
     public GameObject StaticImage;
+    public GameObject FlowImage;
     
 
     // Start is called before the first frame update
     void Start()
     {
         InputManager.Instance.OnSwitchPressed += SwitchMode;//Do the thing when dis pressed
-        StaticImage.SetActive(false);
+        if(FlowImage!=null)
+            FlowImage.SetActive(true);
+        if(StaticImage!=null)
+            StaticImage.SetActive(false);
     }
 
     void OnDisable()
@@ -30,12 +34,16 @@ public class UIscript : MonoBehaviour
             //UI dis
             statFlowText.text = "LT/L shift:Static";
             StaticImage.SetActive(true);
+            if(FlowImage != null)
+                FlowImage.SetActive(false);
         }
         else
         {
             //UI DAT
             statFlowText.text = "LT/L shift:Flow";
             StaticImage.SetActive(false);
+            if(FlowImage!=null)
+                FlowImage.SetActive(true);
         }
     }
 }
