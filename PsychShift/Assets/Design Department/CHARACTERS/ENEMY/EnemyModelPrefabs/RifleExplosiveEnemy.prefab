@@ -882,11 +882,11 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d74c6386b93bfc344aa728c37c333876, type: 2}
-  - {fileID: 2100000, guid: cb366ca1bfe6b5f4b9c077a26c90c147, type: 2}
-  - {fileID: 2100000, guid: faebf449266c0c740abab2a08bdb4510, type: 2}
-  - {fileID: 2100000, guid: d1f50a79af2cbac488afecaff5f404a2, type: 2}
-  - {fileID: 2100000, guid: 826a26e2b6980724e81260da284f7075, type: 2}
+  - {fileID: 2100000, guid: 17ccb2ea0c1798d4785d80484b791984, type: 2}
+  - {fileID: 2100000, guid: 17ccb2ea0c1798d4785d80484b791984, type: 2}
+  - {fileID: 2100000, guid: 17ccb2ea0c1798d4785d80484b791984, type: 2}
+  - {fileID: 2100000, guid: 17ccb2ea0c1798d4785d80484b791984, type: 2}
+  - {fileID: 2100000, guid: 17ccb2ea0c1798d4785d80484b791984, type: 2}
   - {fileID: 2100000, guid: 20b5de88ded37a543a2807dc83468104, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -1646,7 +1646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   gunType: {fileID: 11400000, guid: 29cb4dc3750135b42813e37fb213d896, type: 2}
-  modifiers: 03000000
+  modifier: 0
   currentBrain: {fileID: 0}
 --- !u!114 &3034052666354345378
 MonoBehaviour:
@@ -1709,7 +1709,6 @@ MonoBehaviour:
   Camera: {fileID: 0}
   StartGun: {fileID: 11400000, guid: 29cb4dc3750135b42813e37fb213d896, type: 2}
   GunParent: {fileID: 2213917291445965841}
-  InverseKinematics: {fileID: 0}
   <ActiveBaseGun>k__BackingField: {fileID: 0}
   InitializeOnStart: 0
 --- !u!114 &1336967112072070865
@@ -1823,6 +1822,7 @@ MonoBehaviour:
   childColliders: []
   Animator: {fileID: 0}
   _hipBones: {fileID: 0}
+  Rigidbodies: []
   isDoneStanding: 0
   _bones: []
   _standUpClipName: Stand Up
