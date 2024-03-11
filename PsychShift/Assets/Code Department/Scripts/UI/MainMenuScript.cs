@@ -25,6 +25,8 @@ public class MainMenuScript : MonoBehaviour
     public GameObject NeuroNetworkVideoFirst;
     public GameObject RemappingMenu;
     public GameObject RemappingMenuFirst;
+    public GameObject DiffMenu;
+    public GameObject DiffMenuFirst;
     private WaitForSeconds MenuTick = new WaitForSeconds(0.1f);
     private Coroutine WaitforFade;
     [SerializeField] private bool fadeInCredits = false;
@@ -42,6 +44,7 @@ public class MainMenuScript : MonoBehaviour
         MovementVideo.SetActive(false);
         NeuroNetworkVideo.SetActive(false);
         RemappingMenu.SetActive(false);
+        DiffMenu.SetActive(false);
 
         // Jonathan plased this in the update state, dont know why. Undo it if I broke something.
         Cursor.lockState = CursorLockMode.Locked;
@@ -278,6 +281,17 @@ public class MainMenuScript : MonoBehaviour
     public void CloseRemap()
     {
         RemappingMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+    }
+    public void OpenDiff()
+    {
+        DiffMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(RemappingMenuFirst);
+    }
+
+    public void CloseDiff()
+    {
+        DiffMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
     }
     

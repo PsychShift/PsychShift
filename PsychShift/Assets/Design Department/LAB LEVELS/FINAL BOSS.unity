@@ -1068,6 +1068,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasePanelPK
       objectReference: {fileID: 0}
+    - target: {fileID: 8526224086343137379, guid: e3e10279501d1cc4ba78aae5fe9be0ef, type: 3}
+      propertyPath: godBoxRef
+      value: 
+      objectReference: {fileID: 1821753514}
+    - target: {fileID: 8526224086343137379, guid: e3e10279501d1cc4ba78aae5fe9be0ef, type: 3}
+      propertyPath: amountToActivate
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -39673,15 +39681,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2392382793057758284, guid: dcc96dbbd0f066640b087e4dd49d869e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 266.89743
+      value: 545.72
       objectReference: {fileID: 0}
     - target: {fileID: 2392382793057758284, guid: dcc96dbbd0f066640b087e4dd49d869e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -26.96
+      value: 54.6
       objectReference: {fileID: 0}
     - target: {fileID: 2392382793057758284, guid: dcc96dbbd0f066640b087e4dd49d869e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3903.68
+      value: -4139.5
       objectReference: {fileID: 0}
     - target: {fileID: 2392382793057758284, guid: dcc96dbbd0f066640b087e4dd49d869e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -51377,6 +51385,8 @@ MonoBehaviour:
   amountToActivate: 1
   activateCount: 0
   move: 0
+  isAnim: 0
+  animVarName: 
   endPosition: {x: 0, y: 0, z: 0}
   timeOfMove: 2
   spawn: 0
@@ -54340,13 +54350,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: PushPullItem (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1785156486501920153, guid: 8d5ef483113752f4c91cf65963fae7d0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 72858.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785156486501920153, guid: 8d5ef483113752f4c91cf65963fae7d0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785156486501920153, guid: 8d5ef483113752f4c91cf65963fae7d0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 308.3
+      objectReference: {fileID: 0}
     - target: {fileID: 2166831088855084152, guid: 8d5ef483113752f4c91cf65963fae7d0, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2166831088855084152, guid: 8d5ef483113752f4c91cf65963fae7d0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 572.4
+      value: 572.8
       objectReference: {fileID: 0}
     - target: {fileID: 2166831088855084152, guid: 8d5ef483113752f4c91cf65963fae7d0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -54384,11 +54406,71 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8887124133042796941, guid: 8d5ef483113752f4c91cf65963fae7d0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1409053774942451491, guid: 8d5ef483113752f4c91cf65963fae7d0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1821753514}
   m_SourcePrefab: {fileID: 100100000, guid: 8d5ef483113752f4c91cf65963fae7d0, type: 3}
+--- !u!1 &1821753513 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1409053774942451491, guid: 8d5ef483113752f4c91cf65963fae7d0, type: 3}
+  m_PrefabInstance: {fileID: 1821753512}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1821753514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821753513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Beep: {fileID: 0}
+  soundClip: {fileID: 0}
+  godBoxRef: {fileID: 0}
+  effectForAct: {fileID: 0}
+  index: 0
+  interact: 0
+  pressurePlate: 0
+  shootObj: 0
+  leverPull: 0
+  leverParent: {fileID: 0}
+  effectForGod: {fileID: 0}
+  amountToActivate: 1
+  activateCount: 0
+  move: 1
+  isAnim: 0
+  animVarName: 
+  endPosition: {x: 232.1, y: 54.2, z: -4046.9}
+  timeOfMove: 2
+  spawn: 0
+  spawnObjects: []
+  locationOfSpawn: {fileID: 0}
+  howManySpawn: 0
+  activate: 0
+  activateObject: []
+  deactivate: 0
+  deactivateObject: []
+  dissolveOBJ: 0
+  dissolveDuration: 2
+  dissolveStrength: 0
+  doNotReact: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  activated: 0
+  puzzleComplete: 0
+  puzzleDone: 0
+  puzzleIndex: 0
 --- !u!1001 &1824060046
 PrefabInstance:
   m_ObjectHideFlags: 0
