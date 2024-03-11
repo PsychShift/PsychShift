@@ -133,6 +133,12 @@ public class EnemyBrainSelector : MonoBehaviour
                 return "Minigun";
             case GunType.SaltGun:
                 return "SaltGun";
+            case GunType.Revolver:
+                return "Revolver";
+            case GunType.RocketLauncher:
+                return "RocketLauncher";
+            case GunType.Crossbow:
+                return "Crossbow";
             case GunType.None:
                 return "None";
             default:
