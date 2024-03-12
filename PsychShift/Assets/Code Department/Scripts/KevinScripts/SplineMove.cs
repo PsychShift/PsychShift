@@ -58,6 +58,7 @@ public class SplineMove : MonoBehaviour
     private float currentSpeed;
     private float splineLength;
     private float distancePercentage = 0f;
+    public Vector3 rotation;
 
     void Start()
     {
@@ -88,6 +89,6 @@ public class SplineMove : MonoBehaviour
         // Rotate object along the spline
         Vector3 nextPosition = spline.EvaluatePosition((distancePercentage + 0.05f) % 1f);
         Vector3 direction = nextPosition - currentPosition;
-        transform.rotation = Quaternion.LookRotation(direction, transform.up);
+        transform.rotation = Quaternion.identity;
     }
 }
