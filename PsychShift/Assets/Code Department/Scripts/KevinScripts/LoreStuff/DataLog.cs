@@ -8,6 +8,7 @@ public class DataLog : MonoBehaviour
 {
     public GameObject interactTextObject;
     public GameObject textObject;
+    public GameObject picture;
     //public PlayerInput PlayerInput;
     public AudioClip audioLog;
     public AudioSource audioSource;
@@ -32,6 +33,8 @@ public class DataLog : MonoBehaviour
                 textObject.SetActive(false);
             if(audioSource!=null)
                 audioSource.Stop();
+            if(picture!=null)
+                picture.SetActive(false);
             isReading = false;
                 //if(Time.timeScale==1 && isReading == false)
             //PlayerInput.enabled = false;
@@ -40,7 +43,7 @@ public class DataLog : MonoBehaviour
     
     public void TextInteract()
     {
-        Debug.Log("here");
+        //Debug.Log("here");
         if(isReading == false)
         {
             //Time.timeScale = 0;
@@ -48,6 +51,8 @@ public class DataLog : MonoBehaviour
                 textObject.SetActive(true);
             if(audioSource!=null)
                 audioSource.PlayOneShot(audioLog);
+            if(picture!=null)
+                picture.SetActive(true);
             isReading = true;
             //PlayerInput.enabled = true;
         }
@@ -58,6 +63,8 @@ public class DataLog : MonoBehaviour
                 textObject.SetActive(false);
             if(audioSource!=null)
                 audioSource.Stop();
+            if(picture!=null)
+                picture.SetActive(false);
             isReading = false;
             //PlayerInput.enabled = false;
             

@@ -254,6 +254,7 @@ namespace Player
             InputManager.Instance.OnSwapPressed -= SwapPressed;
             InputManager.Instance.OnManipulatePressed -= Manipulate;
             InputManager.Instance.OnSwitchPressed -= SwitchMode;
+            InputManager.Instance.OnInteractPressed-= TryInteract;
         }
         void Update()
         {
