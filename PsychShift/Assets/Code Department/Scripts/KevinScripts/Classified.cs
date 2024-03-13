@@ -11,6 +11,7 @@ public class Classified : MonoBehaviour
         Debug.Log("I'm in your walls");
         Debug.LogWarning("I'm in your walls");
         Debug.LogError("I'm in your walls");
+        Debug.Log(this.gameObject.name);
         //Debug.LogException("I'm in your walls");
     }
 }
