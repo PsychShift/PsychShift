@@ -134,6 +134,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""d50bfe96-8956-4fda-89e2-1bf2deb34300"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -442,6 +451,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""Objective tracker"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a979ef47-40c1-4089-bb74-ed1349d86176"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""51b1ff76-aa3f-432a-8a5c-1c796c9cf633"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -935,6 +966,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Controls_GamepadSwitch = m_Controls.FindAction("Gamepad Switch", throwIfNotFound: true);
         m_Controls_Pause = m_Controls.FindAction("Pause", throwIfNotFound: true);
         m_Controls_Objectivetracker = m_Controls.FindAction("Objective tracker", throwIfNotFound: true);
+        m_Controls_Interact = m_Controls.FindAction("Interact", throwIfNotFound: true);
         // Slow
         m_Slow = asset.FindActionMap("Slow", throwIfNotFound: true);
         m_Slow_MindSwap = m_Slow.FindAction("MindSwap", throwIfNotFound: true);
@@ -1024,6 +1056,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Controls_GamepadSwitch;
     private readonly InputAction m_Controls_Pause;
     private readonly InputAction m_Controls_Objectivetracker;
+    private readonly InputAction m_Controls_Interact;
     public struct ControlsActions
     {
         private @PlayerControls m_Wrapper;
@@ -1040,6 +1073,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @GamepadSwitch => m_Wrapper.m_Controls_GamepadSwitch;
         public InputAction @Pause => m_Wrapper.m_Controls_Pause;
         public InputAction @Objectivetracker => m_Wrapper.m_Controls_Objectivetracker;
+        public InputAction @Interact => m_Wrapper.m_Controls_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1085,6 +1119,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Objectivetracker.started += instance.OnObjectivetracker;
             @Objectivetracker.performed += instance.OnObjectivetracker;
             @Objectivetracker.canceled += instance.OnObjectivetracker;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IControlsActions instance)
@@ -1125,6 +1162,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Objectivetracker.started -= instance.OnObjectivetracker;
             @Objectivetracker.performed -= instance.OnObjectivetracker;
             @Objectivetracker.canceled -= instance.OnObjectivetracker;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IControlsActions instance)
@@ -1346,6 +1386,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnGamepadSwitch(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnObjectivetracker(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface ISlowActions
     {

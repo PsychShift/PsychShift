@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections;
 using Guns.Demo;
 using UnityEngine.SceneManagement;
+using Unity.Mathematics;
 
 namespace Player
 {
@@ -179,6 +180,7 @@ namespace Player
             InputManager.Instance.OnSwapPressed += SwapPressed;
             InputManager.Instance.OnManipulatePressed += Manipulate;
             InputManager.Instance.OnSwitchPressed += SwitchMode;
+            InputManager.Instance.OnInteractPressed += TryInteract;
             #endregion
 
             // Create instances of root states
@@ -669,6 +671,17 @@ namespace Player
         public void SwitchMode(bool trySetStatic)
         {
             StaticMode = trySetStatic;
+        }
+        public void TryInteract()
+        {
+            
+            RaycastHit[] hitInteract = Physics.BoxCastAll(cameraTransform.position, boxHalfExtents, cameraTransform.forward,Quaternion.identity, 0, LayerMask.NameToLayer("DataLog"), QueryTriggerInteraction.Collide );
+            if(hitInteract.Length>0)
+            {
+                Debug.Log("Hit a box");
+                for(int i = 0; i<hitInteract.Length;i++)
+                    hitInteract[i].collider.GetComponent<DataLog>().TextInteract();
+            }
         }
         void OnDrawGizmos()
         {                
