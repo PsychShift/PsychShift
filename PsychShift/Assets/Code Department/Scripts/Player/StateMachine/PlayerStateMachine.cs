@@ -675,12 +675,17 @@ namespace Player
         public void TryInteract()
         {
             
-            RaycastHit[] hitInteract = Physics.BoxCastAll(cameraTransform.position, boxHalfExtents, cameraTransform.forward,Quaternion.identity, 0, LayerMask.NameToLayer("DataLog"), QueryTriggerInteraction.Collide );
+            RaycastHit[] hitInteract = Physics.BoxCastAll(cameraTransform.position, boxHalfExtents, cameraTransform.forward,Quaternion.identity, 0, ~0, QueryTriggerInteraction.Collide );
             if(hitInteract.Length>0)
             {
                 Debug.Log("Hit a box");
                 for(int i = 0; i<hitInteract.Length;i++)
-                    hitInteract[i].collider.GetComponent<DataLog>().TextInteract();
+                    if(hitInteract[i].collider.TryGetComponent(out DataLog dataLog))
+                    {
+                        dataLog.TextInteract();
+                        break;
+                    }
+                        
             }
         }
         void OnDrawGizmos()
