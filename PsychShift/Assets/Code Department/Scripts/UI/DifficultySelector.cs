@@ -18,14 +18,14 @@ public class DifficultySelector : MonoBehaviour
     }
     public void Easy()
     {
-        EnemyGunSelector.DamageReduction = 0.01f;
+        EnemyGunSelector.DamageReduction = 0.03f;
     }
     public void Medium()
     {
-        EnemyGunSelector.DamageReduction = 0.02f;
+        EnemyGunSelector.DamageReduction = 0.05f;
     }
     public void Hard()
     {
-        EnemyGunSelector.DamageReduction = 0.03f;
+        EnemyGunSelector.DamageReduction = 0.1f;
     }
 }
