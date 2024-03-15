@@ -121,17 +121,17 @@ public class EnemySpawner : MonoBehaviour
 
             AIAgression agression = agressionLevels[UnityEngine.Random.Range(0, agressionLevels.Count)];
 
-
+            EEnemyModifier eMod = selectedModifiers.Count > 0 ? selectedModifiers[0] : EEnemyModifier.None;
             // Set enemy type
             EnemyBrainSelector selector = enemy.GetComponent<EnemyBrainSelector>();
-            selector.SwapBrain(gun, brain, selectedModifiers[0], agression);
+            selector.SwapBrain(gun, brain, eMod, agression);
 
             // subscribe to death event
             enemy.GetComponent<EnemyHealth>().OnDeath += EnemyDeath;
             enemySpawned.Add(enemy);
 
             string gunTypeName = selector.GunName(gun);
-            string modifierName = selector.ModifierName(selectedModifiers[0]);
+            string modifierName = selector.ModifierName(eMod);
 
             enemy.name = gunTypeName + modifierName + "_EnemyModel";
 
