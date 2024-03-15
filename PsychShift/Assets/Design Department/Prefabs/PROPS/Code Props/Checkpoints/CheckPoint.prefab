@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9157026260856771540}
   - component: {fileID: 6998304915453005957}
   - component: {fileID: 7064256302307678227}
+  - component: {fileID: 1881529316891891041}
   m_Layer: 2
   m_Name: CheckPoint
   m_TagString: Untagged
@@ -34,7 +35,7 @@ Transform:
   m_Children:
   - {fileID: 1624003936557096176}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8767255096612412486
 MeshFilter:
@@ -122,11 +123,107 @@ MonoBehaviour:
   currentObjective: 
   objectiveUI: {fileID: 0}
   respawnPoint: {fileID: 7790561805721216078}
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 1881529316891891041}
   audioClip: {fileID: 8300000, guid: e4f5af64947fb22499c7ddb2f4c93cc6, type: 3}
   checkpointUI: {fileID: 801196283188687722, guid: 2a6b062f70586b045863fc32a964f925, type: 3}
   checkpoint: {fileID: 7366738313056340869, guid: 29dd6c729dbb4af4f848cbb7db9b3c53, type: 3}
   spawnPositionObject: {fileID: 7790561805721216078}
+--- !u!82 &1881529316891891041
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3953168529187528139}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: ec3400c78ac187c43b4993df9520ee82, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 0
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &4876731090765731033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -137,7 +234,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1060730381434028716, guid: 696b45f93d79e604aa31ef807aa87327, type: 3}
       propertyPath: m_Name
-      value: Music changer
+      value: Checkpoint AudioSource
       objectReference: {fileID: 0}
     - target: {fileID: 1060730381434028716, guid: 696b45f93d79e604aa31ef807aa87327, type: 3}
       propertyPath: m_Layer
@@ -191,6 +288,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 49c8a5650a4e6bf4e9f6c4d69c23da0d, type: 2}
+    - target: {fileID: 8977205271711738164, guid: 696b45f93d79e604aa31ef807aa87327, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
