@@ -882,11 +882,11 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d74c6386b93bfc344aa728c37c333876, type: 2}
-  - {fileID: 2100000, guid: cb366ca1bfe6b5f4b9c077a26c90c147, type: 2}
-  - {fileID: 2100000, guid: faebf449266c0c740abab2a08bdb4510, type: 2}
-  - {fileID: 2100000, guid: d1f50a79af2cbac488afecaff5f404a2, type: 2}
-  - {fileID: 2100000, guid: 826a26e2b6980724e81260da284f7075, type: 2}
+  - {fileID: 2100000, guid: 17ccb2ea0c1798d4785d80484b791984, type: 2}
+  - {fileID: 2100000, guid: 17ccb2ea0c1798d4785d80484b791984, type: 2}
+  - {fileID: 2100000, guid: 17ccb2ea0c1798d4785d80484b791984, type: 2}
+  - {fileID: 2100000, guid: 17ccb2ea0c1798d4785d80484b791984, type: 2}
+  - {fileID: 2100000, guid: 17ccb2ea0c1798d4785d80484b791984, type: 2}
   - {fileID: 2100000, guid: 20b5de88ded37a543a2807dc83468104, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -1646,7 +1646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   gunType: {fileID: 11400000, guid: 29cb4dc3750135b42813e37fb213d896, type: 2}
-  modifiers: 03000000
+  modifier: 0
   currentBrain: {fileID: 0}
 --- !u!114 &3034052666354345378
 MonoBehaviour:
@@ -1709,7 +1709,6 @@ MonoBehaviour:
   Camera: {fileID: 0}
   StartGun: {fileID: 11400000, guid: 29cb4dc3750135b42813e37fb213d896, type: 2}
   GunParent: {fileID: 2213917291445965841}
-  InverseKinematics: {fileID: 0}
   <ActiveBaseGun>k__BackingField: {fileID: 0}
   InitializeOnStart: 0
 --- !u!114 &1336967112072070865
@@ -1823,6 +1822,7 @@ MonoBehaviour:
   childColliders: []
   Animator: {fileID: 0}
   _hipBones: {fileID: 0}
+  Rigidbodies: []
   isDoneStanding: 0
   _bones: []
   _standUpClipName: Stand Up
@@ -2143,6 +2143,7 @@ Transform:
   - {fileID: 4780430423132955097}
   - {fileID: 8987751286638552437}
   - {fileID: 5173306970131794982}
+  - {fileID: 4866568223168131165}
   m_Father: {fileID: 3783660539169912434}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -2349,11 +2350,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selector: {fileID: 1548434094081613039}
-  fileName: _EnemyModel
+  fileName: RifleExplosive_EnemyModel
   model:
-    materialNames: []
-    materialPaths: []
-    props: []
+    materialNames:
+    - EnemyWireFrame
+    - EnemyWireFrame
+    - EnemyWireFrame
+    - EnemyWireFrame
+    - EnemyWireFrame
+    - Outline_Material_Enemy 1 - Copy
+    materialPaths:
+    - Assets/Design Department/CHARACTERS/ENEMY/wireframe/Enemy_Wireframe/EnemyWireFrame.mat
+    - Assets/Design Department/CHARACTERS/ENEMY/wireframe/Enemy_Wireframe/EnemyWireFrame.mat
+    - Assets/Design Department/CHARACTERS/ENEMY/wireframe/Enemy_Wireframe/EnemyWireFrame.mat
+    - Assets/Design Department/CHARACTERS/ENEMY/wireframe/Enemy_Wireframe/EnemyWireFrame.mat
+    - Assets/Design Department/CHARACTERS/ENEMY/wireframe/Enemy_Wireframe/EnemyWireFrame.mat
+    - Assets/Resources/EnemyMaterials/Outline_Material_Enemy 1 - Copy.mat
+    props:
+    - parent: mixamorig:HeadTop_End
+      prefabPath: Assets/Design Department/PREFABS/ENEMYPROPS/EnemyGlassesProp.prefab
+      prefabName: EnemyGlassesProp
+      position: {x: 0.000118374825, y: -0.31760943, z: 0.26108688}
+      rotation: {x: 285.02277, y: 342.42722, z: 112.48793}
+      scale: {x: 9.355723, y: 9.355722, z: 9.355721}
+    - parent: mixamorig:HeadTop_End
+      prefabPath: Assets/Design Department/PREFABS/ENEMYPROPS/security_capv2 (55)
+        Variant.prefab
+      prefabName: security_capv2 (55) Variant
+      position: {x: -0.012845039, y: -0.23533332, z: -0.08554809}
+      rotation: {x: 2.1398575, y: 182.34581, z: 353.9448}
+      scale: {x: 0.3396766, y: 0.3625759, z: 0.36257586}
+    - parent: mixamorig:Hips
+      prefabPath: Assets/Design Department/PREFABS/ENEMYPROPS/belt_UVd Variant.prefab
+      prefabName: belt_UVd Variant
+      position: {x: 0.0035513975, y: 0.23587242, z: -0.13195194}
+      rotation: {x: 1.5537558, y: 91.23805, z: 1.1135663}
+      scale: {x: 2.556336, y: 3.3373506, z: 3.1041644}
+    - parent: mixamorig:Hips
+      prefabPath: Assets/Design Department/PREFABS/ENEMYPROPS/Bomb EnemyProp.prefab
+      prefabName: Bomb EnemyProp
+      position: {x: 0.004179741, y: 0.9857743, z: 0.46449125}
+      rotation: {x: -0, y: 0.000013660377, z: -0}
+      scale: {x: 68.90084, y: 68.90083, z: 68.90084}
 --- !u!114 &5926595715857599308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4344,4 +4382,82 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7004836451748900539, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
   m_PrefabInstance: {fileID: 2809519271861904029}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7655025066623397335
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8706040795237242598}
+    m_Modifications:
+    - target: {fileID: 2521534283103848240, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_Name
+      value: Bomb EnemyProp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 68.90084
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 68.90083
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 68.90084
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.004179741
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.9857743
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.46449125
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.000000119209275
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+--- !u!4 &4866568223168131165 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3005478470327180682, guid: d2bf37706d2f71042af7123cdbf3c528, type: 3}
+  m_PrefabInstance: {fileID: 7655025066623397335}
   m_PrefabAsset: {fileID: 0}

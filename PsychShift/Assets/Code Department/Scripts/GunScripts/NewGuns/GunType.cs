@@ -13,9 +13,11 @@ namespace Guns
         ShotGun,
         SMG,
         Minigun,
-        SaltGun,
         None,
         Sniper,
-        Revolver
+        Revolver,
+        Crossbow,
+        SaltGun,
+        RocketLauncher
     }
 }

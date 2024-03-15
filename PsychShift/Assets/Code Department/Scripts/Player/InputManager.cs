@@ -25,6 +25,7 @@ public class InputManager : MonoBehaviour
     public InputAction JumpAction { get; set; }
     public InputAction ShootAction { get; set; }
     public InputAction SwitchAction { get; set; }
+    public InputAction Interact {get; set; }
     #region Normal Controls
     public InputActionMap StandardActionMap { get; private set; }
     public InputAction StandardMoveAction { get; private set; }
@@ -59,9 +60,11 @@ public class InputManager : MonoBehaviour
     public delegate void SwapPressedHandler();
     public delegate void ManipulatePressedHandler();
     public delegate void ShootPressedHandler();
+    public delegate void InteractPressedHandler();
     public event SwapPressedHandler OnSwapPressed;
     public event ManipulatePressedHandler OnManipulatePressed;
     public event ShootPressedHandler OnShootPressed;
+    public event InteractPressedHandler OnInteractPressed;
     public event Action<bool> OnSlowActionStateChanged;
     public event Action<bool> OnSwitchPressed;
     public event Action OnPausePressed;
@@ -97,6 +100,7 @@ public class InputManager : MonoBehaviour
         StandardLookAction = PlayerInput.actions[StandardActionMap.name + "/Look"];
         StandardJumpAction = PlayerInput.actions[StandardActionMap.name + "/Jump"];
         StandardShootAction = PlayerInput.actions[StandardActionMap.name + "/Shoot"];//Kevin added this shooting thing
+        Interact = PlayerInput.actions[StandardActionMap.name + "/Interact"];
         SlowAction = PlayerInput.actions[StandardActionMap.name + "/Slow"];
         StandardPauseAction = PlayerInput.actions[StandardActionMap.name + "/Pause"];
         //swap input Kevin added this
@@ -143,6 +147,7 @@ public class InputManager : MonoBehaviour
         StandardPauseAction.started += PressedPause;
         SlowPauseAction.started += PressedPause;
         UIPauseAction.started += PressedPause;
+        Interact.started += PressedInteract;
 
 
         // Camera Sensitivity Stuff
@@ -196,6 +201,10 @@ public class InputManager : MonoBehaviour
     private void PressedPause(InputAction.CallbackContext context)
     {
         OnPausePressed?.Invoke();
+    }
+    private void PressedInteract(InputAction.CallbackContext context)
+    {
+        OnInteractPressed?.Invoke();
     }
     private bool _switch = false;
     private void OnSwitch(InputAction.CallbackContext context)
