@@ -31,12 +31,13 @@ public class RandomBrain : EnemyBrain
         ANY(chaseState, WasDamaged());
 
         stateMachine.SetState(pickRandom, true);
+        _isActive = true;
     }
 
 
     void Update()
     {
-        if(IsActive && stateMachine != null)
+        if(_isActive && stateMachine != null)
             stateMachine.Tick();
     }
 

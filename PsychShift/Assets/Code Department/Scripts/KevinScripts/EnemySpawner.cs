@@ -9,9 +9,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public static System.Random Rand = new System.Random();
     [SerializeField]
-    PuzzleKit godBoxRef;
-    [SerializeField] private GameObject enemyPrefab;
-    
+    PuzzleKit godBoxRef;    
     //[SerializeField] GameObject[] enemyType;
 
     [SerializeField] private List<EBrainType> enemyTypes;
@@ -104,7 +102,7 @@ public class EnemySpawner : MonoBehaviour
 
         for(int i = 0; i < numToSpawn; i++)
         {
-            GameObject enemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+            GameObject enemy = Instantiate(GameAssets.Instance.EnemyPrefab, transform.position, Quaternion.identity);
             // Choose enemy type stuff
             EBrainType brain = enemyTypes[UnityEngine.Random.Range(0, enemyTypes.Count)];
 

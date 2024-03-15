@@ -9,6 +9,7 @@ public class StationaryBrain : EnemyBrain
     ChaseState chaseState;
     SetLocationState returnToStationState;
     LookAroundState lookAroundState;
+    bool isSpawnerBoy = false;
     protected override void SetUp()
     {
         Agent.enabled = true;
@@ -34,17 +35,20 @@ public class StationaryBrain : EnemyBrain
         stateMachine.SetState(lookAroundState,true);
         
         AT(standupState, chaseState, BackToChase());
+
+        _isActive = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(IsActive)
+        if(_isActive)
             stateMachine.Tick();
     }
 
     public void SpawnerSetup(Vector3 guardPos)
     {
+        isSpawnerBoy = true;
         if(guardPos == Vector3.zero) return;
         returnToStationState = new SetLocationState(this, guardPos);
         AT(returnToStationState, lookAroundState, returnToStationState.IsDone());

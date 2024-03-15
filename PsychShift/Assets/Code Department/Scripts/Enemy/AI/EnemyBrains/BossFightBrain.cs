@@ -33,7 +33,7 @@ public class BossFightBrain : EnemyBrain
     // Update is called once per frame
     void Update()
     {
-        if(IsActive && chaseState != null)
+        if(_isActive && chaseState != null)
             stateMachine.Tick();
     }
     public IEnumerator Launch(Vector3 dir, float force)

@@ -23,7 +23,7 @@ public abstract class EnemyBrain : MonoBehaviour
 {
     public bool ragDollDone;
 
-    [SerializeField] private bool _isActive = true;
+    [SerializeField] protected bool _isActive = false;
     public bool IsActive {
         get 
         { 
@@ -31,6 +31,7 @@ public abstract class EnemyBrain : MonoBehaviour
         }
         set 
         { 
+            _isActive = value; 
             if(value == false)
             {
                 //Debug.Log("Deactivating");
@@ -41,7 +42,6 @@ public abstract class EnemyBrain : MonoBehaviour
                 //Debug.Log("Reactivating");
                 HandleReactivation();
             }
-            _isActive = value; 
         }
     }
     //[SerializeField] protected LayerMask playerLayer;
@@ -115,6 +115,7 @@ public abstract class EnemyBrain : MonoBehaviour
     /// </summary> 
     protected void VariableSetup()
     {
+        _isActive = false;
         UpdateAgression(agression);
         stateMachine = new StateMachine.StateMachine();
         RigColliderManager rgm = GetComponent<RigColliderManager>();
@@ -140,9 +141,11 @@ public abstract class EnemyBrain : MonoBehaviour
 
     protected IEnumerator WaitPlease()
     {
+        _isActive = false;
         yield return new WaitForSeconds(0.05f);
         VariableSetup();
         StateMachineSetup();
+        _isActive = true;
     }
 
     /* private void Ragdoll()

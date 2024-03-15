@@ -41,7 +41,7 @@ public class PatrolBrain : EnemyBrain
 
     void Update()
     {
-        if(IsActive && stateMachine != null)
+        if(_isActive && stateMachine != null)
             stateMachine.Tick();
     }
     public void SpawnerSetup(Vector3[] guardPos)

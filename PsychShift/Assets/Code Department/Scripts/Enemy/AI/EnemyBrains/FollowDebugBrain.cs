@@ -12,7 +12,7 @@ public class FollowDebugBrain : EnemyBrain
 
     void Update()
     {
-        if(CharacterInfo.agent.enabled && IsActive)
+        if(CharacterInfo.agent.enabled && _isActive)
             stateMachine.Tick();
     }
 
