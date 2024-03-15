@@ -114,7 +114,6 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     {
         healthBar.value -= damage;
     }
-
 }
 
 [Serializable]
