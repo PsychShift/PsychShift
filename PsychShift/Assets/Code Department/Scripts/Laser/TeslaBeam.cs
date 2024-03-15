@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Guns.Health;
 using UnityEngine;
 
+[RequireComponent(typeof(LineRenderer))]
 public class TeslaBeam : MonoBehaviour
 {
     public LaserBeamStats defaultStats;
@@ -184,6 +185,12 @@ public class TeslaBeam : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, targetCheckRadius);
+    }
+
+    void OnValidate()
+    {
+        LineRenderer lr = GetComponent<LineRenderer>();
+        lr.positionCount = 0;
     }
     #endif
 }
