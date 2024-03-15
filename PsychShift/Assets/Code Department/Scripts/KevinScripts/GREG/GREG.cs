@@ -39,11 +39,10 @@ public class GREG : MonoBehaviour, IDamageable
 
      public void ShootHitScan()
     { 
-
         rooms[currentRoomIndex].SetActive(false);
         currentRoomIndex = (currentRoomIndex+1)%rooms.Length;
         nextColorIndex = currentRoomIndex+1;
-        if(nextColorIndex >rooms.Length)
+        if(nextColorIndex >=rooms.Length)
             nextColorIndex = 0;
         rooms[currentRoomIndex].SetActive(enabled);
         currentColor.material = colors[currentRoomIndex];
