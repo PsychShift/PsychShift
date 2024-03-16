@@ -8,6 +8,12 @@ using UnityEngine;
 /// </summary>
 public class DecisionState : IState
 {
+    private HangingRobotController controller;
+    public DecisionState(HangingRobotController controller)
+    {
+        this.controller = controller;
+    }
+
     float waitForSeconds = 4f;
     float endTime = 0f;
     private bool isDone;
@@ -21,11 +27,12 @@ public class DecisionState : IState
     public void OnEnter()
     {
         endTime = Time.time + waitForSeconds;
+        controller.canMove = true;
     }
 
     public void OnExit()
     {
-        
+        controller.canMove = false;
     }
 
     public void Tick()

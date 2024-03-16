@@ -8,6 +8,7 @@ public class HangingRobotArmsIK : MonoBehaviour
 {
     [Header("Left Arm")]
     public Transform leftArmTarget;
+    public Transform leftArmShoulderBone;
     public Transform leftHandBone;
     //[SerializeField] private TwoBoneIKConstraint leftArmBoneIK;
     [SerializeField] private ChainIKConstraint leftArmIK;
@@ -68,14 +69,15 @@ public class HangingRobotArmsIK : MonoBehaviour
         // Find a point in-between the target position and the spine near the shoulder
 
         // Get the direction from the spine, to the target.
-        Vector3 direction = targetPos - spine.position;
+        /*Vector3 direction = targetPos - leftArmShoulderBone.position;
         direction.Normalize();
 
         // Set the up value of the target to the direction
         leftArmTarget.up = direction;
-        float dist = Vector3.Distance(leftHandBone.position, spine.position);
-        // Set the position of the arm to be the spine position, plusthe direction times some value
-        leftArmTarget.position = spine.position + (direction * dist);
+        float dist = Vector3.Distance(leftHandBone.position, leftArmShoulderBone.position);
+        // Set the position of the arm to be the spine position, plus the direction times some value
+        leftArmTarget.position = leftArmShoulderBone.position + (direction * dist);*/
+        leftArmTarget.position = targetPos;
     }
     public void AimRightHandTarget(Vector3 targetPos)
     {
