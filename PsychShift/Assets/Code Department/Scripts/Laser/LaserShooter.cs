@@ -43,6 +43,7 @@ public class LaserShooter : MonoBehaviour
     }
     public void CeaseFire()
     {
+        Debug.Log("CEASE");
         StopAllCoroutines();
         laserLine.enabled = false;
         isActivelyShooting = false;

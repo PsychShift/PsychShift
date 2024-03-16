@@ -188,12 +188,12 @@ public class HangBossSpine_RotateChest_State : IState
         {
             float t = elapsedTime / duration;
             Quaternion rotation = Quaternion.Lerp(startRot, endRot, t);
-            chest.rotation = rotation;
+            //chest.rotation = rotation;
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        chest.rotation = endRot;
+        //chest.rotation = endRot;
         isDone = true;
     }
 
@@ -264,13 +264,13 @@ public class HangBossSpine_Idle_State : IState
             // Use Mathf.Sin to create an arc motion
             float t = elapsedTime / leanTime;
             float arcFactor = Mathf.Sin(t * Mathf.PI); // Adjust the factor based on your preference
-            target.localPosition = Vector3.Lerp(localStartPos, localHome, arcFactor);
+            //target.localPosition = Vector3.Lerp(localStartPos, localHome, arcFactor);
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        target.localPosition = localHome;
+        //target.localPosition = localHome;
         if (stateIsActive)
             yield return new WaitForSeconds(0.1f);
 
@@ -352,7 +352,7 @@ public class HangBossSpine_Chase_State : IState
         
         while(elapsedTime < leanTime)
         {
-            target.localPosition = Vector3.Lerp(localStartPos, GetLeanPosition(), elapsedTime / leanTime);
+            //target.localPosition = Vector3.Lerp(localStartPos, GetLeanPosition(), elapsedTime / leanTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }

@@ -28,13 +28,13 @@ public class RotatingLaserState : IState
     public void OnEnter()
     {
         bool randomDir = rand.NextDouble() > 0.5;
-        stingerController.laserShooter.Fire(true);
-        stingerController.StartCoroutine(stingerController.FireLaser(stats.ShootForTime, randomDir));
+        //stingerController.laserShooter.Fire(true);
+        stingerController.FireLaser(randomDir);
     }
 
     public void OnExit()
     {
-        stingerController.laserShooter.CeaseFire();
+        //stingerController.laserShooter.CeaseFire();
     }
 
     public void Tick()

@@ -3,18 +3,52 @@ using UnityEngine;
 
 public class StingerController : MonoBehaviour
 {
+    [SerializeField] private Animator _animator;
     [SerializeField] private Transform tailTip, tailBase;
     [SerializeField] private float timeToAimTip = 0.2f;
     public LaserShooter laserShooter;
     private const float amountToRotateY = 180;
-    private static readonly Vector3 normalRotTip = new Vector3(180, 0, -6.7f);
-    private static readonly Vector3 aimingRotTip = new Vector3(180, 0, -48f);
+    [SerializeField] private Vector3 normalRotTip = new Vector3(0, 0, -6.7f);
+    [SerializeField] private Vector3 aimingRotTip = new Vector3(0, 0, -48f);
 
     [HideInInspector] public bool isDone = false;
+
+
+
+    private int activateHash;
+    private int deactivateHash;
+    private int rotateRightHash;
+    private int rotateLeftHash;
+    private int speedHash;
 
     void OnEnable()
     {
         tailTip.localEulerAngles = normalRotTip;
+
+        activateHash = Animator.StringToHash("ActivateTail");
+        deactivateHash = Animator.StringToHash("DeActivateTail");
+        rotateRightHash = Animator.StringToHash("RotateTailRight");
+        rotateLeftHash = Animator.StringToHash("RotateTailLeft");
+        speedHash = Animator.StringToHash("TailSpeed");
+
+        _animator.SetFloat(speedHash, (1 / laserShooter.defaultStats.ShootForTime));
+    }
+    public void FireLaser(bool right)
+    {
+        isDone = false;
+        _animator.SetTrigger(activateHash);
+    }
+    public void TurnOnLaser()
+    {
+        laserShooter.Fire(true);
+    }
+    public void TurnOffLaser()
+    {
+        laserShooter.CeaseFire();
+    }
+    public void Done()
+    {
+        isDone = true;
     }
 
     public IEnumerator FireLaser(float fireTime, bool rotDir)
