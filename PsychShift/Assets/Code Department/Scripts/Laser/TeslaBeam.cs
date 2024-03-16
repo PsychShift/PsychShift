@@ -14,6 +14,8 @@ public class TeslaBeam : MonoBehaviour
     [SerializeField] float targetCheckRadius = 1000;
     LineRenderer lineRenderer;
     public bool test;
+    public AudioSource laserSource;
+    public AudioClip laserClip;
 
     private void Awake()
     {
@@ -72,6 +74,7 @@ public class TeslaBeam : MonoBehaviour
         lineRenderer.SetPosition(0, currentPos);
         bool hitPlayer = false;
         float hitPlayerAgainTimer = 0f;
+        laserSource.PlayOneShot(laserClip);
 
 
         for (int i =  1; i < positions.Count; i++)
