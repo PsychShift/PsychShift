@@ -8,6 +8,7 @@ using TMPro;
 
 public class MainMenuScript : MonoBehaviour
 {
+    public LoadingScene loadingSceneScript;
     public GameObject LoadMenu;
     public GameObject LoadMenuFirst;
     public GameObject MainMenu;
@@ -152,7 +153,8 @@ public class MainMenuScript : MonoBehaviour
     }
     public void IntroLobby()
     {
-        SceneManager.LoadScene("LOBBY INTRO LEVEL");
+        //SceneManager.LoadScene("LOBBY INTRO LEVEL");
+        loadingSceneScript.LoadScene(3);
     }
     public void LobbyBoss()
     {
@@ -253,19 +255,19 @@ public class MainMenuScript : MonoBehaviour
     }
     public void Level1()
     {
-        SceneManager.LoadScene("LEVEL 1");
+        loadingSceneScript.LoadScene(1);
     }
     public void Level2()
     {
-        SceneManager.LoadScene("LEVEL 2");
+        loadingSceneScript.LoadScene(2);
     }
     public void TLab()
     {
-        SceneManager.LoadScene("LAB CENTER");
+        loadingSceneScript.LoadScene(4);
     }
     public void CLab()
     {
-        SceneManager.LoadScene("FINAL BOSS");
+        loadingSceneScript.LoadScene(5);
     }
 
     public void Quit()
