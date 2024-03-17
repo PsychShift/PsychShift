@@ -6,13 +6,11 @@ using UnityEngine.SceneManagement;
 public class LevelEnd : MonoBehaviour
 {
     //private Scene currentScene;
-    void Start()
-    {
-        //currentScene = SceneManager.GetActiveScene();
-    }
+    public LoadingScene loadingScene;
     private void OnTriggerEnter(Collider other) 
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        loadingScene.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         //if(other.CompareTag("Player"))
         //{
             //if(SceneManager.GetActiveScene().name == "Level 1")
