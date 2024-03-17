@@ -314,14 +314,15 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     }
     private void ActivateObject()
     {
-        if(effectForGod!=null)
-            {
-                Instantiate(effectForGod,transform.position, Quaternion.identity);
-            }
+        
         if(soundClip!=null)
                 Beep.PlayOneShot(soundClip);
         for(int i = 0; i< activateObject.Length;i++)
         {
+            if(effectForGod!=null)
+            {
+                Instantiate(effectForGod,activateObject[i].transform.position, Quaternion.identity);
+            }
             activateObject[i].SetActive(true);
         }
         
@@ -331,14 +332,14 @@ public class PuzzleKit : MonoBehaviour, IDamageable
 
     private void DeactivateObject()
     {
-        if(effectForGod!=null)
-            {
-                Instantiate(effectForGod,transform.position, Quaternion.identity);
-            }
         if(soundClip!=null)
                 Beep.PlayOneShot(soundClip);
         for(int i = 0; i< deactivateObject.Length;i++)
         {
+            if(effectForGod!=null)
+            {
+                Instantiate(effectForGod,activateObject[i].transform.position, Quaternion.identity);
+            }
             deactivateObject[i].SetActive(false);
         } 
     }
