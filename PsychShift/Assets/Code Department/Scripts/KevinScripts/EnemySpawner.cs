@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 public class EnemySpawner : MonoBehaviour
 {
     public static System.Random Rand = new System.Random();
+    [Header ("This is to attach a puzzle to stop the spawner when the puzzle is done")]
     [SerializeField]
     PuzzleKit godBoxRef;    
     //[SerializeField] GameObject[] enemyType;
@@ -26,8 +27,11 @@ public class EnemySpawner : MonoBehaviour
 
     
     [SerializeField] Vector2 gapBetweenSpawns;
-    [Header("TURN THIS OFF MANUALLY FOR KILL EVERYONE SECTIONS")]
-    public bool puzzleNotDone= true;
+    //[Header("TURN THIS OFF MANUALLY FOR KILL EVERYONE SECTIONS")]
+    private bool puzzleNotDone= true;
+    [Header("Turn this on for killEveryone sections")]
+    public bool killEveryone;
+    [Header("This is to send a message to god box that a spawner has been cleared")]
     public PuzzleKit godBoxActionRef;
     int deathCount=0;
     public ParticleSystem spawnFX;
@@ -37,6 +41,7 @@ public class EnemySpawner : MonoBehaviour
     private Vector3 randomPos;
     private Vector3 chasePos;
     private Vector3[] patrolPositions;
+    
 
     private void Start() 
     {
@@ -179,10 +184,20 @@ public class EnemySpawner : MonoBehaviour
     
     private void EnemyDeath(Transform enemTransform)
     {
+        #region this is for infinite spawn until puzzle done
         //Debug.Log("ACTIVATED");
-        if(godBoxRef!= null && godBoxRef.puzzleComplete)
-                puzzleNotDone = false;
-        if(puzzleNotDone == false)
+        //IF THERE IS A GODBOX ATTACHED ENEMIES WILL SPAWN UNTIL THAT PUZZLE IS COMPLETE
+        if(godBoxRef!= null && godBoxRef.puzzleDone)
+        {
+            puzzleNotDone = false;//means puzzle issa finished
+        }
+        //has a godbox and the godbox completed the puzzle 
+                
+        #endregion
+
+        #region this is for killing everyone and then activating the godbox 
+        //IF THERE IS AN ACTION 
+        if(killEveryone)//if the puzzle is finished ,Activates godBox
         {
             if(enemySpawned.Count-2<=0)//WAS ONE MADE -2 FOR TEMP FIX
             {
@@ -192,12 +207,13 @@ public class EnemySpawner : MonoBehaviour
             }
             
         }
+
+        #endregion
         enemTransform.GetComponent<EnemyHealth>().OnDeath -= EnemyDeath;
         enemySpawned.Remove(enemTransform.gameObject);
-        if(puzzleNotDone && enemySpawned.Count-2<=0)//WAS ONE MADE -2 FOR TEMP FIX 
+        if(puzzleNotDone && enemySpawned.Count-2<=0)//WAS ONE MADE -2 FOR TEMP FIX THIS IS TO KEEP SPAWNING ENEMIES IF THE PUZZLE IS NOT DONE
         {
             StartCoroutine(SpawnIn());
-            
         }
     }
     void OnDestroy()
@@ -208,10 +224,10 @@ public class EnemySpawner : MonoBehaviour
         }
         enemySpawned.Clear();
     }
-    private void PuzzleFinished()
+    /* private void PuzzleFinished()
     {
         puzzleNotDone = false;
-    }
+    } */
 
     public void UpdateComponents()
     {

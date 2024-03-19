@@ -17,6 +17,7 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     [SerializeField]
     PuzzleKit godBoxRef;
     public ParticleSystem effectForAct;
+    [HideInInspector]
     public int index;
 
     
@@ -381,8 +382,16 @@ public class PuzzleKit : MonoBehaviour, IDamageable
                     //this.gameObject.SetActive(false);  
                 else if(destructObject)
                 {
-                    GetComponent<Collider>().enabled= false;
-                    GetComponent<MeshRenderer>().enabled = false;
+                    Collider collider = GetComponent<Collider>();
+                    //GetComponent<Collider>().enabled= false;
+                    MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+                    //GetComponent<MeshRenderer>().enabled = false;
+                    if(collider!= null)
+                        collider.enabled = false;
+                    if(meshRenderer!= null)
+                        meshRenderer.enabled = false;
+                    else
+                        Destroy(gameObject);
                 }
                 else if(doNotReact)
                 {

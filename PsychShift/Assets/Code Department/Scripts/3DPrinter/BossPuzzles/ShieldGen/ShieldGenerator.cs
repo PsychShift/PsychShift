@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class ShieldGenerator : MonoBehaviour, IDamageable
 {
+    //kevin added this
+    [HideInInspector]
+    public bool isDed;
     public bool isHitable;
     private Animator anim;
     [SerializeField] private ActivateShield_BossPuzzle shieldScript;
@@ -44,6 +47,7 @@ public class ShieldGenerator : MonoBehaviour, IDamageable
     }
     public void Destoyed()
     {
+        isDed = true;
         shieldScript.GeneratorDestroyed(this);
         beam.Stop();
         Destroy(gameObject);
