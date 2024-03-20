@@ -30,10 +30,11 @@ public class HangingRobotController : MonoBehaviour
     // Lets start with movement, we need to keep track of the player's
     [SerializeField] private HangingAnimatorController animController;
     [SerializeField] private StingerController stingerController;
-    [SerializeField] private NavMeshAgent agent;
+    public NavMeshAgent agent {  get; private set; }
     public Transform target;
     public Transform model;
-    private StateMachine.StateMachine attacksStateMachine;
+    public StateMachine.StateMachine attacksStateMachine;
+    public IState[] attackStates;
 
     [SerializeField] private EnemyLauncher enemyLauncher;
     [SerializeField] private LaserShooter simpleLaser1;
@@ -46,10 +47,20 @@ public class HangingRobotController : MonoBehaviour
     [HideInInspector] public List<Guns.GunType> guns;
     [HideInInspector] public List<EEnemyModifier> modifiers;
 
+
+    #region Movement
+    public StateMachine.StateMachine movementStateMachine;
+
     public bool canMove = false;
+    public bool desiredHeightReached = false;
+
+    public float desiredY = 0;
 
     public Vector3 Velocity { get { return agent.velocity; } }
 
+    private StationaryStateMB stationaryState;
+    private MoveStateMB moveState;
+    #endregion
     #region State References
     DecisionState decisionState;
     SpawnEnemyState spawnEnemyState;
@@ -60,6 +71,12 @@ public class HangingRobotController : MonoBehaviour
 
     void Awake()
     {
+        agent = GetComponent<NavMeshAgent>();
+        void ATAttack(IState from, IState to, Func<bool> condition) => attacksStateMachine.AddTransition(from, to, condition);
+
+        void ATMove(IState from, IState to, Func<bool> condition) => movementStateMachine.AddTransition(from, to, condition);
+        void ANYMove(IState to, Func<bool> condition) => movementStateMachine.AddAnyTransition(to, condition);
+        #region attacks
         //Eventually this will be a sub state. Each phase of the boss will be its own state machine, and a healthgate will be the transition for the state machine states.
         attacksStateMachine = new StateMachine.StateMachine();
         decisionState = new DecisionState(this);
@@ -67,22 +84,46 @@ public class HangingRobotController : MonoBehaviour
         staticLaserShotState = new StaticLaserShotState(this, animController, animController.armsController, simpleLaser1, simpleLaserStats1);
         sweepingLaserState = new SweepingLaserState(this, animController, animController.armsController, simpleLaser1, simpleLaserStats1);
         rotatingTailLaserState = new RotatingLaserState(this, animController, stingerController, simpleLaser1, tailLaserStats1);
+
+        attackStates = new IState[]
+        {
+            spawnEnemyState,
+            staticLaserShotState,
+            rotatingTailLaserState
+        };
+            //sweepingLaserState,
         
         guns = defaultGunSpawns;
         modifiers = defaultModifiers;
 
-        void AT(IState from, IState to, Func<bool> condition) => attacksStateMachine.AddTransition(from, to, condition);
 
-        AT(spawnEnemyState, staticLaserShotState, spawnEnemyState.IsDone);
-        AT(staticLaserShotState, rotatingTailLaserState, staticLaserShotState.IsFinished);
-        AT(rotatingTailLaserState, decisionState, rotatingTailLaserState.IsDone);
-        AT(decisionState, staticLaserShotState, decisionState.IsDone);
-        attacksStateMachine.SetState(spawnEnemyState);    
+        ATAttack(spawnEnemyState, decisionState, spawnEnemyState.IsDone);
+        ATAttack(staticLaserShotState, decisionState, staticLaserShotState.IsFinished);
+        ATAttack(rotatingTailLaserState, decisionState, rotatingTailLaserState.IsDone);
+        //AT(decisionState, staticLaserShotState, decisionState.IsDone);
+        attacksStateMachine.SetState(decisionState);
+        #endregion
+
+        #region Movement
+        movementStateMachine = new StateMachine.StateMachine();
+
+        stationaryState = new StationaryStateMB(this, animController);
+        moveState = new MoveStateMB(this, animController);
+
+
+       // ATMove(moveState, stationaryState, () => !canMove);
+       // ATMove(stationaryState, moveState, () => canMove);
+
+        ANYMove(stationaryState, () => !canMove);
+        canMove = false;
+        movementStateMachine.SetState(stationaryState);
+        #endregion
     }
 
     void Update()
     {
         attacksStateMachine.Tick();
+        movementStateMachine.Tick();
         //animController.RotateTowardsTarget(target.position);
     }
 

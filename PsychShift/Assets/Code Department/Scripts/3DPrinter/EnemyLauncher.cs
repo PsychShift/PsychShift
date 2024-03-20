@@ -5,16 +5,13 @@ using UnityEngine;
 public class EnemyLauncher : MonoBehaviour
 {
     [SerializeField] private float force = 400;
+    [HideInInspector] public List<BossFightBrain> enemies;
 
-    public void ShootEnemy()
-    {
-        BossFightBrain brain1 = EnemyPoolingManager.SpawnObject(Guns.GunType.Pistol, EBrainType.FinalBoss, EEnemyModifier.None, GameAssets.Instance.Agressions[0], transform.position, Quaternion.identity) as BossFightBrain;
-        StartCoroutine(brain1.Launch(transform.forward, force));
-    }
     public void ShootEnemy(Guns.GunType gunType, EEnemyModifier modifier)
     {
-        BossFightBrain brain1 = EnemyPoolingManager.SpawnObject(gunType, EBrainType.FinalBoss, modifier, GameAssets.Instance.Agressions[0], transform.position, Quaternion.identity) as BossFightBrain;
-        StartCoroutine(brain1.Launch(transform.forward, force));
+        BossFightBrain brain = EnemyPoolingManager.SpawnObject(gunType, EBrainType.FinalBoss, modifier, GameAssets.Instance.Agressions[0], transform.position, Quaternion.identity) as BossFightBrain;
+        StartCoroutine(brain.Launch(transform.forward, force));
+        brain.EnemyHealth.OnDeath += HandleDeath;
     }
 
     // Dictionary<float, Guns.GunType> gunSpawnDict, Dictionary<float, EEnemyModifier> modSpawnDict
@@ -30,5 +27,23 @@ public class EnemyLauncher : MonoBehaviour
             ShootEnemy(type, mod);
             yield return new WaitForSeconds(timeBetweenShots);
         }
+    }
+
+    private void HandleDeath(Transform enemy)
+    {
+        BossFightBrain brain = enemy.GetComponent<BossFightBrain>();
+        enemies.Remove(brain);
+
+        brain.EnemyHealth.OnDeath -= HandleDeath;
+    }
+
+    private void OnDisable()
+    {
+        for(int i = 0; i < enemies.Count; i++)
+        {
+            enemies[i].EnemyHealth.OnDeath -= HandleDeath;
+        }
+
+        enemies.Clear();
     }
 }

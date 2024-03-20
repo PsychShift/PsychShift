@@ -7,13 +7,13 @@ namespace Guns
     {
         public float Radius = 1;
         public AnimationCurve DamageFalloff;
-        public int BaseDamage = 10;
+        public float BaseDamage = 10;
         public int MaxEnemiesAffected = 10;
 
         protected Collider[] HitObjects;
         protected int Hits;
 
-        public AbstractAreaOfEffect(float Radius, AnimationCurve DamageFalloff, int BaseDamage, int MaxEnemiesAffected)
+        public AbstractAreaOfEffect(float Radius, AnimationCurve DamageFalloff, float BaseDamage, int MaxEnemiesAffected)
         {
             this.Radius = Radius;
             this.DamageFalloff = DamageFalloff;

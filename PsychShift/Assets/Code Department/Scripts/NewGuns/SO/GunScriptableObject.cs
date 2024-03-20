@@ -24,6 +24,7 @@ namespace Guns
         public AudioConfigScriptableObject AudioConfig;
         public BulletPenetrationConfigScriptableObject BulletPenConfig;
 
+
         public ICollisionHandler[] BulletImpactEffects = new ICollisionHandler[0];
 
         private MonoBehaviour ActiveMonoBehaviour;
@@ -646,6 +647,18 @@ namespace Guns
             config.ModelPrefab = ModelPrefab;
             config.SpawnPoint = SpawnPoint;
             config.SpawnRotation = SpawnRotation;
+
+            if(config.DamageConfig.IsExplosive)
+            {
+                config.BulletImpactEffects = new ICollisionHandler[]
+                {
+                    new Explode(
+                        config.DamageConfig.Radius,
+                        config.DamageConfig.DamageFalloff,
+                        config.DamageConfig.BaseAOEDamage,
+                        10)
+                };
+            }
 
             return config;
         }

@@ -8,6 +8,12 @@ namespace Guns
     {
         public MinMaxCurve DamageCurve;
 
+        [Header("Explosive")]
+        public bool IsExplosive = false;
+        public float Radius = 0;
+        public AnimationCurve DamageFalloff;
+        public float BaseAOEDamage = 0;
+
         private void Reset()
         {
             DamageCurve.mode = ParticleSystemCurveMode.Curve;
@@ -25,6 +31,10 @@ namespace Guns
             DamageConfigScriptableObject config = CreateInstance<DamageConfigScriptableObject>();
 
             config.DamageCurve = DamageCurve;
+            config.IsExplosive = IsExplosive;
+            config.Radius = Radius;
+            config.DamageFalloff = DamageFalloff;
+            config.BaseAOEDamage = BaseAOEDamage;
             return config;
         }
     }

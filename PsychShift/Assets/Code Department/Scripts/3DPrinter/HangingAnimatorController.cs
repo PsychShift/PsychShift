@@ -10,6 +10,7 @@ public class HangingAnimatorController : MonoBehaviour
     public HangingRobotArmsIK armsController;
 
     public Transform playerTarget => brain.target;
+    // add ik references to adjust the weights in other scripts, specifically the movement ones.
 
     public Vector3 Velocity { get { return brain.Velocity; } }
     private float spineRotAmount;
