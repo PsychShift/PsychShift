@@ -17,6 +17,7 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     [SerializeField]
     PuzzleKit godBoxRef;
     public ParticleSystem effectForAct;
+    [HideInInspector]
     public int index;
 
     
@@ -314,14 +315,15 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     }
     private void ActivateObject()
     {
-        if(effectForGod!=null)
-            {
-                Instantiate(effectForGod,transform.position, Quaternion.identity);
-            }
+        
         if(soundClip!=null)
                 Beep.PlayOneShot(soundClip);
         for(int i = 0; i< activateObject.Length;i++)
         {
+            if(effectForGod!=null)
+            {
+                Instantiate(effectForGod,activateObject[i].transform.position, Quaternion.identity);
+            }
             activateObject[i].SetActive(true);
         }
         
@@ -331,14 +333,14 @@ public class PuzzleKit : MonoBehaviour, IDamageable
 
     private void DeactivateObject()
     {
-        if(effectForGod!=null)
-            {
-                Instantiate(effectForGod,transform.position, Quaternion.identity);
-            }
         if(soundClip!=null)
                 Beep.PlayOneShot(soundClip);
         for(int i = 0; i< deactivateObject.Length;i++)
         {
+            if(effectForGod!=null)
+            {
+                Instantiate(effectForGod,activateObject[i].transform.position, Quaternion.identity);
+            }
             deactivateObject[i].SetActive(false);
         } 
     }
@@ -380,8 +382,16 @@ public class PuzzleKit : MonoBehaviour, IDamageable
                     //this.gameObject.SetActive(false);  
                 else if(destructObject)
                 {
-                    GetComponent<Collider>().enabled= false;
-                    GetComponent<MeshRenderer>().enabled = false;
+                    Collider collider = GetComponent<Collider>();
+                    //GetComponent<Collider>().enabled= false;
+                    MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+                    //GetComponent<MeshRenderer>().enabled = false;
+                    if(collider!= null)
+                        collider.enabled = false;
+                    if(meshRenderer!= null)
+                        meshRenderer.enabled = false;
+                    else
+                        Destroy(gameObject);
                 }
                 else if(doNotReact)
                 {

@@ -151,11 +151,6 @@ public class MainMenuScript : MonoBehaviour
     {
         SceneManager.LoadScene("Intro");
     }
-    public void IntroLobby()
-    {
-        //SceneManager.LoadScene("LOBBY INTRO LEVEL");
-        loadingSceneScript.LoadScene(3);
-    }
     public void LobbyBoss()
     {
         SceneManager.LoadScene("TREVOR ROOM");
@@ -261,13 +256,22 @@ public class MainMenuScript : MonoBehaviour
     {
         loadingSceneScript.LoadScene(2);
     }
-    public void TLab()
+    public void IntroLobby()
+    {
+        //SceneManager.LoadScene("LOBBY INTRO LEVEL");
+        loadingSceneScript.LoadScene(3);
+    }
+    public void Trevor()
     {
         loadingSceneScript.LoadScene(4);
     }
     public void CLab()
     {
         loadingSceneScript.LoadScene(5);
+    }
+    public void BossLab()
+    {
+        loadingSceneScript.LoadScene(6);
     }
 
     public void Quit()

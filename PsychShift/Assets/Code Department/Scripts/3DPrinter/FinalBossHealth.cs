@@ -19,10 +19,11 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;
     public Phase[] phases;
-    int currentPhase = 0;
+    [HideInInspector]
+    public int currentPhase = 0;
 
-    
-    int currentHealthGateIndex = 0;
+    [HideInInspector]
+    public int currentHealthGateIndex = 0;
     int currentHealthGateNumber;
     EBossStates nextBossState = EBossStates.None;
     AbstractBossPuzzle currentHealthGatePuzzle;
@@ -38,7 +39,7 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
             OnTakeDamage?.Invoke(damageTaken);
         }
         
-        if(currentHealth > 0)
+        if(currentHealth > 0)//is this supposed to go until 0? 
         {
             if(currentHealth <= currentHealthGateNumber)
             {
@@ -66,6 +67,7 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
         currentHealthGatePuzzle?.OnHealthGateReached();
         BossController.SwitchState(nextBossState);
         currentHealthGateIndex++;
+        Debug.Log("HEALTHGATE " +currentHealthGateIndex);
         if(currentHealthGateIndex < phases[currentPhase].Gates.Length)
         {
             HealthGate gate = phases[currentPhase].Gates[currentHealthGateIndex];
