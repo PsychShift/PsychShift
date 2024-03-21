@@ -120,7 +120,7 @@ public class TeslaBeam : MonoBehaviour
                                 hitPlayerAgainTimer = Time.time + currentStats.DamageSpeed;
                             }
                             else if(hit.transform.tag == "Player" && hitPlayer) continue; // If the player was hit recently, skip it to not do damage
-                            damageable.TakeDamage((int)currentStats.Damage);
+                            damageable.TakeDamage((int)currentStats.Damage, Guns.GunType.None);
                         }
                     }
                 }
@@ -171,7 +171,7 @@ public class TeslaBeam : MonoBehaviour
                             hitPlayerAgainTimer = Time.time + currentStats.DamageSpeed;
                         }
                         else if(hit.transform.tag == "Player" && hitPlayer) continue; // If the player was hit recently, skip it to not do damage
-                        damageable.TakeDamage((int)currentStats.Damage);
+                        damageable.TakeDamage((int)currentStats.Damage, Guns.GunType.None);
                     }
                 }
             }

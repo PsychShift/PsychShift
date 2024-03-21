@@ -30,7 +30,7 @@ namespace Guns
             transform.forward = SpawnForce.normalized;
             //SpawnVelocity = SpawnForce * Time.fixedDeltaTime / Rigidbody.mass;
             Rigidbody.velocity = SpawnForce;
-            StartCoroutine(DelayedDisable(2));
+            StartCoroutine(DelayedDisable(20));
         }
 
         private IEnumerator DelayedDisable(float Time)

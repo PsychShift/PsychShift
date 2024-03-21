@@ -24,7 +24,7 @@ public class DestructableDamageable : MonoBehaviour, IDamageable
         collider= gameObject.GetComponent<Collider>();
     }
 
-    public void TakeDamage(int Damage)
+    public void TakeDamage(int Damage, Guns.GunType gunType)
     {
         collider.enabled = false;
         if(disObjectNav!=null)

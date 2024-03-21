@@ -28,7 +28,7 @@ namespace Guns.Health
         }
         
 
-        public void TakeDamage(int Damage)
+        public void TakeDamage(int Damage, Guns.GunType gunType)
         {
             if (gameObject.layer == 15 && GodModeScript.Instance.GodMode) return;
             int damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);

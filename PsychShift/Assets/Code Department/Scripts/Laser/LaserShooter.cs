@@ -85,7 +85,7 @@ public class LaserShooter : MonoBehaviour
                         hitPlayerAgainTimer = Time.time + currentStats.DamageSpeed;
                     }
                     else if(hit.transform.tag == "Player" && hitPlayer) continue; // If the player was hit recently, skip it to not do damage
-                    hitObject.TakeDamage((int)currentStats.Damage);
+                    hitObject.TakeDamage((int)currentStats.Damage, Guns.GunType.None);
                 }
             }
             yield return null;
@@ -133,7 +133,7 @@ public class LaserShooter : MonoBehaviour
                         hitPlayerAgainTimer = Time.time + currentStats.DamageSpeed;
                     }
                     else if(hit.transform.tag == "Player" && hitPlayer) continue; // If the player was hit recently, skip it to not do damage
-                    hitObject.TakeDamage((int)currentStats.Damage);
+                    hitObject.TakeDamage((int)currentStats.Damage, Guns.GunType.None);
                 }
             }
             yield return null;

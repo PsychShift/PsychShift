@@ -18,7 +18,7 @@ public class damagetest : MonoBehaviour, IDamageable
     {
         CurrentHealth = MaxHealth;
     }
-    public void TakeDamage(int Damage)
+    public void TakeDamage(int Damage, Guns.GunType gunType)
     {
         CurrentHealth -= Damage;
         if(CurrentHealth <= 0) Destroy(gameObject);

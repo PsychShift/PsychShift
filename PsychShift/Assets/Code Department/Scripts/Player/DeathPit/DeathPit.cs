@@ -21,7 +21,7 @@ public class DeathPit : MonoBehaviour
                 charCon.enabled = true;
                 return;
             }
-            other.GetComponent<EnemyHealth>().TakeDamage(10000000);
+            other.GetComponent<EnemyHealth>().TakeDamage(10000000, Guns.GunType.None);
         }
     }
 }

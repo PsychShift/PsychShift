@@ -28,7 +28,7 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     EBossStates nextBossState = EBossStates.None;
     AbstractBossPuzzle currentHealthGatePuzzle;
 
-    public void TakeDamage(int Damage)
+    public void TakeDamage(int Damage, Guns.GunType gunType)
     {
         int damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
         currentHealth -= damageTaken;

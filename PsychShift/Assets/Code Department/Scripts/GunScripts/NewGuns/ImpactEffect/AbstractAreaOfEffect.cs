@@ -37,7 +37,8 @@ namespace Guns
                     float distance = Vector3.Distance(HitPosition, HitObjects[i].ClosestPoint(HitPosition));
 
                     damageable.TakeDamage(
-                        Mathf.CeilToInt(BaseDamage * DamageFalloff.Evaluate(distance / Radius))
+                        Mathf.CeilToInt(BaseDamage * DamageFalloff.Evaluate(distance / Radius)),
+                        Gun.Type
                     );
                 }
             }

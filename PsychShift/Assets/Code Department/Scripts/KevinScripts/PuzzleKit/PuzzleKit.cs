@@ -490,7 +490,7 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     }
 
     private bool wasHit => CurrentHealth == 0;
-    public void TakeDamage(int Damage)
+    public void TakeDamage(int Damage, Guns.GunType gunType)
     {
         if(wasHit)
             return;

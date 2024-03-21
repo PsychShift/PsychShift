@@ -25,7 +25,7 @@ public class PuzzleDamage : MonoBehaviour, IDamageable
     float direction = 1f;
 
     bool forward = true;
-    public void TakeDamage(int Damage)
+    public void TakeDamage(int Damage, Guns.GunType gunType)
     {
         forward = !forward;
         int damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);

@@ -52,7 +52,7 @@ public class ExplosiveDeathModifier : AbstractEnemyModifier
             // If the object has an IDamageable component, apply damage
             if (damageable != null)
             {
-                damageable.TakeDamage((int)finalDamage);
+                damageable.TakeDamage((int)finalDamage, Guns.GunType.None);
             }
         }
     }

@@ -49,7 +49,7 @@ public class FallingTrap : MonoBehaviour, IManipulate
         if(other.transform.TryGetComponent(out IDamageable damageable))
         {
             float damage = rb.velocity.magnitude * damageModifier;
-            damageable.TakeDamage((int)damage);
+            damageable.TakeDamage((int)damage, Guns.GunType.None);
         }
     }
 }

@@ -32,7 +32,7 @@ public class GREG : MonoBehaviour, IDamageable
         nextColor.material = colors[1];
 
     }
-    public void TakeDamage(int Damage)
+    public void TakeDamage(int Damage, Guns.GunType gunType)
     {
         ShootHitScan();
     }

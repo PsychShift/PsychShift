@@ -13,5 +13,5 @@ public interface IDamageable
     public delegate void DeathEvent(Transform Position);
     public event DeathEvent OnDeath;
 
-    public void TakeDamage(int Damage);
+    public void TakeDamage(int Damage, Guns.GunType gunType);
 }

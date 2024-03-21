@@ -583,7 +583,7 @@ namespace Guns
                     }
                 }
                 //Debug.Log("damgeplez");
-                damageable.TakeDamage(DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage));
+                damageable.TakeDamage(DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage), Type);
                 /* OnSomethingHit?.Invoke(damageable);
                 if(OnSomethingHit== null)
                     Debug.Log("NULL AF"); */

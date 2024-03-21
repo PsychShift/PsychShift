@@ -102,7 +102,7 @@ public class ActionBox : MonoBehaviour, IDamageable
             ThisActivate();
     }
     private bool wasHit => CurrentHealth == 0;
-    public void TakeDamage(int Damage)
+    public void TakeDamage(int Damage, Guns.GunType gunType)
     {
         if(wasHit)
             return;

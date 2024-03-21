@@ -15,7 +15,7 @@ public class propwalldestory : MonoBehaviour
         if (destructable != null)
         {
             // Apply damage to the object
-            destructable.TakeDamage(damageAmount);
+            destructable.TakeDamage(damageAmount, Guns.GunType.None);
         }
     }
 }

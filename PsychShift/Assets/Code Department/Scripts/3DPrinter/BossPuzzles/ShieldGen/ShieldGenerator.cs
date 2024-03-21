@@ -58,9 +58,12 @@ public class ShieldGenerator : MonoBehaviour, IDamageable
             Colliders[i].GetComponent<Collider>().enabled = condition;
     }
 
-    public void TakeDamage(int Damage)
+    public void TakeDamage(int Damage, Guns.GunType gunType)
     {
         if(!isHitable) return;
-        Destoyed();
+        if (gunType == Guns.GunType.None || gunType == Guns.GunType.RocketLauncher)
+        {
+            Destoyed();
+        }
     }
 }

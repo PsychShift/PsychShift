@@ -15,7 +15,7 @@ public class ObjectDestroyWall : MonoBehaviour
         if (destructable != null)
         {
             // Apply damage to the object
-            destructable.TakeDamage(damage);
+            destructable.TakeDamage(damage, Guns.GunType.None);
 
             // Destroy the bullet
             Destroy(gameObject);

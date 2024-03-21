@@ -82,7 +82,7 @@ public class ObjectManipulator : MovingPlatform, IManipulate
                     {
                         if(other.TryGetComponent(out IDamageable damageable))
                         {
-                            damageable.TakeDamage(999);
+                            damageable.TakeDamage(999, Guns.GunType.None);
                         }
                     }
                 }

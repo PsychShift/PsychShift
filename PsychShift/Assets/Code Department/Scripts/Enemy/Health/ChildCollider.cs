@@ -26,10 +26,10 @@ public class ChildCollider : MonoBehaviour, IDamageable
         this.parentDamageable = parentDamageable;
     }
 
-    public void TakeDamage(int Damage)
+    public void TakeDamage(int Damage, Guns.GunType gunType)
     {
         Damage *= critModifier;
-        parentDamageable.TakeDamage(Damage);
+        parentDamageable.TakeDamage(Damage, gunType);
     }
 
     public void SwapTag(string tag)
