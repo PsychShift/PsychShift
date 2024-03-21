@@ -7,7 +7,7 @@ public class StationaryStateMB : IState
     HangingRobotController controller;
     HangingAnimatorController animController;
 
-    private float climbSpeed = 100f;
+    private float climbSpeed = 1f;
     public StationaryStateMB(HangingRobotController controller, HangingAnimatorController animController)
     {
         this.controller = controller;
@@ -31,10 +31,10 @@ public class StationaryStateMB : IState
 
     public void Tick()
     {
-        ControlHeight();
+        
     }
 
-    private void ControlHeight()
+    /*private void ControlHeight()
     {
         Vector3 localPos = controller.model.position;
         if (localPos.y + 5f > controller.desiredY)
@@ -49,5 +49,5 @@ public class StationaryStateMB : IState
         }
         Debug.Log(controller.model.name + ": " + localPos + " " + controller.model.position);
         Debug.Log($"{controller.desiredY} {controller.model.position.y}");
-    }
+    }*/
 }

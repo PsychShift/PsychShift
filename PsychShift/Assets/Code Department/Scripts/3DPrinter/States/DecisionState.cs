@@ -36,14 +36,12 @@ public class DecisionState : IState
     {
         if(stateQueue.Count > 0)
         {
-            Debug.Log("Queued state: " + stateQueue.Peek());
             controller.attacksStateMachine.SetState(stateQueue.Dequeue());
         }
         else
         {
             int index = UnityEngine.Random.Range(0, controller.attackStates.Length);
             controller.attacksStateMachine.SetState(controller.attackStates[index]);
-            Debug.Log("Randome state: " + controller.attackStates[index]);
         }
     }
 
@@ -61,6 +59,7 @@ public class DecisionState : IState
     {
         endTime = Time.time + waitForSeconds;
         controller.canMove = true;
+        controller.DesiredY = -20f;
     }
 
     public void OnExit()

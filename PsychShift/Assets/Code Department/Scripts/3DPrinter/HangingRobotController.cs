@@ -54,7 +54,17 @@ public class HangingRobotController : MonoBehaviour
     public bool canMove = false;
     public bool desiredHeightReached = false;
 
-    public float desiredY = 0;
+    [SerializeField] private float desiredY = 0;
+    public float DesiredY 
+    { 
+        get { return desiredY; } 
+        set 
+        { 
+            desiredY = value;
+            desiredHeightReached = false;
+            StartCoroutine(ChangeHeight(desiredY)); 
+        } 
+    }
 
     public Vector3 Velocity { get { return agent.velocity; } }
 
@@ -117,17 +127,48 @@ public class HangingRobotController : MonoBehaviour
         ANYMove(stationaryState, () => !canMove);
         canMove = false;
         movementStateMachine.SetState(stationaryState);
+
+        DesiredY = -100f;
         #endregion
     }
 
     void Update()
     {
         attacksStateMachine.Tick();
-        movementStateMachine.Tick();
-        //animController.RotateTowardsTarget(target.position);
+        if(canMove)
+            Rotate();
     }
 
-    
+    private void FixedUpdate()
+    {
+        movementStateMachine.Tick();
+        
+    }
+
+    void Rotate()
+    {
+        Vector3 direction = transform.position - target.position;
+        direction.y = 0; // Ensure we're only considering the X and Z axes
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
+    }
+
+    public float speed = 1f;
+    private IEnumerator ChangeHeight(float targetY)
+    {
+        Vector3 pos = model.position;
+        while (Mathf.Abs(model.position.y - targetY) > 0.01f) // Check if we're close enough to stop
+        {
+            pos = model.position;
+            pos.y = Mathf.MoveTowards(model.position.y, targetY, speed * Time.deltaTime);
+            model.position = pos;
+            yield return null;
+        }
+        pos = model.position;
+        pos.y = targetY;
+        model.position = pos;
+        desiredHeightReached = true;
+    }
 
     IEnumerator FollowPlayer()
     {
@@ -167,6 +208,31 @@ public class HangingRobotController : MonoBehaviour
             Debug.Log("Nah, ima do my own thing.");
             break;
         }
+    }
+
+    public IEnumerator WaitForHeight(StateMachine.StateMachine stateMachine, IState state, Action callback)
+    {
+        WaitForSeconds wait = new WaitForSeconds(3f);
+        while (!desiredHeightReached)
+        {
+            yield return wait;
+        }
+
+        // Call the callback function after the desired height is reached
+        callback?.Invoke();
+
+        stateMachine.SetState(state);
+    }
+    public IEnumerator WaitForHeight(Action callback)
+    {
+        WaitForSeconds wait = new WaitForSeconds(3f);
+        while (!desiredHeightReached)
+        {
+            yield return wait;
+        }
+
+        // Call the callback function after the desired height is reached
+        callback?.Invoke();
     }
 
     public Vector3 pos;

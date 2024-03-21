@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.Rendering.Universal;
 
 public class SpawnEnemyState : IState
 {
     public int spawnAmount = 1;
-    private HangingRobotController hangingRobotController;
+    private HangingRobotController controller;
     private EnemyLauncher enemyLauncher;
     private HangingRobotArmsIK armsController;
 
@@ -15,9 +16,11 @@ public class SpawnEnemyState : IState
     private bool isDone;
     public Func<bool> IsDone => () => isDone;
 
-    public SpawnEnemyState(HangingRobotController hangingRobotController, EnemyLauncher enemyLauncher, HangingRobotArmsIK armsController)
+    bool started = false;
+
+    public SpawnEnemyState(HangingRobotController controller, EnemyLauncher enemyLauncher, HangingRobotArmsIK armsController)
     {
-        this.hangingRobotController = hangingRobotController;
+        this.controller = controller;
         this.enemyLauncher = enemyLauncher;
         this.armsController = armsController;
     }
@@ -29,19 +32,27 @@ public class SpawnEnemyState : IState
 
     public void OnEnter()
     {
-        endTime = Time.time + spawnAmount * .5f;
-        hangingRobotController.canMove = true;
-        enemyLauncher.StartCoroutine(enemyLauncher.ShootEnemies(spawnAmount, 0.5f, hangingRobotController.guns, hangingRobotController.modifiers));
+        controller.canMove = true;
+        started = false;
+        controller.DesiredY = -25f;
+        controller.StartCoroutine(controller.WaitForHeight(() => Start()));
     }
 
     public void OnExit()
     {
-        hangingRobotController.canMove = false;
+        controller.canMove = false;
     }
 
     public void Tick()
     {
-        if (Time.time > endTime)
+        if (started && Time.time > endTime)
             isDone = true;
+    }
+
+    void Start()
+    {
+        endTime = Time.time + spawnAmount * .5f;
+        enemyLauncher.StartCoroutine(enemyLauncher.ShootEnemies(spawnAmount, 0.5f, controller.guns, controller.modifiers));
+        started = true;
     }
 }

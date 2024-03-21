@@ -49,14 +49,15 @@ public class StaticLaserShotState : IState
 
     public bool isFinished = false;
 
-    
 
+    bool started = false;
     public void OnEnter()
     {
-        armsController.SetLeftArmManualOverTime(true, 0.1f);
         isFinished = false;
-        aimState.target = controller.target;
-        stateMachine.SetState(aimState);        
+        started = false;
+        //stateMachine.SetState(aimState);
+        controller.DesiredY = -30f;
+        controller.StartCoroutine(controller.WaitForHeight(stateMachine, aimState, () => Start()));
     }
 
     public void OnExit()
@@ -66,12 +67,20 @@ public class StaticLaserShotState : IState
 
     public void Tick()
     {
+        if (!started) return;
         stateMachine.Tick();
     }
 
     public Color GizmoColor()
     {
         return Color.red;
+    }
+
+    void Start()
+    {
+        armsController.SetLeftArmManualOverTime(true, 0.1f);
+        aimState.target = controller.target;
+        started = true;
     }
 
     public Func<bool> IsFinished => () => isFinished;

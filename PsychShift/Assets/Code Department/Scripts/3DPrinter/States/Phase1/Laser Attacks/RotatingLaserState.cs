@@ -27,9 +27,8 @@ public class RotatingLaserState : IState
 
     public void OnEnter()
     {
-        bool randomDir = rand.NextDouble() > 0.5;
-        //stingerController.laserShooter.Fire(true);
-        stingerController.FireLaser(randomDir);
+        controller.DesiredY = -50f;
+        controller.StartCoroutine(controller.WaitForHeight(() => Start()));
     }
 
     public void OnExit()
@@ -40,6 +39,13 @@ public class RotatingLaserState : IState
     public void Tick()
     {
         
+    }
+
+    void Start()
+    {
+        //stingerController.laserShooter.Fire(true);
+        bool randomDir = rand.NextDouble() > 0.5;
+        stingerController.FireLaser(randomDir);
     }
 }
 
