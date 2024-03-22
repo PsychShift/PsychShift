@@ -36,11 +36,6 @@ public class HangingRobotController : MonoBehaviour
     public StateMachine.StateMachine attacksStateMachine;
     public IState[] attackStates;
 
-    [SerializeField] private EnemyLauncher enemyLauncher;
-    [SerializeField] private LaserShooter simpleLaser1;
-    [SerializeField] private LaserBeamStats simpleLaserStats1;
-    [SerializeField] private LaserBeamStats tailLaserStats1;
-
     [SerializeField] private List<Guns.GunType> defaultGunSpawns;
     [SerializeField] private List<EEnemyModifier> defaultModifiers;
 
@@ -49,12 +44,21 @@ public class HangingRobotController : MonoBehaviour
 
 
     #region Movement
+    [Header("Movement")]
     public StateMachine.StateMachine movementStateMachine;
 
     public bool canMove = false;
-    public bool desiredHeightReached = false;
-
+    [HideInInspector] public bool desiredHeightReached = false;
+    public void TurnOnNeckIK(bool on, float transitionTime) => animController.spineIK.TurnOnNeckLookAtIK(on, transitionTime);
+    public bool reachedRequiredDestination => desiredHeightReached && DestinationCheck();
+    
+    private bool DestinationCheck()
+    {
+        return true;
+    }
+    private Transform armature;
     [SerializeField] private float desiredY = 0;
+
     public float DesiredY 
     { 
         get { return desiredY; } 
@@ -62,21 +66,26 @@ public class HangingRobotController : MonoBehaviour
         { 
             desiredY = value;
             desiredHeightReached = false;
-            StartCoroutine(ChangeHeight(desiredY)); 
+            if(ChangeHeightCoroutine != null) StopCoroutine(ChangeHeightCoroutine);
+            ChangeHeightCoroutine = StartCoroutine(ChangeHeight(desiredY)); 
         } 
     }
+    Coroutine ChangeHeightCoroutine;
+
 
     public Vector3 Velocity { get { return agent.velocity; } }
 
-    private StationaryStateMB stationaryState;
-    private MoveStateMB moveState;
     #endregion
     #region State References
-    DecisionState decisionState;
-    SpawnEnemyState spawnEnemyState;
-    StaticLaserShotState staticLaserShotState;
-    SweepingLaserState sweepingLaserState;
-    RotatingLaserState rotatingTailLaserState;
+    [Header("Movement States")]
+    public StationaryStateMB stationaryState;
+    public MoveStateMB moveState;
+    [Header("Attack States")]
+    public DecisionState decisionState;
+    public SpawnEnemyState spawnEnemyState;
+    public StaticLaserShotState staticLaserShotState;
+    public SweepingLaserState sweepingLaserState;
+    public RotatingLaserState rotatingTailLaserState;
     #endregion
 
     void Awake()
@@ -89,11 +98,11 @@ public class HangingRobotController : MonoBehaviour
         #region attacks
         //Eventually this will be a sub state. Each phase of the boss will be its own state machine, and a healthgate will be the transition for the state machine states.
         attacksStateMachine = new StateMachine.StateMachine();
-        decisionState = new DecisionState(this);
-        spawnEnemyState = new SpawnEnemyState(this, enemyLauncher, animController.armsController);
-        staticLaserShotState = new StaticLaserShotState(this, animController, animController.armsController, simpleLaser1, simpleLaserStats1);
-        sweepingLaserState = new SweepingLaserState(this, animController, animController.armsController, simpleLaser1, simpleLaserStats1);
-        rotatingTailLaserState = new RotatingLaserState(this, animController, stingerController, simpleLaser1, tailLaserStats1);
+        decisionState = new DecisionState(this, decisionState.desiredY);
+        spawnEnemyState = new SpawnEnemyState(this, spawnEnemyState.enemyLauncher, animController.armsController, spawnEnemyState.desiredY, spawnEnemyState.spawnAmount);
+        staticLaserShotState = new StaticLaserShotState(this, animController, animController.armsController, staticLaserShotState.laser, staticLaserShotState.stats, staticLaserShotState.desiredY);
+        //sweepingLaserState = new SweepingLaserState(this, animController, animController.armsController, simpleLaser1, simpleLaserStats1);
+        rotatingTailLaserState = new RotatingLaserState(this, animController, stingerController, rotatingTailLaserState.laser, rotatingTailLaserState.stats, rotatingTailLaserState.desiredY);
 
         attackStates = new IState[]
         {
@@ -118,18 +127,17 @@ public class HangingRobotController : MonoBehaviour
         movementStateMachine = new StateMachine.StateMachine();
 
         stationaryState = new StationaryStateMB(this, animController);
-        moveState = new MoveStateMB(this, animController);
+        moveState = new MoveStateMB(this, animController, moveState.surface, moveState.alwaysRecheckPathAtTime, moveState.targetToCloseRecheckPathTime);
 
 
-       // ATMove(moveState, stationaryState, () => !canMove);
-       // ATMove(stationaryState, moveState, () => canMove);
+       ATMove(moveState, stationaryState, () => !canMove);
+       ATMove(stationaryState, moveState, () => canMove);
 
-        ANYMove(stationaryState, () => !canMove);
+        //ANYMove(stationaryState, () => !canMove);
         canMove = false;
         movementStateMachine.SetState(stationaryState);
-
-        DesiredY = -100f;
         #endregion
+        armature = transform.GetChild(0);
     }
 
     void Update()
@@ -147,17 +155,17 @@ public class HangingRobotController : MonoBehaviour
 
     void Rotate()
     {
-        Vector3 direction = transform.position - target.position;
+        Vector3 direction = armature.position - target.position;
         direction.y = 0; // Ensure we're only considering the X and Z axes
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5);
+        armature.rotation = Quaternion.Slerp(armature.rotation, lookRotation, Time.deltaTime * 5);
     }
 
     public float speed = 1f;
     private IEnumerator ChangeHeight(float targetY)
     {
         Vector3 pos = model.position;
-        while (Mathf.Abs(model.position.y - targetY) > 0.01f) // Check if we're close enough to stop
+        while (Mathf.Abs(model.position.y - targetY) > 0.1f) // Check if we're close enough to stop
         {
             pos = model.position;
             pos.y = Mathf.MoveTowards(model.position.y, targetY, speed * Time.deltaTime);

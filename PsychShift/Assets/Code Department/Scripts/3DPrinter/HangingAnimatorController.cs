@@ -6,7 +6,7 @@ public class HangingAnimatorController : MonoBehaviour
 {
     Animator animator;
     [SerializeField] private HangingRobotController brain;
-    [SerializeField] private SpineControllerIK spineIK;
+    public SpineControllerIK spineIK;
     public HangingRobotArmsIK armsController;
 
     public Transform playerTarget => brain.target;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class StationaryStateMB : IState
 {
     HangingRobotController controller;
@@ -26,7 +27,7 @@ public class StationaryStateMB : IState
 
     public void OnExit()
     {
-        
+        controller.agent.isStopped = false;
     }
 
     public void Tick()

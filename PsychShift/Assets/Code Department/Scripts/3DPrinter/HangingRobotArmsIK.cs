@@ -25,6 +25,7 @@ public class HangingRobotArmsIK : MonoBehaviour
     [Tooltip("The spine transform that the arms are attached to.")]
     [SerializeField] private Transform spine;
     [SerializeField] private float handsDistanceFromSpine = 5f;
+    
 
     public void SetLeftArmManualOverTime(bool manual, float transitionTime)
     {
@@ -64,6 +65,8 @@ public class HangingRobotArmsIK : MonoBehaviour
         {
         } */
     }
+
+    
     public void AimLeftHandTarget(Vector3 targetPos)
     {
         // Find a point in-between the target position and the spine near the shoulder

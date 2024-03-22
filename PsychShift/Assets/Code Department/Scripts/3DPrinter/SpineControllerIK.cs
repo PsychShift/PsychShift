@@ -26,6 +26,7 @@ public class SpineControllerIK : MonoBehaviour
 
     private ChainIKConstraint chainIK;
     private MultiRotationConstraint rotationConstraint;
+    [SerializeField] private MultiAimConstraint neckLookAtIK;
     private Rig spineRig;
     private Transform spineTarget;
     private Vector3 localHomePos;
@@ -47,7 +48,7 @@ public class SpineControllerIK : MonoBehaviour
 
     void Update()
     {
-        animStateMachine.Tick();
+        //animStateMachine.Tick();
     }
     StateMachine.StateMachine animStateMachine;
     private void BuildStateMachine()
@@ -81,7 +82,7 @@ public class SpineControllerIK : MonoBehaviour
         Func<bool> NotChasing() => () => !Moving;
         //Func<bool> NotChasingAndNotClose() => () => !Moving && !CloseEnoughToLookDown();
 
-        animStateMachine.SetState(idleSpine);
+        //animStateMachine.SetState(idleSpine);
     }    
 
     private bool CloseEnoughToLookDown()
@@ -109,7 +110,34 @@ public class SpineControllerIK : MonoBehaviour
         localHomePos = spineTarget.localPosition;
     }
 
-    #if UNITY_EDITOR
+    public void TurnOnNeckLookAtIK(bool on, float transitionTime)
+    {
+        if (on)
+        {
+            StartCoroutine(LerpFloatOverTime(0, 1, transitionTime, (result) => neckLookAtIK.weight = result));
+        }
+        else
+        {
+            StartCoroutine(LerpFloatOverTime(1, 0, transitionTime, (result) => neckLookAtIK.weight = result));
+        }
+    }
+
+    IEnumerator LerpFloatOverTime(float startValue, float endValue, float duration, System.Action<float> resultCallback)
+    {
+        float startTime = Time.time;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            float currentLerp = Mathf.Lerp(startValue, endValue, elapsedTime / duration);
+            resultCallback.Invoke(currentLerp);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        resultCallback.Invoke(endValue);
+    }
+
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
         if(!Application.isPlaying) return;

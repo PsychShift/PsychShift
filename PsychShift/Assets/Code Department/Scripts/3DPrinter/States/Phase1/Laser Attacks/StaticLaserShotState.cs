@@ -3,24 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class StaticLaserShotState : IState
 {
-    private readonly HangingRobotController controller;
-    private readonly HangingAnimatorController animController;
-    private readonly HangingRobotArmsIK armsController;
-    private readonly LaserShooter laser;
-    private readonly LaserBeamStats stats;
+    public LaserShooter laser;
+    public LaserBeamStats stats;
+    public float desiredY;
 
-    private readonly SlowAimAtTargetState aimState;
-    
-    //ChargeUpLaserState chargeLaserState;
-    public StaticLaserShotState(HangingRobotController controller, HangingAnimatorController animController, HangingRobotArmsIK armsController, LaserShooter laser, LaserBeamStats stats)
+    private HangingRobotController controller;
+    private HangingAnimatorController animController;
+    private HangingRobotArmsIK armsController;
+    private SlowAimAtTargetState aimState;
+        
+    public StaticLaserShotState(HangingRobotController controller, HangingAnimatorController animController, HangingRobotArmsIK armsController, LaserShooter laser, LaserBeamStats stats, float desiredY)
     {
         this.controller = controller;
         this.animController = animController;
         this.armsController = armsController;
         this.laser = laser;
         this.stats = stats;
+        this.desiredY = desiredY;
 
         // TO DO - Make a state machine that does each part in steps
         stateMachine = new StateMachine.StateMachine();
@@ -47,7 +49,7 @@ public class StaticLaserShotState : IState
 
     private readonly StateMachine.StateMachine stateMachine;
 
-    public bool isFinished = false;
+    [HideInInspector] public bool isFinished = false;
 
 
     bool started = false;
@@ -56,13 +58,15 @@ public class StaticLaserShotState : IState
         isFinished = false;
         started = false;
         //stateMachine.SetState(aimState);
-        controller.DesiredY = -30f;
+        controller.DesiredY = desiredY;
         controller.StartCoroutine(controller.WaitForHeight(stateMachine, aimState, () => Start()));
+        controller.TurnOnNeckIK(false, 0.25f);
     }
 
     public void OnExit()
     {
         armsController.SetLeftArmManualOverTime(false, 0.6f);
+        controller.TurnOnNeckIK(true, 0.25f);
     }
 
     public void Tick()

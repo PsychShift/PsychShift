@@ -6,15 +6,20 @@ using UnityEngine;
 /// <summary>
 /// A generic in-between state. Gives time to decide the next action.
 /// </summary>
+[System.Serializable]
 public class DecisionState : IState
 {
     private HangingRobotController controller;
 
     public Queue<IState> stateQueue;
-    public DecisionState(HangingRobotController controller)
+    public float decisionTime = 4f;
+    public float desiredY = -10;
+    public DecisionState(HangingRobotController controller, float desiredY)
     {
         this.controller = controller;
         stateQueue = new Queue<IState>();
+
+        this.desiredY = desiredY;
     }
 
 
@@ -45,7 +50,6 @@ public class DecisionState : IState
         }
     }
 
-    float waitForSeconds = 4f;
     float endTime = 0f;
     private bool isDone;
     public Func<bool> IsDone => () => isDone;
@@ -57,9 +61,9 @@ public class DecisionState : IState
 
     public void OnEnter()
     {
-        endTime = Time.time + waitForSeconds;
+        endTime = Time.time + decisionTime;
         controller.canMove = true;
-        controller.DesiredY = -20f;
+        controller.DesiredY = desiredY;
     }
 
     public void OnExit()
