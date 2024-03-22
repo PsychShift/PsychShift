@@ -9,11 +9,18 @@ public class EnemyTargetManager : MonoBehaviour
     {
         get
         {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<EnemyTargetManager>();
-            }
             return _instance;
+        }
+    }
+    void Awake()
+    {
+        if(_instance == null)
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(this);
         }
     }
 

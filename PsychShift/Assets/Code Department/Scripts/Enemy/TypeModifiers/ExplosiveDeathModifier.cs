@@ -5,7 +5,7 @@ using UnityEngine;
 public class ExplosiveDeathModifier : AbstractEnemyModifier
 {
     EnemyBrain brain;
-    public float radius = 100;
+    public float radius = 10;
     public int damageAmount = 50;
     public float falloffRate =  0.2f;
     public override void ApplyModifier(EnemyBrain brain)

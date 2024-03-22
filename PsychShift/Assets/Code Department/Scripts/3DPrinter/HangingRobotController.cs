@@ -241,6 +241,7 @@ public class HangingRobotController : MonoBehaviour
 
         // Call the callback function after the desired height is reached
         callback?.Invoke();
+        desiredHeightReached = false;
     }
 
     public Vector3 pos;

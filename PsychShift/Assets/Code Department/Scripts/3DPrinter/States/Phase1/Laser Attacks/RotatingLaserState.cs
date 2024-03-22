@@ -35,7 +35,7 @@ public class RotatingLaserState : IState
     {
         controller.DesiredY = desiredY;
         controller.StartCoroutine(controller.WaitForHeight(() => Start()));
-        controller.TurnOnNeckIK(false, 0.25f);
+        
     }
 
     public void OnExit()
@@ -51,6 +51,7 @@ public class RotatingLaserState : IState
 
     void Start()
     {
+        controller.TurnOnNeckIK(false, 0.25f);
         //stingerController.laserShooter.Fire(true);
         bool randomDir = rand.NextDouble() > 0.5;
         stingerController.FireLaser(randomDir);
