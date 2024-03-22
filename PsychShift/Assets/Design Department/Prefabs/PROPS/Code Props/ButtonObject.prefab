@@ -197,15 +197,20 @@ MonoBehaviour:
   soundClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
   godBoxRef: {fileID: 0}
   effectForAct: {fileID: 0}
+  index: 0
   interact: 0
   pressurePlate: 1
   shootObj: 1
+  leverPull: 0
+  leverParent: {fileID: 0}
   effectForGod: {fileID: 0}
   amountToActivate: 0
   activateCount: 0
   move: 0
+  isAnim: 0
+  animVarName: 
   endPosition: {x: 0, y: 0, z: 0}
-  speedOfMove: 0
+  timeOfMove: 2
   spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
@@ -217,9 +222,13 @@ MonoBehaviour:
   dissolveOBJ: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  doNotReact: 0
   changeObject: 1
   activatedObject: {fileID: 6670295679467910197}
+  activated: 0
   puzzleComplete: 0
+  puzzleDone: 0
+  puzzleIndex: 0
 --- !u!82 &4666390577329688811
 AudioSource:
   m_ObjectHideFlags: 0
