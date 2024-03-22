@@ -8,10 +8,14 @@ public class DisableObject : MonoBehaviour
     // This method is called when any collider enters the Box Collider
     private void OnTriggerEnter(Collider other)
     {
-        // Disable the object if it's not null
-        if (objectToDisable != null)
+        if(other.gameObject.layer == 15)
         {
-            objectToDisable.SetActive(false);
+            if (objectToDisable != null)
+            {
+                objectToDisable.SetActive(false);
+            }
         }
+        // Disable the object if it's not null
+        
     }
 }
