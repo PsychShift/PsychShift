@@ -12,8 +12,10 @@ public class Enableprop : MonoBehaviour
     // This method is called when any collider enters the Box Collider
     private void OnTriggerEnter(Collider other)
     {
+        if(other.gameObject.layer == 15)
+            StartCoroutine(EnableObjectWithDelay());
         // Start a coroutine to enable the object after the delay
-        StartCoroutine(EnableObjectWithDelay());
+        
     }
 
     // Coroutine to enable the object after a delay

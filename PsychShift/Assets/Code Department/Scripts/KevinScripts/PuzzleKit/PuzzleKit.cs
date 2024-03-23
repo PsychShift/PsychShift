@@ -261,9 +261,9 @@ public class PuzzleKit : MonoBehaviour, IDamageable
         {
             Instantiate(effectForGod,transform.position, Quaternion.identity);
         }
-        if(soundClip!=null)
+        /* if(soundClip!=null)
                 Beep.PlayOneShot(soundClip);
-        
+         */
 
         movingActivated = true;
         puzzleComplete = true;
@@ -304,8 +304,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
             {
                 Instantiate(effectForGod,transform.position, Quaternion.identity);
             }
-            if(soundClip!=null)
-                Beep.PlayOneShot(soundClip);
+            /* if(soundClip!=null)
+                Beep.PlayOneShot(soundClip); */
             for(int i = 0; i< spawnObjects.Length; i++) 
                 Instantiate(spawnObjects[i], locationOfSpawn.position, Quaternion.identity);
             
@@ -316,8 +316,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     private void ActivateObject()
     {
         
-        if(soundClip!=null)
-                Beep.PlayOneShot(soundClip);
+        /* if(soundClip!=null)
+                Beep.PlayOneShot(soundClip); */
         for(int i = 0; i< activateObject.Length;i++)
         {
             if(effectForGod!=null)
@@ -333,8 +333,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
 
     private void DeactivateObject()
     {
-        if(soundClip!=null)
-                Beep.PlayOneShot(soundClip);
+        /* if(soundClip!=null)
+                Beep.PlayOneShot(soundClip); */
         for(int i = 0; i< deactivateObject.Length;i++)
         {
             if(effectForGod!=null)
@@ -412,6 +412,8 @@ public class PuzzleKit : MonoBehaviour, IDamageable
         {
             if(activateCount == amountToActivate || puzzleDone == true)//runs when called to check if everything is activated
             {
+                if(soundClip!=null)
+                    Beep.PlayOneShot(soundClip);
                 puzzleDone = true;
                 //Do whatever action is marked
                 if(activate)
@@ -484,10 +486,6 @@ public class PuzzleKit : MonoBehaviour, IDamageable
             ThisActivate();
     }
 
-    private void PlaySound(AudioClip beep)
-    {
-        Beep.PlayOneShot(beep);
-    }
 
     private bool wasHit => CurrentHealth == 0;
     public void TakeDamage(int Damage, Guns.GunType gunType)

@@ -27,7 +27,7 @@ public class PanelScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Check if the trigger has already been used
-        if (!hasBeenTriggered)
+        if (!hasBeenTriggered && other.gameObject.layer == 15)
         {
             // Enable the first GameObject
             if (enableObject1 != null)
