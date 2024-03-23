@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 using Player;
@@ -23,6 +24,8 @@ public class PauseMenuScript : MonoBehaviour
     public GameObject NeuroNetworkVideoFirst;
     public GameObject RemappingMenu;
     public GameObject RemappingMenuFirst;
+    public GameObject Test;
+    private PlayerInput playerInput;
     public static bool GameIsPaused = false;
 
     // Start is called before the first frame update
@@ -36,6 +39,10 @@ public class PauseMenuScript : MonoBehaviour
         NeuroNetworkVideo.SetActive(false);
         TutorialMenu.SetActive(false);
         RemappingMenu.SetActive(false);
+        playerInput = GetComponent<PlayerInput>();
+        //Test.SetActive(true);
+
+
     }
 
     public void Resume()
@@ -46,6 +53,7 @@ public class PauseMenuScript : MonoBehaviour
         GameIsPaused = false;
         Cursor.visible = false;
         EventSystem.current.SetSelectedGameObject(null);
+        playerInput.enabled = true;
 
     }
     public void Retry()
@@ -102,6 +110,7 @@ public class PauseMenuScript : MonoBehaviour
             GameIsPaused = true;
             Cursor.visible = true;
             EventSystem.current.SetSelectedGameObject(PauseMenuFirst);
+            playerInput.enabled = false;
         }
         
     }
