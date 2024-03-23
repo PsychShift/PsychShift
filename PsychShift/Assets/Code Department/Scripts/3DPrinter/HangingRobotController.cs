@@ -30,8 +30,9 @@ public class HangingRobotController : MonoBehaviour
     // Lets start with movement, we need to keep track of the player's
     [SerializeField] private HangingAnimatorController animController;
     [SerializeField] private StingerController stingerController;
+    [SerializeField] private FinalBossTargetManager targetManager;
     public NavMeshAgent agent {  get; private set; }
-    public Transform target;
+    public Transform target => targetManager.target;
     public Transform model;
     public StateMachine.StateMachine attacksStateMachine;
     public IState[] attackStates;
@@ -98,7 +99,7 @@ public class HangingRobotController : MonoBehaviour
         #region attacks
         //Eventually this will be a sub state. Each phase of the boss will be its own state machine, and a healthgate will be the transition for the state machine states.
         attacksStateMachine = new StateMachine.StateMachine();
-        decisionState = new DecisionState(this, decisionState.desiredY);
+        decisionState = new DecisionState(this, spawnEnemyState.enemyLauncher, decisionState.desiredY);
         spawnEnemyState = new SpawnEnemyState(this, spawnEnemyState.enemyLauncher, animController.armsController, spawnEnemyState.desiredY, spawnEnemyState.spawnAmount);
         staticLaserShotState = new StaticLaserShotState(this, animController, animController.armsController, staticLaserShotState.laser, staticLaserShotState.stats, staticLaserShotState.desiredY);
         //sweepingLaserState = new SweepingLaserState(this, animController, animController.armsController, simpleLaser1, simpleLaserStats1);
@@ -106,7 +107,7 @@ public class HangingRobotController : MonoBehaviour
 
         attackStates = new IState[]
         {
-            spawnEnemyState,
+            spawnEnemyState, // spawnEnemyState must always be index 0
             staticLaserShotState,
             rotatingTailLaserState
         };

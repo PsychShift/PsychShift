@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class EnemyLauncher : MonoBehaviour
 {
     [SerializeField] private float force = 400;
-    [HideInInspector] public List<BossFightBrain> enemies;
+    [Tooltip("Runtime filled")]
+    public List<BossFightBrain> enemies;
+    [HideInInspector] public bool needMoreEnemies = true;
 
     public void ShootEnemy(Guns.GunType gunType, EEnemyModifier modifier)
     {
         BossFightBrain brain = EnemyPoolingManager.SpawnObject(gunType, EBrainType.FinalBoss, modifier, GameAssets.Instance.Agressions[0], transform.position, Quaternion.identity) as BossFightBrain;
         StartCoroutine(brain.Launch(transform.forward, force));
         brain.EnemyHealth.OnDeath += HandleDeath;
+        enemies.Add(brain);
     }
 
     // Dictionary<float, Guns.GunType> gunSpawnDict, Dictionary<float, EEnemyModifier> modSpawnDict
@@ -35,6 +39,11 @@ public class EnemyLauncher : MonoBehaviour
         enemies.Remove(brain);
 
         brain.EnemyHealth.OnDeath -= HandleDeath;
+
+        if(enemies.Count < 5)
+        {
+            needMoreEnemies = true;
+        }
     }
 
     private void OnDisable()

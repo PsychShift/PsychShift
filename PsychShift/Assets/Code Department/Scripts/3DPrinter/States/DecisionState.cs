@@ -10,16 +10,19 @@ using UnityEngine;
 public class DecisionState : IState
 {
     private HangingRobotController controller;
+    private EnemyLauncher enemyLauncher;
 
     public Queue<IState> stateQueue;
     public float decisionTime = 4f;
     public float desiredY = -10;
-    public DecisionState(HangingRobotController controller, float desiredY)
+    public DecisionState(HangingRobotController controller, EnemyLauncher enemyLauncher, float desiredY)
     {
         this.controller = controller;
-        stateQueue = new Queue<IState>();
-
+        this.enemyLauncher = enemyLauncher;
+        enemyLauncher.needMoreEnemies = true;
         this.desiredY = desiredY;
+
+        stateQueue = new Queue<IState>();
     }
 
 
@@ -45,7 +48,9 @@ public class DecisionState : IState
         }
         else
         {
-            int index = UnityEngine.Random.Range(0, controller.attackStates.Length);
+            int min = enemyLauncher.needMoreEnemies ? 0 : 1;
+            if(min == 0) Debug.Log("need me some enemies");
+            int index = UnityEngine.Random.Range(min, controller.attackStates.Length);
             controller.attacksStateMachine.SetState(controller.attackStates[index]);
         }
     }

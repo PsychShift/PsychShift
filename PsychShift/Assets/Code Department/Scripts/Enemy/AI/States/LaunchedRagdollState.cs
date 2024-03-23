@@ -34,7 +34,6 @@ public class LaunchedRagdollState : IState
     {
         hitGround = false;
         isDone = false;
-        brain.Agent.isStopped = true;
         brain.Agent.enabled = false;
         tempGravity.enabled = true;
         rigColliderManager._elapsedResetBonesTime = 0;
@@ -51,6 +50,8 @@ public class LaunchedRagdollState : IState
         //Debug.Log("Ragdoll exit");
         brain.Model.transform.parent = null;
         brain.CharacterInfo.controller.enabled = false;
+        brain.Agent.enabled = true;
+        brain.Agent.isStopped = false;
         
         
         /* AlignRotationToHips();
@@ -78,6 +79,10 @@ public class LaunchedRagdollState : IState
                 isDone = true;
             }
             elapsedTime += Time.deltaTime;
+        }
+        else if(elapsedTime > 20)
+        {
+            brain.EnemyHealth.TakeDamage(99999, Guns.GunType.None);
         }
     }
     private static readonly Vector3 castDirection = Vector3.down;
