@@ -31,7 +31,7 @@ public class ExplosiveDeathModifier : AbstractEnemyModifier
     {   
         // Perform a sphere cast
         // play effect
-
+        StartCoroutine(Instantiate(GameAssets.Instance.ExplosionEffect, transform.position, Quaternion.identity).GetComponent<ExplosionEffectScript>().Explode(4f, radius));
         // Define the falloff parameters
         float baseDamage = damageAmount; // The original damage amount
 

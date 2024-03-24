@@ -5,13 +5,8 @@ public class TestBreakObjectCode : MonoBehaviour
 {
     public GameObject fractured;
     public GameObject objectToDestroy; // Add a public GameObject variable to specify the object to destroy
-      public AudioSource DestroySound;
+    public AudioSource DestroySound;
     public float breakForce;
-    private bool Test = true;
-
-    private bool isDestroyed = false;
-
-
 
     public void BreakTheThing()
     {

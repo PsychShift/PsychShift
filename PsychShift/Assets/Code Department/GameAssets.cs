@@ -52,4 +52,8 @@ public class GameAssets : MonoBehaviour
 
         [Header("AIAgression")]
         public AIAgression[] Agressions;
+
+
+        [Header("Misc")]
+        public GameObject ExplosionEffect;
 }

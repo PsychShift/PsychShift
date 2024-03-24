@@ -18,4 +18,9 @@ public class NonSwapModifier : AbstractEnemyModifier
         gameObject.tag = "NonSwap";
         RCM.SwapTag("NonSwap");
     }
+
+    void Awake()
+    {
+        ApplyModifier(GetComponent<EnemyBrain>());
+    }
 }
