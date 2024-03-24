@@ -7,9 +7,19 @@ public class LevelEnd : MonoBehaviour
 {
     //private Scene currentScene;
     public LoadingScene loadingScene;
+    
+    /* public Camera cam;
+    public Camera cutSceneCam; */
     private void OnTriggerEnter(Collider other) 
     {
-        loadingScene.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if(other.gameObject.layer == 15)
+        {
+            //cutSceneCam.enabled = true;
+            //cam.enabled = false;
+            //other.gameObject.SetActive(false);
+            loadingScene.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         //if(other.CompareTag("Player"))
         //{
