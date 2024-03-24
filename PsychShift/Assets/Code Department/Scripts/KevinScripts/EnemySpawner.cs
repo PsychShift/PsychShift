@@ -23,6 +23,7 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] int howManySpawn;
     [SerializeField] float spawnRate;
+    [SerializeField] float howLongBeforeRespawns = 20f;
     private List<GameObject> enemySpawned;
 
     
@@ -102,7 +103,7 @@ public class EnemySpawner : MonoBehaviour
         */
 
         
-        yield return new WaitForSeconds(spawnRate);
+        yield return new WaitForSeconds(howLongBeforeRespawns);
         int numToSpawn = Math.Abs(enemySpawned.Count - howManySpawn);
 
         for(int i = 0; i < numToSpawn; i++)
