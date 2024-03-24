@@ -21,6 +21,7 @@ public class LoadingScene : MonoBehaviour
     {
         sceneIDRef=sceneId;
         Time.timeScale = 0f;
+        AudioListener.volume = 0;
         playerInput.enabled= true;
         if(videoPlayer!=null)
         {

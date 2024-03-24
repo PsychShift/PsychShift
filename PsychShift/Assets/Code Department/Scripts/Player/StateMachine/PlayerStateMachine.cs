@@ -181,6 +181,7 @@ namespace Player
             InputManager.Instance.OnManipulatePressed += Manipulate;
             InputManager.Instance.OnSwitchPressed += SwitchMode;
             InputManager.Instance.OnInteractPressed += TryInteract;
+            Debug.Log("Try int sub");
             #endregion
 
             // Create instances of root states
@@ -682,11 +683,16 @@ namespace Player
             {
                 Debug.Log("Hit a box");
                 for(int i = 0; i<hitInteract.Length;i++)
+                {
+                    Debug.Log(hitInteract[i].collider.gameObject.name);
                     if(hitInteract[i].collider.TryGetComponent(out DataLog dataLog))
                     {
                         dataLog.TextInteract();
-                        break;
+                        //break;
+                        return;
                     }
+                }
+                    
                         
             }
         }

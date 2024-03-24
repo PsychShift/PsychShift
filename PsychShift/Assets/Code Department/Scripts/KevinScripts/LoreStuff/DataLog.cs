@@ -46,6 +46,7 @@ public class DataLog : MonoBehaviour
         //Debug.Log("here");
         if(isReading == false)
         {
+            Debug.Log("read");
             //Time.timeScale = 0;
             if(textObject!=null)
                 textObject.SetActive(true);
@@ -58,6 +59,7 @@ public class DataLog : MonoBehaviour
         }
         else
         {
+            Debug.Log("DonRead");
             //Time.timeScale = 1;
             if(textObject!= null)
                 textObject.SetActive(false);

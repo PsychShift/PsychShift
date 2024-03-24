@@ -204,6 +204,7 @@ public class InputManager : MonoBehaviour
     }
     private void PressedInteract(InputAction.CallbackContext context)
     {
+        Debug.Log("Pressed");
         OnInteractPressed?.Invoke();
     }
     private bool _switch = false;
