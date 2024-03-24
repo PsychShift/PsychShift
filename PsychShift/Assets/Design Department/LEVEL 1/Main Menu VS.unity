@@ -1616,23 +1616,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &137897192 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 494067872613137912, guid: f7ed6a244b8720947829161c9843db93, type: 3}
-  m_PrefabInstance: {fileID: 816448955}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &137897196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137897192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4cf56dd301cea6459e066f28e930d24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &149208362
 GameObject:
   m_ObjectHideFlags: 0
@@ -9768,7 +9751,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1326419081}
         m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
-        m_MethodName: Level1
+        m_MethodName: VSScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11246,7 +11229,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1326419081}
         m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
-        m_MethodName: Level1
+        m_MethodName: VSScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11570,9 +11553,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3631776395064265870, guid: f7ed6a244b8720947829161c9843db93, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 494067872613137912, guid: f7ed6a244b8720947829161c9843db93, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 137897196}
     - targetCorrespondingSourceObject: {fileID: 7870721429744847090, guid: f7ed6a244b8720947829161c9843db93, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
@@ -12958,8 +12938,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f6fded51ac9dfc4bb2b7e6e011ee0b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
   LoadingScreen: {fileID: 1361458667}
   LoadingBarFill: {fileID: 0}
+  cutSceneCanvas: {fileID: 0}
+  playerInput: {fileID: 0}
+  videoPlayer: {fileID: 0}
 --- !u!1 &979372034
 GameObject:
   m_ObjectHideFlags: 0
@@ -13951,7 +13935,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1326419081}
         m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
-        m_MethodName: Level1
+        m_MethodName: VSScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16339,6 +16323,7 @@ MonoBehaviour:
   NeuroNetworkVideoFirst: {fileID: 0}
   RemappingMenu: {fileID: 0}
   RemappingMenuFirst: {fileID: 0}
+  Test: {fileID: 0}
 --- !u!114 &1326419083
 MonoBehaviour:
   m_ObjectHideFlags: 0
