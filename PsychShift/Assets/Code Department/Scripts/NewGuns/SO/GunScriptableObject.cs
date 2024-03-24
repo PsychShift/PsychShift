@@ -70,7 +70,7 @@ namespace Guns
             Model.transform.SetParent(Parent, false);
             Model.transform.localPosition = SpawnPoint;
             Model.transform.localRotation = Quaternion.Euler(SpawnRotation);
-            gunAnim = Model.GetComponent<Animator>();
+            gunAnim = Model.GetComponent<AnimatorFind>().animator;
 
             ActiveCamera = Camera;
 
@@ -204,6 +204,7 @@ namespace Guns
                     return;
                 }
                 gunAnim.SetInteger("Fire",1);
+                //gunAnim.SetInteger("Fire",0);
                 ShootSystem.Play();
                 AudioConfig.PlayShootingClip(ShootingAudioSource, AmmoConfig.CurrentClipAmmo == 1);
 
