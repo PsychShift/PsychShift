@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 80
   m_IsActive: 1
 --- !u!4 &8128335859218646655
 Transform:
@@ -76,7 +76,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 80
   m_IsActive: 1
 --- !u!4 &5946811797235988572
 Transform:
@@ -144,7 +144,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 84
   m_IsActive: 1
 --- !u!4 &2178632809385884978
 Transform:
@@ -230,6 +230,7 @@ MonoBehaviour:
     animMaster: {fileID: 0}
     gunHandler: {fileID: 0}
     enemyHealth: {fileID: 0}
+    modifier: 0
     movementStats: {fileID: 0}
     characterStats: {fileID: 0}
     enemyBrain: {fileID: 0}
@@ -430,6 +431,10 @@ PrefabInstance:
     - target: {fileID: 7565227480676758264, guid: f4132579e5ed81f4a829ceec70a2ae66, type: 3}
       propertyPath: m_Name
       value: ParticleMaster
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565227480676758264, guid: f4132579e5ed81f4a829ceec70a2ae66, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

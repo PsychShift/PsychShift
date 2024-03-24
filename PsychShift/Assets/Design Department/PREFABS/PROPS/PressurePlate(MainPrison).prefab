@@ -19,7 +19,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 84
   m_IsActive: 1
 --- !u!4 &3608927073123216332
 Transform:
@@ -120,42 +120,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e32eb53d534bb408baaf8b0751cf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Notes: Use this script for creating puzzles. Select the bools at the bottom. One
-    for action another for reaction. Use this script again on a new object for new
-    puzzles
-  effectForAct: {fileID: 5314680439905689725, guid: 375c11ddf461efe46ae8e7196e5d3ffe, type: 3}
-  effectForGod: {fileID: 0}
-  Notepad: Add the god puzzle kit object here, mainly used for interaction puzzles.
+  Beep: {fileID: 5592697869247978549}
+  soundClip: {fileID: 8300000, guid: 31ae32978f37d0040b168b4dfb70cc43, type: 3}
   godBoxRef: {fileID: 0}
-  Notes2: Actions below, pressurePlate/shoot needs a collider set to trigger to work,
-    set a count number to tell code how many objects need to be activated before
-    reaction.
-  stopSpawn: 0
+  effectForAct: {fileID: 5314680439905689725, guid: 375c11ddf461efe46ae8e7196e5d3ffe, type: 3}
+  index: 0
   interact: 0
   pressurePlate: 1
   shootObj: 0
+  leverPull: 0
+  leverParent: {fileID: 0}
+  effectForGod: {fileID: 0}
   amountToActivate: 1
   activateCount: 0
-  Notes3: Reactions below
   move: 0
-  spawn: 0
-  moveVariables: Variables that need to be filled in for move below
+  isAnim: 0
+  animVarName: 
   endPosition: {x: 0, y: 0, z: 0}
-  speedOfMove: 0
-  spawnVariables: Variables that need to be filled in for Spawn below, set objects
-    and location in godBox
+  timeOfMove: 2
+  spawn: 0
   spawnObjects: []
   locationOfSpawn: {fileID: 0}
-  isSpawnInf: 0
   howManySpawn: 0
-  spawnPoints: []
+  activate: 0
+  activateObject: []
+  deactivate: 0
+  deactivateObject: []
+  dissolveOBJ: 0
+  dissolveDuration: 2
+  dissolveStrength: 0
+  doNotReact: 0
+  changeObject: 0
+  activatedObject: {fileID: 0}
+  activated: 0
   puzzleComplete: 0
-  Beep: {fileID: 5592697869247978549}
-  soundClip: {fileID: 8300000, guid: 31ae32978f37d0040b168b4dfb70cc43, type: 3}
-  NotepadBoss: Variables for Boss stuff
-  isBossBox: 0
-  bossContainerRef: {fileID: 0}
-  isAnim: 0
+  puzzleDone: 0
+  puzzleIndex: 0
 --- !u!82 &5592697869247978549
 AudioSource:
   m_ObjectHideFlags: 0
@@ -307,6 +307,10 @@ PrefabInstance:
     - target: {fileID: 6599613965307541504, guid: b64bc0ba53e2ddc4c8c4e734eb7767ef, type: 3}
       propertyPath: m_Name
       value: Pressureplate
+      objectReference: {fileID: 0}
+    - target: {fileID: 6599613965307541504, guid: b64bc0ba53e2ddc4c8c4e734eb7767ef, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

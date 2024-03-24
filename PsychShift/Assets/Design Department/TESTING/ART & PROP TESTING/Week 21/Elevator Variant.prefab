@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 80
   m_IsActive: 1
 --- !u!4 &301078736787854072
 Transform:
@@ -192,10 +192,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8513424388201257645, guid: 723c829161db7964b81563b74c1bef08, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: -6213608111198091106, guid: 723c829161db7964b81563b74c1bef08, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: -6067185528594298527, guid: 723c829161db7964b81563b74c1bef08, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 758e5bd059ecf9749b9310cf66fe1493, type: 2}
+    - target: {fileID: -5539764629200458662, guid: 723c829161db7964b81563b74c1bef08, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: -3270834789232462163, guid: 723c829161db7964b81563b74c1bef08, type: 3}
       propertyPath: m_LocalScale.y
       value: 37.172745
@@ -208,9 +220,17 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.0051067
       objectReference: {fileID: 0}
+    - target: {fileID: 314093143175445656, guid: 723c829161db7964b81563b74c1bef08, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 723c829161db7964b81563b74c1bef08, type: 3}
       propertyPath: m_Name
       value: Elevator Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 723c829161db7964b81563b74c1bef08, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1170970068873931921, guid: 723c829161db7964b81563b74c1bef08, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -296,13 +316,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8513424388201257645, guid: 723c829161db7964b81563b74c1bef08, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: -7609145667655734672, guid: 723c829161db7964b81563b74c1bef08, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: -6213608111198091106, guid: 723c829161db7964b81563b74c1bef08, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: -6067185528594298527, guid: 723c829161db7964b81563b74c1bef08, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 82931c0590b62314bb70faf3ba6a5e80, type: 2}
+    - target: {fileID: -5539764629200458662, guid: 723c829161db7964b81563b74c1bef08, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: -3957782524123411102, guid: 723c829161db7964b81563b74c1bef08, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 314093143175445656, guid: 723c829161db7964b81563b74c1bef08, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 723c829161db7964b81563b74c1bef08, type: 3}
       propertyPath: m_Name
       value: Elevator Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 723c829161db7964b81563b74c1bef08, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 84
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -375,13 +423,18 @@ MonoBehaviour:
   soundClip: {fileID: 0}
   godBoxRef: {fileID: 0}
   effectForAct: {fileID: 0}
+  index: 0
   interact: 0
   pressurePlate: 0
   shootObj: 0
+  leverPull: 0
+  leverParent: {fileID: 0}
   effectForGod: {fileID: 0}
   amountToActivate: 1
   activateCount: 0
   move: 1
+  isAnim: 0
+  animVarName: 
   endPosition: {x: -165.54, y: 194.04, z: -2740.2573}
   timeOfMove: 20
   spawn: 0
@@ -395,8 +448,10 @@ MonoBehaviour:
   dissolveOBJ: 0
   dissolveDuration: 2
   dissolveStrength: 0
+  doNotReact: 0
   changeObject: 0
   activatedObject: {fileID: 0}
+  activated: 0
   puzzleComplete: 0
   puzzleDone: 0
   puzzleIndex: 0
