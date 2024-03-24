@@ -26,6 +26,7 @@ public class ExplosiveBarrelDamageable : MonoBehaviour, IDamageable
 
     public void TakeDamage(int Damage, GunType gunType)
     {
+        GetComponent<BoxCollider>().enabled = false;
         model.SetActive(false);
         explosion.SetActive(true);
         StartCoroutine(explosionEffect.Explode(-1, radius));
@@ -48,19 +49,21 @@ public class ExplosiveBarrelDamageable : MonoBehaviour, IDamageable
         foreach (var hitCollider in hitColliders)
         {
             if(hitCollider == null) continue;
-            var damageable = hitCollider.GetComponent<IDamageable>();
 
-            // Calculate the distance from the explosion center to the hit collider
-            float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
-
-            // Apply the falloff rate
-            float falloffFactor = Mathf.Clamp01((radius - distance) / radius);
-            float finalDamage = baseDamage * falloffFactor;
-
-            // If the object has an IDamageable component, apply damage
-            if (damageable != null)
+            if(hitCollider.TryGetComponent(out IDamageable damageable))
             {
-                damageable.TakeDamage((int)finalDamage, GunType.None);
+                // Calculate the distance from the explosion center to the hit collider
+                float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
+
+                // Apply the falloff rate
+                float falloffFactor = Mathf.Clamp01((radius - distance) / radius);
+                float finalDamage = baseDamage * falloffFactor;
+
+                // If the object has an IDamageable component, apply damage
+                if (damageable != null)
+                {
+                    damageable.TakeDamage((int)finalDamage, GunType.None);
+                }
             }
         }
     }

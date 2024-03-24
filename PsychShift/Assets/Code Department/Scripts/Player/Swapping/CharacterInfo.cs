@@ -22,6 +22,8 @@ namespace Player
         public EnemyGunSelector gunHandler;
         public EnemyHealth enemyHealth;
 
+        public EEnemyModifier modifier;
+
         public CharacterMovementStatsSO movementStats;
         public CharacterStatsSO characterStats;
 
@@ -38,6 +40,8 @@ namespace Player
             animator = model.GetComponent<Animator>();
             enemyHealth = characterContainer.GetComponent<EnemyHealth>();
             animMaster = model.GetComponent<EnemyAnimatorMaster>();
+
+            modifier = characterContainer.GetComponent<EnemyBrainSelector>().modifier;
         }
         public CharacterInfo(CharacterInfoReference charRef)
         {
@@ -50,6 +54,7 @@ namespace Player
             animator = model.GetComponent<Animator>();
             enemyHealth = characterContainer.GetComponent<EnemyHealth>();
             animMaster = model.GetComponent<EnemyAnimatorMaster>();
+            modifier = characterContainer.GetComponent<EnemyBrainSelector>().modifier;
         }
         public CharacterInfo(CharacterInfoReference charRef, Cinemachine.CinemachineVirtualCamera vCam, CharacterMovementStatsSO movementStats, CharacterStatsSO characterStats)
         {
@@ -69,11 +74,13 @@ namespace Player
             enemyHealth = characterContainer.GetComponent<EnemyHealth>();
             animator = model.GetComponent<Animator>();
             animMaster = model.GetComponent<EnemyAnimatorMaster>();
+            modifier = characterContainer.GetComponent<EnemyBrainSelector>().modifier;
 
             this.vCam = vCam;
 
             this.movementStats = movementStats;
             this.characterStats = characterStats;
+
         }
         public override string ToString()
         {

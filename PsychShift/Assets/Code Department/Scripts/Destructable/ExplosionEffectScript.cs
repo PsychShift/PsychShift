@@ -5,6 +5,7 @@ using UnityEngine;
 public class ExplosionEffectScript : MonoBehaviour
 {
     [SerializeField] public AudioSource explosionAudioSource;
+    [SerializeField] public AudioClip clip;
 
     public IEnumerator Explode(float delay, float radius)
     {
@@ -15,7 +16,7 @@ public class ExplosionEffectScript : MonoBehaviour
         }
         //explosionAudioSource.minDistance *= radius / 5;
         //explosionAudioSource.maxDistance *= radius / 5;
-        explosionAudioSource.Play();
+        explosionAudioSource.PlayOneShot(clip);
         if(delay != -1)
         {
             yield return new WaitForSeconds(delay);

@@ -5,8 +5,8 @@ using UnityEngine;
 public class ExplosiveDeathModifier : AbstractEnemyModifier
 {
     EnemyBrain brain;
-    public float radius = 10;
-    public int damageAmount = 50;
+    public float radius = 30;
+    public int damageAmount = 100;
     public float falloffRate =  0.2f;
     public override void ApplyModifier(EnemyBrain brain)
     {
@@ -27,11 +27,12 @@ public class ExplosiveDeathModifier : AbstractEnemyModifier
         brain.EnemyHealth.OnDeath += HandleExplosion;
     }
 
-    private void HandleExplosion(Transform idk)
+    private void HandleExplosion(Transform _)
     {   
         // Perform a sphere cast
         // play effect
         StartCoroutine(Instantiate(GameAssets.Instance.ExplosionEffect, transform.position, Quaternion.identity).GetComponent<ExplosionEffectScript>().Explode(4f, radius));
+
         // Define the falloff parameters
         float baseDamage = damageAmount; // The original damage amount
 
@@ -40,19 +41,22 @@ public class ExplosiveDeathModifier : AbstractEnemyModifier
 
         foreach (var hitCollider in hitColliders)
         {
-            var damageable = hitCollider.GetComponent<IDamageable>();
+            if(hitCollider == null) continue;
 
-            // Calculate the distance from the explosion center to the hit collider
-            float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
-
-            // Apply the falloff rate
-            float falloffFactor = Mathf.Clamp01((radius - distance) / radius);
-            float finalDamage = baseDamage * falloffFactor;
-
-            // If the object has an IDamageable component, apply damage
-            if (damageable != null)
+            if(hitCollider.TryGetComponent(out IDamageable damageable))
             {
-                damageable.TakeDamage((int)finalDamage, Guns.GunType.None);
+                // Calculate the distance from the explosion center to the hit collider
+                float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
+
+                // Apply the falloff rate
+                float falloffFactor = Mathf.Clamp01((radius - distance) / radius);
+                float finalDamage = baseDamage * falloffFactor;
+
+                // If the object has an IDamageable component, apply damage
+                if (damageable != null)
+                {
+                    damageable.TakeDamage((int)finalDamage, Guns.GunType.None);
+                }
             }
         }
     }

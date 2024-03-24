@@ -324,6 +324,7 @@ namespace Player
             if(newCharacter == null) return;
             CharacterInfoReference newCharacterInfoReference = newCharacter.GetComponent<CharacterInfoReference>();
             CharacterInfo newCharInfo = newCharacterInfoReference.characterInfo;
+            if(newCharInfo.modifier == EEnemyModifier.NonSwap) return;
             SlowMotion(false);
             
             if(currentCharacter != null)
