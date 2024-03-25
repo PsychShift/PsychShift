@@ -79,7 +79,7 @@ public class ObjectManipulator : MovingPlatform, IManipulate
                 Collider[] colliders = Physics.OverlapBox(collisionDetection.position, collisionDetectionSize / 2);
                 foreach(Collider other in colliders)
                 {
-                    if(other.TryGetComponent(out IDamageable damageable))
+                    if(other.gameObject.layer == 29 && other.TryGetComponent(out IDamageable damageable))
                     {
                         damageable.TakeDamage(999, Guns.GunType.None);
                     }
