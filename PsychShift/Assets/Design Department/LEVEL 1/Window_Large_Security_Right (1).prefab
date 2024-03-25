@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 80
   m_IsActive: 1
 --- !u!4 &6274800068752153133
 Transform:
@@ -82,7 +82,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 64
+  m_StaticEditorFlags: 80
   m_IsActive: 1
 --- !u!4 &2903366893055293970
 Transform:
@@ -190,7 +190,7 @@ GameObject:
   m_TagString: Destructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 84
   m_IsActive: 1
 --- !u!4 &5567236951587525128
 Transform:
@@ -204,7 +204,7 @@ Transform:
   m_LocalScale: {x: 22.420305, y: 2.9942183, z: 2.249165}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7567968899051183263}
+  - {fileID: 7202956047165931669}
   - {fileID: 221345969279371240}
   - {fileID: 4670499311390842453}
   - {fileID: 6242369191319915864}
@@ -411,6 +411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71ad9a11077039e4e88522d524d56782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disObjectNav: {fileID: 0}
 --- !u!1 &5082363898579849625
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +429,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 64
+  m_StaticEditorFlags: 80
   m_IsActive: 1
 --- !u!4 &221345969279371240
 Transform:
@@ -533,7 +534,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 64
+  m_StaticEditorFlags: 80
   m_IsActive: 1
 --- !u!4 &436469917616923424
 Transform:
@@ -638,7 +639,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 64
+  m_StaticEditorFlags: 80
   m_IsActive: 1
 --- !u!4 &1972919077640899537
 Transform:
@@ -743,7 +744,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 64
+  m_StaticEditorFlags: 80
   m_IsActive: 1
 --- !u!4 &4670499311390842453
 Transform:
@@ -848,7 +849,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 64
+  m_StaticEditorFlags: 80
   m_IsActive: 1
 --- !u!4 &6242369191319915864
 Transform:
@@ -1016,6 +1017,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WindowDestructWindow Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3364787229769517787, guid: 602a02878535a7840bbcb7321401506b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1159,6 +1164,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cracks
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e917d77105f929c4cb42701f0c2d0436, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1247,14 +1256,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8328751317154655173, guid: e4c3e560403390a489035036b95d126e, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 64
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4c3e560403390a489035036b95d126e, type: 3}
---- !u!4 &7567968899051183263 stripped
+--- !u!4 &7202956047165931669 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3967988038987553732, guid: e4c3e560403390a489035036b95d126e, type: 3}
   m_PrefabInstance: {fileID: 6117905097009257297}

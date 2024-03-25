@@ -1645,7 +1645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   gunType: {fileID: 11400000, guid: a399fd4060df00d4187875a939f59edb, type: 2}
-  modifiers: 00000000
+  modifier: 0
   currentBrain: {fileID: 0}
 --- !u!114 &3034052666354345378
 MonoBehaviour:
@@ -1708,7 +1708,6 @@ MonoBehaviour:
   Camera: {fileID: 0}
   StartGun: {fileID: 11400000, guid: 29cb4dc3750135b42813e37fb213d896, type: 2}
   GunParent: {fileID: 2213917291445965841}
-  InverseKinematics: {fileID: 0}
   <ActiveBaseGun>k__BackingField: {fileID: 0}
   InitializeOnStart: 0
 --- !u!114 &1336967112072070865
@@ -1822,6 +1821,7 @@ MonoBehaviour:
   childColliders: []
   Animator: {fileID: 0}
   _hipBones: {fileID: 0}
+  Rigidbodies: []
   isDoneStanding: 0
   _bones: []
   _standUpClipName: Stand Up
@@ -4118,9 +4118,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5456004188930351135}
     m_Modifications:
+    - target: {fileID: 1323012286234400941, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1550469888592366794, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
       propertyPath: m_Name
       value: Frug
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550469888592366794, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2220187251202889328, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
       propertyPath: m_RootOrder
@@ -4166,6 +4174,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -15.626
       objectReference: {fileID: 0}
+    - target: {fileID: 2230109181668366536, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2500545152972484723, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2805097079540481542, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4507329809934980758, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507323963072543585, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7104990841362924933, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7451211044135869289, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713847824835510244, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044042049404365417, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8781331753015073022, guid: 8b251e4bea8124749a2a43b15c8600be, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4184,6 +4232,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8706040795237242598}
     m_Modifications:
+    - target: {fileID: 209105517063130429, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054455589164353360, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7004836451748900539, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -4247,6 +4303,10 @@ PrefabInstance:
     - target: {fileID: 7673567582494077953, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
       propertyPath: m_TagString
       value: EnemyCosmetic
+      objectReference: {fileID: 0}
+    - target: {fileID: 7673567582494077953, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4313,6 +4373,10 @@ PrefabInstance:
     - target: {fileID: 9015548630375950314, guid: 8c5961e8cff60d643b582aad191c7ee6, type: 3}
       propertyPath: m_Name
       value: frug2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015548630375950314, guid: 8c5961e8cff60d643b582aad191c7ee6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

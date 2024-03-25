@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 80
   m_IsActive: 1
 --- !u!4 &7094639176747847029
 Transform:
@@ -143,7 +143,7 @@ GameObject:
   m_TagString: Destructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 80
   m_IsActive: 1
 --- !u!4 &7138523202312685109
 Transform:
@@ -193,7 +193,7 @@ GameObject:
   m_TagString: Destructable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 84
   m_IsActive: 1
 --- !u!4 &4128840082497961504
 Transform:
@@ -245,6 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71ad9a11077039e4e88522d524d56782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disObjectNav: {fileID: 0}
 --- !u!1001 &3102008525378524999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -312,6 +313,10 @@ PrefabInstance:
     - target: {fileID: 7135452647622386446, guid: 40d826008da2e2a4d9cca415eb4a45b2, type: 3}
       propertyPath: m_TagString
       value: Destructable
+      objectReference: {fileID: 0}
+    - target: {fileID: 7135452647622386446, guid: 40d826008da2e2a4d9cca415eb4a45b2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

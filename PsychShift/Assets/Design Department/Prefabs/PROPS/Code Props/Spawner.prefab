@@ -18,7 +18,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 84
   m_IsActive: 1
 --- !u!4 &5188862199387158100
 Transform:
@@ -119,7 +119,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   godBoxRef: {fileID: 0}
-  enemyPrefab: {fileID: 0}
   enemyTypes: 03000000
   gunTypes:
   - {fileID: 11400000, guid: 29cb4dc3750135b42813e37fb213d896, type: 2}
@@ -138,7 +137,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b11693b8e2be01a418452a964a9584b0, type: 2}
   howManySpawn: 5
   spawnRate: 3
+  howLongBeforeRespawns: 20
   gapBetweenSpawns: {x: 0, y: 2}
-  puzzleNotDone: 1
+  killEveryone: 0
   godBoxActionRef: {fileID: 0}
   spawnFX: {fileID: 0}

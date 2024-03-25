@@ -768,7 +768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   gunType: {fileID: 11400000, guid: 2f50468b5e902084697cb52a12875343, type: 2}
-  modifiers: 00000000
+  modifier: 0
   currentBrain: {fileID: 0}
 --- !u!114 &8673227956813383
 MonoBehaviour:
@@ -799,7 +799,6 @@ MonoBehaviour:
   Camera: {fileID: 0}
   StartGun: {fileID: 11400000, guid: 13f32ffad930d8447be9c072f0e96087, type: 2}
   GunParent: {fileID: 0}
-  InverseKinematics: {fileID: 0}
   <ActiveBaseGun>k__BackingField: {fileID: 0}
   InitializeOnStart: 0
 --- !u!114 &8126881814406043271
@@ -5307,6 +5306,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6621903345571102187}
     m_Modifications:
+    - target: {fileID: 209105517063130429, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054455589164353360, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7004836451748900539, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -5366,6 +5373,10 @@ PrefabInstance:
     - target: {fileID: 7673567582494077953, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
       propertyPath: m_Name
       value: belt_UVd Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7673567582494077953, guid: 58d5e179b1129c04fa3b4dc03c003bf3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
