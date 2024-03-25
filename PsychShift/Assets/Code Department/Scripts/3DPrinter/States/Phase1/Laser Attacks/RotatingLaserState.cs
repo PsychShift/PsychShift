@@ -33,8 +33,9 @@ public class RotatingLaserState : IState
 
     public void OnEnter()
     {
-        controller.DesiredY = desiredY;
-        controller.StartCoroutine(controller.WaitForHeight(() => Start()));
+        //controller.DesiredY = desiredY;
+        //controller.StartCoroutine(controller.WaitForHeight(() => Start()));
+        Start();
         
     }
 

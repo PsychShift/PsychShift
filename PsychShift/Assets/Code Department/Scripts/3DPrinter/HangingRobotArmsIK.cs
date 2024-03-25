@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -11,15 +9,16 @@ public class HangingRobotArmsIK : MonoBehaviour
     public Transform leftArmShoulderBone;
     public Transform leftHandBone;
     //[SerializeField] private TwoBoneIKConstraint leftArmBoneIK;
-    [SerializeField] private ChainIKConstraint leftArmIK;
+    [SerializeField] private TwoBoneIKConstraint leftArmIK;
     [SerializeField] private MultiRotationConstraint leftArmRotationIK;
 
 
     [Header("Right Arm")]
     public Transform rightArmTarget;
     public Transform rightHandBone;
-    [SerializeField] private ChainIKConstraint rightArmIK;
+    [SerializeField] private TwoBoneIKConstraint rightArmIK;
     [SerializeField] private MultiRotationConstraint rightArmRotationIK;
+
 
     [Header("Spine")]
     [Tooltip("The spine transform that the arms are attached to.")]
@@ -50,13 +49,13 @@ public class HangingRobotArmsIK : MonoBehaviour
     {
         if(manual)
         {
-            StartCoroutine(LerpFloatOverTime(0, 1, transitionTime, (result) => rightArmIK.weight = result));
-            StartCoroutine(LerpFloatOverTime(0, 1, transitionTime, (result) => rightArmRotationIK.weight = result));
+            StartCoroutine(RightLerpFloatOverTime(0, 1, transitionTime));
+            //StartCoroutine(LerpFloatOverTime(0, 1, transitionTime, (result) => rightArmRotationIK.weight = result));
         }
         else
         {
-            StartCoroutine(LerpFloatOverTime(1, 0, transitionTime, (result) => rightArmIK.weight = result));
-            StartCoroutine(LerpFloatOverTime(1, 0, transitionTime, (result) => rightArmRotationIK.weight = result));
+            StartCoroutine(RightLerpFloatOverTime(1, 0, transitionTime));
+            //StartCoroutine(LerpFloatOverTime(1, 0, transitionTime, (result) => rightArmRotationIK.weight = result));
         }
         /* if(manual)
         {
@@ -84,7 +83,7 @@ public class HangingRobotArmsIK : MonoBehaviour
     }
     public void AimRightHandTarget(Vector3 targetPos)
     {
-        // Find a point in-between the target position and the spine near the shoulder
+        /* // Find a point in-between the target position and the spine near the shoulder
 
         // Get the direction from the spine, to the target.
         Vector3 direction = targetPos - spine.position;
@@ -94,7 +93,9 @@ public class HangingRobotArmsIK : MonoBehaviour
         rightArmTarget.up = direction;
         float dist = Vector3.Distance(rightHandBone.position, spine.position);
         // Set the position of the arm to be the spine position, plusthe direction times some value
-        rightArmTarget.position = spine.position + (direction * dist);
+        rightArmTarget.position = spine.position + (direction * dist); */
+        rightArmTarget.position = targetPos;
+        
     }
 
     IEnumerator LerpFloatOverTime(float startValue, float endValue, float duration, System.Action<float> resultCallback)
@@ -105,10 +106,26 @@ public class HangingRobotArmsIK : MonoBehaviour
         while (elapsedTime < duration)
         {
             float currentLerp = Mathf.Lerp(startValue, endValue, elapsedTime / duration);
+            Debug.Log(currentLerp);
             resultCallback.Invoke(currentLerp);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         resultCallback.Invoke(endValue);
+    }
+    IEnumerator RightLerpFloatOverTime(float startValue, float endValue, float duration)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            float currentLerp = Mathf.Lerp(startValue, endValue, elapsedTime / duration);
+            rightArmRotationIK.weight = currentLerp;
+            rightArmIK.weight = currentLerp;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        rightArmRotationIK.weight = endValue;
+        rightArmIK.weight = endValue;
     }
 }

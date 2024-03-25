@@ -21,6 +21,11 @@ public class SpawnEnemyState : IState
 
     bool started = false;
 
+    private Vector3 startPos;
+    private Vector3 localTargetPos;
+    float timer = 0f;
+    float aimForSeconds = 1f;
+
     public SpawnEnemyState(HangingRobotController controller, EnemyLauncher enemyLauncher, HangingRobotArmsIK armsController, float desiredY, int spawnAmount)
     {
         this.controller = controller;
@@ -39,27 +44,45 @@ public class SpawnEnemyState : IState
     {
         controller.canMove = true;
         started = false;
-        controller.DesiredY = desiredY;
-        controller.StartCoroutine(controller.WaitForHeight(() => Start()));
-        controller.TurnOnNeckIK(false, 0.25f);
+        //controller.DesiredY = desiredY;
+        //controller.StartCoroutine(controller.WaitForHeight(() => Start()));
+        Start();
+        controller.animController.RightArmAttack(true);
+        
+        //controller.TurnOnNeckIK(false, 0.25f);        
     }
 
     public void OnExit()
     {
         controller.canMove = false;
-        controller.TurnOnNeckIK(true, 0.25f);
+        controller.animController.RightArmAttack(false);
+        armsController.SetRightArmManualOverTime(false, 0.6f);
+        //controller.TurnOnNeckIK(true, 0.25f);
     }
 
     public void Tick()
     {
-        if (started && Time.time > endTime)
+        if(!started) return;
+        
+        if (Time.time > endTime)
             isDone = true;
+
+        Vector3 moveTo = Vector3.Lerp(startPos, armsController.transform.TransformPoint(localTargetPos), timer/aimForSeconds);
+        armsController.AimRightHandTarget(moveTo);
+        timer += Time.deltaTime;
     }
 
     void Start()
     {
+        armsController.SetRightArmManualOverTime(true, 0.1f);
         endTime = Time.time + spawnAmount * .5f;
         enemyLauncher.StartCoroutine(enemyLauncher.ShootEnemies(spawnAmount, 0.5f, controller.guns, controller.modifiers));
         started = true;
+
+        armsController.rightArmTarget.position = armsController.rightHandBone.position;
+        startPos = armsController.rightArmTarget.position;
+
+        // Convert the target position to the body's local space
+        localTargetPos = armsController.transform.InverseTransformPoint(controller.target.position);
     }
 }

@@ -31,10 +31,23 @@ public class HangingAnimatorController : MonoBehaviour
         } 
     }
 
+    private int staticTriggerHash;
+    private int attackDoneHash;
 
-    void Awake()
+
+    void Start()
     {
         animator = GetComponent<Animator>();
+        staticTriggerHash = Animator.StringToHash("StaticShootTrigger");
+        attackDoneHash = Animator.StringToHash("AttackDone");
+    }
+
+    public void RightArmAttack(bool on)
+    {
+        if(on)
+            animator.SetTrigger(staticTriggerHash);
+        else
+            animator.SetTrigger(attackDoneHash);
     }
 
     [SerializeField] private float modelRotationDamping = 1f;

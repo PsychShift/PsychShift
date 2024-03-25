@@ -10,7 +10,7 @@ public class StaticLaserShotState : IState
     public LaserBeamStats stats;
     public float desiredY;
 
-    private HangingRobotController controller;
+    [HideInInspector] public HangingRobotController controller;
     private HangingAnimatorController animController;
     private HangingRobotArmsIK armsController;
     private SlowAimAtTargetState aimState;
@@ -29,7 +29,7 @@ public class StaticLaserShotState : IState
 
 
         // 1 aiming, slowly aim at the player, show a red beam for conveince
-        aimState = new SlowAimAtTargetState(armsController);
+        aimState = new SlowAimAtTargetState(controller, armsController);
 
         // 2 charge up, charge the laser
         var chargeLaserState = new ChargeUpLaserState(laser, stats);
@@ -57,16 +57,19 @@ public class StaticLaserShotState : IState
     {
         isFinished = false;
         started = false;
-        //stateMachine.SetState(aimState);
-        controller.DesiredY = desiredY;
-        controller.StartCoroutine(controller.WaitForHeight(stateMachine, aimState, () => Start()));
-        controller.TurnOnNeckIK(false, 0.25f);
+        stateMachine.SetState(aimState);
+        //controller.DesiredY = desiredY;
+        //controller.StartCoroutine(controller.WaitForHeight(stateMachine, aimState, () => Start()));
+        Start();
+        //controller.TurnOnNeckIK(false, 0.25f);
+        animController.RightArmAttack(true);
     }
 
     public void OnExit()
     {
-        armsController.SetLeftArmManualOverTime(false, 0.6f);
-        controller.TurnOnNeckIK(true, 0.25f);
+        armsController.SetRightArmManualOverTime(false, 0.6f);
+        animController.RightArmAttack(false);
+        //controller.TurnOnNeckIK(true, 0.25f);
     }
 
     public void Tick()
@@ -82,8 +85,7 @@ public class StaticLaserShotState : IState
 
     void Start()
     {
-        armsController.SetLeftArmManualOverTime(true, 0.1f);
-        aimState.target = controller.target;
+        armsController.SetRightArmManualOverTime(true, 0.1f);
         started = true;
     }
 

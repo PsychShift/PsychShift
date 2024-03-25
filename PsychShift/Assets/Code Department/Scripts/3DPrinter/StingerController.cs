@@ -17,8 +17,7 @@ public class StingerController : MonoBehaviour
 
     private int activateHash;
     private int deactivateHash;
-    private int rotateRightHash;
-    private int rotateLeftHash;
+    private int rightHash;
     private int speedHash;
 
     void OnEnable()
@@ -27,8 +26,7 @@ public class StingerController : MonoBehaviour
 
         activateHash = Animator.StringToHash("ActivateTail");
         deactivateHash = Animator.StringToHash("DeActivateTail");
-        rotateRightHash = Animator.StringToHash("RotateTailRight");
-        rotateLeftHash = Animator.StringToHash("RotateTailLeft");
+        rightHash = Animator.StringToHash("right");
         speedHash = Animator.StringToHash("TailSpeed");
 
         _animator.SetFloat(speedHash, (1 / laserShooter.defaultStats.ShootForTime));
@@ -36,6 +34,7 @@ public class StingerController : MonoBehaviour
     public void FireLaser(bool right)
     {
         isDone = false;
+        _animator.SetBool(rightHash, right);
         _animator.SetTrigger(activateHash);
     }
     public void TurnOnLaser()

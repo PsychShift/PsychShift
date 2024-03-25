@@ -25,12 +25,14 @@ public class LaserShootState : IState
     {
         timer = 0;
         isFinished = false;
+        rootState.controller.canRotate = false;
         laser.Fire(true, stats);
     }
 
     public void OnExit()
     {
         laser.CeaseFire();
+        rootState.controller.canRotate = true;
         rootState.isFinished = true;
     }
     float timer;

@@ -49,7 +49,6 @@ public class DecisionState : IState
         else
         {
             int min = enemyLauncher.needMoreEnemies ? 0 : 1;
-            if(min == 0) Debug.Log("need me some enemies");
             int index = UnityEngine.Random.Range(min, controller.attackStates.Length);
             controller.attacksStateMachine.SetState(controller.attackStates[index]);
         }
@@ -68,7 +67,7 @@ public class DecisionState : IState
     {
         endTime = Time.time + decisionTime;
         controller.canMove = true;
-        controller.DesiredY = desiredY;
+        //controller.DesiredY = desiredY;
     }
 
     public void OnExit()

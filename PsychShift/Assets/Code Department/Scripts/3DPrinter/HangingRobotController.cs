@@ -28,10 +28,11 @@ public class HangingRobotController : MonoBehaviour
     [Header("Everything Else")]
 
     // Lets start with movement, we need to keep track of the player's
-    [SerializeField] private HangingAnimatorController animController;
+    public HangingAnimatorController animController;
     [SerializeField] private StingerController stingerController;
     [SerializeField] private FinalBossTargetManager targetManager;
     public NavMeshAgent agent {  get; private set; }
+    
     public Transform target => targetManager.target;
     public Transform model;
     public StateMachine.StateMachine attacksStateMachine;
@@ -49,6 +50,7 @@ public class HangingRobotController : MonoBehaviour
     public StateMachine.StateMachine movementStateMachine;
 
     public bool canMove = false;
+    public bool canRotate = true;
     [HideInInspector] public bool desiredHeightReached = false;
     public void TurnOnNeckIK(bool on, float transitionTime) => animController.spineIK.TurnOnNeckLookAtIK(on, transitionTime);
     public bool reachedRequiredDestination => desiredHeightReached && DestinationCheck();
@@ -95,7 +97,7 @@ public class HangingRobotController : MonoBehaviour
         void ATAttack(IState from, IState to, Func<bool> condition) => attacksStateMachine.AddTransition(from, to, condition);
 
         void ATMove(IState from, IState to, Func<bool> condition) => movementStateMachine.AddTransition(from, to, condition);
-        void ANYMove(IState to, Func<bool> condition) => movementStateMachine.AddAnyTransition(to, condition);
+        //void ANYMove(IState to, Func<bool> condition) => movementStateMachine.AddAnyTransition(to, condition);
         #region attacks
         //Eventually this will be a sub state. Each phase of the boss will be its own state machine, and a healthgate will be the transition for the state machine states.
         attacksStateMachine = new StateMachine.StateMachine();
@@ -144,7 +146,7 @@ public class HangingRobotController : MonoBehaviour
     void Update()
     {
         attacksStateMachine.Tick();
-        if(canMove)
+        if(canRotate)
             Rotate();
     }
 
