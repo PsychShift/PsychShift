@@ -75,19 +75,17 @@ public class ObjectManipulator : MovingPlatform, IManipulate
 
             if (collisionDetection != null)
             {
+                Debug.Log("trying");
                 Collider[] colliders = Physics.OverlapBox(collisionDetection.position, collisionDetectionSize / 2);
                 foreach(Collider other in colliders)
                 {
-                    if(other.tag == "Destructable")
+                    if(other.TryGetComponent(out IDamageable damageable))
                     {
-                        if(other.TryGetComponent(out IDamageable damageable))
-                        {
-                            damageable.TakeDamage(999, Guns.GunType.None);
-                        }
+                        damageable.TakeDamage(999, Guns.GunType.None);
                     }
                 }
             }
-            yield return new WaitForFixedUpdate(); ;
+            yield return null;
         }
         transform.position = targetPosition;
         CanInteract = true;

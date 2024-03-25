@@ -6,6 +6,9 @@ using System.Collections;
 
 public class FinalBossHealth : MonoBehaviour, IDamageable
 {
+    [Header("REMOVE GATE AFTER SPRINT 7 IT'S NOT GOOD")]
+    public GameObject GATE;
+    public ChildCollider childCollider;
     [SerializeField] private HangingRobotController BossController;
     [SerializeField] private Slider healthBar;
     private int currentHealth;
@@ -27,9 +30,11 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     int currentHealthGateNumber;
     EBossStates nextBossState = EBossStates.None;
     AbstractBossPuzzle currentHealthGatePuzzle;
+    public bool invincible;
 
     public void TakeDamage(int Damage, Guns.GunType gunType)
     {
+        if(invincible) return;
         int damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
         currentHealth -= damageTaken;
         UpdateHealthBar(damageTaken);
@@ -57,7 +62,11 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
             else
             {
                 // die
+                GATE.SetActive(false);
                 OnDeath?.Invoke(transform);
+                Debug.Log("DESTROY");
+                healthBar.enabled = false;
+                Destroy(gameObject);
             }
         }
     }
@@ -98,6 +107,7 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
         }
         currentPhase = 0;
         SwitchPhase();
+        childCollider.SetUp(this);
     }
 
     private int GetPhaseHealth(int phase)

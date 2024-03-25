@@ -136,7 +136,6 @@ public class LaserShooter : MonoBehaviour
                     hitObject.TakeDamage((int)currentStats.Damage, Guns.GunType.None);
                 }
             }
-            Debug.Log("firing, hits: " + hits.Length);
             yield return null;
         }
     }

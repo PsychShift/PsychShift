@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class ShieldGenerator : MonoBehaviour, IDamageable
 {
+    public bool isImportant;
     //kevin added this
     [HideInInspector]
-    public bool isDed;
+    public bool isDead;
     public bool isHitable;
     private Animator anim;
     [SerializeField] private ActivateShield_BossPuzzle shieldScript;
@@ -47,10 +48,10 @@ public class ShieldGenerator : MonoBehaviour, IDamageable
     }
     public void Destoyed()
     {
-        isDed = true;
-        shieldScript.GeneratorDestroyed(this);
+        isDead = true;
+        shieldScript.GeneratorDestroyed(this, isImportant);
         beam.Stop();
-        Destroy(gameObject);
+        OnDeath?.Invoke(transform);
     }
     private void SetColliderEnabled(bool condition)
     {

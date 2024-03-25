@@ -42,6 +42,7 @@ public class DecisionState : IState
 
     private void SetState()
     {
+        Debug.Log(stateQueue.Count);
         if(stateQueue.Count > 0)
         {
             controller.attacksStateMachine.SetState(stateQueue.Dequeue());

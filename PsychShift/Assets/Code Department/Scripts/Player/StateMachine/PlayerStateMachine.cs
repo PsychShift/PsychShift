@@ -181,7 +181,6 @@ namespace Player
             InputManager.Instance.OnManipulatePressed += Manipulate;
             InputManager.Instance.OnSwitchPressed += SwitchMode;
             InputManager.Instance.OnInteractPressed += TryInteract;
-            Debug.Log("Try int sub");
             #endregion
 
             // Create instances of root states
