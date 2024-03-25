@@ -27,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6188636574918965547}
-  m_LocalRotation: {x: -0.012268108, y: 0.95136225, z: -0.03821065, w: -0.30544928}
-  m_LocalPosition: {x: 255.60745, y: -20.58019, z: -4575.906}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 274.75302, y: -18.461462, z: -4497.752}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -381,7 +381,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8202395381392147999, guid: 0c5d37e96cd941e40bbbbbba860a1841, type: 3}
       propertyPath: simulationSpeed
-      value: 10
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8202395381392147999, guid: 0c5d37e96cd941e40bbbbbba860a1841, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
@@ -548,8 +548,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 49623413748325001}
     m_Modifications:
     - target: {fileID: 4543878156077938316, guid: 12a7c8ffd9afa384d83b1a15aa501f96, type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4543878156077938316, guid: 12a7c8ffd9afa384d83b1a15aa501f96, type: 3}
       propertyPath: prewarm
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4543878156077938316, guid: 12a7c8ffd9afa384d83b1a15aa501f96, type: 3}
+      propertyPath: randomSeed
+      value: -1602605871
+      objectReference: {fileID: 0}
+    - target: {fileID: 4543878156077938316, guid: 12a7c8ffd9afa384d83b1a15aa501f96, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4543878156077938316, guid: 12a7c8ffd9afa384d83b1a15aa501f96, type: 3}
+      propertyPath: scalingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4543878156077938316, guid: 12a7c8ffd9afa384d83b1a15aa501f96, type: 3}
+      propertyPath: autoRandomSeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4543878156077938316, guid: 12a7c8ffd9afa384d83b1a15aa501f96, type: 3}
+      propertyPath: TrailModule.mode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4543878156077938316, guid: 12a7c8ffd9afa384d83b1a15aa501f96, type: 3}
       propertyPath: ShapeModule.arc.mode
