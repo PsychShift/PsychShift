@@ -28,6 +28,20 @@ public class MainMenuScript : MonoBehaviour
     public GameObject RemappingMenuFirst;
     public GameObject DiffMenu;
     public GameObject DiffMenuFirst;
+    public GameObject CutSceneMenu;
+    public GameObject CutSceneMenuFirst;
+    public GameObject CutScene1;
+    public GameObject CutScene1First;
+    public GameObject CutScene2;
+    public GameObject CutScene2First;
+    public GameObject CutScene3;
+    public GameObject CutScene3First;
+    public GameObject CutScene4;
+    public GameObject CutScene4First;
+    public GameObject CutScene5;
+    public GameObject CutScene5First;
+    public GameObject CutScene6;
+    public GameObject CutScene6First;
     private WaitForSeconds MenuTick = new WaitForSeconds(0.1f);
     private Coroutine WaitforFade;
     [SerializeField] private bool fadeInCredits = false;
@@ -46,6 +60,7 @@ public class MainMenuScript : MonoBehaviour
         NeuroNetworkVideo.SetActive(false);
         RemappingMenu.SetActive(false);
         DiffMenu.SetActive(false);
+        CutSceneMenu.SetActive(false);
 
         // Jonathan plased this in the update state, dont know why. Undo it if I broke something.
         Cursor.lockState = CursorLockMode.Locked;
@@ -292,7 +307,7 @@ public class MainMenuScript : MonoBehaviour
     public void OpenDiff()
     {
         DiffMenu.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(RemappingMenuFirst);
+        EventSystem.current.SetSelectedGameObject(DiffMenuFirst);
     }
 
     public void CloseDiff()
@@ -300,5 +315,75 @@ public class MainMenuScript : MonoBehaviour
         DiffMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
     }
-    
+    public void OpenCutMenu()
+    {
+        CutSceneMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(CutSceneMenuFirst);
+    }
+
+    public void CloseCutMenu()
+    {
+        CutSceneMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(MainMenuFirst);
+    }
+    public void OpenCut1()
+    {
+        CutScene1.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(CutScene1First);
+    }
+    public void CloseCut1()
+    {
+        CutScene1.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(CutSceneMenuFirst);
+    }
+    public void OpenCut2()
+    {
+        CutScene2.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(CutScene2First);
+    }
+    public void CloseCut2()
+    {
+        CutScene2.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(CutSceneMenuFirst);
+    }
+    public void OpenCut3()
+    {
+        CutScene3.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(CutScene3First);
+    }
+    public void CloseCut3()
+    {
+        CutScene3.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(CutSceneMenuFirst);
+    }
+    public void OpenCut4()
+    {
+        CutScene4.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(CutScene4First);
+    }
+    public void CloseCut4()
+    {
+        CutScene4.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(CutSceneMenuFirst);
+    }
+    public void OpenCut5()
+    {
+        CutScene5.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(CutScene5First);
+    }
+    public void CloseCut5()
+    {
+        CutScene5.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(CutSceneMenuFirst);
+    }
+    public void OpenCut6()
+    {
+        CutScene1.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(CutScene6First);
+    }
+    public void CloseCut6()
+    {
+        CutScene1.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(CutSceneMenuFirst);
+    }
 }

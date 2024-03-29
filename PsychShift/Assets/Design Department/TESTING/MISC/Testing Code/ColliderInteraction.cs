@@ -19,7 +19,7 @@ public class ColliderInteraction : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Check if the trigger has already been used
-        if (!hasBeenTriggered)
+        if (!hasBeenTriggered && other.gameObject.layer == 15)
         {
             // Trigger animation if there is an Animation component attached
             if (anim != null)
