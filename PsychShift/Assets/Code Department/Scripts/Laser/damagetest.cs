@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class damagetest : MonoBehaviour, IDamageable
 {
-    public int CurrentHealth { get; set; }
+    public float CurrentHealth { get; set; }
 
-    public int MaxHealth { get; set; } = 100;
+    public float MaxHealth { get; set; } = 100;
 
     public bool IsWeakPoint { get; set; } = false;
 
@@ -18,7 +18,7 @@ public class damagetest : MonoBehaviour, IDamageable
     {
         CurrentHealth = MaxHealth;
     }
-    public void TakeDamage(int Damage, Guns.GunType gunType)
+    public void TakeDamage(float Damage, Guns.GunType gunType)
     {
         CurrentHealth -= Damage;
         if(CurrentHealth <= 0) Destroy(gameObject);

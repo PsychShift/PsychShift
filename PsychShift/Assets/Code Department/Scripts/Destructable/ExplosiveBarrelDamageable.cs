@@ -6,9 +6,9 @@ using UnityEngine;
 public class ExplosiveBarrelDamageable : MonoBehaviour, IDamageable
 {
     #region Not Useful, waaa
-    public int CurrentHealth => throw new System.NotImplementedException();
+    public float CurrentHealth => throw new System.NotImplementedException();
 
-    public int MaxHealth => throw new System.NotImplementedException();
+    public float MaxHealth => throw new System.NotImplementedException();
 
     public bool IsWeakPoint => throw new System.NotImplementedException();
 
@@ -24,7 +24,7 @@ public class ExplosiveBarrelDamageable : MonoBehaviour, IDamageable
     [SerializeField] private GameObject explosion;
     [SerializeField] private ExplosionEffectScript explosionEffect;
 
-    public void TakeDamage(int Damage, GunType gunType)
+    public void TakeDamage(float Damage, GunType gunType)
     {
         GetComponent<BoxCollider>().enabled = false;
         model.SetActive(false);

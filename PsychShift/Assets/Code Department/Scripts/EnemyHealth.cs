@@ -7,13 +7,13 @@ namespace Guns.Health
     public class EnemyHealth : MonoBehaviour, IDamageable
     {
         [SerializeField]
-        private int _MaxHealth = 100;
+        private float _MaxHealth = 100;
         [SerializeField]
-        private int _Health;
+        private float _Health;
 
-        public int CurrentHealth {get => _Health; private set => _Health = value; }
+        public float CurrentHealth {get => _Health; private set => _Health = value; }
 
-        public int MaxHealth {get => _MaxHealth; private set=> _MaxHealth = value; }
+        public float MaxHealth {get => _MaxHealth; private set=> _MaxHealth = value; }
         public bool IsWeakPoint { get; } = false;
         public event IDamageable.TakeDamageEvent OnTakeDamage;
         public event IDamageable.DeathEvent OnDeath;
@@ -23,15 +23,14 @@ namespace Guns.Health
         private void OnEnable()
         {
             CurrentHealth = MaxHealth;
-            rigColliderManager = gameObject.AddComponent<RigColliderManager>();
+            rigColliderManager = gameObject.GetComponent<RigColliderManager>();
             rigColliderManager.SetUp(this);
         }
-        
 
-        public void TakeDamage(int Damage, Guns.GunType gunType)
+        public void TakeDamage(float Damage, Guns.GunType gunType)
         {
             if (gameObject.layer == 15 && GodModeScript.Instance.GodMode) return;
-            int damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
+            float damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
             
             CurrentHealth -= damageTaken;
             //healthBar.value = CurrenHealth;
@@ -57,6 +56,12 @@ namespace Guns.Health
 
         public void ResetHealth()
         {
+            _Health = _MaxHealth;
+        }
+
+        public void SetMaxHealth(GunScriptableObject gun)
+        {
+            _MaxHealth = gun.CharacterConfig.Health;
             _Health = _MaxHealth;
         }
     }

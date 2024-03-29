@@ -8,9 +8,9 @@ public class GREG : MonoBehaviour, IDamageable
     
     private bool wasHit => CurrentHealth == 0;
 
-    public int CurrentHealth {get;set;}
+    public float CurrentHealth {get;set;}
 
-    public int MaxHealth { get { return 1; } }
+    public float MaxHealth { get { return 1; } }
 
     public bool IsWeakPoint {get;set;}
 
@@ -32,7 +32,7 @@ public class GREG : MonoBehaviour, IDamageable
         nextColor.material = colors[1];
 
     }
-    public void TakeDamage(int Damage, Guns.GunType gunType)
+    public void TakeDamage(float Damage, Guns.GunType gunType)
     {
         ShootHitScan();
     }

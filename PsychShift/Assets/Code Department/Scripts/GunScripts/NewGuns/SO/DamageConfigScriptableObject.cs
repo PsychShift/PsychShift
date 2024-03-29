@@ -7,6 +7,7 @@ namespace Guns
     public class DamageConfigScriptableObject : ScriptableObject, System.ICloneable
     {
         public MinMaxCurve DamageCurve;
+        public float CritModifier = 1.5f;
 
         [Header("Explosive")]
         public bool IsExplosive = false;
@@ -31,6 +32,7 @@ namespace Guns
             DamageConfigScriptableObject config = CreateInstance<DamageConfigScriptableObject>();
 
             config.DamageCurve = DamageCurve;
+            config.CritModifier = CritModifier;
             config.IsExplosive = IsExplosive;
             config.Radius = Radius;
             config.DamageFalloff = DamageFalloff;

@@ -17,9 +17,9 @@ public class ShieldGenerator : MonoBehaviour, IDamageable
     public event IDamageable.DeathEvent OnDeath;
     public ChildCollider[] Colliders;
 
-    public int CurrentHealth => throw new System.NotImplementedException();
+    public float CurrentHealth => throw new System.NotImplementedException();
 
-    public int MaxHealth => throw new System.NotImplementedException();
+    public float MaxHealth => throw new System.NotImplementedException();
 
     public bool IsWeakPoint => throw new System.NotImplementedException();
 
@@ -59,7 +59,7 @@ public class ShieldGenerator : MonoBehaviour, IDamageable
             Colliders[i].GetComponent<Collider>().enabled = condition;
     }
 
-    public void TakeDamage(int Damage, Guns.GunType gunType)
+    public void TakeDamage(float Damage, Guns.GunType gunType)
     {
         if(!isHitable) return;
         if (gunType == Guns.GunType.None || gunType == Guns.GunType.RocketLauncher)

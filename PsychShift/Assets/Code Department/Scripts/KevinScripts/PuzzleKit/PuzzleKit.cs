@@ -115,10 +115,10 @@ public class PuzzleKit : MonoBehaviour, IDamageable
     public event IDamageable.DeathEvent OnDeath;
     #pragma warning restore 67
 
-    private int currentHealth;
-    public int CurrentHealth { get => currentHealth; set => currentHealth = value;}
+    private float currentHealth;
+    public float CurrentHealth { get => currentHealth; set => currentHealth = value;}
 
-    public int MaxHealth { get { return 1; } }
+    public float MaxHealth { get { return 1; } }
 
     public bool IsWeakPoint { get; } = false;
 
@@ -488,7 +488,7 @@ public class PuzzleKit : MonoBehaviour, IDamageable
 
 
     private bool wasHit => CurrentHealth == 0;
-    public void TakeDamage(int Damage, Guns.GunType gunType)
+    public void TakeDamage(float Damage, Guns.GunType gunType)
     {
         if(wasHit)
             return;

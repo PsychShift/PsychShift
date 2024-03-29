@@ -7,9 +7,9 @@ public class PlayThud : MonoBehaviour, IDamageable
 {
     public ImpactType impactType;
 
-    public int CurrentHealth  { get; }
+    public float CurrentHealth  { get; }
 
-    public int MaxHealth { get; }
+    public float MaxHealth { get; }
     public bool IsWeakPoint { get; } = false;
 
     #pragma warning disable 67
@@ -17,7 +17,7 @@ public class PlayThud : MonoBehaviour, IDamageable
     public event IDamageable.DeathEvent OnDeath;
     #pragma warning restore 67
 
-    public void TakeDamage(int Damage, Guns.GunType gunType)
+    public void TakeDamage(float Damage, Guns.GunType gunType)
     {
         SurfaceManager.Instance.HandleImpact(gameObject, Vector3.zero, Vector3.up, impactType, 0);
     }

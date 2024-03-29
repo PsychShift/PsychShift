@@ -7,13 +7,13 @@ public class SaveObject
 {
   public int Scene;
   public Vector3 Savepoint;
-  public int Health;
+  public float Health;
   public AIAgression AIAgression;
   public EBrainType EnemyType;
   public GunType GunType;
   public EEnemyModifier[] Modifiers;
 
-  public SaveObject(int scene, Vector3 savePoint, int health, AIAgression aIAgression, EBrainType enemyType,  
+  public SaveObject(int scene, Vector3 savePoint, float health, AIAgression aIAgression, EBrainType enemyType,  
                     GunType gunType, EEnemyModifier[] modifiers)
   {
     Scene = scene;

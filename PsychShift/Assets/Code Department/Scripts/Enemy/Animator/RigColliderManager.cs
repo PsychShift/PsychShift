@@ -13,29 +13,29 @@ public class RigColliderManager : MonoBehaviour
     public List<ChildCollider> childColliders;
     [SerializeField]
     public Animator Animator;//changed to public to access in standup state
-    public Transform _hipBones;
     private Transform RagdollRoot;
     [HideInInspector] public Rigidbody[] Rigidbodies;
     private CharacterJoint[] Joints;
     private Collider[] Colliders;
-    private float _timeToWakeUp;
+/*     private float _timeToWakeUp;
    // private float animationTimeBack;
-    private float animationTime;
-    public bool isDoneStanding;
+    private float animationTime; */
+    [HideInInspector] public bool isDoneStanding;
     //all dis for anim transition
     public BoneTransform[] _standUpBoneTransforms;
     public BoneTransform[] _ragdollBoneTransforms;
-    public Transform[] _bones;
-    [SerializeField]
-    private string _standUpClipName = "Stand Up";
+    [HideInInspector] public Transform[] _bones;
+    
+    //private const string _standUpClipName = "Stand Up";
     [SerializeField]
     private float _timeToResetBones= .5f;
-    public float _elapsedResetBonesTime;
+    [HideInInspector] public float _elapsedResetBonesTime;
     public void SetUp(IDamageable parentDamageable)
     {
         RagdollRoot = transform.GetChild(0);
-        Animator = RagdollRoot.GetComponent<Animator>();
-        childColliders = new List<ChildCollider>();
+        if(Animator == null)
+            Animator = RagdollRoot.GetComponent<Animator>();
+            
         Colliders = RagdollRoot.GetComponentsInChildren<Collider>();
         Rigidbodies = RagdollRoot.GetComponentsInChildren<Rigidbody>();
         Joints = RagdollRoot.GetComponentsInChildren<CharacterJoint>();
@@ -51,18 +51,23 @@ public class RigColliderManager : MonoBehaviour
         }
         PopulateAnimationStartBoneTransfroms(_standUpClipName, _standUpBoneTransforms); */
 
+        if(childColliders.Count == 0)
+            childColliders = new List<ChildCollider>();
+        
         foreach (Collider collider in Colliders)
         {
             if(collider.gameObject == gameObject) continue;
             if(collider.gameObject.TryGetComponent(out ChildCollider premadeScript))
             {
-                premadeScript.SetUp(premadeScript);
+                premadeScript.SetUp(parentDamageable);
                 childColliders.Add(premadeScript);
-                continue;
             }
-            ChildCollider childCollider = collider.gameObject.AddComponent<ChildCollider>();
-            childCollider.SetUp(parentDamageable);
-            childColliders.Add(childCollider);
+            else
+            {
+                ChildCollider childCollider = collider.gameObject.AddComponent<ChildCollider>();
+                childCollider.SetUp(parentDamageable);
+                childColliders.Add(childCollider);
+            }
         }
 
         EnableAnimator();
@@ -70,7 +75,6 @@ public class RigColliderManager : MonoBehaviour
 
     public void SwapTag(string tag)
     {
-
         foreach (var collider in childColliders)
         {
             collider.SwapTag(tag);

@@ -363,6 +363,10 @@ namespace Player
                 gunSelector.SetupGun(currentCharacter.gunHandler.StartGun);
                 // Setup healthbar ui
                 HealthUI.Instance.SetHealthBarOnSwap(currentCharacter.enemyHealth.CurrentHealth, currentCharacter.enemyHealth.MaxHealth);
+
+                walkSpeed = newCharacterInfoReference.characterInfo.gunHandler.ActiveGun.CharacterConfig.WalkMoveSpeed;
+                wallSpeed = newCharacterInfoReference.characterInfo.gunHandler.ActiveGun.CharacterConfig.WallMoveSpeed;
+
                 currentCharacter.enemyHealth.OnTakeDamage += HealthUI.Instance.UpdateHealthBar;
                 currentCharacter.enemyHealth.OnDeath += HealthUI.Instance.HandleDeath;
                 // Subscribe the hit effects to the gun
@@ -374,8 +378,6 @@ namespace Player
             }
 
             PlayerMaster.Instance.currentChar = currentCharacter.characterContainer;
-           
-
         }
 
         /* private void HitDamageable(IDamageable hitDamageable)
@@ -511,6 +513,9 @@ namespace Player
             gunSelector.SetupGun(endCharacter.characterInfo.gunHandler.StartGun);
             startCharacter.characterInfo.enemyBrain.onSwappedOut?.Invoke(startTransform);
             endCharacter.characterInfo.enemyBrain.onSwappedIn?.Invoke(startTransform);
+
+            walkSpeed = endCharacter.characterInfo.gunHandler.ActiveGun.CharacterConfig.WalkMoveSpeed;
+            wallSpeed = endCharacter.characterInfo.gunHandler.ActiveGun.CharacterConfig.WallMoveSpeed;
             isSwapping = false;
         }
         #endregion

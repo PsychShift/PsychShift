@@ -6,9 +6,9 @@ using UnityEngine.AI;
 
 public class DestructableDamageable : MonoBehaviour, IDamageable
 {
-    public int CurrentHealth { get; set; }
+    public float CurrentHealth { get; set; }
 
-    public int MaxHealth { get; set; }
+    public float MaxHealth { get; set; }
     public bool IsWeakPoint { get; } = false;
     private TestBreakObjectCode implodeThing;
     private new Collider collider;
@@ -24,7 +24,7 @@ public class DestructableDamageable : MonoBehaviour, IDamageable
         collider= gameObject.GetComponent<Collider>();
     }
 
-    public void TakeDamage(int Damage, Guns.GunType gunType)
+    public void TakeDamage(float Damage, Guns.GunType gunType)
     {
         collider.enabled = false;
         if(disObjectNav!=null)

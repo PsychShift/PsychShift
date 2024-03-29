@@ -86,7 +86,7 @@ public class PlayerMaster : MonoBehaviour
     {
         // use transform, current character info
         Vector3 checkPoint = checkPointLocation.position;
-        int health = charInfo.enemyHealth.CurrentHealth;
+        float health = charInfo.enemyHealth.CurrentHealth;
 
         AIAgression aIAgression = charInfo.enemyBrain.agression;
         // we need enemy type as well

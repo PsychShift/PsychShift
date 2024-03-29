@@ -9,9 +9,9 @@ public class ChildCollider : MonoBehaviour, IDamageable
 {
     [HideInInspector] public IDamageable parentDamageable;
 
-    public int CurrentHealth { get; set; }
+    public float CurrentHealth { get; set; }
 
-    public int MaxHealth { get; set; }
+    public float MaxHealth { get; set; }
     [SerializeField] private bool isWeakPoint;
     public bool IsWeakPoint { get { return isWeakPoint; } set { isWeakPoint = value; } }
     private int critModifier = 1;
@@ -26,9 +26,8 @@ public class ChildCollider : MonoBehaviour, IDamageable
         this.parentDamageable = parentDamageable;
     }
 
-    public void TakeDamage(int Damage, Guns.GunType gunType)
+    public void TakeDamage(float Damage, Guns.GunType gunType)
     {
-        Damage *= critModifier;
         parentDamageable.TakeDamage(Damage, gunType);
     }
 

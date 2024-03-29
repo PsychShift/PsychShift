@@ -5,13 +5,13 @@ using UnityEngine;
 public class PuzzleDamage : MonoBehaviour, IDamageable
 {
     [SerializeField]
-    private int _MaxHealth = 100;
+    private float _MaxHealth = 100;
     [SerializeField]
-    private int _Health;
+    private float _Health;
 
-    public int CurrentHealth {get => _Health; private set => _Health = value; }
+    public float CurrentHealth {get => _Health; private set => _Health = value; }
 
-    public int MaxHealth {get => _MaxHealth; private set=> _MaxHealth = value; }
+    public float MaxHealth {get => _MaxHealth; private set=> _MaxHealth = value; }
     public bool IsWeakPoint { get; } = false;
 
     public float rotationSpeed = 1f;
@@ -25,10 +25,10 @@ public class PuzzleDamage : MonoBehaviour, IDamageable
     float direction = 1f;
 
     bool forward = true;
-    public void TakeDamage(int Damage, Guns.GunType gunType)
+    public void TakeDamage(float Damage, Guns.GunType gunType)
     {
         forward = !forward;
-        int damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
+        float damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
             
         CurrentHealth -= damageTaken;
 

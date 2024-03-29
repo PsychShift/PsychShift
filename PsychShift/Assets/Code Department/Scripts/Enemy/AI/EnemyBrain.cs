@@ -120,7 +120,7 @@ public abstract class EnemyBrain : MonoBehaviour
         stateMachine = new StateMachine.StateMachine();
         RigColliderManager rgm = GetComponent<RigColliderManager>();
         ragdollState = new RagdollState(this, rgm, GetComponent<TempGravity>());
-        standupState = new StandupState(this, rgm);           
+        standupState = new StandupState(this, rgm);
         
         ANY(ragdollState, NotGrounded());
         AT(ragdollState, standupState, () => ragdollState.IsDone());
@@ -136,6 +136,8 @@ public abstract class EnemyBrain : MonoBehaviour
         }
         UpdateAgression(agression);
         characterInfo = gameObject.GetComponent<CharacterInfoReference>().SetUp();
+        Agent.speed = characterInfo.gunHandler.ActiveGun.CharacterConfig.WalkMoveSpeed / 12.85f;
+        EnemyHealth.SetMaxHealth(characterInfo.gunHandler.ActiveBaseGun);
         EnemyHealth.OnDeath += Died;
     }
 
@@ -229,7 +231,7 @@ public abstract class EnemyBrain : MonoBehaviour
     }
 
     private bool wasHit = false;
-    private void TookDamage(int dmg)
+    private void TookDamage(float dmg)
     {
         wasHit = true;
         StartCoroutine(NotAngryAfterHit());

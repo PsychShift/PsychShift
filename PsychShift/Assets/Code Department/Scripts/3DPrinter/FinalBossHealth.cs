@@ -11,11 +11,11 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     public ChildCollider childCollider;
     [SerializeField] private HangingRobotController BossController;
     [SerializeField] private Slider healthBar;
-    private int currentHealth;
-    public int CurrentHealth { get { return currentHealth; } }
+    private float currentHealth;
+    public float CurrentHealth { get { return currentHealth; } }
 
-    [SerializeField] private int maxHealth = 1000;
-    public int MaxHealth { get { return maxHealth; } private set { maxHealth = value; } }
+    [SerializeField] private float maxHealth = 1000;
+    public float MaxHealth { get { return maxHealth; } private set { maxHealth = value; } }
 
     public bool IsWeakPoint { get; set; } = false;
 
@@ -32,10 +32,10 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     AbstractBossPuzzle currentHealthGatePuzzle;
     public bool invincible;
 
-    public void TakeDamage(int Damage, Guns.GunType gunType)
+    public void TakeDamage(float Damage, Guns.GunType gunType)
     {
         if(invincible) return;
-        int damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
+        float damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
         currentHealth -= damageTaken;
         UpdateHealthBar(damageTaken);
 
@@ -115,14 +115,14 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
         return phases[phase].TotalHealth;
     }
 
-    public void SetHealthBarPhaseChange(int maxHealth)
+    public void SetHealthBarPhaseChange(float maxHealth)
     {
         healthBar.maxValue = maxHealth;
         healthBar.minValue = 0;
         healthBar.value = maxHealth;
         
     }
-    public void UpdateHealthBar(int damage)
+    public void UpdateHealthBar(float damage)
     {
         healthBar.value -= damage;
     }

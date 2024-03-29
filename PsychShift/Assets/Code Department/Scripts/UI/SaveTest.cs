@@ -15,7 +15,7 @@ public class SaveTest : MonoBehaviour
     public void SaveData()
     {
         Player.CharacterInfo charInfo = PlayerStateMachine.Instance.currentCharacter;
-        int health = charInfo.enemyHealth.CurrentHealth;
+        float health = charInfo.enemyHealth.CurrentHealth;
 
         saveObject = new SaveObject();
 

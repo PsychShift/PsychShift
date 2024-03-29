@@ -4,6 +4,8 @@ using UnityEngine.Pool;
 using System.Collections.Generic;
 using ImpactSystem;
 using Guns.ImpactEffects;
+using Guns.Stats;
+
 namespace Guns
 {
     [CreateAssetMenu(fileName = "Gun", menuName = "Guns/Gun", order = 0)]
@@ -17,12 +19,15 @@ namespace Guns
         public Vector3 SpawnPoint;
         public Vector3 SpawnRotation;
 
+        
+
         public DamageConfigScriptableObject DamageConfig;
         public ShootConfigScriptableObject ShootConfig;
         public AmmoConfigScriptableObject AmmoConfig;
         public TrailConfigScriptableObject TrailConfig;
         public AudioConfigScriptableObject AudioConfig;
         public BulletPenetrationConfigScriptableObject BulletPenConfig;
+        public CharacterStatsScriptableObject CharacterConfig;
 
 
         public ICollisionHandler[] BulletImpactEffects = new ICollisionHandler[0];
@@ -584,7 +589,8 @@ namespace Guns
                     }
                 }
                 //Debug.Log("damgeplez");
-                damageable.TakeDamage(DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage), Type);
+                float critMod = damageable.IsWeakPoint ? DamageConfig.CritModifier : 1;
+                damageable.TakeDamage(DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage) * critMod, Type);
                 /* OnSomethingHit?.Invoke(damageable);
                 if(OnSomethingHit== null)
                     Debug.Log("NULL AF"); */
@@ -638,12 +644,14 @@ namespace Guns
             config.Type = Type;
             config.Name = Name;
             config.name = name;
+
             config.DamageConfig = DamageConfig.Clone() as DamageConfigScriptableObject;
             config.ShootConfig = ShootConfig.Clone() as ShootConfigScriptableObject;
             config.AmmoConfig = AmmoConfig.Clone() as AmmoConfigScriptableObject;
             config.TrailConfig = TrailConfig.Clone() as TrailConfigScriptableObject;
             config.AudioConfig = AudioConfig.Clone() as AudioConfigScriptableObject;
             config.BulletPenConfig = BulletPenConfig.Clone() as BulletPenetrationConfigScriptableObject;
+            config.CharacterConfig = CharacterConfig.Clone() as CharacterStatsScriptableObject;
 
             config.ModelPrefab = ModelPrefab;
             config.SpawnPoint = SpawnPoint;

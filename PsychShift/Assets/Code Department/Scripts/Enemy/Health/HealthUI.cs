@@ -14,7 +14,7 @@ public class HealthUI : MonoBehaviour
 
     bool isDamaged;
     float DamagedTimer;
-    internal static int currentHealth;
+    static float currentHealth;
     private Coroutine damageCoroutine;
 
     private void Awake()
@@ -31,7 +31,7 @@ public class HealthUI : MonoBehaviour
         DamageUI.SetActive(false);
     }
 
-    public void SetHealthBarOnSwap(int currentHealth, int maxHealth)
+    public void SetHealthBarOnSwap(float currentHealth, float maxHealth)
     {
         healthBar.maxValue = maxHealth;
         healthBar.minValue = 0;
@@ -39,7 +39,7 @@ public class HealthUI : MonoBehaviour
         
     }
 
-    public void UpdateHealthBar(int damage)
+    public void UpdateHealthBar(float damage)
     {
         if(healthBar.value - damage <  0) damage =  0;
         healthBar.value -= damage;
