@@ -19,8 +19,8 @@ public class ShootingSuperState : IState
         // Transitions
         AT(idleShootState, activeShootState, idleShootState.IsDone());
         AT(activeShootState, idleShootState, activeShootState.IsDone());
-        AT(activeShootState, reloadState,() => brain.CharacterInfo.gunHandler.ShouldReload());
-        AT(reloadState, activeShootState, () => !brain.CharacterInfo.gunHandler.ShouldReload());
+        //AT(activeShootState, reloadState,() => brain.CharacterInfo.gunHandler.ShouldReload());
+       //AT(reloadState, activeShootState, () => !brain.CharacterInfo.gunHandler.ShouldReload());
 
 
         stateMachine.SetState(activeShootState);

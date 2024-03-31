@@ -151,14 +151,12 @@ public class EnemyAnimatorMaster : MonoBehaviour
     {
         weaponIK.SetAimTransform(aim);
     }
-
     public void SetWeaponTarget(Transform aimTarget)
     {
         //SetHeadTarget(aimTarget);
 
         weaponIK.SetTargetTransform(aimTarget);
     }
-
     public void SetGunHandPosition(Vector3 position)
     {
         rightArmConstraint.data.target.position = position;
@@ -168,7 +166,6 @@ public class EnemyAnimatorMaster : MonoBehaviour
         if(rightArmConstraint == null) GetRigComponents();
         return rightArmConstraint.data.target.position;
     }
-
     public void SetHeadTarget(Transform headTarget)
     {
         headConstraint.data.sourceObjects.Clear();
@@ -179,8 +176,6 @@ public class EnemyAnimatorMaster : MonoBehaviour
         headConstraint.data.sourceObjects.Clear();
         headConstraint.data.sourceObjects.Add(new WeightedTransform(originalHeadTarget, 1f));
     }
-
-
     public void AimAtTarget(bool isAiming)
     {
         if(isAiming)
@@ -192,17 +187,14 @@ public class EnemyAnimatorMaster : MonoBehaviour
             headRig.weight = 0f;
         }
     }
-
     public void WeaponAim()
     {
         //weaponIK.Aim();
-    }
-
+    }    
     public void UpdateAimPosition(Vector3 position)
     {
         aimTarget.transform.position = position;
     }
-
     public IEnumerator SetWeightOverTime(float value, float blendTime)
     {
         float elapsedTime = 0f;
@@ -226,6 +218,15 @@ public class EnemyAnimatorMaster : MonoBehaviour
         // Ensure the final weight is set
         armsRig.weight = value;
     }
-
+    
+    public void SwapGunAnimations(AnimatorOverrideController animatorOverriderController)
+    {
+        /* foreach(var a in animatorOverriderController.animationClips)
+            Debug.Log(a);
+        animator.runtimeAnimatorController = animatorOverriderController; */
+        if(animatorOverriderController == null) return;
+        animator.runtimeAnimatorController = animatorOverriderController;
+        
+    }
 
 }

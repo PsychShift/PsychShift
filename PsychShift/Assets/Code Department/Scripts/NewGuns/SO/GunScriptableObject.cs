@@ -29,6 +29,9 @@ namespace Guns
         public BulletPenetrationConfigScriptableObject BulletPenConfig;
         public CharacterStatsScriptableObject CharacterConfig;
 
+        public AnimatorOverrideController AnimatorOverride;
+
+
 
         public ICollisionHandler[] BulletImpactEffects = new ICollisionHandler[0];
 
@@ -654,6 +657,7 @@ namespace Guns
             config.CharacterConfig = CharacterConfig.Clone() as CharacterStatsScriptableObject;
 
             config.ModelPrefab = ModelPrefab;
+            config.AnimatorOverride = AnimatorOverride;
             config.SpawnPoint = SpawnPoint;
             config.SpawnRotation = SpawnRotation;
 

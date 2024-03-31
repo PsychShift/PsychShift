@@ -24,14 +24,14 @@ public class AtCoverState : ShootingSuperState
     public override void Tick()
     {
         base.Tick();
-        if(stateMachine._currentState is ActiveShootState)
+        /* if(stateMachine._currentState is ActiveShootState)
         {
             brain.CharacterInfo.animator.SetFloat("cover", 0);
         }
         else
         {
             brain.CharacterInfo.animator.SetFloat("cover", 1);
-        }
+        } */
     }
 
 }

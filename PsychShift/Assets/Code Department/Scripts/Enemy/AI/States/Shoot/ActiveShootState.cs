@@ -17,6 +17,7 @@ public class ActiveShootState : IState
     {        
         shootForSeconds = Time.time + UnityEngine.Random.Range(FireRateAgro.FireRates[(int)brain.agression.FireRateAgression].MinWaitTime, FireRateAgro.FireRates[(int)brain.agression.FireRateAgression].MaxWaitTime);
         brain.AnimMaster.SetGunHandPosition(defaultGunPosition);
+        brain.Animator.SetBool("Combat", true);
         brain.Animator.SetBool("shooting", true);
         brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
     }
@@ -24,6 +25,7 @@ public class ActiveShootState : IState
     public void OnExit()
     {
         brain.Animator.SetBool("shooting", false);
+        brain.Animator.SetBool("Combat", false);
         //brain.AnimMaster.StopCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
         //brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(0f, .2f));
         //brain.AnimMaster.SetGunHandPosition(defaultGunPosition);

@@ -58,7 +58,6 @@ public class SensitivityController : MonoBehaviour
     public void AdjustSpeed(float newSpeed)
     {
         mouseSensitivity = newSpeed * 10;
-        Debug.Log(mouseSensitivity);
         PlayerPrefs.SetFloat("currentSensitivity", mouseSensitivity);
         CinemachinePOVExtension.horizontalSpeed = mouseSensitivity;
         CinemachinePOVExtension.verticalSpeed = mouseSensitivity;

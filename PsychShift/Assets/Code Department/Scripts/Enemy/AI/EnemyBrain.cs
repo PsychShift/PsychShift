@@ -10,6 +10,8 @@ using Unity.VisualScripting;
 using UnityEngine.Events;
 using System.Linq;
 using UnityEngine.PlayerLoop;
+using Guns.Demo;
+
 
 
 
@@ -76,6 +78,7 @@ public abstract class EnemyBrain : MonoBehaviour
     public Transform Model => CharacterInfo.model.transform;
     public EnemyAnimatorMaster AnimMaster => CharacterInfo.animMaster;
     public EnemyHealth EnemyHealth => CharacterInfo.enemyHealth;
+    public EnemyGunSelector GunSelector => CharacterInfo.gunHandler;
 
     protected List<AbstractEnemyModifier> modifiers;
     
@@ -136,6 +139,7 @@ public abstract class EnemyBrain : MonoBehaviour
         }
         UpdateAgression(agression);
         characterInfo = gameObject.GetComponent<CharacterInfoReference>().SetUp();
+        AnimMaster.SwapGunAnimations(GunSelector.ActiveBaseGun.AnimatorOverride);
         Agent.speed = characterInfo.gunHandler.ActiveGun.CharacterConfig.WalkMoveSpeed / 12.85f;
         EnemyHealth.SetMaxHealth(characterInfo.gunHandler.ActiveBaseGun);
         EnemyHealth.OnDeath += Died;
