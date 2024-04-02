@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8044065713770488425}
-  - component: {fileID: 4305649607179872174}
   m_Layer: 0
   m_Name: Wet_Floor_W_Puddle 1
   m_TagString: Untagged
@@ -37,22 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!208 &4305649607179872174
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3019766776075282228}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 4.575, y: 1.185, z: 3.67}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 1.67, y: -1.58, z: -2.69}
-  m_TimeToStationary: 0.5
 --- !u!1001 &4344048141582122374
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -239,9 +222,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 8044065713770488425}
     m_Modifications:
     - target: {fileID: 734402527441105488, guid: fd051b4ae7b5a8c458e3c3c5ca9dd644, type: 3}
+      propertyPath: MaxDistance
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 734402527441105488, guid: fd051b4ae7b5a8c458e3c3c5ca9dd644, type: 3}
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 2f5f878b3cdd6d64db4b2320a49920a1, type: 3}
+    - target: {fileID: 734402527441105488, guid: fd051b4ae7b5a8c458e3c3c5ca9dd644, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 734402527441105488, guid: fd051b4ae7b5a8c458e3c3c5ca9dd644, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 978219963694845584, guid: fd051b4ae7b5a8c458e3c3c5ca9dd644, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 80
