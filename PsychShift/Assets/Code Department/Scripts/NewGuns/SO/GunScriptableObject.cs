@@ -15,7 +15,7 @@ namespace Guns
         public GunType Type;
         public string Name;
         public GameObject ModelPrefab;
-        public List<HandsOrientation> HandOrientations;
+        [HideInInspector] public List<HandsOrientation> HandOrientations;
         public Vector3 SpawnPoint;
         public Vector3 SpawnRotation;
 

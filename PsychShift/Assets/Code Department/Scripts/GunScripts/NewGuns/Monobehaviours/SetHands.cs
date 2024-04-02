@@ -9,6 +9,11 @@ public class HandsOrientation
     public GameObject leftElbow;
     public GameObject rightHand;
     public GameObject rightElbow;
+
+    public override string ToString()
+    {
+        return $"Left Hand: {leftHand.name}\nLeft Elbow: {leftElbow.name}\nRight Hand: {rightHand.name}\nRight Elbow: {rightElbow.name}";
+    }
 }
 public class SetHands : MonoBehaviour
 {
