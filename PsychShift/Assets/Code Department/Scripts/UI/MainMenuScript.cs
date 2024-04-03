@@ -265,28 +265,28 @@ public class MainMenuScript : MonoBehaviour
     }
     public void Level1()
     {
-        loadingSceneScript.LoadScene(1);
+        loadingSceneScript.LoadScene(2);
     }
     public void Level2()
     {
-        loadingSceneScript.LoadScene(2);
+        loadingSceneScript.LoadScene(3);
     }
     public void IntroLobby()
     {
         //SceneManager.LoadScene("LOBBY INTRO LEVEL");
-        loadingSceneScript.LoadScene(3);
+        loadingSceneScript.LoadScene(4);
     }
     public void Trevor()
     {
-        loadingSceneScript.LoadScene(4);
+        loadingSceneScript.LoadScene(5);
     }
     public void CLab()
     {
-        loadingSceneScript.LoadScene(5);
+        loadingSceneScript.LoadScene(6);
     }
     public void BossLab()
     {
-        loadingSceneScript.LoadScene(6);
+        loadingSceneScript.LoadScene(7);
     }
 
     public void Quit()
