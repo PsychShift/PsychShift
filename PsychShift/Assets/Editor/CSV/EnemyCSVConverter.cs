@@ -1,7 +1,6 @@
+using System.IO;
 using UnityEngine;
 using UnityEditor;
-using System.IO;
-using System.Linq;
 using Guns;
 using Guns.Stats;
 
@@ -17,11 +16,10 @@ public class EnemyCSVConverter
     {
         string[] allLines = File.ReadAllLines(Application.dataPath + EnemyCSVPath);
 
-        for(int i = 2; i < 11; i++) // if we change the number of weapons, this value needs to change
+        for(int i = 1; i < 10; i++) // if we change the number of weapons, this value needs to change
         {
             string[] splitData = allLines[i].Split(',');
             string gunFolder = BaseGunFolder + splitData[0];
-
             string[] GUID = AssetDatabase.FindAssets("l:Weapon", new string[] { gunFolder });
             string gunAssetPath = AssetDatabase.GUIDToAssetPath(GUID[0]);
 
@@ -34,6 +32,7 @@ public class EnemyCSVConverter
             damageConfig.DamageCurve.constant = float.Parse(splitData[1]);
             damageConfig.CritModifier = float.Parse(splitData[2]);
 
+            Debug.Log(gunFolder + damageConfig.DamageCurve.constant);
             shootConfig.FireRate = float.Parse(splitData[3]);
 
             int ammo = int.Parse(splitData[4]);
