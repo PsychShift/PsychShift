@@ -221,22 +221,20 @@ namespace Guns
 
                 for(int i = 0; i<ShootConfig.BulletsPerShot; i++)
                 {
-                    Vector3 spreadAmount = ShootConfig.GetSpread(Time.time - InitialClickTime);
+                    Vector2 spreadAmount = ShootConfig.GetSpread(Time.time - InitialClickTime);
+                    Vector3 shootDirection;
 
-                    Vector3 shootDirection = Vector3.zero;
                     //Model.transform.forward += Model.transform.TransformDirection(spreadAmount); FOR NOW
                     if (ShootConfig.ShootType == ShootType.FromGun)
                     {
-                        shootDirection = ShootSystem.transform.forward; /* + new Vector3(
-                        Random.Range(-ShootConfig.Spread.x,ShootConfig.Spread.x),
-                        Random.Range(-ShootConfig.Spread.y,ShootConfig.Spread.y),
-                        Random.Range(-ShootConfig.Spread.z, ShootConfig.Spread.z)
-                    ); */
+                        shootDirection.x = spreadAmount.x + ShootSystem.transform.forward.x;
+                        shootDirection.y = spreadAmount.y + ShootSystem.transform.forward.y;
+                        shootDirection.z = ShootSystem.transform.forward.z;
                     }
                     else
                     {
                         shootDirection = ActiveCamera.transform.forward +
-                                        ActiveCamera.transform.TransformDirection(spreadAmount);
+                                        ActiveCamera.transform.TransformDirection(new Vector3(spreadAmount.x, spreadAmount.y, ActiveCamera.transform.forward.z));
                     }
 
                     

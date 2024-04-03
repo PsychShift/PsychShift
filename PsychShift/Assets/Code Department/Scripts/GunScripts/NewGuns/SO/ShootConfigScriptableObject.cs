@@ -49,22 +49,21 @@ namespace Guns
          * larger area of <see cref="SpreadTexture"/> is read, or wider range of <see cref="Spread"/>
          * is used, depending on <see cref="SpreadType"/>
          */
-        public Vector3 GetSpread(float ShootTime = 0)
+        public Vector2 GetSpread(float ShootTime = 0)
         {
-            Vector3 spread = Vector3.zero;
+            Vector2 spread = Vector2.zero;
 
             if (SpreadType == BulletSpreadType.Simple)
             {
-                spread = Vector3.Lerp(
-                    new Vector3(
+                spread = Vector2.Lerp(
+                    new Vector2(
                         Random.Range(-MinSpread.x, MinSpread.x),
-                        Random.Range(-MinSpread.y, MinSpread.y),
-                        Random.Range(-MinSpread.z, MinSpread.z)
+                        Random.Range(-MinSpread.y, MinSpread.y)
                     ),
-                    new Vector3(
+                    new Vector2(
                         Random.Range(-Spread.x, Spread.x),
-                        Random.Range(-Spread.y, Spread.y),
-                        Random.Range(-Spread.z, Spread.z)
+                        Random.Range(-Spread.y, Spread.y)
+        
                     ),
                     Mathf.Clamp01(ShootTime / MaxSpreadTime)
                 );
@@ -74,6 +73,7 @@ namespace Guns
                 spread = GetTextureDirection(ShootTime);
                 spread *= SpreadMultiplier;
             }
+
             return spread;
         }
 
