@@ -4,19 +4,19 @@ using UnityEditor;
 using Guns;
 using Guns.Stats;
 
-public class EnemyCSVConverter
+public class CSVGraphReader : MonoBehaviour
 {
     private static readonly string EnemyCSVPath = "/Editor/CSV/EnemyCSV.csv";
     private static readonly string BaseGunFolder = "Assets/Guns/";
 
-    
+
     //private const string end = "~";
     [MenuItem("Utilities/Generate Enemies")]
     public static void GenerateEnemies()
     {
         string[] allLines = File.ReadAllLines(Application.dataPath + EnemyCSVPath);
 
-        for(int i = 1; i < 10; i++) // if we change the number of weapons, this value needs to change
+        for (int i = 1; i < 10; i++) // if we change the number of weapons, this value needs to change
         {
             string[] splitData = allLines[i].Split(',');
             string gunFolder = BaseGunFolder + splitData[0];
@@ -56,9 +56,9 @@ public class EnemyCSVConverter
             characterConfig.Health = float.Parse(splitData[5]);
             characterConfig.WalkMoveSpeed = float.Parse(splitData[6]);
             characterConfig.WallMoveSpeed = float.Parse(splitData[7]);
-            characterConfig.JumpForce =  float.Parse(splitData[8]);
+            characterConfig.JumpForce = float.Parse(splitData[8]);
             characterConfig.WallJumpForce = float.Parse(splitData[9]);
-            
+
         }
 
         AssetDatabase.SaveAssets();
