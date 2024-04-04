@@ -25,7 +25,7 @@ public class PauseMenuScript : MonoBehaviour
     public GameObject RemappingMenu;
     public GameObject RemappingMenuFirst;
     public GameObject Test;
-    private PlayerInput playerInput;
+    //private PlayerInput playerInput;
     public static bool GameIsPaused = false;
 
     // Start is called before the first frame update
@@ -39,7 +39,7 @@ public class PauseMenuScript : MonoBehaviour
         NeuroNetworkVideo.SetActive(false);
         TutorialMenu.SetActive(false);
         RemappingMenu.SetActive(false);
-        playerInput = GetComponent<PlayerInput>();
+        //playerInput = GetComponent<PlayerInput>();
         //Test.SetActive(true);
 
 
@@ -53,7 +53,7 @@ public class PauseMenuScript : MonoBehaviour
         GameIsPaused = false;
         Cursor.visible = false;
         EventSystem.current.SetSelectedGameObject(null);
-        playerInput.enabled = true;
+        //playerInput.enabled = true;
 
     }
     public void Retry()
@@ -110,7 +110,7 @@ public class PauseMenuScript : MonoBehaviour
             GameIsPaused = true;
             Cursor.visible = true;
             EventSystem.current.SetSelectedGameObject(PauseMenuFirst);
-            playerInput.enabled = false;
+            //playerInput.enabled = false;
         }
         
     }
