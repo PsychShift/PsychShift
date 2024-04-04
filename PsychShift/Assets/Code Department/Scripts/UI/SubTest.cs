@@ -10,7 +10,7 @@ public class SubTest : MonoBehaviour
     public string[] linesOfText; // Array of lines to display
     public float[] timeBetweenLines; // Array of time durations for each line
 
-    private int currentLineIndex = 0; // Index of the current line
+    [HideInInspector] public int currentLineIndex = 0; // Index of the current line
     private float timer = 0f;
 
     void Start()
@@ -45,5 +45,12 @@ public class SubTest : MonoBehaviour
     {
         // Update the TextMeshPro component with the current line of text
         textMeshPro.text = linesOfText[currentLineIndex];
+    }
+
+    private void OnEnable()
+    {
+        currentLineIndex = 0;
+        timer = 0;
+        UpdateText();
     }
 }

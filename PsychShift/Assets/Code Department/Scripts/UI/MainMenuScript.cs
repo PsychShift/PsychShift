@@ -378,7 +378,7 @@ public class MainMenuScript : MonoBehaviour
     }
     public void OpenCut6()
     {
-        CutScene1.SetActive(true);
+        CutScene6.SetActive(true);
         EventSystem.current.SetSelectedGameObject(CutScene6First);
     }
     public void CloseCut6()
