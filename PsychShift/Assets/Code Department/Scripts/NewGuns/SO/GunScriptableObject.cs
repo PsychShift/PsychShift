@@ -49,6 +49,7 @@ namespace Guns
         private bool LastFrameWantedToShoot;
         private bool isEnemyMaybe;
         private Animator gunAnim;
+        
 
         /* public delegate void OnSomethingHitDelegate(IDamageable damageable);
         public event OnSomethingHitDelegate OnSomethingHit; */

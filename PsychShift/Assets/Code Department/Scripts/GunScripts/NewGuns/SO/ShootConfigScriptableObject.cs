@@ -1,12 +1,17 @@
 using UnityEngine;
 using System.Linq;
-
+using System.IO;
+using Guns;
+using UnityEditor;
 
 namespace Guns
 {
     [CreateAssetMenu(fileName = "Shoot Config", menuName = "Guns/Shoot Config", order = 2)]
     public class ShootConfigScriptableObject : ScriptableObject, System.ICloneable
     {
+        public GunScriptableObject gun;
+        public Texture2D tex;
+        public Renderer renderer;
         public bool IsHitscan = true;
         public Bullet BulletPrefab;
         public float BulletSpawnForce = 100;
@@ -28,7 +33,7 @@ namespace Guns
         /// </summary>
         [Header("Simple Spread")]
         public Vector3 Spread = new Vector3(0.1f, 0.1f, 0.1f);
-        public Vector3 MinSpread = Vector3.zero;
+        public Vector2 MaxSpread = Vector2.zero;
         [Header("Texture-Based Spread")]
         /// <summary>
         /// Multiplier applied to the vector from the center of <see cref="SpreadTexture"/> and the chosen pixel. 
@@ -36,12 +41,17 @@ namespace Guns
         /// </summary>
         [Range(0.001f, 5f)]
         public float SpreadMultiplier = 0.1f;
+        public float AverageSpreadTimes = 2;
         /// <summary>
         /// Weighted random values based on the Greyscale value of each pixel, originating from the center of the texture is used to calculate the spread offset.
         /// For more accurate guns, have strictly black pixels farther from the center of the image. 
         /// For very inaccurate weapons, you may choose to define grey/white values very far from the center 
         /// </summary>
         public Texture2D SpreadTexture;
+
+        [HideInInspector] public Vector2[] PreCalculatedSpread;
+        private int spreadIndex = 0;
+        private int bulletCount;
 
         /**
          * Calculates and returns the offset from "forward" that should be applied for the bullet
@@ -57,8 +67,8 @@ namespace Guns
             {
                 spread = Vector2.Lerp(
                     new Vector2(
-                        Random.Range(-MinSpread.x, MinSpread.x),
-                        Random.Range(-MinSpread.y, MinSpread.y)
+                        Random.Range(-MaxSpread.x, MaxSpread.x),
+                        Random.Range(-MaxSpread.y, MaxSpread.y)
                     ),
                     new Vector2(
                         Random.Range(-Spread.x, Spread.x),
@@ -72,6 +82,10 @@ namespace Guns
             {
                 spread = GetTextureDirection(ShootTime);
                 spread *= SpreadMultiplier;
+            }
+            else if (SpreadType == BulletSpreadType.Averaged)
+            {
+
             }
 
             return spread;
@@ -122,6 +136,64 @@ namespace Guns
 
             return direction;
         }
+        public Vector2[] PreCalculateBulletSpread(int ammo)
+        {
+            bulletCount = ammo * BulletsPerShot;
+            PreCalculatedSpread = new Vector2[bulletCount];
+            Vector2 zero = Vector2.zero;
+            Vector2 avgSpread;
+            Vector2 combinedSpreadValue;
+            int i;
+            int j;
+            for(i = 0; i < bulletCount; i++)
+            {
+                combinedSpreadValue = zero;
+
+                for(j = 0; j < AverageSpreadTimes; j++)
+                {
+                    combinedSpreadValue += new Vector2(
+                        Random.Range(-MaxSpread.x, MaxSpread.x),
+                        Random.Range(-MaxSpread.y, MaxSpread.y)
+                    );
+                }
+
+                avgSpread = combinedSpreadValue / AverageSpreadTimes;
+                PreCalculatedSpread[i] = avgSpread;
+            }
+
+            return PreCalculatedSpread;
+        }
+        public Vector2[] PreCalculateBulletSpread()
+        {
+            if(bulletCount == 0) bulletCount = 20;
+            PreCalculatedSpread = new Vector2[bulletCount];
+            Vector2 zero = Vector2.zero;
+            Vector2 avgSpread;
+            Vector2 combinedSpreadValue;
+            int i;
+            int j;
+            for(i = 0; i < bulletCount; i++)
+            {
+                combinedSpreadValue = zero;
+
+                for(j = 0; j < AverageSpreadTimes; j++)
+                {
+                    combinedSpreadValue += new Vector2(
+                        Random.Range(-MaxSpread.x, MaxSpread.x),
+                        Random.Range(-MaxSpread.y, MaxSpread.y)
+                    );
+                }
+
+                avgSpread = combinedSpreadValue / AverageSpreadTimes;
+                PreCalculatedSpread[i] = avgSpread;
+            }
+
+            return PreCalculatedSpread;
+        }
+
+        private void OnValidate() {
+            //BulletSpreadVisualizer.UpdateTexture(gun);
+        }
 
         public object Clone()
         {
@@ -131,5 +203,54 @@ namespace Guns
 
             return config;
         }
+    }
+}
+
+
+
+
+public static class BulletSpreadVisualizer
+{
+    private static readonly string FolderPath = "Assets/Editor/BulletSpread/";
+    public static int squareSize = 100;
+    static Color red = Color.red;
+
+    public static void UpdateTexture(GunScriptableObject gun)
+    {
+        Vector2[] points = gun.ShootConfig.PreCalculateBulletSpread(gun.AmmoConfig.CurrentClipAmmo);
+
+        Texture2D texture = new Texture2D(100, 100);
+        Color32[] pixels = new Color32[texture.width * texture.height];
+        for(int i = 0; i < pixels.Length; i++)
+        {
+            pixels[i] = Color.black;
+        }
+        texture.SetPixels32(pixels);
+
+        foreach(Vector2 point in points)
+        {
+            DrawSquare(texture, point, squareSize);
+        }
+
+        texture.Apply();
+
+        // Save the texture as an asset
+        string assetPath = AssetDatabase.GenerateUniqueAssetPath(FolderPath + gun.name + "Texture.png");
+        System.IO.File.WriteAllBytes(assetPath, texture.EncodeToPNG());
+
+        // Assign the texture to the gun's ShootConfig
+        gun.ShootConfig.tex = texture;
+        EditorUtility.SetDirty(gun.ShootConfig);
+        AssetDatabase.Refresh();
+    }
+
+    static void DrawSquare(Texture2D texture, Vector2 position, int size)
+    {
+        // Calculate the bounds of the square
+        int x = Mathf.Clamp((int)(position.x * size), -texture.width / 2, texture.width / 2) + texture.width / 2;
+        int y = Mathf.Clamp((int)(position.y * size), -texture.height / 2, texture.height / 2) + texture.height / 2;
+
+        texture.SetPixel(x, y, red);
+
     }
 }

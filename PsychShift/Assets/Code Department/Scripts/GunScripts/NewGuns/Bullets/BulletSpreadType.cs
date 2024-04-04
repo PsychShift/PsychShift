@@ -8,7 +8,8 @@ namespace Guns
     {
         None,
         Simple,
-        TextureBased
+        TextureBased,
+        Averaged
     }
 
 }

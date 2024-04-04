@@ -26,7 +26,7 @@ public class EnemyCSVConverter
             GunScriptableObject gun = AssetDatabase.LoadAssetAtPath<GunScriptableObject>(gunAssetPath);
             DamageConfigScriptableObject damageConfig = gun.DamageConfig;
             AmmoConfigScriptableObject ammoConfig = gun.AmmoConfig;
-            ShootConfigScriptableObject shootConfig = gun.ShootConfig;
+            Guns.ShootConfigScriptableObject shootConfig = gun.ShootConfig;
             CharacterStatsScriptableObject characterConfig = gun.CharacterConfig;
 
             damageConfig.DamageCurve.constant = float.Parse(splitData[1]);
