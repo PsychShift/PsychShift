@@ -38,6 +38,7 @@ public class EnemyCSVConverter
             int ammo = int.Parse(splitData[4]);
             ammoConfig.MaxAmmo = ammo;
             ammoConfig.ClipSize = ammo;
+            ammoConfig.CurrentAmmo = ammo;
             ammoConfig.CurrentClipAmmo = ammo;
 
             /* if(characterConfig == null)

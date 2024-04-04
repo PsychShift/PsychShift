@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Linq;
-using System.IO;
 using Guns;
-using UnityEditor;
+
 
 namespace Guns
 {
@@ -48,8 +47,9 @@ namespace Guns
         /// For very inaccurate weapons, you may choose to define grey/white values very far from the center 
         /// </summary>
         public Texture2D SpreadTexture;
+        private static Vector2 zero = Vector2.zero;
 
-        [HideInInspector] public Vector2[] PreCalculatedSpread;
+        /* [HideInInspector] */ public Vector2[] PreCalculatedSpread;
         private int spreadIndex = 0;
         private int bulletCount;
 
@@ -61,7 +61,7 @@ namespace Guns
          */
         public Vector2 GetSpread(float ShootTime = 0)
         {
-            Vector2 spread = Vector2.zero;
+            Vector2 spread = zero;
 
             if (SpreadType == BulletSpreadType.Simple)
             {
@@ -85,7 +85,14 @@ namespace Guns
             }
             else if (SpreadType == BulletSpreadType.Averaged)
             {
-
+                spread = Vector2.Lerp(
+                    zero,
+                    PreCalculatedSpread[spreadIndex],
+                    Mathf.Clamp01(ShootTime / MaxSpreadTime)
+                );
+                spreadIndex++;
+                if(spreadIndex > bulletCount - 1) PreCalculateBulletSpread();
+                
             }
 
             return spread;
@@ -138,6 +145,8 @@ namespace Guns
         }
         public Vector2[] PreCalculateBulletSpread(int ammo)
         {
+            spreadIndex = 0;
+
             bulletCount = ammo * BulletsPerShot;
             PreCalculatedSpread = new Vector2[bulletCount];
             Vector2 zero = Vector2.zero;
@@ -165,6 +174,7 @@ namespace Guns
         }
         public Vector2[] PreCalculateBulletSpread()
         {
+            spreadIndex = 0;
             if(bulletCount == 0) bulletCount = 20;
             PreCalculatedSpread = new Vector2[bulletCount];
             Vector2 zero = Vector2.zero;
@@ -234,14 +244,14 @@ public static class BulletSpreadVisualizer
 
         texture.Apply();
 
-        // Save the texture as an asset
+        gun.ShootConfig.tex = texture;
+        /* // Save the texture as an asset
         string assetPath = AssetDatabase.GenerateUniqueAssetPath(FolderPath + gun.name + "Texture.png");
         System.IO.File.WriteAllBytes(assetPath, texture.EncodeToPNG());
 
         // Assign the texture to the gun's ShootConfig
-        gun.ShootConfig.tex = texture;
         EditorUtility.SetDirty(gun.ShootConfig);
-        AssetDatabase.Refresh();
+        AssetDatabase.Refresh(); */
     }
 
     static void DrawSquare(Texture2D texture, Vector2 position, int size)

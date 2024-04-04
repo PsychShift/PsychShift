@@ -660,6 +660,8 @@ namespace Guns
             config.SpawnPoint = SpawnPoint;
             config.SpawnRotation = SpawnRotation;
 
+            config.ShootConfig.PreCalculateBulletSpread(config.AmmoConfig.ClipSize);
+
             if(config.DamageConfig.IsExplosive)
             {
                 config.BulletImpactEffects = new ICollisionHandler[]
