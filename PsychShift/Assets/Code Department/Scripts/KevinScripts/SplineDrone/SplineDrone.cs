@@ -5,29 +5,22 @@ using UnityEngine.Splines;
 
 public class SplineDrone : MonoBehaviour
 {
-    public float MaxRayCastDistance = 20f;
+    //public float MaxRayCastDistance = 20f;
     // Start is called before the first frame update\
     public SplineAnimate splineRef;
-    public Collider triggerBoxToStartDroneAgain;
-    private void Update() 
+    //public Collider triggerBoxToStartDroneAgain;
+    private void Awake() 
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, MaxRayCastDistance, 7))
-        {
-            // Check if the object hit by the ray is on the vault layer
-            HitBarrier();
-            
-        }   
+        splineRef.Pause();
     }
-    private void HitBarrier()
-    {
-        splineRef.enabled = false;
-        triggerBoxToStartDroneAgain.enabled = true;
-
-    }
+    
 
     private void OnTriggerEnter(Collider other) 
     {
-
+        if(other.gameObject.layer == 15)
+       {
+        Debug.Log("Play splien");
+            splineRef.Play();
+       }        
     }
 }
