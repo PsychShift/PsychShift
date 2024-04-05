@@ -6,51 +6,40 @@ using TMPro;
 
 public class SubTest : MonoBehaviour
 {
-    public TextMeshProUGUI textMeshPro;
+public TextMeshProUGUI textMeshPro;
     public string[] linesOfText; // Array of lines to display
     public float[] timeBetweenLines; // Array of time durations for each line
 
-    [HideInInspector] public int currentLineIndex = 0; // Index of the current line
-    private float timer = 0f;
+    private Coroutine textUpdateCoroutine;
 
-    void Start()
+    void OnEnable()
     {
-        if (textMeshPro == null)
-            textMeshPro = GetComponent<TextMeshProUGUI>();
+        // Start or restart the coroutine when the object is activated
+        if (textUpdateCoroutine != null)
+            StopCoroutine(textUpdateCoroutine);
 
-        // Start displaying text immediately
-        UpdateText();
+        textUpdateCoroutine = StartCoroutine(UpdateTextOverTime());
     }
 
-    void Update()
+    void OnDisable()
     {
-        // Update timer
-        timer += Time.deltaTime;
+        // Stop the coroutine when the object is deactivated
+        if (textUpdateCoroutine != null)
+            StopCoroutine(textUpdateCoroutine);
+    }
 
-        // Check if it's time to change the line
-        if (timer >= timeBetweenLines[currentLineIndex])
+    IEnumerator UpdateTextOverTime()
+    {
+        for (int i = 0; i < linesOfText.Length; i++)
         {
-            // Reset timer
-            timer = 0f;
+            // Update text
+            textMeshPro.text = linesOfText[i];
 
-            // Move to the next line or loop back to the beginning if at the end
-            currentLineIndex = (currentLineIndex + 1) % linesOfText.Length;
-
-            // Update the text
-            UpdateText();
+            // Wait for the specified time before moving to the next line
+            yield return new WaitForSeconds(timeBetweenLines[i]);
         }
-    }
 
-    void UpdateText()
-    {
-        // Update the TextMeshPro component with the current line of text
-        textMeshPro.text = linesOfText[currentLineIndex];
-    }
-
-    private void OnEnable()
-    {
-        currentLineIndex = 0;
-        timer = 0;
-        UpdateText();
+        // Reset the coroutine when it finishes
+        textUpdateCoroutine = StartCoroutine(UpdateTextOverTime());
     }
 }
