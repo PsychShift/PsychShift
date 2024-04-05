@@ -18,7 +18,7 @@ public class BossFightBrain : EnemyBrain
     {
         Agent.enabled = true;
         rigColliderManager = GetComponent<RigColliderManager>();
-        StartCoroutine(WaitPlease());
+        SetUpWait = StartCoroutine(WaitPlease());
     }
     public override void StateMachineSetup()
     {
@@ -46,11 +46,16 @@ public class BossFightBrain : EnemyBrain
     public void SpawnerSetup(Vector3 guardPos)
     {
         if(guardPos == Vector3.zero) return;
+        StopCoroutine(SetUpWait);
+        VariableSetup();
+        StateMachineSetup();
+
         var startHereState = new SetLocationState(this, guardPos);
 
         AT(startHereState, chaseState, startHereState.IsDone());
         AT(startHereState, chaseState, WasDamaged());
 
         stateMachine.SetState(startHereState);
+        _isActive = true;
     }
 }

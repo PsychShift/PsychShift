@@ -144,7 +144,7 @@ public abstract class EnemyBrain : MonoBehaviour
         EnemyHealth.SetMaxHealth(characterInfo.gunHandler.ActiveBaseGun);
         EnemyHealth.OnDeath += Died;
     }
-
+    protected Coroutine SetUpWait;
     protected IEnumerator WaitPlease()
     {
         _isActive = false;

@@ -21,6 +21,7 @@ public class SetLocationState : IState
 
     public void OnEnter()
     {
+        Debug.Log("entering set location state");
         brain.Agent.isStopped = false;
         Vector3 closestNavMeshPosition = GetClosestNavMeshPosition(homePosition);
         brain.Agent.SetDestination(closestNavMeshPosition);
@@ -29,6 +30,7 @@ public class SetLocationState : IState
 
     public void OnExit()
     {
+        Debug.Log("exiting set location state");
         brain.Agent.velocity = Vector3.zero;
         brain.Agent.isStopped = true;
         brain.Animator.SetFloat("speed", 0f);
@@ -44,6 +46,7 @@ public class SetLocationState : IState
     {
         if (brain.Agent.remainingDistance < 0.5f)
         {
+            Debug.Log(brain.gameObject.name + " is moving to destination");
             return true;
         }
 
