@@ -6,8 +6,10 @@ using UnityEngine.Audio;
 
 public class MusicVolumeManager : MonoBehaviour
 {
-    [SerializeField] Slider musicvolumeSlider;
+    [SerializeField] 
+    public Slider musicvolumeSlider;
     public AudioSource MusicSource;
+    public bool playingDialouge;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +26,8 @@ public class MusicVolumeManager : MonoBehaviour
         }
         else
         {
-            Load();
+            if(!playingDialouge)
+                Load();
         }
     }
     public void ChangeVolume()
