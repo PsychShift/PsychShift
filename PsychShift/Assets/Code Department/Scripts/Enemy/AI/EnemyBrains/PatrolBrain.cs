@@ -11,7 +11,7 @@ public class PatrolBrain : EnemyBrain
     protected override void SetUp()
     {
         Agent.enabled = true;
-        StartCoroutine(WaitPlease());
+        SetUpWait = StartCoroutine(WaitPlease());
     }
 
     public override void StateMachineSetup()
@@ -47,6 +47,10 @@ public class PatrolBrain : EnemyBrain
     public void SpawnerSetup(Vector3[] guardPos)
     {
         if(guardPos.Length == 0) return;
+        StopCoroutine(SetUpWait);
+        VariableSetup();
+        StateMachineSetup();
+
         patrolPath = guardPos;
         patrolState = new PatrolState(this, guardPos);
 
@@ -54,6 +58,7 @@ public class PatrolBrain : EnemyBrain
         AT(patrolState, chaseState, PlayerInSight());
 
         stateMachine.SetState(patrolState);
+        _isActive = true;
     }
     int len;
     void OnValidate()

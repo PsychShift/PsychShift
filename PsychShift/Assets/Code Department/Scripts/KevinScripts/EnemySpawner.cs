@@ -22,7 +22,6 @@ public class EnemySpawner : MonoBehaviour
     //[SerializeField] int whatEnemytoSpawn;//select int to only spawn an enemy of that type
 
     [SerializeField] int howManySpawn;
-    [SerializeField] float spawnRate;
     [SerializeField] float howLongBeforeRespawns = 20f;
     private List<GameObject> enemySpawned;
 
@@ -48,7 +47,7 @@ public class EnemySpawner : MonoBehaviour
     {
         enemySpawned = new();
         SetupSpawnerInfo();
-        StartCoroutine(SpawnIn());
+        StartCoroutine(SpawnIn(UnityEngine.Random.Range(0f, 2.5f)));
     }
     private void SetupSpawnerInfo()
     {
@@ -90,7 +89,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnIn()
+    private IEnumerator SpawnIn(float time = -1)
     {
         /* wait for respawn check, if youre down enemies respawn, else wait again to check
         pick from the lists :
@@ -102,8 +101,8 @@ public class EnemySpawner : MonoBehaviour
         call swap brain
         */
 
-        
-        yield return new WaitForSeconds(howLongBeforeRespawns);
+        float t = time == -1 ? howLongBeforeRespawns : time;
+        yield return new WaitForSeconds(t);
         int numToSpawn = Math.Abs(enemySpawned.Count - howManySpawn);
 
         for(int i = 0; i < numToSpawn; i++)
@@ -144,6 +143,7 @@ public class EnemySpawner : MonoBehaviour
             switch (brain)
             {
                 case EBrainType.Stationary :
+                Debug.Log("stationary setup from spawner");
                 enemy.GetComponent<StationaryBrain>().SpawnerSetup(stationaryPos);
                 break;
                 case EBrainType.Chase :

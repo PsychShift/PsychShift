@@ -7,7 +7,7 @@ public class EmptyBrain : EnemyBrain
     protected override void SetUp()
     {
         Agent.enabled = true;
-        StartCoroutine(WaitPlease());
+        SetUpWait = StartCoroutine(WaitPlease());
     }
     public override void StateMachineSetup()
     {

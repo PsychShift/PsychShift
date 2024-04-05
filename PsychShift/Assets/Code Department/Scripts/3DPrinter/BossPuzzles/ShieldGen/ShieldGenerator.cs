@@ -8,6 +8,7 @@ public class ShieldGenerator : MonoBehaviour, IDamageable
     public bool isDead;
     public bool isHitable;
     private Animator anim;
+    [SerializeField] private GameObject disableOnDeactivate;
     [SerializeField] private ActivateShield_BossPuzzle shieldScript;
     public ParticleSystem beam;
     private static readonly int activateAnimHash = Animator.StringToHash("Activate");
@@ -51,6 +52,7 @@ public class ShieldGenerator : MonoBehaviour, IDamageable
         isDead = true;
         shieldScript.GeneratorDestroyed(this, isImportant);
         beam.Stop();
+        disableOnDeactivate.SetActive(false);
         OnDeath?.Invoke(transform);
     }
     private void SetColliderEnabled(bool condition)

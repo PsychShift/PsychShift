@@ -13,7 +13,7 @@ public class StationaryBrain : EnemyBrain
     protected override void SetUp()
     {
         Agent.enabled = true;
-        StartCoroutine(WaitPlease());
+        SetUpWait = StartCoroutine(WaitPlease());
     }
     public override void StateMachineSetup()
     {
@@ -48,11 +48,25 @@ public class StationaryBrain : EnemyBrain
 
     public void SpawnerSetup(Vector3 guardPos)
     {
+        StopCoroutine(SetUpWait);
+        VariableSetup();
+        StateMachineSetup();
         isSpawnerBoy = true;
+        Debug.Log(guardPos + "spawner set up");
         if(guardPos == Vector3.zero) return;
         returnToStationState = new SetLocationState(this, guardPos);
         AT(returnToStationState, lookAroundState, returnToStationState.IsDone());
 
         stateMachine.SetState(returnToStationState);
+        _isActive = true;
+    }
+
+    void OnDrawGizmos()
+    {
+        if(Application.isPlaying && stateMachine != null)
+        {
+            Gizmos.color = stateMachine.GetGizmoColor();
+            Gizmos.DrawCube(transform.position, Vector3.one);
+        }
     }
 }
