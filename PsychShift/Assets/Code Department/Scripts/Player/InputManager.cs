@@ -26,6 +26,7 @@ public class InputManager : MonoBehaviour
     public InputAction ShootAction { get; set; }
     public InputAction SwitchAction { get; set; }
     public InputAction Interact {get; set; }
+    
     #region Normal Controls
     public InputActionMap StandardActionMap { get; private set; }
     public InputAction StandardMoveAction { get; private set; }
@@ -35,6 +36,7 @@ public class InputManager : MonoBehaviour
     public InputAction StandardShootAction { get; private set; }
     public InputAction StandardSwitchAction {get; private set;}//Kevin Added this //Action to switch static and flow mode
     public InputAction StandardPauseAction {get; private set;}
+    public InputAction StandardMelee {get; set; }
     #endregion
 
     #region Slow Controls
@@ -48,6 +50,7 @@ public class InputManager : MonoBehaviour
     public InputAction ManipulateAction { get; private set; }
     public InputAction SlowSwitchAction {get; private set;}//Kevin Added this //Action to switch static and flow mode
     public InputAction SlowPauseAction {get; private set;}
+    public InputAction SlowMelee {get; set; }
     #endregion
 
     #region UI Controls
@@ -61,10 +64,12 @@ public class InputManager : MonoBehaviour
     public delegate void ManipulatePressedHandler();
     public delegate void ShootPressedHandler();
     public delegate void InteractPressedHandler();
+    public delegate void MeleePressedHandler();
     public event SwapPressedHandler OnSwapPressed;
     public event ManipulatePressedHandler OnManipulatePressed;
     public event ShootPressedHandler OnShootPressed;
     public event InteractPressedHandler OnInteractPressed;
+    public event MeleePressedHandler OnMeleePressed;
     public event Action<bool> OnSlowActionStateChanged;
     public event Action<bool> OnSwitchPressed;
     public event Action OnPausePressed;
@@ -103,6 +108,7 @@ public class InputManager : MonoBehaviour
         Interact = PlayerInput.actions[StandardActionMap.name + "/Interact"];
         SlowAction = PlayerInput.actions[StandardActionMap.name + "/Slow"];
         StandardPauseAction = PlayerInput.actions[StandardActionMap.name + "/Pause"];
+        StandardMelee = PlayerInput.actions[StandardActionMap.name + "/Melee"];
         //swap input Kevin added this
         StandardSwitchAction = PlayerInput.actions[StandardActionMap.name + "/Switch"];
         ShaderIsPressed = PlayerInput.actions[StandardActionMap.name + "/Shader"];
@@ -120,6 +126,7 @@ public class InputManager : MonoBehaviour
         UnSlowAction = PlayerInput.actions[SlowActionMap.name + "/Unslow"];
         SlowSwitchAction = PlayerInput.actions[SlowActionMap.name + "/Switch"];
         SlowPauseAction = PlayerInput.actions[SlowActionMap.name + "/Pause"];
+        SlowMelee = PlayerInput.actions[SlowActionMap.name + "/Melee"];
         #endregion
 
         #region UI Controls
@@ -148,6 +155,8 @@ public class InputManager : MonoBehaviour
         SlowPauseAction.started += PressedPause;
         UIPauseAction.started += PressedPause;
         Interact.started += PressedInteract;
+        StandardMelee.started += PressedMelee;
+        SlowMelee.started += PressedMelee;
 
 
         // Camera Sensitivity Stuff
@@ -170,6 +179,8 @@ public class InputManager : MonoBehaviour
         StandardPauseAction.started-=PressedPause;
         SlowPauseAction.started-= PressedPause;
         UIPauseAction.started -= PressedPause;
+        StandardMelee.started -= PressedMelee;
+        SlowMelee.started -= PressedMelee;
     }
 
     public Vector2 GetPlayerMovement() {
@@ -260,6 +271,11 @@ public class InputManager : MonoBehaviour
     {
         OnShootPressed?.Invoke();
         IsShootingHeld = context.ReadValueAsButton();
+    }
+    public void PressedMelee(InputAction.CallbackContext context)//I added melee 
+    {
+        OnMeleePressed.Invoke();
+        //activate hands animation with this invoke
     }
 
     public bool PlayerSwitchedModeThisFrame()//Press L shift or L bump to swap static/flow//Kevin Added this

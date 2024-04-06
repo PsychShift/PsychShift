@@ -119,6 +119,8 @@ namespace Player
         //mindswap fx and arms
         private ParticleSystem mindSwapTunnel;
         [SerializeField] GameObject armsOff;
+        [SerializeField] Animator handsAnimator;
+
         [SerializeField] AudioClip mindswapBegin;
         bool playingBeginning;
         [SerializeField] AudioClip mindswapDuring;
@@ -181,6 +183,7 @@ namespace Player
             InputManager.Instance.OnManipulatePressed += Manipulate;
             InputManager.Instance.OnSwitchPressed += SwitchMode;
             InputManager.Instance.OnInteractPressed += TryInteract;
+            InputManager.Instance.OnMeleePressed+= TryMelee;
             #endregion
 
             // Create instances of root states
@@ -699,6 +702,11 @@ namespace Player
                     
                         
             }
+        }
+
+        public void TryMelee()
+        {
+            handsAnimator.SetTrigger("MeleeTrigger");
         }
         void OnDrawGizmos()
         {                
