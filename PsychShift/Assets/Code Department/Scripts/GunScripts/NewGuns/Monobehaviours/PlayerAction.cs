@@ -37,6 +37,14 @@ namespace Guns.Demo
                 InverseKinematics.HandIKAmount = 0.25f;
                 InverseKinematics.ElbowIKAmount = 0.25f; */
             }
+            if (PauseMenuScript.GameIsPaused == true)
+        {
+            enabled = false; // Disables this script when the game is paused
+        }
+        if (PauseMenuScript.GameIsPaused == false)
+        {
+            enabled = true;
+        }
         }
 
         private bool ShouldManualReload()

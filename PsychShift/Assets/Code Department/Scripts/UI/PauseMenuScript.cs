@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 using Player;
+using Guns.Demo;
 
 public class PauseMenuScript : MonoBehaviour
 {
@@ -24,14 +25,14 @@ public class PauseMenuScript : MonoBehaviour
     public GameObject NeuroNetworkVideoFirst;
     public GameObject RemappingMenu;
     public GameObject RemappingMenuFirst;
-    public GameObject Test;
-    //private PlayerInput playerInput;
+    public PlayerAction playerAction;
+
     public static bool GameIsPaused = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Time.fixedDeltaTime = .02f;
+
         
         PauseMenu.SetActive(false);
         PauseMenuSettings.SetActive(false);
@@ -39,8 +40,6 @@ public class PauseMenuScript : MonoBehaviour
         NeuroNetworkVideo.SetActive(false);
         TutorialMenu.SetActive(false);
         RemappingMenu.SetActive(false);
-        //playerInput = GetComponent<PlayerInput>();
-        //Test.SetActive(true);
 
 
     }
@@ -53,12 +52,13 @@ public class PauseMenuScript : MonoBehaviour
         GameIsPaused = false;
         Cursor.visible = false;
         EventSystem.current.SetSelectedGameObject(null);
-        //playerInput.enabled = true;
+        playerAction.enabled = true;
+
 
     }
     public void Retry()
     {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
         Debug.Log("why");
         PlayerMaster.Instance.Load();
     }
@@ -99,6 +99,7 @@ public class PauseMenuScript : MonoBehaviour
         if(PauseMenu.activeSelf)
         {
             Resume();
+        
         }
         else
         {
@@ -110,7 +111,7 @@ public class PauseMenuScript : MonoBehaviour
             GameIsPaused = true;
             Cursor.visible = true;
             EventSystem.current.SetSelectedGameObject(PauseMenuFirst);
-            //playerInput.enabled = false;
+
         }
         
     }
