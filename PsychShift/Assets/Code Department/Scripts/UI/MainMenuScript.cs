@@ -8,6 +8,7 @@ using TMPro;
 
 public class MainMenuScript : MonoBehaviour
 {
+    #region References
     public LoadingScene loadingSceneScript;
     public GameObject LoadMenu;
     public GameObject LoadMenuFirst;
@@ -28,8 +29,22 @@ public class MainMenuScript : MonoBehaviour
     public GameObject RemappingMenuFirst;
     public GameObject DiffMenu;
     public GameObject DiffMenuFirst;
+    public GameObject DiffMenu1;
+    public GameObject DiffMenu1First;
+    public GameObject DiffMenu2;
+    public GameObject DiffMenu2First;
+    public GameObject DiffMenu3;
+    public GameObject DiffMenu3First;
+    public GameObject DiffMenu4;
+    public GameObject DiffMenu4First;
+    public GameObject DiffMenu5;
+    public GameObject DiffMenu5First;
+    public GameObject DiffMenu6;
+    public GameObject DiffMenu6First;
     public GameObject CutSceneMenu;
     public GameObject CutSceneMenuFirst;
+    public GameObject LevelMenu;
+    public GameObject LevelMenuFirst;
     public GameObject CutScene1;
     public GameObject CutScene1First;
     public GameObject CutScene2;
@@ -50,16 +65,25 @@ public class MainMenuScript : MonoBehaviour
     [SerializeField] private bool fadeOutSettings = false;
     [SerializeField] private bool fadeInMenu = false;
     [SerializeField] private bool fadeOutMenu = false;
+    #endregion
+    #region UI Stuff
     // Start is called before the first frame update
     void Start()
     {
         SettingsMenu.SetActive(false);
         LoadMenu.SetActive(false);
+        LevelMenu.SetActive(false);
         CreditsMenu.SetActive(false);
         MovementVideo.SetActive(false);
         NeuroNetworkVideo.SetActive(false);
         RemappingMenu.SetActive(false);
         DiffMenu.SetActive(false);
+        DiffMenu1.SetActive(false);
+        DiffMenu2.SetActive(false);
+        DiffMenu3.SetActive(false);
+        DiffMenu4.SetActive(false);
+        DiffMenu5.SetActive(false);
+        DiffMenu6.SetActive(false);
         CutSceneMenu.SetActive(false);
 
         // Jonathan plased this in the update state, dont know why. Undo it if I broke something.
@@ -143,24 +167,26 @@ public class MainMenuScript : MonoBehaviour
                 }
             }
         }
+        
+    }
+    #endregion
+    #region Button Voids
+    public void labCenterGREG()
+    {
+        SceneManager.LoadScene("LAB CENTER");
     }
 
-    public void NewGame()
+    public void Train()
     {
-        //Here is where the first intended scene of the game will be called
-    }
-
-    public void Continue()
-    {
-        //Here is where the game will continue from where the player last left off
+        SceneManager.LoadScene("Level 2");
     }
     public void LoadArtScene()
     {
-        SceneManager.LoadScene("Art Prototype");
+        SceneManager.LoadScene("LOBBY INTRO LEVEL");
     }
     public void GameplayScene()
     {
-        SceneManager.LoadScene("GameplayTest");
+        SceneManager.LoadScene("FINAL BOSS");
     }
     public void VSScene()
     {
@@ -183,6 +209,19 @@ public class MainMenuScript : MonoBehaviour
     {
         LoadMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+        SettingsMenu.SetActive(true);
+    }
+    public void OpenLevelMenu()
+    {
+        LevelMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(LevelMenuFirst);
+        SettingsMenu.SetActive(false);
+    }
+
+    public void CloseLevelMenu()
+    {
+        LevelMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(MainMenuFirst);
         SettingsMenu.SetActive(true);
     }
     public void OpenMovement()
@@ -245,24 +284,6 @@ public class MainMenuScript : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
         WaitforFade = StartCoroutine(FadeSettings());
     }
-    private IEnumerator FadeMenu()
-    {
-        yield return new WaitForSeconds(1);
-        MainMenu.SetActive(false);
-        
-    }
-    private IEnumerator FadeCredits()
-    {
-        yield return new WaitForSeconds(1);
-        CreditsMenu.SetActive(false);
-        
-    }
-    private IEnumerator FadeSettings()
-    {
-        yield return new WaitForSeconds(1);
-        SettingsMenu.SetActive(false);
-        
-    }
     public void Level1()
     {
         loadingSceneScript.LoadScene(2);
@@ -313,6 +334,72 @@ public class MainMenuScript : MonoBehaviour
     public void CloseDiff()
     {
         DiffMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+    }
+    public void OpenDiff1()
+    {
+        DiffMenu1.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(DiffMenu1First);
+    }
+
+    public void CloseDiff1()
+    {
+        DiffMenu1.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+    }
+    public void OpenDiff2()
+    {
+        DiffMenu2.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(DiffMenu2First);
+    }
+
+    public void CloseDiff2()
+    {
+        DiffMenu2.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+    }
+    public void OpenDiff3()
+    {
+        DiffMenu3.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(DiffMenu3First);
+    }
+
+    public void CloseDiff3()
+    {
+        DiffMenu3.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+    }
+    public void OpenDiff4()
+    {
+        DiffMenu4.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(DiffMenu4First);
+    }
+
+    public void CloseDiff4()
+    {
+        DiffMenu4.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+    }
+    public void OpenDiff5()
+    {
+        DiffMenu5.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(DiffMenu5First);
+    }
+
+    public void CloseDiff5()
+    {
+        DiffMenu5.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+    }
+    public void OpenDiff6()
+    {
+        DiffMenu6.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(DiffMenu6First);
+    }
+
+    public void CloseDiff6()
+    {
+        DiffMenu6.SetActive(false);
         EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
     }
     public void OpenCutMenu()
@@ -386,4 +473,25 @@ public class MainMenuScript : MonoBehaviour
         CutScene1.SetActive(false);
         EventSystem.current.SetSelectedGameObject(CutSceneMenuFirst);
     }
+    #endregion
+      #region Fade Stuff
+        private IEnumerator FadeMenu()
+    {
+        yield return new WaitForSeconds(1);
+        MainMenu.SetActive(false);
+        
+    }
+    private IEnumerator FadeCredits()
+    {
+        yield return new WaitForSeconds(1);
+        CreditsMenu.SetActive(false);
+        
+    }
+    private IEnumerator FadeSettings()
+    {
+        yield return new WaitForSeconds(1);
+        SettingsMenu.SetActive(false);
+        
+    }
 }
+#endregion
