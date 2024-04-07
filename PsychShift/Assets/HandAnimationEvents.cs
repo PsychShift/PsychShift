@@ -7,6 +7,10 @@ public class HandAnimationEvents : MonoBehaviour
     public GameObject leftHand;
     public GameObject sword;
     public GameObject holster;//where the sword is to be placed 
+    public GameObject swordHitBox;
+    private Collider swordCollider;
+    private Rigidbody swordRigidBody;
+
     //public GameObject gunParent;
     [SerializeField] Animator GunParentAnimator;
     Vector3 swordRotation;
@@ -19,6 +23,9 @@ public class HandAnimationEvents : MonoBehaviour
         {
             swordRotation = sword.transform.localEulerAngles;    
             swordLocation = sword.transform.position;
+            swordCollider = swordHitBox.GetComponent<Collider>();
+            swordRigidBody = swordRigidBody.GetComponent<Rigidbody>();
+            swordCollider.enabled = false;
         }
         
     }
@@ -52,5 +59,16 @@ public class HandAnimationEvents : MonoBehaviour
     {
         //Dis one on GunParent
         GunParentAnimator.SetBool("Move", false);
+    }
+    public void ActivateCollider()
+    {
+        swordCollider.enabled = true;
+        swordRigidBody.isKinematic = false;
+
+    }
+    public void DeActivateCollider()
+    {
+        swordCollider.enabled = false;
+        swordRigidBody.isKinematic = true;
     }
 }

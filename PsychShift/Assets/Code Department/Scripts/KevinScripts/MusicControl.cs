@@ -12,7 +12,7 @@ public class MusicControl : MonoBehaviour
     public bool isVA;
     public bool activated;
     //public AudioMixer music;
-    public AudioMixer dialouge;
+    //public AudioMixer dialouge;
     float currentVal;
     float newVal;
     public float numberDividedBy=2;
@@ -28,19 +28,22 @@ public class MusicControl : MonoBehaviour
     }
     private void TrackChoice()
     {
+        this.gameObject.GetComponent<Collider>().enabled = false;
         ChangeTrack(Song);
         if(isVA)
         {
-            Debug.Log("ISVA HERE");
+            //Debug.Log("ISVA HERE");
+
             currentVal = PlayerPrefs.GetFloat("musicVolume");
             //newVal = currentVal/numberDividedBy;
             //music.SetFloat("SFXVolume", currentVal/numberDividedBy);
             //PlayerPrefs.SetFloat("musicVolume", currentVal/numberDividedBy);
+            //this.gameObject.GetComponent<Collider>().enabled = false;
             stopTheSlide.musicvolumeSlider.value = currentVal/numberDividedBy;
             stopTheSlide.playingDialouge = true;
             StartCoroutine(waitForSound());
         }
-        this.gameObject.GetComponent<Collider>().enabled = false;
+        
     }
     private void ChangeTrack(AudioClip song)
     {
@@ -49,7 +52,7 @@ public class MusicControl : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other) 
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.layer == 15)
         {
             TrackChoice();
             /* if(isVA)
@@ -59,7 +62,7 @@ public class MusicControl : MonoBehaviour
 
     IEnumerator waitForSound()
     {
-        Debug.Log("InCoRoutine");
+        //Debug.Log("InCoRoutine");
         stopTheSlide.ChangeVolume();
         yield return new WaitWhile (()=> musicPlayer.isPlaying);
         //music.SetFloat("SFXVolume", currentVal);
