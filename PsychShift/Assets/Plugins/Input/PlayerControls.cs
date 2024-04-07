@@ -152,6 +152,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Melee"",
+                    ""type"": ""Button"",
+                    ""id"": ""2a63f3fd-0318-4e9e-8059-01cd5ed7787c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -506,6 +515,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Skip Cutscene"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b09c1b9d-c5cc-4ea8-b9ba-8c113bdf2c6b"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Melee"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c76d7334-ec7b-4abc-aeac-123746e01ec4"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Melee"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -517,6 +548,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""MindSwap"",
                     ""type"": ""Button"",
                     ""id"": ""daaa2f70-b226-466b-b0b5-e9cd2d328651"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Melee"",
+                    ""type"": ""Button"",
+                    ""id"": ""a3e2b643-556d-4d0f-b62b-a37690cae4d4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -910,6 +950,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Objective tracker"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1fbbe2f2-2298-4f8d-9b75-7ee09be8e7c4"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Melee"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04616f00-213d-42fb-8b3a-2b3c6dc108ad"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Melee"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -999,9 +1061,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Controls_Objectivetracker = m_Controls.FindAction("Objective tracker", throwIfNotFound: true);
         m_Controls_Interact = m_Controls.FindAction("Interact", throwIfNotFound: true);
         m_Controls_SkipCutscene = m_Controls.FindAction("Skip Cutscene", throwIfNotFound: true);
+        m_Controls_Melee = m_Controls.FindAction("Melee", throwIfNotFound: true);
         // Slow
         m_Slow = asset.FindActionMap("Slow", throwIfNotFound: true);
         m_Slow_MindSwap = m_Slow.FindAction("MindSwap", throwIfNotFound: true);
+        m_Slow_Melee = m_Slow.FindAction("Melee", throwIfNotFound: true);
         m_Slow_Manipulate = m_Slow.FindAction("Manipulate", throwIfNotFound: true);
         m_Slow_Unslow = m_Slow.FindAction("Unslow", throwIfNotFound: true);
         m_Slow_Move = m_Slow.FindAction("Move", throwIfNotFound: true);
@@ -1090,6 +1154,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Controls_Objectivetracker;
     private readonly InputAction m_Controls_Interact;
     private readonly InputAction m_Controls_SkipCutscene;
+    private readonly InputAction m_Controls_Melee;
     public struct ControlsActions
     {
         private @PlayerControls m_Wrapper;
@@ -1108,6 +1173,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Objectivetracker => m_Wrapper.m_Controls_Objectivetracker;
         public InputAction @Interact => m_Wrapper.m_Controls_Interact;
         public InputAction @SkipCutscene => m_Wrapper.m_Controls_SkipCutscene;
+        public InputAction @Melee => m_Wrapper.m_Controls_Melee;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1159,6 +1225,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SkipCutscene.started += instance.OnSkipCutscene;
             @SkipCutscene.performed += instance.OnSkipCutscene;
             @SkipCutscene.canceled += instance.OnSkipCutscene;
+            @Melee.started += instance.OnMelee;
+            @Melee.performed += instance.OnMelee;
+            @Melee.canceled += instance.OnMelee;
         }
 
         private void UnregisterCallbacks(IControlsActions instance)
@@ -1205,6 +1274,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SkipCutscene.started -= instance.OnSkipCutscene;
             @SkipCutscene.performed -= instance.OnSkipCutscene;
             @SkipCutscene.canceled -= instance.OnSkipCutscene;
+            @Melee.started -= instance.OnMelee;
+            @Melee.performed -= instance.OnMelee;
+            @Melee.canceled -= instance.OnMelee;
         }
 
         public void RemoveCallbacks(IControlsActions instance)
@@ -1227,6 +1299,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Slow;
     private List<ISlowActions> m_SlowActionsCallbackInterfaces = new List<ISlowActions>();
     private readonly InputAction m_Slow_MindSwap;
+    private readonly InputAction m_Slow_Melee;
     private readonly InputAction m_Slow_Manipulate;
     private readonly InputAction m_Slow_Unslow;
     private readonly InputAction m_Slow_Move;
@@ -1242,6 +1315,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         private @PlayerControls m_Wrapper;
         public SlowActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MindSwap => m_Wrapper.m_Slow_MindSwap;
+        public InputAction @Melee => m_Wrapper.m_Slow_Melee;
         public InputAction @Manipulate => m_Wrapper.m_Slow_Manipulate;
         public InputAction @Unslow => m_Wrapper.m_Slow_Unslow;
         public InputAction @Move => m_Wrapper.m_Slow_Move;
@@ -1264,6 +1338,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MindSwap.started += instance.OnMindSwap;
             @MindSwap.performed += instance.OnMindSwap;
             @MindSwap.canceled += instance.OnMindSwap;
+            @Melee.started += instance.OnMelee;
+            @Melee.performed += instance.OnMelee;
+            @Melee.canceled += instance.OnMelee;
             @Manipulate.started += instance.OnManipulate;
             @Manipulate.performed += instance.OnManipulate;
             @Manipulate.canceled += instance.OnManipulate;
@@ -1301,6 +1378,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MindSwap.started -= instance.OnMindSwap;
             @MindSwap.performed -= instance.OnMindSwap;
             @MindSwap.canceled -= instance.OnMindSwap;
+            @Melee.started -= instance.OnMelee;
+            @Melee.performed -= instance.OnMelee;
+            @Melee.canceled -= instance.OnMelee;
             @Manipulate.started -= instance.OnManipulate;
             @Manipulate.performed -= instance.OnManipulate;
             @Manipulate.canceled -= instance.OnManipulate;
@@ -1428,10 +1508,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnObjectivetracker(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnSkipCutscene(InputAction.CallbackContext context);
+        void OnMelee(InputAction.CallbackContext context);
     }
     public interface ISlowActions
     {
         void OnMindSwap(InputAction.CallbackContext context);
+        void OnMelee(InputAction.CallbackContext context);
         void OnManipulate(InputAction.CallbackContext context);
         void OnUnslow(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
