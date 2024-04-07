@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 9095654126742544243}
   - component: {fileID: 4955209886089162233}
   - component: {fileID: 5704635447745018809}
+  - component: {fileID: 3482410343187695341}
   m_Layer: 0
   m_Name: HitBox
   m_TagString: Untagged
@@ -175,6 +176,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordDmg: 500
+--- !u!54 &3482410343187695341
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2492287548910007919}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2980394448318895685
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +362,7 @@ MonoBehaviour:
   leftHand: {fileID: 0}
   sword: {fileID: 0}
   holster: {fileID: 0}
+  swordHitBox: {fileID: 0}
   GunParentAnimator: {fileID: 1709349518474696726}
   parentrefSword: {fileID: 0}
 --- !u!1 &6727626487578036865
@@ -1396,6 +1425,7 @@ MonoBehaviour:
   leftHand: {fileID: 7895567598141594437}
   sword: {fileID: 5371129750408746580}
   holster: {fileID: 7198923053035280593}
+  swordHitBox: {fileID: 2492287548910007919}
   GunParentAnimator: {fileID: 1709349518474696726}
   parentrefSword: {fileID: 4064353543514727426}
 --- !u!4 &6921314809897341584 stripped

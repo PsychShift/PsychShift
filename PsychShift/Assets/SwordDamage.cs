@@ -10,11 +10,12 @@ public class SwordDamage : MonoBehaviour
     public float swordDmg;
     private void OnTriggerEnter(Collider other) 
     {
-        if(other.gameObject.layer!=15 && damageFlag == false)
+        //IDamageable enemyDamage = other.GetComponent<IDamageable>();
+        if(other.gameObject.layer!=15 && other.TryGetComponent(out IDamageable damageable) && damageFlag == false)
         {
             //do damage once then reset flag
                 //do damage
-                other.GetComponent<EnemyHealth>().TakeDamage(swordDmg,Guns.GunType.None);
+                damageable.TakeDamage(swordDmg,Guns.GunType.None);
                 damageFlag = true;
                 StartCoroutine(swordDownTime());
             
