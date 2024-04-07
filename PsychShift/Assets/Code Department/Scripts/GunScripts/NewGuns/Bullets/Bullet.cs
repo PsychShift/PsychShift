@@ -7,7 +7,7 @@ namespace Guns
     public class Bullet : MonoBehaviour
     {
         private int ObjectsPenetrated;
-
+        private Collider Collider;
         public Rigidbody Rigidbody { get; private set; }
         [field: SerializeField] public Vector3 SpawnLocation { get; private set; }
 
@@ -20,6 +20,7 @@ namespace Guns
         private void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
+            Collider = GetComponent<Collider>();
             Rigidbody.useGravity = false;
         }
 
@@ -35,8 +36,10 @@ namespace Guns
 
         private IEnumerator DelayedDisable(float Time)
         {
-            yield return null;
-            yield return new WaitForSeconds(Time);
+            Collider.enabled = false;
+            yield return new WaitForSeconds(0.05f);
+            Collider.enabled = true;
+            yield return new WaitForSeconds(Time - 0.05f);
             OnCollisionEnter(null);
         }
 

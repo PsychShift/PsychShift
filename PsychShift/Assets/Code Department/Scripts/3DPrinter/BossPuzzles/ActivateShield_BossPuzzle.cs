@@ -39,12 +39,19 @@ public class ActivateShield_BossPuzzle : AbstractBossPuzzle
 
     public void GeneratorDestroyed(ShieldGenerator shieldGenerator, bool important)
     {
+        shieldGenerator.beam.Stop();
+        shieldGenerator.Disable();
         shieldGenerators.Remove(shieldGenerator);
         Destroy(shieldGenerator.gameObject);
         shieldGeneratorsLength = shieldGenerators.Count;
 
-        if(important)
+        if(shieldGeneratorsLength > 0)
             DeactivateShieldGenerators();
+        else
+        {
+            Shield.SetActive(false);
+            bossHealthScript.invincible = false;
+        }
     }
 
     private void DeactivateShieldGenerators()

@@ -11,7 +11,7 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     public ChildCollider childCollider;
     [SerializeField] private HangingRobotController BossController;
     [SerializeField] private Slider healthBar;
-    private float currentHealth;
+    [SerializeField] private float currentHealth;
     public float CurrentHealth { get { return currentHealth; } }
 
     [SerializeField] private float maxHealth = 1000;
@@ -36,7 +36,7 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     {
         if(invincible) return;
         float damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
-        currentHealth -= damageTaken;
+        currentHealth = Mathf.Clamp(currentHealth - damageTaken, currentHealthGateNumber - 1, currentHealth);
         UpdateHealthBar(damageTaken);
 
         if(damageTaken != 0)
@@ -83,6 +83,10 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
             currentHealthGateNumber = gate.Health;
             currentHealthGatePuzzle = gate.Puzzle;
             nextBossState = gate.BossState;
+        }
+        else
+        {
+            currentHealthGateNumber = 0;
         }
     }
 

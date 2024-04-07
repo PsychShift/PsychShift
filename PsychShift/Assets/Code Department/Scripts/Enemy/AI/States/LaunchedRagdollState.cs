@@ -16,7 +16,7 @@ public class LaunchedRagdollState : IState
 
     public bool isDone = false;
     public System.Func<bool> IsDone => () => isDone;
-    private static int len;
+    private readonly int len;
     public LaunchedRagdollState(EnemyBrain brain, RigColliderManager rigColliderManager, TempGravity tempGravity, Rigidbody[] rigidbodies)
     {
         this.brain = brain;
@@ -38,7 +38,8 @@ public class LaunchedRagdollState : IState
         tempGravity.enabled = true;
         rigColliderManager._elapsedResetBonesTime = 0;
         rigColliderManager.EnableRagdoll();
-
+        //rigidbodies[0].AddExplosionForce(100, brain.Model.position - brain.Model.transform.forward * 2, 5, 10);
+        //rigidbodies[0].AddForce(force, ForceMode.Impulse);
         for(int i = 0; i < len; i++)
         {
             rigidbodies[i].AddForce(force, ForceMode.Impulse);

@@ -98,6 +98,7 @@ public class RigColliderManager : MonoBehaviour
         foreach (CharacterJoint joint in Joints)
         {
             joint.enableCollision = true;
+            joint.enableProjection = true;
         }
         /* foreach (Collider collider in Colliders)
         {
@@ -107,8 +108,8 @@ public class RigColliderManager : MonoBehaviour
         foreach (Rigidbody rigidbody in Rigidbodies)
         {
             rigidbody.velocity = Vector3.zero;
-            rigidbody.detectCollisions = true;
             rigidbody.useGravity = true;
+            rigidbody.isKinematic = false;
         }
         //if not ded 
         //StartCoroutine(StandUp());
@@ -122,15 +123,12 @@ public class RigColliderManager : MonoBehaviour
         foreach (CharacterJoint joint in Joints)
         {
             joint.enableCollision = false;
+            joint.enableProjection = false;
         }
-        /* foreach (Collider collider in Colliders)
-        {
-            collider.enabled = false;
-        } */
         foreach (Rigidbody rigidbody in Rigidbodies)
         {
-            //rigidbody.detectCollisions = false;
             rigidbody.useGravity = false;
+            rigidbody.isKinematic = true;
         }
         //StartCoroutine(WaitForStandUpAnim());
     }

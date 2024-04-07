@@ -8,6 +8,11 @@ public class EnemyLauncher : MonoBehaviour
     [Tooltip("Runtime filled")]
     public List<BossFightBrain> enemies;
     [HideInInspector] public bool needMoreEnemies = true;
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+            ShootEnemy(Guns.GunType.Pistol, EEnemyModifier.None);
+    }
 
     public void ShootEnemy(Guns.GunType gunType, EEnemyModifier modifier)
     {

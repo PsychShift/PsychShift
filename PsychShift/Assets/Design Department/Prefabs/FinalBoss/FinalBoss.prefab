@@ -338,6 +338,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cfbe2a3057672d449887f407a252524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GATE: {fileID: 0}
+  childCollider: {fileID: 0}
   BossController: {fileID: 1756946037349031504}
   healthBar: {fileID: 0}
   maxHealth: 10000
@@ -562,7 +564,7 @@ Transform:
   - {fileID: 3984275186551757662}
   - {fileID: 1386497415402073438}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7258229721584564964
 MonoBehaviour:
@@ -2888,9 +2890,9 @@ MonoBehaviour:
   bossHealthScript: {fileID: 5527973046558807687}
   Shield: {fileID: 5459367765492371737}
   shieldGenerators:
+  - {fileID: 7057182552774165222}
   - {fileID: 3330250692463913481}
   - {fileID: 437889408754717409}
-  - {fileID: 7057182552774165222}
   - {fileID: 6628365548104079663}
 --- !u!1 &7536399042911832740
 GameObject:
@@ -3421,13 +3423,13 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2814197012293818968, guid: 3a6699fbcd9747243adbe0f8069873a5, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 168619019749311251}
+      addedObject: {fileID: 5589043426973150204}
     - targetCorrespondingSourceObject: {fileID: 2814197012293818968, guid: 3a6699fbcd9747243adbe0f8069873a5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3059018774720822267}
     - targetCorrespondingSourceObject: {fileID: 2814197012293818968, guid: 3a6699fbcd9747243adbe0f8069873a5, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5589043426973150204}
+      addedObject: {fileID: 168619019749311251}
     - targetCorrespondingSourceObject: {fileID: 2814197012293818968, guid: 3a6699fbcd9747243adbe0f8069873a5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8618988217576288309}
@@ -3611,7 +3613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
       propertyPath: m_Name
-      value: BossLabWallProp (2)
+      value: BossLabWallProp1
       objectReference: {fileID: 0}
     - target: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -4044,7 +4046,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
       propertyPath: m_Name
-      value: BossLabWallProp (3)
+      value: BossLabWallProp4
       objectReference: {fileID: 0}
     - target: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -4321,7 +4323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
       propertyPath: m_Name
-      value: BossLabWallProp
+      value: BossLabWallProp3
       objectReference: {fileID: 0}
     - target: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -4598,7 +4600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
       propertyPath: m_Name
-      value: BossLabWallProp (1)
+      value: BossLabWallProp2
       objectReference: {fileID: 0}
     - target: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
       propertyPath: m_StaticEditorFlags
