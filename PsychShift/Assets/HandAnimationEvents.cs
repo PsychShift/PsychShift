@@ -24,7 +24,7 @@ public class HandAnimationEvents : MonoBehaviour
             swordRotation = sword.transform.localEulerAngles;    
             swordLocation = sword.transform.position;
             swordCollider = swordHitBox.GetComponent<Collider>();
-            swordRigidBody = swordRigidBody.GetComponent<Rigidbody>();
+            swordRigidBody = swordHitBox.GetComponent<Rigidbody>();
             swordCollider.enabled = false;
         }
         
