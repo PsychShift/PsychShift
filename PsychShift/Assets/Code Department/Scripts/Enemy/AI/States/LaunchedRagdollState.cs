@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -38,12 +40,14 @@ public class LaunchedRagdollState : IState
         tempGravity.enabled = true;
         rigColliderManager._elapsedResetBonesTime = 0;
         rigColliderManager.EnableRagdoll();
+
+        brain.StartCoroutine(ApplyForceGradually());
         //rigidbodies[0].AddExplosionForce(100, brain.Model.position - brain.Model.transform.forward * 2, 5, 10);
         //rigidbodies[0].AddForce(force, ForceMode.Impulse);
-        for(int i = 0; i < len; i++)
+        /* for(int i = 0; i < len; i++)
         {
             rigidbodies[i].AddForce(force, ForceMode.Impulse);
-        }
+        } */
     }
 
     public void OnExit()
@@ -84,6 +88,29 @@ public class LaunchedRagdollState : IState
         else if(elapsedTime > 20)
         {
             brain.EnemyHealth.TakeDamage(99999, Guns.GunType.None);
+        }
+    }
+    IEnumerator ApplyForceGradually()
+    {
+        float duration = 0.5f; // Duration over which the force will be applied
+        float elapsed = 0;
+        Vector3 startForce = Vector3.zero; // Start with no force
+        Vector3 endForce = force; // End with the desired force
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration; // Calculate the interpolation factor
+
+            // Interpolate between startForce and endForce based on t
+            Vector3 currentForce = Vector3.Lerp(endForce, startForce, t);
+
+            for (int i = 0; i < len; i++)
+            {
+                rigidbodies[i].AddForce(currentForce, ForceMode.Impulse);
+            }
+
+            yield return null; // Wait for the next frame
         }
     }
     private static readonly Vector3 castDirection = Vector3.down;
