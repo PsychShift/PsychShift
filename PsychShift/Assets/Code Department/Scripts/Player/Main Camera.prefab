@@ -71,7 +71,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 400
+  far clip plane: 300
   field of view: 80
   orthographic: 0
   orthographic size: 5
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 4
+    quality: 0
     frameInfluence: 0.1
     jitterScale: 1
     mipBias: 0
@@ -510,6 +510,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 49623413748325001}
     m_Modifications:
+    - target: {fileID: 3699721170581210384, guid: 061156ec4547dfd4eb26d47608244b3d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 49c8a5650a4e6bf4e9f6c4d69c23da0d, type: 2}
     - target: {fileID: 4913975875555256877, guid: 061156ec4547dfd4eb26d47608244b3d, type: 3}
       propertyPath: m_RootOrder
       value: -1
