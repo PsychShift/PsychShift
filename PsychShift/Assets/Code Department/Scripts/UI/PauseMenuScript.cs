@@ -52,9 +52,6 @@ public class PauseMenuScript : MonoBehaviour
         GameIsPaused = false;
         Cursor.visible = false;
         EventSystem.current.SetSelectedGameObject(null);
-        playerAction.enabled = true;
-
-
     }
     public void Retry()
     {
@@ -99,7 +96,6 @@ public class PauseMenuScript : MonoBehaviour
         if(PauseMenu.activeSelf)
         {
             Resume();
-        
         }
         else
         {
@@ -117,10 +113,12 @@ public class PauseMenuScript : MonoBehaviour
     }
     private void OnEnable() 
     {
+        playerAction.enabled = true;
         InputManager.Instance.OnPausePressed+= PausePressed;
     }
     private void OnDisable() 
     {
+        playerAction.enabled = false;
         InputManager.Instance.OnPausePressed-= PausePressed;
     }
     public void OpenMovement()
