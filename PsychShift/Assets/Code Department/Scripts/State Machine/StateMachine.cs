@@ -6,8 +6,10 @@ using UnityEngine;
 
 namespace StateMachine
 {
+    [System.Serializable]
     public class StateMachine
     {
+        public string currentStateName;
         public IState defaultState;
         public IState _currentState { get; private set; }
         private Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>(); // Saves all transitions
@@ -42,6 +44,7 @@ namespace StateMachine
             
 
             _currentState.OnEnter(); // Call the OnEnter function for the new state
+            currentStateName = _currentState.GetType().Name;
         }
         public void SetState(IState state, bool isDefault)
         {
