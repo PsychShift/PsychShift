@@ -27,24 +27,34 @@ public class MainMenuScript : MonoBehaviour
     public GameObject NeuroNetworkVideoFirst;
     public GameObject RemappingMenu;
     public GameObject RemappingMenuFirst;
+    public CanvasGroup RemappingMenuCG;
     public GameObject DiffMenu;
     public GameObject DiffMenuFirst;
+    public CanvasGroup DiffMenuCG;
     public GameObject DiffMenu1;
     public GameObject DiffMenu1First;
+    public CanvasGroup DiffMenu1CG;
     public GameObject DiffMenu2;
     public GameObject DiffMenu2First;
+    public CanvasGroup DiffMenu2CG;
     public GameObject DiffMenu3;
     public GameObject DiffMenu3First;
+    public CanvasGroup DiffMenu3CG;
     public GameObject DiffMenu4;
     public GameObject DiffMenu4First;
+    public CanvasGroup DiffMenu4CG;
     public GameObject DiffMenu5;
     public GameObject DiffMenu5First;
+    public CanvasGroup DiffMenu5CG;
     public GameObject DiffMenu6;
     public GameObject DiffMenu6First;
+    public CanvasGroup DiffMenu6CG;
     public GameObject CutSceneMenu;
     public GameObject CutSceneMenuFirst;
+    public CanvasGroup CutSceneMenuCG;
     public GameObject LevelMenu;
     public GameObject LevelMenuFirst;
+    public CanvasGroup LevelMenuCG;
     public GameObject CutScene1;
     public GameObject CutScene1First;
     public GameObject CutScene2;
@@ -65,6 +75,24 @@ public class MainMenuScript : MonoBehaviour
     [SerializeField] private bool fadeOutSettings = false;
     [SerializeField] private bool fadeInMenu = false;
     [SerializeField] private bool fadeOutMenu = false;
+    [SerializeField] private bool fadeInDifficulty = false;
+    [SerializeField] private bool fadeOutDifficulty = false;
+    [SerializeField] private bool fadeInDifficulty1 = false;
+    [SerializeField] private bool fadeOutDifficulty1 = false;
+    [SerializeField] private bool fadeInDifficulty2 = false;
+    [SerializeField] private bool fadeOutDifficulty2 = false;
+    [SerializeField] private bool fadeInDifficulty3 = false;
+    [SerializeField] private bool fadeOutDifficulty3 = false;
+    [SerializeField] private bool fadeInDifficulty4 = false;
+    [SerializeField] private bool fadeOutDifficulty4 = false;
+    [SerializeField] private bool fadeInDifficulty5 = false;
+    [SerializeField] private bool fadeOutDifficulty5 = false;
+    [SerializeField] private bool fadeInDifficulty6 = false;
+    [SerializeField] private bool fadeOutDifficulty6 = false;
+    [SerializeField] private bool fadeInRemappingMenu = false;
+    [SerializeField] private bool fadeOutRemappingMenu = false;
+    [SerializeField] private bool fadeInCutSceneMenu = false;
+    [SerializeField] private bool fadeOutCutSceneMenu = false;
     #endregion
     #region UI Stuff
     // Start is called before the first frame update
@@ -92,6 +120,16 @@ public class MainMenuScript : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
         CreditsMenuCG.alpha = 0;
         SettingsMenuCG.alpha = 0;
+        LevelMenuCG.alpha = 0;
+        RemappingMenuCG.alpha = 0;
+        DiffMenuCG.alpha = 0;
+        DiffMenu1CG.alpha = 0;
+        DiffMenu2CG.alpha = 0;
+        DiffMenu3CG.alpha = 0;
+        DiffMenu4CG.alpha = 0;
+        DiffMenu5CG.alpha = 0;
+        DiffMenu6CG.alpha = 0;
+        CutSceneMenuCG.alpha = 0;
         MainMenuCG.alpha = 1;
     }
 
@@ -167,7 +205,204 @@ public class MainMenuScript : MonoBehaviour
                 }
             }
         }
-        
+        if (fadeInDifficulty)
+        {
+            if (DiffMenuCG.alpha < 1)
+            {
+                DiffMenuCG.alpha += Time.deltaTime;
+                if (DiffMenuCG.alpha >= 1)
+                {
+                    fadeInDifficulty = false;
+                }
+            }
+        }
+        if (fadeOutDifficulty)
+        {
+            if (DiffMenuCG.alpha >= 0)
+            {
+                DiffMenuCG.alpha -= Time.deltaTime;
+                if (DiffMenuCG.alpha == 0)
+                {
+                    fadeOutDifficulty = false;
+                }
+            }
+        }
+        if (fadeInDifficulty1)
+        {
+            if (DiffMenu1CG.alpha < 1)
+            {
+                DiffMenu1CG.alpha += Time.deltaTime;
+                if (DiffMenu1CG.alpha >= 1)
+                {
+                    fadeInDifficulty1 = false;
+                }
+            }
+        }
+        if (fadeOutDifficulty1)
+        {
+            if (DiffMenu1CG.alpha >= 0)
+            {
+                DiffMenu1CG.alpha -= Time.deltaTime;
+                if (DiffMenu1CG.alpha == 0)
+                {
+                    fadeOutDifficulty1 = false;
+                }
+            }
+        }
+        if (fadeInDifficulty2)
+        {
+            if (DiffMenu2CG.alpha < 1)
+            {
+                DiffMenu2CG.alpha += Time.deltaTime;
+                if (DiffMenu2CG.alpha >= 1)
+                {
+                    fadeInDifficulty2 = false;
+                }
+            }
+        }
+        if (fadeOutDifficulty2)
+        {
+            if (DiffMenu2CG.alpha >= 0)
+            {
+                DiffMenu2CG.alpha -= Time.deltaTime;
+                if (DiffMenu2CG.alpha == 0)
+                {
+                    fadeOutDifficulty2 = false;
+                }
+            }
+        }
+        if (fadeInDifficulty3)
+        {
+            if (DiffMenu3CG.alpha < 1)
+            {
+                DiffMenu3CG.alpha += Time.deltaTime;
+                if (DiffMenu3CG.alpha >= 1)
+                {
+                    fadeInDifficulty3 = false;
+                }
+            }
+        }
+        if (fadeOutDifficulty3)
+        {
+            if (DiffMenu3CG.alpha >= 0)
+            {
+                DiffMenu3CG.alpha -= Time.deltaTime;
+                if (DiffMenu3CG.alpha == 0)
+                {
+                    fadeOutDifficulty3 = false;
+                }
+            }
+        }
+        if (fadeInDifficulty4)
+        {
+            if (DiffMenu4CG.alpha < 1)
+            {
+                DiffMenu4CG.alpha += Time.deltaTime;
+                if (DiffMenu4CG.alpha >= 1)
+                {
+                    fadeInDifficulty4 = false;
+                }
+            }
+        }
+        if (fadeOutDifficulty4)
+        {
+            if (DiffMenu4CG.alpha >= 0)
+            {
+                DiffMenu4CG.alpha -= Time.deltaTime;
+                if (DiffMenu4CG.alpha == 0)
+                {
+                    fadeOutDifficulty4 = false;
+                }
+            }
+        }
+        if (fadeInDifficulty5)
+        {
+            if (DiffMenu5CG.alpha < 1)
+            {
+                DiffMenu5CG.alpha += Time.deltaTime;
+                if (DiffMenu5CG.alpha >= 1)
+                {
+                    fadeInDifficulty5 = false;
+                }
+            }
+        }
+        if (fadeOutDifficulty5)
+        {
+            if (DiffMenu5CG.alpha >= 0)
+            {
+                DiffMenu5CG.alpha -= Time.deltaTime;
+                if (DiffMenu5CG.alpha == 0)
+                {
+                    fadeOutDifficulty5 = false;
+                }
+            }
+        }
+        if (fadeInDifficulty6)
+        {
+            if (DiffMenu6CG.alpha < 1)
+            {
+                DiffMenu6CG.alpha += Time.deltaTime;
+                if (DiffMenu6CG.alpha >= 1)
+                {
+                    fadeInDifficulty6 = false;
+                }
+            }
+        }
+        if (fadeOutDifficulty6)
+        {
+            if (DiffMenu6CG.alpha >= 0)
+            {
+                DiffMenu6CG.alpha -= Time.deltaTime;
+                if (DiffMenu6CG.alpha == 0)
+                {
+                    fadeOutDifficulty6 = false;
+                }
+            }
+        }
+        if (fadeInRemappingMenu)
+        {
+            if (RemappingMenuCG.alpha < 1)
+            {
+                RemappingMenuCG.alpha += Time.deltaTime;
+                if (RemappingMenuCG.alpha >= 1)
+                {
+                    fadeInRemappingMenu = false;
+                }
+            }
+        }
+        if (fadeOutRemappingMenu)
+        {
+            if (RemappingMenuCG.alpha >= 0)
+            {
+                RemappingMenuCG.alpha -= Time.deltaTime;
+                if (RemappingMenuCG.alpha == 0)
+                {
+                    fadeOutRemappingMenu = false;
+                }
+            }
+        }
+        if (fadeInCutSceneMenu)
+        {
+            if (CutSceneMenuCG.alpha < 1)
+            {
+                CutSceneMenuCG.alpha += Time.deltaTime;
+                if (CutSceneMenuCG.alpha >= 1)
+                {
+                    fadeInCutSceneMenu = false;
+                }
+            }
+        }
+        if (fadeOutCutSceneMenu)
+        {
+            if (CutSceneMenuCG.alpha >= 0)
+            {
+                CutSceneMenuCG.alpha -= Time.deltaTime;
+                if (CutSceneMenuCG.alpha == 0)
+                {
+                    fadeOutCutSceneMenu = false;
+                }
+            }
+        }
     }
     #endregion
     #region Button Voids
@@ -491,6 +726,48 @@ public class MainMenuScript : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         SettingsMenu.SetActive(false);
+        
+    }
+        private IEnumerator FadeDifficulty()
+    {
+        yield return new WaitForSeconds(1);
+        DiffMenu.SetActive(false);
+        
+    }
+    private IEnumerator FadeDifficulty1()
+    {
+        yield return new WaitForSeconds(1);
+        DiffMenu1.SetActive(false);
+        
+    }
+    private IEnumerator FadeDifficulty2()
+    {
+        yield return new WaitForSeconds(1);
+        DiffMenu2.SetActive(false);
+        
+    }
+    private IEnumerator FadeDifficulty3()
+    {
+        yield return new WaitForSeconds(1);
+        DiffMenu3.SetActive(false);
+        
+    }
+    private IEnumerator FadeDifficulty4()
+    {
+        yield return new WaitForSeconds(1);
+        DiffMenu4.SetActive(false);
+        
+    }
+    private IEnumerator FadeDifficulty5()
+    {
+        yield return new WaitForSeconds(1);
+        DiffMenu5.SetActive(false);
+        
+    }
+    private IEnumerator FadeDifficulty6()
+    {
+        yield return new WaitForSeconds(1);
+        DiffMenu6.SetActive(false);
         
     }
 }
