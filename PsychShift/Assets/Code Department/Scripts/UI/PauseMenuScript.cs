@@ -32,16 +32,13 @@ public class PauseMenuScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        
+        GameIsPaused = false;
         PauseMenu.SetActive(false);
         PauseMenuSettings.SetActive(false);
         MovementVideo.SetActive(false);
         NeuroNetworkVideo.SetActive(false);
         TutorialMenu.SetActive(false);
         RemappingMenu.SetActive(false);
-
-
     }
 
     public void Resume()
