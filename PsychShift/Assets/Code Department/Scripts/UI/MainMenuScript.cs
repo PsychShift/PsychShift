@@ -604,7 +604,7 @@ public class MainMenuScript : MonoBehaviour
     }
     public void OpenDiff2()
     {
-        fadeInDifficulty1 = true;
+        fadeInDifficulty2 = true;
         fadeOutLevelMenu = true;
         DiffMenu2.SetActive(true);
         EventSystem.current.SetSelectedGameObject(DiffMenu2First);
@@ -613,7 +613,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void CloseDiff2()
     {
-        fadeOutDifficulty1 = true;
+        fadeOutDifficulty2 = true;
         fadeInLevelMenu = true;
         LevelMenu.SetActive(true);
         //DiffMenu2.SetActive(false);
@@ -622,7 +622,7 @@ public class MainMenuScript : MonoBehaviour
     }
     public void OpenDiff3()
     {
-        fadeInDifficulty1 = true;
+        fadeInDifficulty3 = true;
         fadeOutLevelMenu = true;
         DiffMenu3.SetActive(true);
         EventSystem.current.SetSelectedGameObject(DiffMenu3First);
@@ -631,7 +631,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void CloseDiff3()
     {
-        fadeOutDifficulty1 = true;
+        fadeOutDifficulty3 = true;
         fadeInLevelMenu = true;
         LevelMenu.SetActive(true);
         //DiffMenu3.SetActive(false);
@@ -640,7 +640,7 @@ public class MainMenuScript : MonoBehaviour
     }
     public void OpenDiff4()
     {
-        fadeInDifficulty1 = true;
+        fadeInDifficulty4 = true;
         fadeOutLevelMenu = true;
         DiffMenu4.SetActive(true);
         EventSystem.current.SetSelectedGameObject(DiffMenu4First);
@@ -649,7 +649,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void CloseDiff4()
     {
-        fadeOutDifficulty1 = true;
+        fadeOutDifficulty4 = true;
         fadeInLevelMenu = true;
         LevelMenu.SetActive(true);
         //DiffMenu4.SetActive(false);
@@ -659,7 +659,7 @@ public class MainMenuScript : MonoBehaviour
     }
     public void OpenDiff5()
     {
-        fadeInDifficulty1 = true;
+        fadeInDifficulty5 = true;
         fadeOutLevelMenu = true;
         DiffMenu5.SetActive(true);
         EventSystem.current.SetSelectedGameObject(DiffMenu5First);
@@ -668,45 +668,45 @@ public class MainMenuScript : MonoBehaviour
 
     public void CloseDiff5()
     {
-        fadeOutDifficulty1 = true;
-        fadeInLevelMenu = true;
         LevelMenu.SetActive(true);
+        fadeOutDifficulty5 = true;
+        fadeInLevelMenu = true;
         //DiffMenu5.SetActive(false);
         EventSystem.current.SetSelectedGameObject(LevelMenuFirst);
         WaitforFade = StartCoroutine(FadeDifficulty5());
     }
     public void OpenDiff6()
     {
-        fadeInDifficulty1 = true;
-        fadeOutLevelMenu = true;
         DiffMenu6.SetActive(true);
+        fadeInDifficulty6 = true;
+        fadeOutLevelMenu = true;
         EventSystem.current.SetSelectedGameObject(DiffMenu6First);
         WaitforFade = StartCoroutine(FadeLevelMenu());
     }
 
     public void CloseDiff6()
     {
-        fadeOutDifficulty1 = true;
-        fadeInLevelMenu = true;
         LevelMenu.SetActive(true);
+        fadeOutDifficulty6 = true;
+        fadeInLevelMenu = true;
         //DiffMenu6.SetActive(false);
         EventSystem.current.SetSelectedGameObject(LevelMenuFirst);
         WaitforFade = StartCoroutine(FadeDifficulty6());
     }
     public void OpenCutMenu()
     {
+        CutSceneMenu.SetActive(true);
         fadeInCutSceneMenu = true;
         fadeOutMenu = true;
-        CutSceneMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(CutSceneMenuFirst);
         WaitforFade = StartCoroutine(FadeMenu());
     }
 
     public void CloseCutMenu()
     {
+        MainMenu.SetActive(true);
         fadeOutCutSceneMenu = true;
         fadeInMenu = true;
-        MainMenu.SetActive(true);
         //CutSceneMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
         WaitforFade = StartCoroutine(FadeCutSceneMenu());
@@ -768,7 +768,7 @@ public class MainMenuScript : MonoBehaviour
     }
     public void CloseCut6()
     {
-        CutScene1.SetActive(false);
+        CutScene6.SetActive(false);
         EventSystem.current.SetSelectedGameObject(CutSceneMenuFirst);
     }
         public void Level1()
