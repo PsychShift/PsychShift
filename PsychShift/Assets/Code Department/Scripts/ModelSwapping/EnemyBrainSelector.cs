@@ -14,7 +14,6 @@ public class EnemyBrainSelector : MonoBehaviour
 
     public EBrainType enemyType;
     public GunScriptableObject gunType;
-    [Header("Doesn't do anything yet")]
     public EEnemyModifier modifier = EEnemyModifier.None;
     [HideInInspector] public EnemyBrain currentBrain;
 

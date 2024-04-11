@@ -22,10 +22,7 @@ public class ShootingSuperState : IState
         //AT(activeShootState, reloadState,() => brain.CharacterInfo.gunHandler.ShouldReload());
        //AT(reloadState, activeShootState, () => !brain.CharacterInfo.gunHandler.ShouldReload());
 
-
         stateMachine.SetState(activeShootState);
-
-
     }
     protected void AT(IState from, IState to, Func<bool> condition) => stateMachine.AddTransition(from, to, condition);
     protected void Any(IState from, Func<bool> condition) => stateMachine.AddAnyTransition(from, condition);
@@ -33,7 +30,7 @@ public class ShootingSuperState : IState
     {
         SetUp(brain);
         //brain.AnimMaster.SetWeaponTarget(brain.player);
-        //brain.Animator.SetBool("Combat", true);
+        brain.Animator.SetBool("Combat", true);
         //brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
     }
 
@@ -42,7 +39,7 @@ public class ShootingSuperState : IState
         //brain.AnimMaster.StopCoroutine(brain.AnimMaster.SetWeightOverTime(1f, .2f));
         //brain.AnimMaster.StartCoroutine(brain.AnimMaster.SetWeightOverTime(0f, .2f));
 
-        //brain.Animator.SetBool("Combat", false);
+        brain.Animator.SetBool("Combat", false);
         //brain.AnimMaster.SetOriginalHeadTarget();
     }
     Vector3 aimOffset = new Vector3(0, 3f, 0);

@@ -66,7 +66,7 @@ public class StationaryBrain : EnemyBrain
         if(Application.isPlaying && stateMachine != null)
         {
             Gizmos.color = stateMachine.GetGizmoColor();
-            Gizmos.DrawCube(transform.position, Vector3.one);
+            Gizmos.DrawCube(transform.position, Vector3.one * 5);
         }
     }
 }
