@@ -33,6 +33,7 @@ public class PauseMenuScript : MonoBehaviour
     void Start()
     {
         GameIsPaused = false;
+        playerAction.enabled = true;
         PauseMenu.SetActive(false);
         PauseMenuSettings.SetActive(false);
         MovementVideo.SetActive(false);
@@ -49,6 +50,7 @@ public class PauseMenuScript : MonoBehaviour
         GameIsPaused = false;
         Cursor.visible = false;
         EventSystem.current.SetSelectedGameObject(null);
+        playerAction.enabled = true;
     }
     public void Retry()
     {
