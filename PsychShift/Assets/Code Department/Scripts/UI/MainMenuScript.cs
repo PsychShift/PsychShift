@@ -93,6 +93,8 @@ public class MainMenuScript : MonoBehaviour
     [SerializeField] private bool fadeOutRemappingMenu = false;
     [SerializeField] private bool fadeInCutSceneMenu = false;
     [SerializeField] private bool fadeOutCutSceneMenu = false;
+    [SerializeField] private bool fadeInLevelMenu = false;
+    [SerializeField] private bool fadeOutLevelMenu = false;
     #endregion
     #region UI Stuff
     // Start is called before the first frame update
@@ -403,6 +405,28 @@ public class MainMenuScript : MonoBehaviour
                 }
             }
         }
+        if (fadeInLevelMenu)
+        {
+            if (LevelMenuCG.alpha < 1)
+            {
+                LevelMenuCG.alpha += Time.deltaTime;
+                if (MainMenuCG.alpha >= 1)
+                {
+                    fadeInLevelMenu = false;
+                }
+            }
+        }
+        if (fadeOutLevelMenu)
+        {
+            if (LevelMenuCG.alpha >= 0)
+            {
+                LevelMenuCG.alpha -= Time.deltaTime;
+                if (LevelMenuCG.alpha == 0)
+                {
+                    fadeOutLevelMenu = false;
+                }
+            }
+        }
     }
     #endregion
     #region Button Voids
@@ -448,16 +472,20 @@ public class MainMenuScript : MonoBehaviour
     }
     public void OpenLevelMenu()
     {
+        fadeInLevelMenu = true;
+        fadeOutMenu = true;
         LevelMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(LevelMenuFirst);
-        SettingsMenu.SetActive(false);
+
     }
 
     public void CloseLevelMenu()
     {
-        LevelMenu.SetActive(false);
+        fadeOutLevelMenu = true;
+        fadeInMenu = true;
+        //LevelMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
-        SettingsMenu.SetActive(true);
+        MainMenu.SetActive(true);
     }
     public void OpenMovement()
     {
@@ -519,134 +547,169 @@ public class MainMenuScript : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
         WaitforFade = StartCoroutine(FadeSettings());
     }
-    public void Level1()
-    {
-        loadingSceneScript.LoadScene(2);
-    }
-    public void Level2()
-    {
-        loadingSceneScript.LoadScene(3);
-    }
-    public void IntroLobby()
-    {
-        //SceneManager.LoadScene("LOBBY INTRO LEVEL");
-        loadingSceneScript.LoadScene(4);
-    }
-    public void Trevor()
-    {
-        loadingSceneScript.LoadScene(5);
-    }
-    public void CLab()
-    {
-        loadingSceneScript.LoadScene(6);
-    }
-    public void BossLab()
-    {
-        loadingSceneScript.LoadScene(7);
-    }
 
-    public void Quit()
-    {
-        Application.Quit();
-    }
     public void OpenRemap()
     {
+        fadeInRemappingMenu = true;
+        fadeOutSettings = true;
         RemappingMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(RemappingMenuFirst);
+        WaitforFade = StartCoroutine(FadeSettings());
     }
 
     public void CloseRemap()
     {
-        RemappingMenu.SetActive(false);
+        fadeOutRemappingMenu = true;
+        fadeInSettings = true;
+        SettingsMenu.SetActive(true);
+        //RemappingMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+        WaitforFade = StartCoroutine(FadeRemappingMenu());
     }
     public void OpenDiff()
     {
+        fadeInDifficulty = true;
+        fadeOutMenu = true;
         DiffMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(DiffMenuFirst);
+        WaitforFade = StartCoroutine(FadeMenu());
     }
 
     public void CloseDiff()
     {
-        DiffMenu.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+        fadeOutDifficulty = true;
+        fadeInMenu = true;
+        MainMenu.SetActive(true);
+        //DiffMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(MainMenuFirst);
+        WaitforFade = StartCoroutine(FadeDifficulty());
     }
     public void OpenDiff1()
     {
+        fadeInDifficulty1 = true;
+        fadeOutLevelMenu = true;
         DiffMenu1.SetActive(true);
         EventSystem.current.SetSelectedGameObject(DiffMenu1First);
+        WaitforFade = StartCoroutine(FadeLevelMenu());
     }
 
     public void CloseDiff1()
     {
-        DiffMenu1.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+        fadeOutDifficulty1 = true;
+        fadeInLevelMenu = true;
+        LevelMenu.SetActive(true);
+        //DiffMenu1.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(LevelMenuFirst);
+        WaitforFade = StartCoroutine(FadeDifficulty1());
     }
     public void OpenDiff2()
     {
+        fadeInDifficulty1 = true;
+        fadeOutLevelMenu = true;
         DiffMenu2.SetActive(true);
         EventSystem.current.SetSelectedGameObject(DiffMenu2First);
+        WaitforFade = StartCoroutine(FadeLevelMenu());
     }
 
     public void CloseDiff2()
     {
-        DiffMenu2.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+        fadeOutDifficulty1 = true;
+        fadeInLevelMenu = true;
+        LevelMenu.SetActive(true);
+        //DiffMenu2.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(LevelMenuFirst);
+        WaitforFade = StartCoroutine(FadeDifficulty2());
     }
     public void OpenDiff3()
     {
+        fadeInDifficulty1 = true;
+        fadeOutLevelMenu = true;
         DiffMenu3.SetActive(true);
         EventSystem.current.SetSelectedGameObject(DiffMenu3First);
+        WaitforFade = StartCoroutine(FadeLevelMenu());
     }
 
     public void CloseDiff3()
     {
-        DiffMenu3.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+        fadeOutDifficulty1 = true;
+        fadeInLevelMenu = true;
+        LevelMenu.SetActive(true);
+        //DiffMenu3.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(LevelMenuFirst);
+        WaitforFade = StartCoroutine(FadeDifficulty3());
     }
     public void OpenDiff4()
     {
+        fadeInDifficulty1 = true;
+        fadeOutLevelMenu = true;
         DiffMenu4.SetActive(true);
         EventSystem.current.SetSelectedGameObject(DiffMenu4First);
+        WaitforFade = StartCoroutine(FadeLevelMenu());
     }
 
     public void CloseDiff4()
     {
-        DiffMenu4.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+        fadeOutDifficulty1 = true;
+        fadeInLevelMenu = true;
+        LevelMenu.SetActive(true);
+        //DiffMenu4.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(LevelMenuFirst);
+        WaitforFade = StartCoroutine(FadeDifficulty4());
+        
     }
     public void OpenDiff5()
     {
+        fadeInDifficulty1 = true;
+        fadeOutLevelMenu = true;
         DiffMenu5.SetActive(true);
         EventSystem.current.SetSelectedGameObject(DiffMenu5First);
+        WaitforFade = StartCoroutine(FadeLevelMenu());
     }
 
     public void CloseDiff5()
     {
-        DiffMenu5.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+        fadeOutDifficulty1 = true;
+        fadeInLevelMenu = true;
+        LevelMenu.SetActive(true);
+        //DiffMenu5.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(LevelMenuFirst);
+        WaitforFade = StartCoroutine(FadeDifficulty5());
     }
     public void OpenDiff6()
     {
+        fadeInDifficulty1 = true;
+        fadeOutLevelMenu = true;
         DiffMenu6.SetActive(true);
         EventSystem.current.SetSelectedGameObject(DiffMenu6First);
+        WaitforFade = StartCoroutine(FadeLevelMenu());
     }
 
     public void CloseDiff6()
     {
-        DiffMenu6.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(SettingsMenuFirst);
+        fadeOutDifficulty1 = true;
+        fadeInLevelMenu = true;
+        LevelMenu.SetActive(true);
+        //DiffMenu6.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(LevelMenuFirst);
+        WaitforFade = StartCoroutine(FadeDifficulty6());
     }
     public void OpenCutMenu()
     {
+        fadeInCutSceneMenu = true;
+        fadeOutMenu = true;
         CutSceneMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(CutSceneMenuFirst);
+        WaitforFade = StartCoroutine(FadeMenu());
     }
 
     public void CloseCutMenu()
     {
-        CutSceneMenu.SetActive(false);
+        fadeOutCutSceneMenu = true;
+        fadeInMenu = true;
+        MainMenu.SetActive(true);
+        //CutSceneMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
+        WaitforFade = StartCoroutine(FadeCutSceneMenu());
     }
     public void OpenCut1()
     {
@@ -708,9 +771,38 @@ public class MainMenuScript : MonoBehaviour
         CutScene1.SetActive(false);
         EventSystem.current.SetSelectedGameObject(CutSceneMenuFirst);
     }
+        public void Level1()
+    {
+        loadingSceneScript.LoadScene(2);
+    }
+    public void Level2()
+    {
+        loadingSceneScript.LoadScene(3);
+    }
+    public void IntroLobby()
+    {
+        //SceneManager.LoadScene("LOBBY INTRO LEVEL");
+        loadingSceneScript.LoadScene(4);
+    }
+    public void Trevor()
+    {
+        loadingSceneScript.LoadScene(5);
+    }
+    public void CLab()
+    {
+        loadingSceneScript.LoadScene(6);
+    }
+    public void BossLab()
+    {
+        loadingSceneScript.LoadScene(7);
+    }
+    public void Quit()
+    {
+        Application.Quit();
+    }
     #endregion
       #region Fade Stuff
-        private IEnumerator FadeMenu()
+    private IEnumerator FadeMenu()
     {
         yield return new WaitForSeconds(1);
         MainMenu.SetActive(false);
@@ -728,7 +820,7 @@ public class MainMenuScript : MonoBehaviour
         SettingsMenu.SetActive(false);
         
     }
-        private IEnumerator FadeDifficulty()
+    private IEnumerator FadeDifficulty()
     {
         yield return new WaitForSeconds(1);
         DiffMenu.SetActive(false);
@@ -768,6 +860,24 @@ public class MainMenuScript : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         DiffMenu6.SetActive(false);
+        
+    }
+    private IEnumerator FadeLevelMenu()
+    {
+        yield return new WaitForSeconds(1);
+        LevelMenu.SetActive(false);
+        
+    }
+    private IEnumerator FadeRemappingMenu()
+    {
+        yield return new WaitForSeconds(1);
+        RemappingMenu.SetActive(false);
+        
+    }
+    private IEnumerator FadeCutSceneMenu()
+    {
+        yield return new WaitForSeconds(1);
+        CutSceneMenu.SetActive(false);
         
     }
 }
