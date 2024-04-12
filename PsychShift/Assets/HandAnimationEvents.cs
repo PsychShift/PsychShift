@@ -17,6 +17,9 @@ public class HandAnimationEvents : MonoBehaviour
     Vector3 swordLocation;
     Vector3 swordonHandLocal;
     public Transform parentrefSword;
+    public AudioSource swordAudio;
+    public AudioClip swordClip;
+    public GameObject swordTrail;
     private void Start() 
     {
         if(sword!=null)
@@ -26,6 +29,7 @@ public class HandAnimationEvents : MonoBehaviour
             swordCollider = swordHitBox.GetComponent<Collider>();
             swordRigidBody = swordHitBox.GetComponent<Rigidbody>();
             swordCollider.enabled = false;
+            swordTrail.SetActive(false);
         }
         
     }
@@ -35,8 +39,11 @@ public class HandAnimationEvents : MonoBehaviour
         //parents sword
         //Debug.Log("fgjhikidgsfjhklasdgjklhdfgaskljh");
         sword.transform.SetParent(leftHand.transform);
+        swordAudio.Stop();
+        swordAudio.PlayOneShot(swordClip);
         sword.transform.localPosition = parentrefSword.transform.localPosition;
         sword.transform.localEulerAngles = parentrefSword.transform.localEulerAngles;
+        swordTrail.SetActive(true);
         //sword.transform.localPosition = Vector3(-0.0123966224,0.0029108529,0.000422136916);
         //sword.transform.position = swordLocation;
     }
@@ -47,6 +54,7 @@ public class HandAnimationEvents : MonoBehaviour
         sword.transform.SetParent(holster.transform);
         sword.transform.localPosition = Vector3.zero;
         sword.transform.localEulerAngles = swordRotation;
+        swordTrail.SetActive(false);
         //Debug.Log("HOLSTER FOR THE LOVE OF EVERYTHING [P]");
         
     }

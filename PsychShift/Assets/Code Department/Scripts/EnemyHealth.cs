@@ -10,6 +10,8 @@ namespace Guns.Health
         private float _MaxHealth = 100;
         [SerializeField]
         private float _Health;
+        //xtra var I added for enemyDialouge to stop it from playing
+        [SerializeField]
 
         public float CurrentHealth {get => _Health; private set => _Health = value; }
 
