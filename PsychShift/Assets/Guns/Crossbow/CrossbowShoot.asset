@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65449a326c84ba249b073574e3c79e66, type: 3}
   m_Name: CrossbowShoot
   m_EditorClassIdentifier: 
+  gun: {fileID: 0}
+  tex: {fileID: 0}
+  renderer: {fileID: 0}
   IsHitscan: 1
   BulletPrefab: {fileID: 8999715571735216251, guid: 01534201637a822419d0e9395b1b0fc8, type: 3}
   BulletSpawnForce: 200
   HitMask:
     serializedVersion: 2
-    m_Bits: 285212603
+    m_Bits: 8388539
   FireRate: 5
   BulletsPerShot: 1
   SpreadType: 0
@@ -27,6 +30,8 @@ MonoBehaviour:
   HitMarker: {fileID: 0}
   ShootType: 1
   Spread: {x: 0, y: 0, z: 0}
-  MinSpread: {x: 0, y: 0, z: 0}
+  MaxSpread: {x: 0, y: 0}
   SpreadMultiplier: 0.001
+  AverageSpreadTimes: 2
   SpreadTexture: {fileID: 0}
+  PreCalculatedSpread: []

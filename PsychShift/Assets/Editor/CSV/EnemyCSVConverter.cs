@@ -11,7 +11,7 @@ public class EnemyCSVConverter
 
     
     //private const string end = "~";
-    [MenuItem("Utilities/Generate Enemies")]
+    [MenuItem("Utilities/Generate Enemy Data")]
     public static void GenerateEnemies()
     {
         string[] allLines = File.ReadAllLines(Application.dataPath + EnemyCSVPath);
@@ -29,7 +29,20 @@ public class EnemyCSVConverter
             Guns.ShootConfigScriptableObject shootConfig = gun.ShootConfig;
             CharacterStatsScriptableObject characterConfig = gun.CharacterConfig;
 
-            damageConfig.DamageCurve.constant = float.Parse(splitData[1]);
+            float dmg = float.Parse(splitData[1]);
+            float minDist = float.Parse(splitData[6]);
+            float maxDist = float.Parse(splitData[7]);
+            float ratio = float.Parse(splitData[8]);
+
+            float slope = (dmg * ratio - dmg) / (maxDist - minDist); // Slope between Vector2 2 and Vector2 3
+
+            Keyframe[] frames = new Keyframe[3]
+            {
+                new(0, dmg, 0, 0),
+                new(minDist, dmg, 0, slope),
+                new(maxDist, dmg * ratio, slope, 0)
+            };
+            damageConfig.DamageCurve.curve = new AnimationCurve(frames);
             damageConfig.CritModifier = float.Parse(splitData[2]);
 
             Debug.Log(gunFolder + damageConfig.DamageCurve.constant);
@@ -40,6 +53,15 @@ public class EnemyCSVConverter
             ammoConfig.ClipSize = ammo;
             ammoConfig.CurrentAmmo = ammo;
             ammoConfig.CurrentClipAmmo = ammo;
+
+
+
+            characterConfig.Health = float.Parse(splitData[5]);            
+        }
+
+        AssetDatabase.SaveAssets();
+    }
+}
 
             /* if(characterConfig == null)
             {
@@ -53,15 +75,3 @@ public class EnemyCSVConverter
                 AssetDatabase.CreateAsset(characterConfig, $"{gunFolder}{splitData[0]}CharacterConfig.asset");
                 gun.CharacterConfig = characterConfig;
             } */
-
-            characterConfig.Health = float.Parse(splitData[5]);
-            characterConfig.WalkMoveSpeed = float.Parse(splitData[6]);
-            characterConfig.WallMoveSpeed = float.Parse(splitData[7]);
-            characterConfig.JumpForce =  float.Parse(splitData[8]);
-            characterConfig.WallJumpForce = float.Parse(splitData[9]);
-            
-        }
-
-        AssetDatabase.SaveAssets();
-    }
-}
