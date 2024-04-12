@@ -24,6 +24,10 @@ using UnityEditor;
 public abstract class EnemyBrain : MonoBehaviour
 {
     public bool ragDollDone;
+    /* public AudioSource enemyAudio;
+    public AudioClip[] enemyClips;
+    public EnemyDialouge enemyDialouge; */
+    private DeathSounds deathSounds;
 
     [SerializeField] protected bool _isActive = false;
     public bool IsActive {
@@ -118,6 +122,7 @@ public abstract class EnemyBrain : MonoBehaviour
     /// </summary> 
     protected void VariableSetup()
     {
+        deathSounds= this.GetComponent<DeathSounds>();
         _isActive = false;
         UpdateAgression(agression);
         stateMachine = new StateMachine.StateMachine();
@@ -173,6 +178,9 @@ public abstract class EnemyBrain : MonoBehaviour
     private void Died(Transform idk)
     {
         StopAllCoroutines();
+        deathSounds.EnemyDeathSound();
+        //Play audio here
+        //Stop all audio on the current audio player
         ragdollState.IsDead = true;
         wasHit = false;
         //stateMachine.EventTransition(ragdollState);

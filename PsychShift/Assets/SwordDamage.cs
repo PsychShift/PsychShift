@@ -8,6 +8,8 @@ public class SwordDamage : MonoBehaviour
     // Start is called before the first frame update
     private bool damageFlag;
     public float swordDmg;
+    public AudioSource swordAudio;
+    public AudioClip[] swordClip;
     private void OnTriggerEnter(Collider other) 
     {
         //IDamageable enemyDamage = other.GetComponent<IDamageable>();
@@ -16,6 +18,7 @@ public class SwordDamage : MonoBehaviour
             //do damage once then reset flag
                 //do damage
                 damageable.TakeDamage(swordDmg,Guns.GunType.None);
+                swordAudio.PlayOneShot(swordClip[Random.Range(0,swordClip.Length)]);
                 damageFlag = true;
                 StartCoroutine(swordDownTime());
             
