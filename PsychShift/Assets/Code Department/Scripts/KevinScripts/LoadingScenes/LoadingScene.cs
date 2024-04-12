@@ -23,6 +23,8 @@ public class LoadingScene : MonoBehaviour
         Time.timeScale = 0f;
         AudioListener.volume = 0;
         playerInput.enabled= true;
+        PlayerMaster.Instance.SetCheckPoint(transform);
+        PlayerMaster.Instance.isLoadingNewSceneTransition = true;
         if(videoPlayer!=null)
         {
             cutSceneCanvas.SetActive(true);

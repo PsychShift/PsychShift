@@ -44,6 +44,7 @@ public class PlayerMaster : MonoBehaviour
     public Player.CharacterInfo charInfo => PlayerStateMachine.Instance == null ? null : PlayerStateMachine.Instance.currentCharacter;
     public Transform checkPointLocation;
     private bool isLoadingSceneFromLoadMethod = false;
+    public bool isLoadingNewSceneTransition = false;
     private SaveObject loadedInfo;
     public bool noSavePlez;
     public void SetIsMenu(bool menu)
@@ -107,7 +108,9 @@ public class PlayerMaster : MonoBehaviour
     // loading, for enemy prefab use GameAssets.Instance.EnemyPrefab
     public void Load()
     {
+        Debug.Log("Loading started");
         string json = SaveSystem.Load("Saves", "Save");
+        Debug.Log(json);
         if(json == null)
         {
             loadedInfo = null;
@@ -115,7 +118,9 @@ public class PlayerMaster : MonoBehaviour
         }
         loadedInfo = JsonUtility.FromJson<SaveObject>(json);
         isLoadingSceneFromLoadMethod = true;
+        Debug.Log(loadedInfo.Scene);
         SceneManager.LoadScene(loadedInfo.Scene, LoadSceneMode.Single);
+        Debug.Log("Loading ended");
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -135,6 +140,23 @@ public class PlayerMaster : MonoBehaviour
             Destroy(PlayerStateMachine.Instance.tempCharacter);
             PlayerStateMachine.Instance.tempCharacter = Enemy;
         }
+        else if(isLoadingNewSceneTransition)
+        {
+            isLoadingNewSceneTransition = false;
+            string json = SaveSystem.Load("Saves", "Save");
+            if(json == null)
+            {
+                loadedInfo = null;
+                return;
+            }
+            loadedInfo = JsonUtility.FromJson<SaveObject>(json);
+
+            EnemyBrainSelector brainSelector =  PlayerStateMachine.Instance.tempCharacter.GetComponent<EnemyBrainSelector>();
+            GunScriptableObject gun = GameAssets.Instance.GetGun(loadedInfo.GunType);
+            brainSelector.SwapBrain(gun, loadedInfo.EnemyType, loadedInfo.Modifiers[0], loadedInfo.AIAgression);
+
+        }
+        //if(!isMenu)
         PlayerStateMachine.Instance.Load();
     }
 
