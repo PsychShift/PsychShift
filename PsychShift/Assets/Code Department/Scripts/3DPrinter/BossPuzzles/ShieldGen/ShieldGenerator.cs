@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ShieldGenerator : MonoBehaviour, IDamageable
@@ -51,9 +52,13 @@ public class ShieldGenerator : MonoBehaviour, IDamageable
     {
         isDead = true;
         shieldScript.GeneratorDestroyed(this, isImportant);
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        rb.useGravity = true;
         beam.Stop();
         disableOnDeactivate.SetActive(false);
         OnDeath?.Invoke(transform);
+        StartCoroutine(DelayedDestroy());
     }
     private void SetColliderEnabled(bool condition)
     {
@@ -68,5 +73,11 @@ public class ShieldGenerator : MonoBehaviour, IDamageable
         {
             Destoyed();
         }
+    }
+
+    IEnumerator DelayedDestroy()
+    {
+        yield return new WaitForSeconds(20);
+        Destroy(gameObject);
     }
 }

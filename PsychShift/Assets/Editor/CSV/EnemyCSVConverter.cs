@@ -47,6 +47,7 @@ public class EnemyCSVConverter
 
             Debug.Log(gunFolder + damageConfig.DamageCurve.constant);
             shootConfig.FireRate = float.Parse(splitData[3]);
+            shootConfig.BulletsPerShot = int.Parse(splitData[9]);
 
             int ammo = int.Parse(splitData[4]);
             ammoConfig.MaxAmmo = ammo;

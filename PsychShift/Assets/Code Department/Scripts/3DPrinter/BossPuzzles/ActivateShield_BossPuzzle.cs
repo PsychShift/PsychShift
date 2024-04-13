@@ -42,7 +42,7 @@ public class ActivateShield_BossPuzzle : AbstractBossPuzzle
         shieldGenerator.beam.Stop();
         shieldGenerator.Disable();
         shieldGenerators.Remove(shieldGenerator);
-        Destroy(shieldGenerator.gameObject);
+        //Destroy(shieldGenerator.gameObject);
         shieldGeneratorsLength = shieldGenerators.Count;
 
         if(shieldGeneratorsLength > 0)

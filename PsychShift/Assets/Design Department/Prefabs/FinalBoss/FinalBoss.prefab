@@ -342,6 +342,7 @@ MonoBehaviour:
   childCollider: {fileID: 0}
   BossController: {fileID: 1756946037349031504}
   healthBar: {fileID: 0}
+  currentHealth: 0
   maxHealth: 10000
   phases:
   - TotalHealth: 505
@@ -384,10 +385,14 @@ MonoBehaviour:
   stingerController: {fileID: 5301049042784320256}
   targetManager: {fileID: 3019443922756658379}
   model: {fileID: 3033247360573067987}
+  attacksStateMachine:
+    currentStateName: 
   defaultGunSpawns: 00000000030000000100000008000000
   defaultModifiers: 00000000
   guns: 
   modifiers: 
+  movementStateMachine:
+    currentStateName: 
   canMove: 0
   canRotate: 1
   desiredHeightReached: 0
@@ -3730,8 +3735,43 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8946186268039060748}
   m_SourcePrefab: {fileID: 100100000, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
+--- !u!1 &5570506356053347673 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
+  m_PrefabInstance: {fileID: 1539345685790363010}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &8946186268039060748
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5570506356053347673}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &5589043426973150204 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6398664939286292094, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
@@ -3742,7 +3782,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8407372346794495844, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
   m_PrefabInstance: {fileID: 1539345685790363010}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 5570506356053347673}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71387689ee1e9eb4f8ed6688e5e1e361, type: 3}
