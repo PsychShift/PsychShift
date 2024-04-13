@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GodModeScript : MonoBehaviour
 {
-    public bool GodMode {  get; private set; }
+    public bool GodMode;
 
 
     private static GodModeScript instance;
@@ -13,14 +13,12 @@ public class GodModeScript : MonoBehaviour
     {
         get
         {
-            if (instance == null)
-            {
-                GameObject go = new GameObject();
-                instance = go.AddComponent<GodModeScript>();
-            }
             return instance;
         }
         set { instance = value; }
+    }
+    private void Start() {
+        instance = this;
     }
 
     private void Update()

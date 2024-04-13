@@ -50,6 +50,8 @@ namespace Guns.Demo
             ActiveGun.ShootConfig.SpreadMultiplier = 10f;
             ActiveGun.ShootConfig.ShootType = ShootType.FromGun;
             ActiveGun.DamageConfig.DamageCurve.constant *= DamageReduction;
+            for (int i = 0; i < 3; i++)
+                ActiveGun.DamageConfig.DamageCurve.curve.keys[i].value *= DamageReduction;
   
             ActiveGun.Model.AddComponent<RigTransform>();
             OnActiveGunSet?.Invoke();
