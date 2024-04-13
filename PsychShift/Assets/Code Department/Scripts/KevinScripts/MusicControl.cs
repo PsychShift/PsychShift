@@ -17,15 +17,12 @@ public class MusicControl : MonoBehaviour
     float newVal;
     public float numberDividedBy=2;
     public MusicVolumeManager stopTheSlide;
+    public GameObject previousDialouge;
 
     //divide in half 
     //save ref to OG value 
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
     private void TrackChoice()
     {
         this.gameObject.GetComponent<Collider>().enabled = false;
@@ -41,6 +38,10 @@ public class MusicControl : MonoBehaviour
             //this.gameObject.GetComponent<Collider>().enabled = false;
             stopTheSlide.musicvolumeSlider.value = currentVal/numberDividedBy;
             stopTheSlide.playingDialouge = true;
+            if(previousDialouge!=null)
+            {
+                Destroy(previousDialouge);
+            }
             StartCoroutine(waitForSound());
         }
         
