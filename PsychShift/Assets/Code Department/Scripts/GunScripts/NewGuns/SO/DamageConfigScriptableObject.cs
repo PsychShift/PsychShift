@@ -7,6 +7,10 @@ namespace Guns
     public class DamageConfigScriptableObject : ScriptableObject, System.ICloneable
     {
         public MinMaxCurve DamageCurve;
+        public float Damage = 10;
+        public float MinDist = 25;
+        public float MaxDist = 100;
+        public float MinDamage = 1;
         public float CritModifier = 1.5f;
 
         [Header("Explosive")]
@@ -20,11 +24,15 @@ namespace Guns
             DamageCurve.mode = ParticleSystemCurveMode.Curve;
         }
 
-        public int GetDamage(float Distance = 0, float DamageMultiplier = 1)
+        /* public float GetDamage(float Distance = 0, float DamageMultiplier = 1)
         {
             return Mathf.CeilToInt(
                 DamageCurve.Evaluate(Distance, Random.value) * DamageMultiplier
             );
+        } */
+        public float GetDamage(float Distance = 0, float DamageMultiplier = 1)
+        {
+            return Distance <= MinDist ? Damage * DamageMultiplier : Mathf.Lerp(Damage, MinDamage, (Distance - MinDist) / (MaxDist - MinDist)) * DamageMultiplier;
         }
 
         public object Clone()

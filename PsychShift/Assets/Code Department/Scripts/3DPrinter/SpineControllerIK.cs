@@ -45,21 +45,20 @@ public class SpineControllerIK : MonoBehaviour
         SetUpComponents();
         ValidateConstraints();
         BuildStateMachine();
-        neckTarget = neckLookAtIK.data.sourceObjects[0].transform;
-        /* var weightedTransform = new WeightedTransform(playerTarget, 1);
+        EnemyTargetManager.Instance.OnTargetChange += TargetChange;
+    }
+
+    private void TargetChange(Transform target)
+    {
+        var weightedTransform = new WeightedTransform(target, 1);
         var array = new WeightedTransformArray(1)
         {
             weightedTransform
         };
         // Assign the new instance back to the array
-        neckLookAtIK.data.sourceObjects = array; */
+        neckLookAtIK.data.sourceObjects = array;
     }
 
-    void Update()
-    {
-        //animStateMachine.Tick();
-        neckTarget.position = playerTarget.position;
-    }
     StateMachine.StateMachine animStateMachine;
     private void BuildStateMachine()
     {

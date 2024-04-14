@@ -339,7 +339,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GATE: {fileID: 0}
-  childCollider: {fileID: 1788053907757921455}
+  childCollider:
+  - {fileID: 0}
   BossController: {fileID: 1756946037349031504}
   healthBar: {fileID: 0}
   currentHealth: 0
@@ -1389,8 +1390,6 @@ GameObject:
   - component: {fileID: 5301049042784320256}
   - component: {fileID: 4966897892986184591}
   - component: {fileID: 2496017656980242682}
-  - component: {fileID: 157384157748229492}
-  - component: {fileID: 1788053907757921455}
   m_Layer: 3
   m_Name: Model
   m_TagString: Untagged
@@ -1536,42 +1535,6 @@ MonoBehaviour:
   - m_Rig: {fileID: 303458864921428660}
     m_Active: 1
   m_Effectors: []
---- !u!136 &157384157748229492
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2110378752204429386}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.99
-  m_Height: 5.66
-  m_Direction: 1
-  m_Center: {x: 0, y: 4.61, z: 0}
---- !u!114 &1788053907757921455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2110378752204429386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ade7991dd4f0264b85ea192b6fa94f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isWeakPoint: 0
 --- !u!1 &2117851057151234399
 GameObject:
   m_ObjectHideFlags: 0
