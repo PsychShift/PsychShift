@@ -9,6 +9,7 @@ using UnityEngine.Rendering.Universal;
 public class SpawnEnemyState : IState
 {
     public EnemyLauncher enemyLauncher;
+    public int maxNumOfEnemies = 5;
     public int spawnAmount = 1;
     public float desiredY;
 
@@ -26,10 +27,11 @@ public class SpawnEnemyState : IState
     float timer = 0f;
     float aimForSeconds = 1f;
 
-    public SpawnEnemyState(HangingRobotController controller, EnemyLauncher enemyLauncher, HangingRobotArmsIK armsController, float desiredY, int spawnAmount)
+    public SpawnEnemyState(HangingRobotController controller, EnemyLauncher enemyLauncher, HangingRobotArmsIK armsController, float desiredY, int spawnAmount, int maxNumOfEnemies)
     {
         this.controller = controller;
         this.enemyLauncher = enemyLauncher;
+        this.enemyLauncher.maxNumOfEnemies = maxNumOfEnemies;
         this.armsController = armsController;
         this.desiredY = desiredY;
         this.spawnAmount = spawnAmount;

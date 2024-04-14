@@ -7,7 +7,8 @@ public class EnemyLauncher : MonoBehaviour
     [SerializeField] private float force = 400;
     [Tooltip("Runtime filled")]
     public List<BossFightBrain> enemies;
-    [HideInInspector] public bool needMoreEnemies = true;
+    public int maxNumOfEnemies;
+    public bool needMoreEnemies = true;
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
@@ -44,9 +45,13 @@ public class EnemyLauncher : MonoBehaviour
 
         brain.EnemyHealth.OnDeath -= HandleDeath;
 
-        if(enemies.Count < 5)
+        if(enemies.Count <= 5)
         {
             needMoreEnemies = true;
+        }
+        else
+        {
+            needMoreEnemies = false;
         }
     }
 
