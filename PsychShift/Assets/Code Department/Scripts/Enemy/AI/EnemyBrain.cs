@@ -147,8 +147,8 @@ public abstract class EnemyBrain : MonoBehaviour
         characterInfo = gameObject.GetComponent<CharacterInfoReference>().SetUp();
         AnimMaster.SwapGunAnimations(GunSelector.ActiveBaseGun.AnimatorOverride);
         Agent.speed = characterInfo.gunHandler.ActiveGun.CharacterConfig.WalkMoveSpeed / 12.85f;
-        if(!ManualHealthOverride)
-            EnemyHealth.SetMaxHealth(characterInfo.gunHandler.ActiveBaseGun);
+
+        EnemyHealth.SetMaxHealth(characterInfo.gunHandler.ActiveBaseGun);
         EnemyHealth.OnDeath += Died;
     }
     protected Coroutine SetUpWait;
