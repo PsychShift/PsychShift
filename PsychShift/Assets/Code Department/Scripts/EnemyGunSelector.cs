@@ -46,10 +46,16 @@ namespace Guns.Demo
             ActiveBaseGun = Gun;
             ActiveGun = Gun.Clone() as GunScriptableObject;
             ActiveGun.Spawn(GunParent, this, this, Camera);
+
             ActiveGun.ShootConfig.SpreadType = BulletSpreadType.Simple;
             ActiveGun.ShootConfig.SpreadMultiplier = 10f;
             ActiveGun.ShootConfig.ShootType = ShootType.FromGun;
-            ActiveGun.DamageConfig.DamageCurve.constant *= DamageReduction;
+
+            ActiveGun.DamageConfig.DamageCurve.curveMultiplier = DamageReduction;
+            
+            /* ActiveGun.DamageConfig.Damage *= DamageReduction;
+            ActiveGun.DamageConfig.MinDamage *= DamageReduction; */
+            /* ActiveGun.DamageConfig.DamageCurve.constant *= DamageReduction;
 
             float dmg = ActiveGun.DamageConfig.DamageCurve.constant;
             float minDist = ActiveGun.DamageConfig.DamageCurve.curve.keys[1].time;
@@ -63,7 +69,7 @@ namespace Guns.Demo
                 new(minDist, dmg, 0, slope),
                 new(maxDist, minDmg, slope, 0)
             };
-            ActiveGun.DamageConfig.DamageCurve.curve.keys = frames;
+            ActiveGun.DamageConfig.DamageCurve.curve.keys = frames; */
   
             ActiveGun.Model.AddComponent<RigTransform>();
             OnActiveGunSet?.Invoke();

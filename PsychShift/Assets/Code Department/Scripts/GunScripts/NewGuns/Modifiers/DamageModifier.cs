@@ -5,6 +5,7 @@ namespace Guns.Modifiers
 {
     public class DamageModifier : AbstractValueModifier<float>
     {
+    public DamageModifier(float Amount, string AttributeName): base(Amount, AttributeName) { }
         public override void Apply(GunScriptableObject Gun)
         {
             try
