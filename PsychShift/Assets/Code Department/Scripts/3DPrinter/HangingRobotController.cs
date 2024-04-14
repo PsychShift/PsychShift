@@ -110,8 +110,8 @@ public class HangingRobotController : MonoBehaviour
         attackStates = new IState[]
         {
             spawnEnemyState, // spawnEnemyState must always be index 0
-            staticLaserShotState
-            //rotatingTailLaserState
+            staticLaserShotState,
+            rotatingTailLaserState
         };
             //sweepingLaserState,
         

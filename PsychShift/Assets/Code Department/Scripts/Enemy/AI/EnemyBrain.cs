@@ -23,7 +23,8 @@ using UnityEditor;
 [DisallowMultipleComponent]
 public abstract class EnemyBrain : MonoBehaviour
 {
-    public bool ragDollDone;
+    public bool ManualHealthOverride = false;
+    [HideInInspector] public bool ragDollDone;
     /* public AudioSource enemyAudio;
     public AudioClip[] enemyClips;
     public EnemyDialouge enemyDialouge; */
@@ -146,7 +147,8 @@ public abstract class EnemyBrain : MonoBehaviour
         characterInfo = gameObject.GetComponent<CharacterInfoReference>().SetUp();
         AnimMaster.SwapGunAnimations(GunSelector.ActiveBaseGun.AnimatorOverride);
         Agent.speed = characterInfo.gunHandler.ActiveGun.CharacterConfig.WalkMoveSpeed / 12.85f;
-        EnemyHealth.SetMaxHealth(characterInfo.gunHandler.ActiveBaseGun);
+        if(!ManualHealthOverride)
+            EnemyHealth.SetMaxHealth(characterInfo.gunHandler.ActiveBaseGun);
         EnemyHealth.OnDeath += Died;
     }
     protected Coroutine SetUpWait;
