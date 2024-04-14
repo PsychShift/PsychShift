@@ -18,7 +18,7 @@ namespace Guns.Demo
 
         [Space] 
         [Header("Runtime Filled")] 
-        private GunScriptableObject _activeGun;
+        [SerializeField]private GunScriptableObject _activeGun;
         public GunScriptableObject ActiveGun
         { 
             get { return _activeGun; } 

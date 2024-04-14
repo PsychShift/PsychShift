@@ -6,6 +6,7 @@ namespace Guns.Health
 {
     public class EnemyHealth : MonoBehaviour, IDamageable
     {
+        [SerializeField] private bool ManualHealthValue;
         [SerializeField]
         private float _MaxHealth = 100;
         [SerializeField]
@@ -63,6 +64,7 @@ namespace Guns.Health
 
         public void SetMaxHealth(GunScriptableObject gun)
         {
+            if(ManualHealthValue) return;
             _MaxHealth = gun.CharacterConfig.Health;
             _Health = _MaxHealth;
         }

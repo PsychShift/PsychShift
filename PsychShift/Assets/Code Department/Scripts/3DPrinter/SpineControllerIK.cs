@@ -27,6 +27,7 @@ public class SpineControllerIK : MonoBehaviour
     private ChainIKConstraint chainIK;
     private MultiRotationConstraint rotationConstraint;
     [SerializeField] private MultiAimConstraint neckLookAtIK;
+    private Transform neckTarget;
     private Rig spineRig;
     private Transform spineTarget;
     private Vector3 localHomePos;
@@ -44,11 +45,20 @@ public class SpineControllerIK : MonoBehaviour
         SetUpComponents();
         ValidateConstraints();
         BuildStateMachine();
+        neckTarget = neckLookAtIK.data.sourceObjects[0].transform;
+        /* var weightedTransform = new WeightedTransform(playerTarget, 1);
+        var array = new WeightedTransformArray(1)
+        {
+            weightedTransform
+        };
+        // Assign the new instance back to the array
+        neckLookAtIK.data.sourceObjects = array; */
     }
 
     void Update()
     {
         //animStateMachine.Tick();
+        neckTarget.position = playerTarget.position;
     }
     StateMachine.StateMachine animStateMachine;
     private void BuildStateMachine()

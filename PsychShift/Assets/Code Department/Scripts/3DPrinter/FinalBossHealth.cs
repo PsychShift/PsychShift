@@ -8,7 +8,7 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
 {
     [Header("REMOVE GATE AFTER SPRINT 7 IT'S NOT GOOD")]
     public GameObject GATE;
-    public ChildCollider childCollider;
+    public ChildCollider[] childCollider;
     [SerializeField] private HangingRobotController BossController;
     [SerializeField] private Slider healthBar;
     [SerializeField] private float currentHealth;
@@ -111,7 +111,8 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
         }
         currentPhase = 0;
         SwitchPhase();
-        childCollider.SetUp(this);
+        for(int i = 0; i < childCollider.Length; i++)
+            childCollider[i].SetUp(this);
     }
 
     private int GetPhaseHealth(int phase)
