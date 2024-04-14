@@ -9,11 +9,11 @@ public class EnemyLauncher : MonoBehaviour
     public List<BossFightBrain> enemies;
     public int maxNumOfEnemies;
     public bool needMoreEnemies = true;
-    void Update()
+    /* void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
             ShootEnemy(Guns.GunType.Pistol, EEnemyModifier.None);
-    }
+    } */
 
     public void ShootEnemy(Guns.GunType gunType, EEnemyModifier modifier)
     {
