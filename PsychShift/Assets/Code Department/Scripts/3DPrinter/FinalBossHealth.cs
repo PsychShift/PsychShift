@@ -137,7 +137,7 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     {
         //trackRig.weight = 0;
        //wires.parent.SetParent(null);
-        BossController.animController.enabled = false;
+        
         deActivateBoss.DeActivate();
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
