@@ -1,22 +1,60 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BossBarFadeScript : MonoBehaviour
 {
+    public static BossBarFadeScript Instance;
    public CanvasGroup BossBar;
-   private WaitForSeconds MenuTick = new WaitForSeconds(0.1f);
-   private Coroutine WaitforFade;
+   public float fadeSpeed = 1;
    [SerializeField] private bool fadeInBar = false;
    [SerializeField] private bool fadeOutBar = false;
     // Start is called before the first frame update
     void Start()
     {
+        Instance = this;
         BossBar.alpha = 0;
+        BossBar.enabled = true;
     }
 
-    // Update is called once per frame
+    public IEnumerator FadeIn()
+    {
+        BossBar.enabled = true;
+        BossBar.alpha = 0;
+        fadeInBar = true;
+        while (fadeInBar)
+        {
+            if (BossBar.alpha >= 0)
+            {
+                BossBar.alpha += Time.deltaTime * fadeSpeed;
+                if (BossBar.alpha >= 1)
+                {
+                    fadeInBar = false;
+                }
+            }
+            yield return null;
+        }
+        BossBar.alpha = 1;
+    }
+    public IEnumerator FadeOut()
+    {
+        fadeOutBar = true;
+        while (fadeOutBar)
+        {
+            if (BossBar.alpha >= 0)
+            {
+                BossBar.alpha -= Time.deltaTime * fadeSpeed;
+                if (BossBar.alpha == 0)
+                {
+                    fadeOutBar = false;
+                }
+            }
+            yield return null;
+        }
+        BossBar.alpha = 0;
+        //BossBar.enabled = false;
+    }
+
+    /* // Update is called once per frame
     void Update()
     {
         if (fadeInBar)
@@ -41,9 +79,5 @@ public class BossBarFadeScript : MonoBehaviour
                 }
             }
         }
-    }
-     private void OnTriggerEnter(Collider other) 
-    {
-        fadeInBar = true;
-    }
+    } */
 }

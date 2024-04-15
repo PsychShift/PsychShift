@@ -1,14 +1,12 @@
 using System;
 using UnityEngine;
-using System.Linq;
 using UnityEngine.UI;
-using System.Collections;
 
 public class FinalBossHealth : MonoBehaviour, IDamageable
 {
     [Header("REMOVE GATE AFTER SPRINT 7 IT'S NOT GOOD")]
     public GameObject GATE;
-    public ChildCollider[] childCollider;
+    public ChildCollider[] childColliders;
     [SerializeField] private HangingRobotController BossController;
     [SerializeField] private Slider healthBar;
     [SerializeField] private float currentHealth;
@@ -31,6 +29,9 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     EBossStates nextBossState = EBossStates.None;
     AbstractBossPuzzle currentHealthGatePuzzle;
     public bool invincible;
+    [SerializeField] private Transform wires;
+    [SerializeField] private UnityEngine.Animations.Rigging.Rig trackRig;
+    [SerializeField] private DeActivateBoss deActivateBoss;
 
     public void TakeDamage(float Damage, Guns.GunType gunType)
     {
@@ -66,7 +67,7 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
                 OnDeath?.Invoke(transform);
                 Debug.Log("DESTROY");
                 healthBar.enabled = false;
-                Destroy(gameObject);
+                ActivateRagdoll();
             }
         }
     }
@@ -111,8 +112,8 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
         }
         currentPhase = 0;
         SwitchPhase();
-        for(int i = 0; i < childCollider.Length; i++)
-            childCollider[i].SetUp(this);
+        for(int i = 0; i < childColliders.Length; i++)
+            childColliders[i].SetUp(this);
     }
 
     private int GetPhaseHealth(int phase)
@@ -130,6 +131,25 @@ public class FinalBossHealth : MonoBehaviour, IDamageable
     public void UpdateHealthBar(float damage)
     {
         healthBar.value -= damage;
+    }
+
+    public void ActivateRagdoll()
+    {
+        //trackRig.weight = 0;
+       //wires.parent.SetParent(null);
+        BossController.animController.enabled = false;
+        deActivateBoss.DeActivate();
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        GetComponent<CapsuleCollider>().enabled = true;
+        for(int i = 0; i < childColliders.Length; i++)
+        {
+            rb = childColliders[i].GetComponent<Rigidbody>();
+            rb.useGravity = true;
+            rb.isKinematic = false;
+        }
+
     }
 }
 

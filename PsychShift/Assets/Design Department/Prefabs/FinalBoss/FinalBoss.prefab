@@ -339,8 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GATE: {fileID: 0}
-  childCollider:
-  - {fileID: 0}
+  childColliders: []
   BossController: {fileID: 1756946037349031504}
   healthBar: {fileID: 0}
   currentHealth: 0
@@ -350,10 +349,10 @@ MonoBehaviour:
     Gates:
     - Health: 750
       Puzzle: {fileID: 0}
-      BossState: 0
+      BossState: 1
     - Health: 500
       Puzzle: {fileID: 0}
-      BossState: 0
+      BossState: 1
     - Health: 300
       Puzzle: {fileID: 0}
       BossState: 1
@@ -6010,19 +6009,54 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7328161572543405245}
   m_SourcePrefab: {fileID: 100100000, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
 --- !u!114 &6628365548104079663 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8407372346794495844, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
   m_PrefabInstance: {fileID: 3409317010625959499}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 8593681145902896784}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71387689ee1e9eb4f8ed6688e5e1e361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8593681145902896784 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
+  m_PrefabInstance: {fileID: 3409317010625959499}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &7328161572543405245
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8593681145902896784}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &8618988217576288309 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6398664939286292094, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
@@ -7087,19 +7121,54 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5429591740548323403}
   m_SourcePrefab: {fileID: 100100000, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
 --- !u!4 &168619019749311251 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6398664939286292094, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
   m_PrefabInstance: {fileID: 6528972367353324909}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &182714077416695222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
+  m_PrefabInstance: {fileID: 6528972367353324909}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &5429591740548323403
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182714077416695222}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &3330250692463913481 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8407372346794495844, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
   m_PrefabInstance: {fileID: 6528972367353324909}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 182714077416695222}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71387689ee1e9eb4f8ed6688e5e1e361, type: 3}
@@ -7827,7 +7896,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3497901143813418054}
   m_SourcePrefab: {fileID: 100100000, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
 --- !u!114 &437889408754717409 stripped
 MonoBehaviour:
@@ -7850,6 +7922,33 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6346329140237238491, guid: 37bf6457db61e774d82e3e47002f7c75, type: 3}
   m_PrefabInstance: {fileID: 8268413761440439685}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &3497901143813418054
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3075393639671061854}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &8547879423111974583
 PrefabInstance:
   m_ObjectHideFlags: 0
