@@ -13569,6 +13569,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5987555987194780162, guid: 5b5e5488af2f01c4c8e2b949ccff3260, type: 3}
+      propertyPath: playerAction
+      value: 
+      objectReference: {fileID: 1740773837}
     - target: {fileID: 6018102115212856091, guid: 5b5e5488af2f01c4c8e2b949ccff3260, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -14729,6 +14733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 630a6ddba63248045b671137c0a27492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ManualHealthOverride: 0
   ragDollDone: 0
   _isActive: 0
   _agression: {fileID: 11400000, guid: 6e100eed3b47a3b41ae170096b62e4f1, type: 2}
@@ -18387,6 +18392,7 @@ MonoBehaviour:
   currentChar: {fileID: 0}
   charDouble: {fileID: 0}
   checkPointLocation: {fileID: 0}
+  isLoadingNewSceneTransition: 0
   noSavePlez: 0
 --- !u!4 &682816335
 Transform:
@@ -32745,6 +32751,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 7b53616e-850f-4ef3-afe1-99436734fdb9
     m_ActionName: UI/Pause[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2a63f3fd-0318-4e9e-8059-01cd5ed7787c
+    m_ActionName: Controls/Melee[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a3e2b643-556d-4d0f-b62b-a37690cae4d4
+    m_ActionName: Slow/Melee[/Keyboard/c]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Controls
@@ -40280,6 +40294,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f4d58587da6c3c429176f738fba269b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1740773837 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4915459179439826330, guid: b27e890ec4c04c340be562795d8179f9, type: 3}
+  m_PrefabInstance: {fileID: 1740773835}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc0f8ba3b07f5643a7e539935c5b041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1744813946
