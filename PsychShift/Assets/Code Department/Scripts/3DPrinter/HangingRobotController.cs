@@ -26,7 +26,8 @@ public enum EBossStates
 public class HangingRobotController : MonoBehaviour
 {
     [Header("Everything Else")]
-
+    public bool IsActive;
+    public static HangingRobotController Instance;
     // Lets start with movement, we need to keep track of the player's
     public HangingAnimatorController animController;
     [SerializeField] private StingerController stingerController;
@@ -93,6 +94,7 @@ public class HangingRobotController : MonoBehaviour
 
     void Awake()
     {
+        Instance = this;
         agent = GetComponent<NavMeshAgent>();
         void ATAttack(IState from, IState to, Func<bool> condition) => attacksStateMachine.AddTransition(from, to, condition);
 
@@ -145,6 +147,7 @@ public class HangingRobotController : MonoBehaviour
 
     void Update()
     {
+        if(!IsActive) return;
         attacksStateMachine.Tick();
         if(canRotate)
             Rotate();
@@ -152,8 +155,8 @@ public class HangingRobotController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(!IsActive) return;
         movementStateMachine.Tick();
-        
     }
 
     void Rotate()

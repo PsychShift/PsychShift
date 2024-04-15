@@ -50,6 +50,7 @@ public class ShieldGenerator : MonoBehaviour, IDamageable
     }
     public void Destoyed()
     {
+        anim.enabled = false;
         isDead = true;
         shieldScript.GeneratorDestroyed(this, isImportant);
         Rigidbody rb = GetComponent<Rigidbody>();
