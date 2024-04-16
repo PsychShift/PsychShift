@@ -2055,6 +2055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4126de5ce1d8474448838d2cfa56c542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ManualHealthValue: 0
   _MaxHealth: 100
   _Health: 100
 --- !u!114 &5917110174640737060
@@ -2087,6 +2088,7 @@ MonoBehaviour:
   Camera: {fileID: 0}
   StartGun: {fileID: 11400000, guid: 29cb4dc3750135b42813e37fb213d896, type: 2}
   GunParent: {fileID: 2213917291445965841}
+  _activeGun: {fileID: 0}
   <ActiveBaseGun>k__BackingField: {fileID: 0}
   InitializeOnStart: 0
 --- !u!114 &1336967112072070865
@@ -2197,6 +2199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b76e13e10e5e794a85471ea033aebeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ManualHealthOverride: 0
   ragDollDone: 0
   _isActive: 1
   _agression: {fileID: 11400000, guid: 6e100eed3b47a3b41ae170096b62e4f1, type: 2}
@@ -2255,10 +2258,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0
-  MinDistance: 1
-  MaxDistance: 18.2
+  MinDistance: 29.70297
+  MaxDistance: 100
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

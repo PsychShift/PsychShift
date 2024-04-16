@@ -198,7 +198,7 @@ public class AIVigilScuff : MonoBehaviour
  
     void EnviromentView()
     {
-        Collider[] playerInRange = Physics.OverlapSphere(transform.position, viewRadius, playerMask);   
+        Collider[] playerInRange = Physics.OverlapSphere(transform.position, viewRadius, playerMask);//This is whats spiking vigil    
         for (int i = 0; i < playerInRange.Length; i++)
         {
             Transform player = playerInRange[i].transform;
