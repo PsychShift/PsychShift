@@ -114,7 +114,7 @@ namespace Guns.Demo
             ActiveGun.TryToShoot(true);
         }
 
-        public void Hit()
+        public void Hit(bool hit)
         {
             
         }

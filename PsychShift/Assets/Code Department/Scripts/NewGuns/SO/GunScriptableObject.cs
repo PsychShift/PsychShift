@@ -596,7 +596,7 @@ namespace Guns
                 /* OnSomethingHit?.Invoke(damageable);
                 if(OnSomethingHit== null)
                     Debug.Log("NULL AF"); */
-                gunSelector.Hit();
+                gunSelector.Hit(damageable.IsWeakPoint);
             }
 
             foreach (ICollisionHandler collisionHandler in BulletImpactEffects)

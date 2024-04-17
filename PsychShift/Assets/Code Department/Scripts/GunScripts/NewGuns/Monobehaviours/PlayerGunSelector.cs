@@ -77,9 +77,9 @@ namespace Guns.Demo
             }
         }
 
-        public void Hit()
+        public void Hit(bool crit)
         {
-            StartCoroutine(hitRef.HitReaction());//IF WE GET CRIT CHANGE DIS
+            StartCoroutine(hitRef.HitReaction(crit));//IF WE GET CRIT CHANGE DIS
         }
     }
 }

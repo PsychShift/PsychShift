@@ -14,8 +14,12 @@ public class HitEffects : MonoBehaviour
     // Update is called once per frame
     //function
     //Plays anim
+    [Tooltip("The parent of the hitmarker sprites")]
     public GameObject hitMarker;
+    private GameObject hitMarkerChild;
+    private GameObject critHitMarkerChild;
     public AudioClip hitMarkerSound;
+    public AudioClip critHitMarkerSound;
     public AudioSource hitSource;
     /* public void HitReaction(bool crit)
     {
@@ -23,12 +27,29 @@ public class HitEffects : MonoBehaviour
         hitMarker.SetActive(true);
         hitMarker.SetActive(false);
     } */
-    public IEnumerator HitReaction()
+    void Awake()
     {
-        hitMarker.SetActive(true);
-        hitSource.PlayOneShot(hitMarkerSound);
-        yield return new WaitForSeconds(.05f); 
-        hitMarker.SetActive(false);
+        hitMarkerChild = hitMarker.transform.GetChild(0).gameObject;
+        critHitMarkerChild = hitMarker.transform.GetChild(1).gameObject;
+    }
+    public IEnumerator HitReaction(bool crit)
+    {
+        if (crit)
+        {
+            critHitMarkerChild.SetActive(true);
+            hitSource.PlayOneShot(critHitMarkerSound);
+            yield return new WaitForSeconds(.05f); 
+            critHitMarkerChild.SetActive(false);
+            Debug.Log("crit");
+        }
+        else
+        {
+            hitMarkerChild.SetActive(true);
+            hitSource.PlayOneShot(hitMarkerSound);
+            yield return new WaitForSeconds(.05f); 
+            hitMarkerChild.SetActive(false);
+            Debug.Log("no crit");
+        }
     }
 
 }

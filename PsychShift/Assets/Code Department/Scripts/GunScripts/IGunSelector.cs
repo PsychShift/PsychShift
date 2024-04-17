@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IGunSelector 
 {
-    public void Hit ();
+    public void Hit (bool crit);
     
 }
