@@ -719,7 +719,8 @@ namespace Player
                 if(currentCharacter != null && stateMachine != null)
                 {
                     Gizmos.color = stateMachine.GetGizmoColor();
-                    debugSprite.color = Gizmos.color;
+                    if(debugSprite != null)
+                        debugSprite.color = Gizmos.color;
                     Gizmos.DrawCube(currentCharacter.characterContainer.transform.position + Vector3.up * 3f, Vector3.one);
                     RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer);
                     if(hits.Any(hit => hit.collider != null))
