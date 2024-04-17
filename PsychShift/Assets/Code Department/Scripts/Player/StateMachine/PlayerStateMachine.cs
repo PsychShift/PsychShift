@@ -4,14 +4,14 @@ using Cinemachine;
 using System.Linq;
 using System.Collections;
 using Guns.Demo;
-using UnityEngine.SceneManagement;
-using Unity.Mathematics;
+using UnityEngine.UI;
 // reeeeeeeeeeeee
 namespace Player
 {
     [RequireComponent(typeof(InputManager))]
     public class PlayerStateMachine : MonoBehaviour
     {
+        public Image debugSprite;
         private static PlayerStateMachine instance = null;
         public static PlayerStateMachine Instance 
         { 
@@ -271,6 +271,9 @@ namespace Player
         }
         void FixedUpdate()
         {
+            //Debug.Log(appliedMovement);
+            Vector2 debug = new Vector2(appliedMovement.x, appliedMovement.z);
+            //Debug.Log(debug.magnitude + " " + debug);
             currentCharacter.controller.Move(appliedMovement * Time.deltaTime);
         }
         #endregion
@@ -716,6 +719,7 @@ namespace Player
                 if(currentCharacter != null && stateMachine != null)
                 {
                     Gizmos.color = stateMachine.GetGizmoColor();
+                    debugSprite.color = Gizmos.color;
                     Gizmos.DrawCube(currentCharacter.characterContainer.transform.position + Vector3.up * 3f, Vector3.one);
                     RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer);
                     if(hits.Any(hit => hit.collider != null))

@@ -69,7 +69,7 @@ namespace Player
         private void HorizontalMovement()
         {
             Vector2 input = InputManager.Instance.GetPlayerMovement();
-            playerStateMachine.currentInputVector = Vector2.SmoothDamp(playerStateMachine.currentInputVector, input, ref playerStateMachine.smoothInputVelocity, playerStateMachine.smoothInputSpeed);
+            playerStateMachine.currentInputVector = Vector2.SmoothDamp(playerStateMachine.currentInputVector, input, ref playerStateMachine.smoothInputVelocity, 0.3f);
             Vector3 movement = new Vector3(playerStateMachine.currentInputVector.x, 0f, playerStateMachine.currentInputVector.y);
             // get the rotation of the camera, isolate the y axis, and rotate the movement vector by that amount
             movement = Quaternion.Euler(0f, playerStateMachine.cameraTransform.eulerAngles.y, 0f) * movement;

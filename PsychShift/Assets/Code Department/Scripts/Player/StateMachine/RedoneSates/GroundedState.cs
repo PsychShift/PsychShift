@@ -17,8 +17,8 @@ namespace Player
             //void Any(IState from, Func<bool> condition) => subStateMachine.AddAnyTransition(from, condition);
 
             subStateMachine = new StateMachine.StateMachine();
-            var idleState = new IdleState(playerStateMachine);
-            var walkState = new WalkState(playerStateMachine);
+            var idleState = new IdleState(playerStateMachine, 0.075f);
+            var walkState = new WalkState(playerStateMachine, 0.125f);
 
             AT(idleState, walkState, Walked());
             AT(walkState, idleState, Stopped());
