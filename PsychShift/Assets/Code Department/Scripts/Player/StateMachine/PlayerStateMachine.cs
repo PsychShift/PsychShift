@@ -261,9 +261,7 @@ namespace Player
         }
         void Update()
         {
-            RotatePlayer();
-            //IsVaulting = CheckForVaultableObject();
-            stateMachine.Tick();
+            
             if (isSlowed)
                 SearchForInteractable();
 
@@ -271,8 +269,10 @@ namespace Player
         }
         void FixedUpdate()
         {
-            //Debug.Log(appliedMovement);
-            Vector2 debug = new Vector2(appliedMovement.x, appliedMovement.z);
+            RotatePlayer();
+            stateMachine.Tick();
+
+            //Vector2 debug = new Vector2(appliedMovement.x, appliedMovement.z);
             //Debug.Log(debug.magnitude + " " + debug);
             currentCharacter.controller.Move(appliedMovement * Time.deltaTime);
         }
@@ -375,6 +375,8 @@ namespace Player
 
                 currentCharacter.enemyHealth.OnTakeDamage += HealthUI.Instance.UpdateHealthBar;
                 currentCharacter.enemyHealth.OnDeath += HealthUI.Instance.HandleDeath;
+
+                currentCharacter.enemyHealth.SetMaxHealth(currentCharacter.gunHandler.ActiveBaseGun);
                 // Subscribe the hit effects to the gun
                 //currentCharacter.gunHandler.ActiveGun.OnSomethingHit += HitDamageable;
                 
@@ -597,18 +599,7 @@ namespace Player
 
         public virtual void RotatePlayer()
         {
-            if(isSwapping) return;
-            Vector2 mouseDelta = InputManager.Instance.GetMouseDelta();
-            Vector3 currentRotation = cameraTransform.localRotation.eulerAngles;
-
-            currentRotation.x -= mouseDelta.y;
-            currentRotation.y += mouseDelta.x;
-
-            currentRotation.x = Mathf.Clamp(currentRotation.x, -90f, 90f);
-
-            cameraTransform.localRotation = Quaternion.Euler(currentRotation);
-            currentCharacter.characterContainer.transform.rotation = Quaternion.Euler(0f, currentRotation.y, 0f);
-
+            currentCharacter.characterContainer.transform.rotation = Quaternion.Euler(new Vector3(0, cameraTransform.localRotation.eulerAngles.y, 0));
         }
         private bool CheckForVaultableObject()
         {

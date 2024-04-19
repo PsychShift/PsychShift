@@ -40,7 +40,6 @@ public class HitEffects : MonoBehaviour
             hitSource.PlayOneShot(critHitMarkerSound);
             yield return new WaitForSeconds(.05f); 
             critHitMarkerChild.SetActive(false);
-            Debug.Log("crit");
         }
         else
         {
@@ -48,7 +47,6 @@ public class HitEffects : MonoBehaviour
             hitSource.PlayOneShot(hitMarkerSound);
             yield return new WaitForSeconds(.05f); 
             hitMarkerChild.SetActive(false);
-            Debug.Log("no crit");
         }
     }
 

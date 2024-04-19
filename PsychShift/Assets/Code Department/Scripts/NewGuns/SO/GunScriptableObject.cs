@@ -638,6 +638,21 @@ namespace Guns
             return bullet;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is GunScriptableObject other)
+            {
+                return Type == other.Type;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Type.GetHashCode();
+        }
+
+
         public object Clone()
         {
             GunScriptableObject config = CreateInstance<GunScriptableObject>();
@@ -647,20 +662,20 @@ namespace Guns
             config.Name = Name;
             config.name = name;
 
-            config.DamageConfig = DamageConfig.Clone() as DamageConfigScriptableObject;
+            config.DamageConfig = DamageConfig/* .Clone() as DamageConfigScriptableObject */;
             config.ShootConfig = ShootConfig.Clone() as ShootConfigScriptableObject;
             config.AmmoConfig = AmmoConfig.Clone() as AmmoConfigScriptableObject;
-            config.TrailConfig = TrailConfig.Clone() as TrailConfigScriptableObject;
-            config.AudioConfig = AudioConfig.Clone() as AudioConfigScriptableObject;
-            config.BulletPenConfig = BulletPenConfig.Clone() as BulletPenetrationConfigScriptableObject;
-            config.CharacterConfig = CharacterConfig.Clone() as CharacterStatsScriptableObject;
+            config.TrailConfig = TrailConfig/* .Clone() as TrailConfigScriptableObject */;
+            config.AudioConfig = AudioConfig/* .Clone() as AudioConfigScriptableObject */;
+            config.BulletPenConfig = BulletPenConfig/* .Clone() as BulletPenetrationConfigScriptableObject */;
+            config.CharacterConfig = CharacterConfig/* .Clone() as CharacterStatsScriptableObject */;
 
             config.ModelPrefab = ModelPrefab;
             config.AnimatorOverride = AnimatorOverride;
             config.SpawnPoint = SpawnPoint;
             config.SpawnRotation = SpawnRotation;
 
-            config.ShootConfig.PreCalculateBulletSpread(config.AmmoConfig.ClipSize);
+            //config.ShootConfig.PreCalculateBulletSpread(config.AmmoConfig.ClipSize);
 
             if(config.DamageConfig.IsExplosive)
             {

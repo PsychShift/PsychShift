@@ -78,9 +78,6 @@ public class InputManager : MonoBehaviour
     public InputAction ShaderIsPressed{get; private set;}
     public InputAction ShaderIsPressedSlow{get; private set;}
 
-    bool switchFromKeyboard = false;
-    bool switchFromController = false;
-
     public void OnEnable()
     {
         if(Instance == null)
@@ -157,10 +154,6 @@ public class InputManager : MonoBehaviour
         Interact.started += PressedInteract;
         StandardMelee.started += PressedMelee;
         SlowMelee.started += PressedMelee;
-
-
-        // Camera Sensitivity Stuff
-        switchFromController = true;
     }
     
     private void OnDisable() 
@@ -183,11 +176,15 @@ public class InputManager : MonoBehaviour
         SlowMelee.started -= PressedMelee;
     }
 
+    public Vector2 MoveVector;
     public Vector2 GetPlayerMovement() {
-        return MoveAction.ReadValue<Vector2>();
+        MoveVector = MoveAction.ReadValue<Vector2>();
+        return MoveVector;
     }
+    public Vector2 MouseDelta;
     public Vector2 GetMouseDelta() {
-        return LookAction.ReadValue<Vector2>();
+        MouseDelta = LookAction.ReadValue<Vector2>();
+        return MouseDelta;
     }
     private void OnJump(InputAction.CallbackContext context)
     {

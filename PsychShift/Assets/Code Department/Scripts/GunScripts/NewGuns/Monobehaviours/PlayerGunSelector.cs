@@ -45,7 +45,7 @@ namespace Guns.Demo
             ActiveGun = Gun.Clone() as GunScriptableObject;
             ActiveGun.Spawn(GunParent, this,this, Camera);
             ActiveGun.ShootConfig.ShootType = ShootType.FromCamera;
-            PlayerHands.Instance.SetHandPositions(ActiveGun.GetHandOrientations()[0]);
+            PlayerHands.Instance.SetHandPositions(ActiveGun);
             /* InverseKinematics.SetGunStyle(ActiveGun.Type == GunType.Glock);
             InverseKinematics.Setup(GunParent); */
         }

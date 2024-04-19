@@ -90,7 +90,11 @@ namespace Player
             foreach(var item in DirectionHits)
             {
                 
-                if(item.Value.collider != null) return true;
+                if(item.Value.collider != null)
+                {
+                    LastWallNormal = item.Value.normal;
+                    return true;
+                } 
             }
 
             return false;

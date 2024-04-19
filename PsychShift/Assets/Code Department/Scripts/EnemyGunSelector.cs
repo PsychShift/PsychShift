@@ -52,24 +52,6 @@ namespace Guns.Demo
             ActiveGun.ShootConfig.ShootType = ShootType.FromGun;
 
             ActiveGun.DamageConfig.DamageCurve.curveMultiplier = DamageReduction;
-            
-            /* ActiveGun.DamageConfig.Damage *= DamageReduction;
-            ActiveGun.DamageConfig.MinDamage *= DamageReduction; */
-            /* ActiveGun.DamageConfig.DamageCurve.constant *= DamageReduction;
-
-            float dmg = ActiveGun.DamageConfig.DamageCurve.constant;
-            float minDist = ActiveGun.DamageConfig.DamageCurve.curve.keys[1].time;
-            float maxDist = ActiveGun.DamageConfig.DamageCurve.curve.keys[2].time;
-            float minDmg = ActiveGun.DamageConfig.DamageCurve.curve.keys[2].value * DamageReduction;
-            float slope = (minDmg - dmg) / (maxDist - minDist); // Slope between Vector2 2 and Vector2 3
-
-            Keyframe[] frames = new Keyframe[3]
-            {
-                new(0, dmg, 0, 0),
-                new(minDist, dmg, 0, slope),
-                new(maxDist, minDmg, slope, 0)
-            };
-            ActiveGun.DamageConfig.DamageCurve.curve.keys = frames; */
   
             ActiveGun.Model.AddComponent<RigTransform>();
             OnActiveGunSet?.Invoke();

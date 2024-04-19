@@ -29,7 +29,7 @@ public class MouseLook : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    /* void Update()
     {
     //ray cast to detect things in front and ask player if they want to interact
       /*Vector3 direction = Vector3.forward;
@@ -41,7 +41,7 @@ public class MouseLook : MonoBehaviour
 
       }*/
      //getmousedelta put in player
-        mouseInput = InputManager.Instance.GetMouseDelta();
+       /*  mouseInput = InputManager.Instance.GetMouseDelta();
 
         float mouseX = mouseInput.x * mouseSensitivity * Time.deltaTime;
         float mouseY = mouseInput.y * mouseSensitivity * Time.deltaTime;
@@ -52,10 +52,10 @@ public class MouseLook : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-        playerBody.Rotate(Vector3.up * mouseX);
+        playerBody.Rotate(Vector3.up * mouseX); 
 
 
-    }
+    } */
 
 
 
