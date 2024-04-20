@@ -11,6 +11,7 @@ namespace Player
     [RequireComponent(typeof(InputManager))]
     public class PlayerStateMachine : MonoBehaviour
     {
+        public Image debugSprite;
         private static PlayerStateMachine instance = null;
         public static PlayerStateMachine Instance 
         { 
@@ -260,6 +261,7 @@ namespace Player
         }
         void Update()
         {
+            
             if (isSlowed)
                 SearchForInteractable();
 
@@ -270,6 +272,8 @@ namespace Player
             RotatePlayer();
             stateMachine.Tick();
 
+            //Vector2 debug = new Vector2(appliedMovement.x, appliedMovement.z);
+            //Debug.Log(debug.magnitude + " " + debug);
             currentCharacter.controller.Move(appliedMovement * Time.deltaTime);
         }
         #endregion
@@ -324,8 +328,6 @@ namespace Player
         {
             
             if(newCharacter == null) return;
-
-
             CharacterInfoReference newCharacterInfoReference = newCharacter.GetComponent<CharacterInfoReference>();
             CharacterInfo newCharInfo = newCharacterInfoReference.characterInfo;
             if(newCharInfo.modifier == EEnemyModifier.NonSwap) return;
@@ -333,14 +335,13 @@ namespace Player
             
             if(currentCharacter != null)
             {
-                int cost = BrainJuiceBarTest.instance.DistanceCheck(Vector3.Distance(newCharacter.transform.position, currentCharacter.characterContainer.transform.position));
-                if (BrainJuiceBarTest.instance.UseBrain(cost))//This is where mindswap starts
+                if (BrainJuiceBarTest.instance.currentBrain >= 15)//This is where mindswap starts
                 {
                     CharacterInfoReference oldCharacterInfoReference = currentCharacter.characterContainer.GetComponent<CharacterInfoReference>();
                     StartCoroutine(SwapAnimation(currentCharacter.cameraRoot.transform, 
                     newCharacterInfoReference.characterInfo.cameraRoot.transform, 
                     oldCharacterInfoReference, newCharacterInfoReference));
-                    
+                    BrainJuiceBarTest.instance.UseBrain(15);
                     /* if(playingBeginning ==false)
                     {
                         playerAudio.PlayOneShot(mindswapBegin);
@@ -405,6 +406,7 @@ namespace Player
         public void SwapCharacter(GameObject newChar, Transform position)
         {
             SwapCharacter(newChar);
+            HealthUI.Instance.SetHealthBarOnSwap(currentCharacter.enemyHealth.CurrentHealth, currentCharacter.enemyHealth.MaxHealth);
 
             if(checkPoint!=Vector3.zero)
             {
@@ -709,6 +711,8 @@ namespace Player
                 if(currentCharacter != null && stateMachine != null)
                 {
                     Gizmos.color = stateMachine.GetGizmoColor();
+                    if(debugSprite != null)
+                        debugSprite.color = Gizmos.color;
                     Gizmos.DrawCube(currentCharacter.characterContainer.transform.position + Vector3.up * 3f, Vector3.one);
                     RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer);
                     if(hits.Any(hit => hit.collider != null))
