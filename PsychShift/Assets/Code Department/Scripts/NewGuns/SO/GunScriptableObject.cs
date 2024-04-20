@@ -53,7 +53,7 @@ namespace Guns
 
         /* public delegate void OnSomethingHitDelegate(IDamageable damageable);
         public event OnSomethingHitDelegate OnSomethingHit; */
-        private IGunSelector gunSelector;
+        public IGunSelector gunSelector;
 
 
         /// <summary>

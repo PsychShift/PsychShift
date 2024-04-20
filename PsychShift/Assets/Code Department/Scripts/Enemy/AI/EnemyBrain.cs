@@ -271,6 +271,12 @@ public abstract class EnemyBrain : MonoBehaviour
         } */
     }
 
+    public void SetRagDollState()
+    {
+        if(stateMachine != null)
+            stateMachine.SetState(ragdollState);
+    }
+
     void OnDisable()
     {
         CharacterInfo.agent.enabled = false;

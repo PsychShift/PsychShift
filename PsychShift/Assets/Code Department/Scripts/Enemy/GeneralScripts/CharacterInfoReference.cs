@@ -63,6 +63,7 @@ public class CharacterInfoReference : MonoBehaviour
         characterInfo.enemyBrain.IsActive = false;
         characterInfo.agent.enabled = false;
 
+
         GetComponent<RigColliderManager>().SwapTag("Player");
         characterInfo.characterContainer.layer = LayerMask.NameToLayer("Player");
         characterInfo.characterContainer.tag = "Player";
@@ -71,9 +72,14 @@ public class CharacterInfoReference : MonoBehaviour
     public void DeactivatePlayerAllAtOnce()
     {
         characterInfo.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
-        characterInfo.enemyBrain.IsActive = true;
-        characterInfo.agent.enabled = true;
+        characterInfo.enemyBrain.IsActive = false;
 
+        characterInfo.agent.enabled = false;
+
+        if (!IsAgentOnNavMesh())
+        {
+            characterInfo.enemyBrain.SetRagDollState();
+        }
         GetComponent<RigColliderManager>().SwapTag("Enemy");
         characterInfo.characterContainer.tag = "Swapable";
         characterInfo.characterContainer.layer = LayerMask.NameToLayer("Character");
@@ -88,8 +94,29 @@ public class CharacterInfoReference : MonoBehaviour
         characterInfo.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
     }
 
+    private const float onMeshThreshold = 4f;
+    private bool IsAgentOnNavMesh()
+    {
+        Vector3 agentPosition = characterInfo.characterContainer.transform.position;
+
+        // Check for nearest point on navmesh to agent, within onMeshThreshold
+        if (NavMesh.SamplePosition(agentPosition, out NavMeshHit hit, onMeshThreshold, NavMesh.AllAreas))
+        {
+            // Check if the positions are vertically aligned
+            if (Mathf.Approximately(agentPosition.x, hit.position.x)
+                && Mathf.Approximately(agentPosition.z, hit.position.z))
+            {
+                // Lastly, check if object is below navmesh
+                return agentPosition.y >= hit.position.y;
+            }
+        }
+
+        return false;
+    }
+
     public override string ToString()
     {
         return characterInfo.ToString();
     }
 }
+

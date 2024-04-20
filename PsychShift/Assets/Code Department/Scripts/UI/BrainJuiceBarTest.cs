@@ -33,7 +33,7 @@ public class BrainJuiceBarTest : MonoBehaviour
     {
         
     }
-public void UseBrain(int amount)
+public bool UseBrain(int amount)
     {
         if(currentBrain - amount >= 0)
         {
@@ -44,11 +44,20 @@ public void UseBrain(int amount)
                 StopCoroutine(regen);
 
             regen = StartCoroutine(RegenBrain());
+            return true;
         }
         else
         {
             Debug.Log("Not enough brain juice");
+            return false;
         }
+    }
+    int distanceToCostModifier = 2;
+    public int DistanceCheck(float distance)
+    {
+        int cost = (int)Mathf.Floor(distance/distanceToCostModifier);
+        Debug.Log(cost);
+        return cost;
     }
 
     private IEnumerator RegenBrain()
