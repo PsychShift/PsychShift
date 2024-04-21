@@ -28,6 +28,7 @@ namespace Guns
         public AudioConfigScriptableObject AudioConfig;
         public BulletPenetrationConfigScriptableObject BulletPenConfig;
         public CharacterStatsScriptableObject CharacterConfig;
+        public RecoilConfigScriptableObject RecoilConfig;
 
         public AnimatorOverrideController AnimatorOverride;
 
@@ -47,7 +48,7 @@ namespace Guns
         private ObjectPool<TrailRenderer> TrailPool;
         private ObjectPool<Bullet> BulletPool;
         private bool LastFrameWantedToShoot;
-        private bool isEnemyMaybe;
+        private bool isEnemy;
         private Animator gunAnim;
         
 
@@ -64,7 +65,7 @@ namespace Guns
         /// <param name="Camera">The camera to raycast from. Required if <see cref="ShootConfigScriptableObject.ShootType"/> = <see cref="ShootType.FromCamera"/></paramref>
         /// The input handling script is a good candidate for this.
         /// </param>
-        public void Spawn(Transform Parent, MonoBehaviour ActiveMonoBehaviour, IGunSelector gunSelector ,Camera Camera = null)
+        public void Spawn(Transform Parent, MonoBehaviour ActiveMonoBehaviour, IGunSelector gunSelector, bool isEnemy, Camera Camera = null)
         {
             this.ActiveMonoBehaviour = ActiveMonoBehaviour;
             this.gunSelector = gunSelector;
@@ -85,6 +86,8 @@ namespace Guns
 
             ShootingAudioSource = Model.GetComponent<AudioSource>();
             ShootSystem = Model.GetComponentInChildren<ParticleSystem>();
+
+            this.isEnemy = isEnemy;
         }
 
         public List<HandsOrientation> GetHandOrientations()
@@ -185,9 +188,8 @@ namespace Guns
         /// <summary>
         /// Performs the shooting raycast if possible based on gun rate of fire. Also applies bullet spread and plays sound effects based on the AudioConfig.
         /// </summary>
-        public void TryToShoot(bool isEnemy = false)
+        public void TryToShoot()
         {
-            isEnemyMaybe=isEnemy;//sets if enemy for whole script
             if (Time.time - LastShootTime - ShootConfig.FireRate > Time.deltaTime)
             {
                 float lastDuration = Mathf.Clamp(
@@ -206,7 +208,7 @@ namespace Guns
                 // for ShootConfig.BulletsPerShot
                 // Do this
                 LastShootTime = Time.time;
-                if (AmmoConfig.CurrentClipAmmo == 0)
+                if (AmmoConfig.CurrentClipAmmo <= 0)
                 {
                     AudioConfig.PlayOutOfAmmoClip(ShootingAudioSource);
                     gunAnim.SetInteger("Fire",0);
@@ -249,7 +251,8 @@ namespace Guns
                         DoProjectileShoot(shootDirection);
                     }
                 }
-                
+                // recoil?
+                if(!isEnemy) GunRecoil.Instance.Fire();
             }
         }
 
@@ -258,7 +261,7 @@ namespace Guns
         /// with velocity from <see cref="ShootConfigScriptableObject.BulletSpawnForce"/>.
         /// </summary>
         /// <param name="ShootDirection"></param>
-        private void DoProjectileShoot(Vector3 ShootDirection, bool isEnemy = false)
+        private void DoProjectileShoot(Vector3 ShootDirection)
         {
             Bullet bullet = BulletPool.Get();
             bullet.gameObject.SetActive(true);
@@ -669,6 +672,7 @@ namespace Guns
             config.AudioConfig = AudioConfig/* .Clone() as AudioConfigScriptableObject */;
             config.BulletPenConfig = BulletPenConfig/* .Clone() as BulletPenetrationConfigScriptableObject */;
             config.CharacterConfig = CharacterConfig/* .Clone() as CharacterStatsScriptableObject */;
+            config.RecoilConfig = RecoilConfig;
 
             config.ModelPrefab = ModelPrefab;
             config.AnimatorOverride = AnimatorOverride;

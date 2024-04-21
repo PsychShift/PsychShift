@@ -41,9 +41,9 @@ public class CharacterInfoReference : MonoBehaviour
         {
             vCamParent = Instantiate(vCamPrefab);
             vCamParent.transform.SetParent(transform);
-            vCamParent.SetActive(false);
             vCam = vCamParent.GetComponent<CinemachineVirtualCamera>();
         }
+        vCamParent.SetActive(false);
         // get the name of the level, based on the name, spawn
 
         //
@@ -58,7 +58,6 @@ public class CharacterInfoReference : MonoBehaviour
 
     public void ActivatePlayerAllAtOnce()
     {
-        vCamParent.SetActive(true);
         characterInfo.model.GetComponent<ModelDisplay>().ActivateFirstPerson();
         characterInfo.enemyBrain.IsActive = false;
         characterInfo.agent.enabled = false;

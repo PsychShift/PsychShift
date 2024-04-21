@@ -45,7 +45,7 @@ namespace Guns.Demo
         {
             ActiveBaseGun = Gun;
             ActiveGun = Gun.Clone() as GunScriptableObject;
-            ActiveGun.Spawn(GunParent, this, this, Camera);
+            ActiveGun.Spawn(GunParent, this, this, true, Camera);
 
             ActiveGun.ShootConfig.SpreadType = BulletSpreadType.Simple;
             ActiveGun.ShootConfig.SpreadMultiplier = 10f;
@@ -93,7 +93,7 @@ namespace Guns.Demo
 
         public void EnemyShoot()
         {
-            ActiveGun.TryToShoot(true);
+            ActiveGun.TryToShoot();
         }
 
         public void Hit(bool hit)
