@@ -30,7 +30,7 @@ namespace Guns.Health
             rigColliderManager.SetUp(this);
         }
 
-        public void TakeDamage(float Damage, Guns.GunType gunType)
+        public void TakeDamage(float Damage, GunType gunType)
         {
             Debug.Log(Damage);
             if (gameObject.layer == 15 && GodModeScript.Instance.GodMode) return;

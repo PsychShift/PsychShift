@@ -44,6 +44,7 @@ public class MovementCSVConverter
             characterConfig.JumpForce =  float.Parse(splitData[3]);
             characterConfig.WallJumpForce = float.Parse(splitData[4]);
             
+            EditorUtility.SetDirty(characterConfig);
         }
 
         AssetDatabase.SaveAssets();
