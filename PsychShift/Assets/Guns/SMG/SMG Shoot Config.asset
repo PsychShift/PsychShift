@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65449a326c84ba249b073574e3c79e66, type: 3}
   m_Name: SMG Shoot Config
   m_EditorClassIdentifier: 
+  gun: {fileID: 0}
+  tex: {fileID: 0}
+  renderer: {fileID: 0}
   IsHitscan: 1
   BulletPrefab: {fileID: 4270552254601791157, guid: 111c4393170385e4f8a5901c17b937cc, type: 3}
   BulletSpawnForce: 100
@@ -27,6 +30,8 @@ MonoBehaviour:
   HitMarker: {fileID: 8269701639143149118, guid: 69965678af33980448f806dee7dfc515, type: 3}
   ShootType: 0
   Spread: {x: 0.1, y: 0.1, z: 0.1}
-  MinSpread: {x: 0, y: 0, z: 0}
+  MaxSpread: {x: 0, y: 0}
   SpreadMultiplier: 0.1
+  AverageSpreadTimes: 2
   SpreadTexture: {fileID: 0}
+  PreCalculatedSpread: []

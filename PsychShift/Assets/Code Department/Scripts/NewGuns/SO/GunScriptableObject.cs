@@ -593,9 +593,7 @@ namespace Guns
                         maxPercentDamage *= BulletPenConfig.DamageRetentionPercentage;
                     }
                 }
-                //Debug.Log("damgeplez");
                 float critMod = damageable.IsWeakPoint ? DamageConfig.CritModifier : 1;
-                Debug.Log($"maxPercentDamage: {maxPercentDamage}\ncritMod: {critMod} \ndamage: {DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage)}\nfinal damage: {DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage) * critMod}");
                 damageable.TakeDamage(DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage) * critMod, Type);
                 /* OnSomethingHit?.Invoke(damageable);
                 if(OnSomethingHit== null)
