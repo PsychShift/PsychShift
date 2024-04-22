@@ -22,9 +22,10 @@ namespace Guns
 
         public float GetDamage(float Distance = 0, float DamageMultiplier = 1)
         {
-            return Mathf.CeilToInt(
-                DamageCurve.Evaluate(Distance, Random.value) * DamageMultiplier
-            );
+            //Debug.Log($"Distance: {Distance}, DamageMult: {DamageMultiplier}, Damage: {DamageCurve.Evaluate(Distance)}");
+            //foreach (var val in DamageCurve.curve.keys)
+            //    Debug.Log(val.time + " " + val.value);
+            return DamageCurve.Evaluate(Distance) * DamageMultiplier;
         }
         /* public float GetDamage(float Distance = 0, float DamageMultiplier = 1)
         {

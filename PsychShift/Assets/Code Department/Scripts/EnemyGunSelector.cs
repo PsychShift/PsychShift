@@ -52,7 +52,7 @@ namespace Guns.Demo
             ActiveGun.ShootConfig.ShootType = ShootType.FromGun;
 
             ActiveGun.DamageConfig.DamageCurve.curveMultiplier = DamageReduction;
-  
+
             ActiveGun.Model.AddComponent<RigTransform>();
             OnActiveGunSet?.Invoke();
             /* InverseKinematics.SetGunStyle(ActiveGun.Type == GunType.Glock);

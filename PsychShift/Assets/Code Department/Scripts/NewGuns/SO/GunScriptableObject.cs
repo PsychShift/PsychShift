@@ -595,6 +595,7 @@ namespace Guns
                 }
                 //Debug.Log("damgeplez");
                 float critMod = damageable.IsWeakPoint ? DamageConfig.CritModifier : 1;
+                Debug.Log($"maxPercentDamage: {maxPercentDamage}\ncritMod: {critMod} \ndamage: {DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage)}\nfinal damage: {DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage) * critMod}");
                 damageable.TakeDamage(DamageConfig.GetDamage(DistanceTraveled, maxPercentDamage) * critMod, Type);
                 /* OnSomethingHit?.Invoke(damageable);
                 if(OnSomethingHit== null)
@@ -665,7 +666,7 @@ namespace Guns
             config.Name = Name;
             config.name = name;
 
-            config.DamageConfig = DamageConfig/* .Clone() as DamageConfigScriptableObject */;
+            config.DamageConfig = DamageConfig.Clone() as DamageConfigScriptableObject;
             config.ShootConfig = ShootConfig.Clone() as ShootConfigScriptableObject;
             config.AmmoConfig = AmmoConfig.Clone() as AmmoConfigScriptableObject;
             config.TrailConfig = TrailConfig/* .Clone() as TrailConfigScriptableObject */;
