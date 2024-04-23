@@ -43,8 +43,9 @@ public class EnemySpawner : MonoBehaviour
     private Vector3[] patrolPositions;
     
 
-    private void Start() 
+    private void Start()
     {
+        Debug.Log("spawning");
         enemySpawned = new();
         SetupSpawnerInfo();
         StartCoroutine(SpawnIn(UnityEngine.Random.Range(0f, 2.5f)));

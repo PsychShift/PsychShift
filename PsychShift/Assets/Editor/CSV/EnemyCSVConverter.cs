@@ -58,9 +58,13 @@ public class EnemyCSVConverter
 
 
             characterConfig.Health = float.Parse(splitData[5]);            
+            EditorUtility.SetDirty(gun);
+            EditorUtility.SetDirty(damageConfig);
+            EditorUtility.SetDirty(shootConfig);
+            EditorUtility.SetDirty(ammoConfig);
+            EditorUtility.SetDirty(characterConfig);
+            AssetDatabase.SaveAssets();
         }
-
-        AssetDatabase.SaveAssets();
     }
 }
 

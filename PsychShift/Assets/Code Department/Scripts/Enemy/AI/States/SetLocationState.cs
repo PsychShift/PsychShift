@@ -8,7 +8,7 @@ public class SetLocationState : IState
 {
     EnemyBrain brain;
     Vector3 homePosition;
-
+    float time = 0;
     public SetLocationState(EnemyBrain brain, Vector3 homePosition)
     {
         this.brain = brain;
@@ -24,6 +24,8 @@ public class SetLocationState : IState
         Debug.Log("entering set location state");
         brain.Agent.isStopped = false;
         Vector3 closestNavMeshPosition = GetClosestNavMeshPosition(homePosition);
+        /* GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        go.transform.position = closestNavMeshPosition; */
         brain.Agent.SetDestination(closestNavMeshPosition);
         brain.Animator.SetFloat("speed", 1f);
     }
@@ -44,7 +46,8 @@ public class SetLocationState : IState
     public Func<bool> IsDone() => () => IsFinished();
     private bool IsFinished()
     {
-        if (brain.Agent.remainingDistance < 0.5f)
+        time += Time.deltaTime;
+        if (time > 1f && brain.Agent.remainingDistance < 0.5f)
         {
             Debug.Log(brain.gameObject.name + " is moving to destination");
             return true;
@@ -55,8 +58,7 @@ public class SetLocationState : IState
 
     private Vector3 GetClosestNavMeshPosition(Vector3 position)
     {
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(position, out hit, 1.0f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
         {
             return hit.position;
         }
