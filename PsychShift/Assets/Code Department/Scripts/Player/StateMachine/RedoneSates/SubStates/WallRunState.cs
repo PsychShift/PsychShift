@@ -53,14 +53,19 @@ namespace Player
             cameraClamp.enabled = true;
             cameraClamp.SetBaseRotation(WallStateVariables.Instance.LastWallNormal); */
             playerStateMachine.wallRunEffect.SetActive(true);
-            playerStateMachine.playerAudio.PlayOneShot(playerStateMachine.wallRunSound);
+            playerStateMachine.playerAudio.clip =playerStateMachine.wallRunSound;
+            //playerStateMachine.playerAudio.PlayOneShot(playerStateMachine.wallRunSound);
+            playerStateMachine.playerAudio.Play();
+            playerStateMachine.playerAudio.loop = true;
             monoBehaviour.StartCoroutine(SetNormal());
             this.WallSpeed = playerStateMachine.WallSpeed;
         }
 
         public void OnExit()
         {
+            playerStateMachine.playerAudio.loop = false;
             playerStateMachine.playerAudio.Stop();
+            playerStateMachine.playerAudio.clip = null;
             playerStateMachine.wallRunEffect.SetActive(false);
             WallStateVariables.Instance.LastWallNormal = wallNormal;
             wallNormal = Vector3.zero; 
