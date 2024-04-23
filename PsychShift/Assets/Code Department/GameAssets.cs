@@ -32,9 +32,6 @@ public class GameAssets : MonoBehaviour
         }
 
         public GameObject level1VCamPrefab;
-        public GameObject level2VCamPrefab;
-        public GameObject level3VCamPrefab;
-
 
         [Header("Materials")]
         public List<Material> materials;

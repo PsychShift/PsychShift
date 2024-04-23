@@ -47,14 +47,7 @@ namespace Guns.Demo
             GunRecoil.Instance?.SetUpGun(ActiveGun.RecoilConfig);
             ActiveGun.ShootConfig.ShootType = ShootType.FromCamera;
             PlayerHands.Instance.SetHandPositions(ActiveGun);
-            Debug.Log("Player");
-            foreach (var val in ActiveGun.DamageConfig.DamageCurve.curve.keys)
-                Debug.Log(val.time + " " + val.value);
-            Debug.Log("Player");
-            for(int i = 0; i <= 100; i++)
-            {
-                Debug.Log("~"+ActiveGun.DamageConfig.GetDamage(i));
-            }
+
             /* InverseKinematics.SetGunStyle(ActiveGun.Type == GunType.Glock);
             InverseKinematics.Setup(GunParent); */
         }
