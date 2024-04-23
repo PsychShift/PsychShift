@@ -23,7 +23,6 @@ using UnityEditor;
 [DisallowMultipleComponent]
 public abstract class EnemyBrain : MonoBehaviour
 {
-    public bool ManualHealthOverride = false;
     [HideInInspector] public bool ragDollDone;
     /* public AudioSource enemyAudio;
     public AudioClip[] enemyClips;
