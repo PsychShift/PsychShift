@@ -11,9 +11,6 @@ using Unity.VisualScripting;
 [RequireComponent(typeof(CharacterController), typeof(EnemyGunSelector), typeof(NavMeshAgent))]
 public class CharacterInfoReference : MonoBehaviour
 {
-    [Header("VERY IMPORTANT MUST FILL IN IN EDITOR")]
-    [Tooltip("This is a thing that does stuff")]
-    public GameObject vCamPrefab;
     public Transform cameraRoot;
 
     [Header("Filled in in editor ATM")]
@@ -36,17 +33,18 @@ public class CharacterInfoReference : MonoBehaviour
     private CinemachineVirtualCamera vCam;
     public CharacterInfo SetUp()
     {
-        if(vCamPrefab == null) Debug.LogError("vCamPrefab is null, please fill in in editor. Otherwise the game won't work. Which is bad. Please fix it now. Thank you. Have you done it yet? Ok good. \n It's located at Assets/Code Department/Scripts/Player/Swapping");
-        else if(vCam == null)
+        if(vCam == null)
         {
-            vCamParent = Instantiate(vCamPrefab);
+            if(PlayerFollowCameraReference.Instance != null)
+            {
+                vCamParent = Instantiate(PlayerFollowCameraReference.Instance.Prefab);
+            }
+            else
+                vCamParent = Instantiate(GameAssets.Instance.level1VCamPrefab);
             vCamParent.transform.SetParent(transform);
             vCam = vCamParent.GetComponent<CinemachineVirtualCamera>();
         }
         vCamParent.SetActive(false);
-        // get the name of the level, based on the name, spawn
-
-        //
 
         _characterInfo = new CharacterInfo(this, vCam, movementStats, characterStats);
         vCam.Follow = characterInfo.cameraRoot;

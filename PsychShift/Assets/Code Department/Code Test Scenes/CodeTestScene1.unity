@@ -895,7 +895,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 630a6ddba63248045b671137c0a27492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ManualHealthOverride: 0
   ragDollDone: 0
   _isActive: 0
   _agression: {fileID: 11400000, guid: 6e100eed3b47a3b41ae170096b62e4f1, type: 2}
@@ -3545,7 +3544,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 630a6ddba63248045b671137c0a27492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ManualHealthOverride: 0
   ragDollDone: 0
   _isActive: 0
   _agression: {fileID: 11400000, guid: 6e100eed3b47a3b41ae170096b62e4f1, type: 2}
@@ -4837,6 +4835,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1559759412}
   m_Mesh: {fileID: 5320360568150157594, guid: 5c6f26a5cc838ff49868b6415ae48734, type: 3}
+--- !u!1 &1568448633
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1568448635}
+  - component: {fileID: 1568448634}
+  m_Layer: 0
+  m_Name: PlayerFollowCamReference
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1568448634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568448633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bfc34d467ee1b542a8bcf019cfab380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 6664049937413521787, guid: a7f1c5026b63123409e285d559eb8bd4, type: 3}
+--- !u!4 &1568448635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568448633}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.585884, y: -0.038681496, z: -19.893759}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1576646452
 GameObject:
   m_ObjectHideFlags: 0
@@ -4944,8 +4987,6 @@ MonoBehaviour:
   - {fileID: 6099400264645409314, guid: 1caa3a6556601f64e926b2df7293d765, type: 3}
   - {fileID: 6363347238915398542, guid: a54c32529b93ce84eaf1858c35801b7f, type: 3}
   level1VCamPrefab: {fileID: 6664049937413521787, guid: a7f1c5026b63123409e285d559eb8bd4, type: 3}
-  level2VCamPrefab: {fileID: 0}
-  level3VCamPrefab: {fileID: 0}
   materials:
   - {fileID: 2100000, guid: e5dcb276587613647b4caa2814fe96be, type: 2}
   - {fileID: 2100000, guid: 20b5de88ded37a543a2807dc83468104, type: 2}
@@ -6353,8 +6394,6 @@ MonoBehaviour:
   - {fileID: 6099400264645409314, guid: 1caa3a6556601f64e926b2df7293d765, type: 3}
   - {fileID: 6363347238915398542, guid: a54c32529b93ce84eaf1858c35801b7f, type: 3}
   level1VCamPrefab: {fileID: 6664049937413521787, guid: a7f1c5026b63123409e285d559eb8bd4, type: 3}
-  level2VCamPrefab: {fileID: 0}
-  level3VCamPrefab: {fileID: 0}
   materials:
   - {fileID: 2100000, guid: e5dcb276587613647b4caa2814fe96be, type: 2}
   - {fileID: 2100000, guid: 20b5de88ded37a543a2807dc83468104, type: 2}
