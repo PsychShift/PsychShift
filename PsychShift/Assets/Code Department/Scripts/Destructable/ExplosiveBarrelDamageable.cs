@@ -6,11 +6,11 @@ using UnityEngine;
 public class ExplosiveBarrelDamageable : MonoBehaviour, IDamageable
 {
     #region Not Useful, waaa
-    public float CurrentHealth => throw new System.NotImplementedException();
+    public float CurrentHealth { get; }
 
-    public float MaxHealth => throw new System.NotImplementedException();
+    public float MaxHealth { get; }
 
-    public bool IsWeakPoint => throw new System.NotImplementedException();
+    public bool IsWeakPoint { get; }
 
     public event IDamageable.TakeDamageEvent OnTakeDamage;
     public event IDamageable.DeathEvent OnDeath;
@@ -26,6 +26,7 @@ public class ExplosiveBarrelDamageable : MonoBehaviour, IDamageable
 
     public void TakeDamage(float Damage, GunType gunType)
     {
+        Debug.Log("Kevin is Stinky, Explosive Barrel 1");
         GetComponent<BoxCollider>().enabled = false;
         model.SetActive(false);
         explosion.SetActive(true);
