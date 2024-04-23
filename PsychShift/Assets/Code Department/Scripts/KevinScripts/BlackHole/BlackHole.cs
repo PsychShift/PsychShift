@@ -19,6 +19,8 @@ public class BlackHole : MonoBehaviour
     public AudioClip BHsound;
     public AudioClip shutDownSound;
     public AudioSource BHsource;
+    public float timeAfterWarningToActivate = 1f;
+    public AudioClip Warning;
     private void Start()
     {
         oGGravVal = playerStateMachine.gravityValue;
@@ -37,8 +39,9 @@ public class BlackHole : MonoBehaviour
     //do coroutine that activates and deactivate grav pull 
     private IEnumerator BHAct()
     {
-
-        yield return new WaitForSeconds(secsToActivate);
+        yield return new WaitForSeconds(secsToActivate - timeAfterWarningToActivate);
+        BHsource.PlayOneShot(Warning);
+        yield return new WaitForSeconds(timeAfterWarningToActivate);
         BHsource.PlayOneShot(BHsound);
         effectBlackHole.SetActive(true);
         playerStateMachine.gravityValue = newGravVal;
