@@ -50,9 +50,9 @@ public class EnemyCSVConverter
             shootConfig.BulletsPerShot = int.Parse(splitData[9]);
 
             int ammo = int.Parse(splitData[4]);
-            ammoConfig.MaxAmmo = ammo;
-            ammoConfig.ClipSize = ammo;
-            ammoConfig.CurrentAmmo = ammo;
+            ammoConfig.MaxAmmo = 0;
+            ammoConfig.ClipSize = 0;
+            ammoConfig.CurrentAmmo = 0;
             ammoConfig.CurrentClipAmmo = ammo;
 
 
