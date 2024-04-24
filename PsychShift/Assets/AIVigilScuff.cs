@@ -59,9 +59,12 @@ public class AIVigilScuff : MonoBehaviour
         navMeshAgent.speed = speedWalk;             
         navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);    
     }
+    float timer = 0;
+    const float waitForTime = 0.5f;
  
     private void Update()
     {
+        timer += Time.deltaTime;
         this.transform.rotation = Quaternion.identity;
         EnviromentView();                       
             if (!m_IsPatrol)
@@ -196,36 +199,44 @@ public class AIVigilScuff : MonoBehaviour
         }
     }
  
+    const int maxColliders = 10; // Set the maximum number of colliders to be detected
+    static Vector3 up = Vector3.up;
     void EnviromentView()
     {
-        Collider[] playerInRange = Physics.OverlapSphere(transform.position, viewRadius, playerMask);//This is whats spiking vigil    
-        for (int i = 0; i < playerInRange.Length; i++)
+        if(timer < waitForTime) return;
+        timer = 0;
+        RaycastHit[] sphereCastResults = new RaycastHit[maxColliders]; // Create an array to store the results
+
+        int numColliders = Physics.SphereCastNonAlloc(transform.position, viewRadius, up, sphereCastResults, 0f, playerMask); // Perform the sphere cast
+
+        for (int i = 0; i < numColliders; i++)
         {
-            Transform player = playerInRange[i].transform;
+            Collider playerCollider = sphereCastResults[i].collider;
+            Transform player = playerCollider.transform;
+
             Vector3 dirToPlayer = (player.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToPlayer) < viewAngle / 2)
             {
-                float dstToPlayer = Vector3.Distance(transform.position, player.position);          
+                float dstToPlayer = Vector3.Distance(transform.position, player.position);
                 if (!Physics.Raycast(transform.position, dirToPlayer, dstToPlayer, obstacleMask))
                 {
-                    m_playerInRange = true;             
-                    m_IsPatrol = false;                 
+                    m_playerInRange = true;
+                    m_IsPatrol = false;
                 }
                 else
                 {
-
                     m_playerInRange = false;
                 }
             }
+
             if (Vector3.Distance(transform.position, player.position) > viewRadius)
             {
- 
-                m_playerInRange = false;                
+                m_playerInRange = false;
             }
+
             if (m_playerInRange)
             {
- 
-                m_PlayerPosition = player.transform.position;       
+                m_PlayerPosition = player.transform.position;
             }
         }
     }
