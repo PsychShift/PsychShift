@@ -12,7 +12,7 @@ public class BossFightBrain : EnemyBrain
     public void Reset()
     {
         stateMachine.SetState(ragdollState);
-        EnemyHealth.ResetHealth();
+        //EnemyHealth.ResetHealth();
     }
     protected override void SetUp()
     {

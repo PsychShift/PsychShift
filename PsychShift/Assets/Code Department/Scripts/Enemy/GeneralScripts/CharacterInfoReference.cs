@@ -91,7 +91,7 @@ public class CharacterInfoReference : MonoBehaviour
         characterInfo.model.GetComponent<ModelDisplay>().DeActivateFirstPerson();
     }
 
-    private const float onMeshThreshold = 4f;
+    private const float onMeshThreshold = 15f;
     private bool IsAgentOnNavMesh()
     {
         Vector3 agentPosition = characterInfo.characterContainer.transform.position;

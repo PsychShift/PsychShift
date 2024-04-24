@@ -21,6 +21,8 @@ namespace Guns.Health
         public event IDamageable.TakeDamageEvent OnTakeDamage;
         public event IDamageable.DeathEvent OnDeath;
 
+        public bool cantDie = false;
+
         private RigColliderManager rigColliderManager;
         
         private void OnEnable()
@@ -32,7 +34,7 @@ namespace Guns.Health
 
         public void TakeDamage(float Damage, GunType gunType)
         {
-            Debug.Log(Damage);
+            if(cantDie) return;
             if (gameObject.layer == 15 && GodModeScript.Instance.GodMode) return;
             float damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
             

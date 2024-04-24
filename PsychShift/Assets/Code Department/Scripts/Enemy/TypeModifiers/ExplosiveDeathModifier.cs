@@ -5,14 +5,17 @@ using UnityEngine;
 public class ExplosiveDeathModifier : AbstractEnemyModifier
 {
     EnemyBrain brain;
+    AudioSource enemyVoice;
     public float radius = 30;
     public int damageAmount = 100;
     public float falloffRate =  0.2f;
     public override void ApplyModifier(EnemyBrain brain)
     {
         this.brain = brain;
+        enemyVoice = GetComponent<AudioSource>();
         brain.onSwappedOut += HandleExplosion;
         StartCoroutine(WaitForEnemyHealth());
+        StartCoroutine(VoiceLineSpam());
     }
     void OnDestroy()
     {
@@ -61,7 +64,19 @@ public class ExplosiveDeathModifier : AbstractEnemyModifier
         }
     }
     
+    IEnumerator VoiceLineSpam()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(4,10));
 
+            enemyVoice.PlayOneShot(AudioEnemy.AudioManager.Instance.bombEnemy[Random.Range(0, AudioEnemy.AudioManager.Instance.bombEnemy.Length)]);
+            while(enemyVoice.isPlaying)
+            {
+                yield return new WaitForSeconds(4);
+            }
+        }        
+    }
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
