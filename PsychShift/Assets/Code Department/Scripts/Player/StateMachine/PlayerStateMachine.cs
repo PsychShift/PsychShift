@@ -429,6 +429,12 @@ namespace Player
             }
             startCharacter.characterInfo.enemyBrain.StopAllCoroutines();
             endCharacter.characterInfo.enemyBrain.StopAllCoroutines();
+            startCharacter.characterInfo.enemyHealth.cantDie = true;
+            endCharacter.characterInfo.enemyHealth.cantDie = true;
+
+            
+            // give the ammo from the player gun selector gun to the start character
+            startCharacter.characterInfo.gunHandler.ActiveGun.AmmoConfig.CurrentClipAmmo = gunSelector.ActiveGun.AmmoConfig.CurrentClipAmmo;
             
             //deactivate input
             isSwapping = true;
@@ -471,7 +477,6 @@ namespace Player
         
                 } */
                 
-                
                 yield return null;
             }
             startCharacter.ActivateThirdPersonModel();
@@ -513,7 +518,6 @@ namespace Player
             startCharacter.characterInfo.characterContainer.transform.rotation = startCharacter.characterInfo.model.transform.rotation;
             endCharacter.characterInfo.characterContainer.transform.rotation = endCharacter.characterInfo.model.transform.rotation;
             startCharacter.characterInfo.enemyBrain.enabled = true;
-
             HealthUI.Instance.SetHealthBarOnSwap(endCharacter.characterInfo.enemyHealth.CurrentHealth, endCharacter.characterInfo.enemyHealth.MaxHealth);
             endCharacter.characterInfo.enemyHealth.OnTakeDamage += HealthUI.Instance.UpdateHealthBar;
             endCharacter.characterInfo.enemyHealth.OnDeath += HealthUI.Instance.HandleDeath;
@@ -522,6 +526,13 @@ namespace Player
             gunSelector.SetupGun(endCharacter.characterInfo.gunHandler.StartGun);
             startCharacter.characterInfo.enemyBrain.onSwappedOut?.Invoke(startTransform);
             endCharacter.characterInfo.enemyBrain.onSwappedIn?.Invoke(startTransform);
+
+            // give the ammo from the end character to player gun selector gun
+            gunSelector.ActiveGun.AmmoConfig.CurrentClipAmmo = endCharacter.characterInfo.gunHandler.ActiveGun.AmmoConfig.CurrentClipAmmo;
+
+
+            startCharacter.characterInfo.enemyHealth.cantDie = false;
+            endCharacter.characterInfo.enemyHealth.cantDie = false;
 
             walkSpeed = endCharacter.characterInfo.gunHandler.ActiveGun.CharacterConfig.WalkMoveSpeed;
             wallSpeed = endCharacter.characterInfo.gunHandler.ActiveGun.CharacterConfig.WallMoveSpeed;
