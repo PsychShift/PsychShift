@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour
     void Start()
     {
         volumeSlider.value = PlayerPrefs.GetFloat("masterVolume");
+        AudioListener.volume = volumeSlider.value;
     }
 
     // Update is called once per frame

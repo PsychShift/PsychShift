@@ -10,6 +10,7 @@ public class CreditsScript : MonoBehaviour
     {
         Time.timeScale = 1f;
         CreditsObject.SetActive(true);
+        AudioListener.volume = 1;
     }
 
     // Update is called once per frame
