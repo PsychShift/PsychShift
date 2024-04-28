@@ -11,7 +11,7 @@ namespace Player
     [RequireComponent(typeof(InputManager))]
     public class PlayerStateMachine : MonoBehaviour
     {
-        public Image debugSprite;
+        public LayerMask checkForOnSwap;
         private static PlayerStateMachine instance = null;
         public static PlayerStateMachine Instance 
         { 
@@ -314,8 +314,9 @@ namespace Player
             dir.Normalize();
             // Perform a raycast
             RaycastHit hit;
-            if (Physics.Raycast(cam.transform.position + dir, dir, out hit))
+            if (Physics.Raycast(cam.transform.position + dir, dir, out hit, firstHit.distance + 10, checkForOnSwap))
             {
+            Debug.Log(obj.name);
                 // If the raycast hits the object, the object is potentially visible
                 return hit.collider.gameObject == obj;
             }
@@ -613,12 +614,12 @@ namespace Player
         {
             currentCharacter.characterContainer.transform.rotation = Quaternion.Euler(new Vector3(0, cameraTransform.localRotation.eulerAngles.y, 0));
         }
-        private bool CheckForVaultableObject()
+        /* private bool CheckForVaultableObject()
         {
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var firstHit, 1f, vaultLayers, QueryTriggerInteraction.Ignore))
                 return true;
             return false;
-        }
+        } */
 
         private void Manipulate()
         {
@@ -694,19 +695,15 @@ namespace Player
             RaycastHit[] hitInteract = Physics.BoxCastAll(cameraTransform.position, boxHalfExtents, cameraTransform.forward,Quaternion.identity, 0, ~0, QueryTriggerInteraction.Collide );
             if(hitInteract.Length>0)
             {
-                Debug.Log("Hit a box");
                 for(int i = 0; i<hitInteract.Length;i++)
                 {
-                    Debug.Log(hitInteract[i].collider.gameObject.name);
                     if(hitInteract[i].collider.TryGetComponent(out DataLog dataLog))
                     {
                         dataLog.TextInteract();
                         //break;
                         return;
                     }
-                }
-                    
-                        
+                }    
             }
         }
 
@@ -722,8 +719,6 @@ namespace Player
                 if(currentCharacter != null && stateMachine != null)
                 {
                     Gizmos.color = stateMachine.GetGizmoColor();
-                    if(debugSprite != null)
-                        debugSprite.color = Gizmos.color;
                     Gizmos.DrawCube(currentCharacter.characterContainer.transform.position + Vector3.up * 3f, Vector3.one);
                     RaycastHit[] hits = Physics.BoxCastAll(currentCharacter.characterContainer.transform.position, boxSize, castDirection, Quaternion.identity, castDistance, groundLayer);
                     if(hits.Any(hit => hit.collider != null))

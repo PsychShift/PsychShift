@@ -75,7 +75,6 @@ public class ObjectManipulator : MovingPlatform, IManipulate
 
             if (collisionDetection != null)
             {
-                Debug.Log("trying");
                 Collider[] colliders = Physics.OverlapBox(collisionDetection.position, collisionDetectionSize / 2);
                 foreach(Collider other in colliders)
                 {
