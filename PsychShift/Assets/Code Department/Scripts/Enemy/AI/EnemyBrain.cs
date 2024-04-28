@@ -23,6 +23,7 @@ using UnityEditor;
 [DisallowMultipleComponent]
 public abstract class EnemyBrain : MonoBehaviour
 {
+    [SerializeField] private bool ManualSpeed;
     [HideInInspector] public bool ragDollDone;
     /* public AudioSource enemyAudio;
     public AudioClip[] enemyClips;
@@ -145,7 +146,8 @@ public abstract class EnemyBrain : MonoBehaviour
         UpdateAgression(agression);
         characterInfo = gameObject.GetComponent<CharacterInfoReference>().SetUp();
         AnimMaster.SwapGunAnimations(GunSelector.ActiveBaseGun.AnimatorOverride);
-        Agent.speed = characterInfo.gunHandler.ActiveGun.CharacterConfig.WalkMoveSpeed / 12.85f;
+        if(!ManualSpeed)
+            Agent.speed = characterInfo.gunHandler.ActiveGun.CharacterConfig.WalkMoveSpeed / 12.85f;
         if(!setup)
         {
             EnemyHealth.SetMaxHealth(characterInfo.gunHandler.ActiveBaseGun);
