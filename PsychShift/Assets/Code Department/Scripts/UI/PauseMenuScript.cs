@@ -114,11 +114,13 @@ public class PauseMenuScript : MonoBehaviour
     {
         playerAction.enabled = true;
         InputManager.Instance.OnPausePressed+= PausePressed;
+        //InputManager.Instance.PlayerInput.enabled = false;
     }
     private void OnDisable() 
     {
         playerAction.enabled = false;
         InputManager.Instance.OnPausePressed-= PausePressed;
+        //InputManager.Instance.PlayerInput.enabled = true;
     }
     public void OpenMovement()
     {
@@ -145,6 +147,7 @@ public class PauseMenuScript : MonoBehaviour
         RemappingMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(RemappingMenuFirst);
         TutorialButton.SetActive(false);
+        InputManager.Instance.PlayerInput.enabled = false;
     }
 
     public void CloseRemap()
@@ -152,5 +155,6 @@ public class PauseMenuScript : MonoBehaviour
         RemappingMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(PauseMenuSettingsFirst);
         TutorialButton.SetActive(true);
+        InputManager.Instance.PlayerInput.enabled = true;
     }
 }
