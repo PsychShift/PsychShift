@@ -33367,7 +33367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1625331124}
   - component: {fileID: 1625331126}
-  - component: {fileID: 1625331125}
+  - component: {fileID: 1625331127}
   m_Layer: 5
   m_Name: VolumeSlider (1)
   m_TagString: Untagged
@@ -33398,19 +33398,6 @@ RectTransform:
   m_AnchoredPosition: {x: 91.99998, y: 15.699989}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1625331125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1625331123}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b34872e5bede813478382e47b3269dc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeSlider: {fileID: 1625331126}
 --- !u!114 &1625331126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33461,7 +33448,34 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1625331127}
+        m_TargetAssemblyTypeName: MusicVolumeManager, Assembly-CSharp
+        m_MethodName: ChangeVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1625331127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625331123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7bfe7e7ce35bc441912fbb0b31f18dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicvolumeSlider: {fileID: 1625331126}
+  MusicSource: {fileID: 1909143332}
+  playingDialouge: 0
 --- !u!1 &1626575846
 GameObject:
   m_ObjectHideFlags: 0
@@ -39726,7 +39740,7 @@ AudioSource:
   m_GameObject: {fileID: 1909143331}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: 4d3d955d0219e9044aebb38bc252c00a, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 0acdff786589f844fa01bbff63a7f9c6, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.017
