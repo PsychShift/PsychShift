@@ -29,18 +29,4 @@ public class CinemachinePOVExtension : CinemachineExtension
             }
         }
     }
-    
-    /* protected override void OnEnable() {
-        base.OnEnable();
-        SetSens(SensitivityController.Instance.mouseSensitivity);
-        SensitivityController.Instance.UpdatedSpeed += SetSens;
-    }
-    private void OnDisable() {
-        SensitivityController.Instance.UpdatedSpeed -= SetSens;
-    }
-    private void SetSens(float speed)
-    {
-        horizontalSpeed = speed;
-        verticalSpeed = speed;
-    } */
 }
