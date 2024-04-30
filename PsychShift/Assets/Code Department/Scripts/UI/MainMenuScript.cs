@@ -133,6 +133,7 @@ public class MainMenuScript : MonoBehaviour
         DiffMenu6CG.alpha = 0;
         CutSceneMenuCG.alpha = 0;
         MainMenuCG.alpha = 1;
+        MainMenuCG.interactable = true;
     }
 
     // Update is called once per frame
@@ -478,6 +479,7 @@ public class MainMenuScript : MonoBehaviour
         MainMenuCG.interactable = false;
         LevelMenuCG.interactable = true;
         EventSystem.current.SetSelectedGameObject(LevelMenuFirst);
+        WaitforFade = StartCoroutine(FadeMenu());
 
     }
 
@@ -490,6 +492,7 @@ public class MainMenuScript : MonoBehaviour
         LevelMenuCG.interactable = false;
         //LevelMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(MainMenuFirst);
+        WaitforFade = StartCoroutine(FadeLevelMenu());
         
     }
     public void OpenMovement()
