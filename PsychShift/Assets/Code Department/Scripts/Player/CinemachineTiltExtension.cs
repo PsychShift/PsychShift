@@ -18,7 +18,7 @@ public class CinemachineTiltExtension : CinemachineExtension
     protected override void PostPipelineStageCallback(
         CinemachineVirtualCameraBase vcam, CinemachineCore.Stage stage, ref CameraState state, float deltaTime)
     {
-        if (stage == CinemachineCore.Stage.Aim)
+        if (stage == CinemachineCore.Stage.Noise)
         {
             // Apply the tilt to the camera
             previousTiltAngle = Mathf.Lerp(previousTiltAngle, targetAngle, Time.deltaTime * tiltSpeed);

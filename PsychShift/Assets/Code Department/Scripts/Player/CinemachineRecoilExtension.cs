@@ -8,7 +8,7 @@ public class CinemachineRecoilExtension : CinemachineExtension
     protected override void PostPipelineStageCallback(
         CinemachineVirtualCameraBase vcam, CinemachineCore.Stage stage, ref CameraState state, float deltaTime)
     {
-        if (stage == CinemachineCore.Stage.Aim)
+        if (stage == CinemachineCore.Stage.Noise)
         {
             state.OrientationCorrection = Quaternion.Euler(GunRecoil.Instance.rot);
         }

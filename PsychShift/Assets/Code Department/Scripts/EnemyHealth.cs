@@ -20,9 +20,6 @@ namespace Guns.Health
         public bool IsWeakPoint { get; } = false;
         public event IDamageable.TakeDamageEvent OnTakeDamage;
         public event IDamageable.DeathEvent OnDeath;
-
-        public bool cantDie = false;
-
         private RigColliderManager rigColliderManager;
         
         private void OnEnable()
@@ -34,8 +31,8 @@ namespace Guns.Health
 
         public void TakeDamage(float Damage, GunType gunType)
         {
-            if(cantDie) return;
-            if (gameObject.layer == 15 && GodModeScript.Instance.GodMode) return;
+
+            if (gameObject.layer == 15) return;
             float damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
             
             CurrentHealth -= damageTaken;

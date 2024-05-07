@@ -27,12 +27,14 @@ namespace Player
         #endregion
 
         public bool IsActive { get; set; }
-        public void Awake()
+        /* public void Awake()
         {
+            return;
             camera = Camera.main;
         }
         private void SwitchSensitivity(bool isKeyboard)
         {
+            return;
             if(isKeyboard)
             {
                 currentSenseX = keyBoardSensitivityX;
@@ -47,6 +49,7 @@ namespace Player
 
         public void RotatePlayer()
         {
+            return;
             Vector2 mouseDelta = InputManager.Instance.GetMouseDelta();
             mouseDelta.x *= currentSenseX;
             mouseDelta.y *= currentSenseY;
@@ -64,14 +67,15 @@ namespace Player
 
         public void SetCharacter(CharacterInfo characterInfo)
         {
+            return;
             currentCharacterInfo = characterInfo;
             currentCharacter = characterInfo.characterContainer.transform;
             currentCameraRoot = characterInfo.cameraRoot;
             camera.transform.parent = currentCameraRoot;
         }
 
-
-    }
+*/
+    } 
 
 }
 

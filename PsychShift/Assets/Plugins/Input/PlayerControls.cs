@@ -554,6 +554,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""dbe739a7-9024-4506-8933-d0cb1fed3e5a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Melee"",
                     ""type"": ""Button"",
                     ""id"": ""a3e2b643-556d-4d0f-b62b-a37690cae4d4"",
@@ -584,15 +593,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""4b33f672-c3bd-4107-9550-8a39432cd389"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Look"",
-                    ""type"": ""Value"",
-                    ""id"": ""dbe739a7-9024-4506-8933-d0cb1fed3e5a"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -788,28 +788,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3866b295-c6ff-4cc4-bf0b-3c829eae0f54"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""51326d87-9593-41d7-a13d-52d7361c17de"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""ac2d4a95-dbcb-4121-bedf-8f830d362a79"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -972,6 +950,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Melee"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3866b295-c6ff-4cc4-bf0b-3c829eae0f54"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""51326d87-9593-41d7-a13d-52d7361c17de"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1065,11 +1065,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Slow
         m_Slow = asset.FindActionMap("Slow", throwIfNotFound: true);
         m_Slow_MindSwap = m_Slow.FindAction("MindSwap", throwIfNotFound: true);
+        m_Slow_Look = m_Slow.FindAction("Look", throwIfNotFound: true);
         m_Slow_Melee = m_Slow.FindAction("Melee", throwIfNotFound: true);
         m_Slow_Manipulate = m_Slow.FindAction("Manipulate", throwIfNotFound: true);
         m_Slow_Unslow = m_Slow.FindAction("Unslow", throwIfNotFound: true);
         m_Slow_Move = m_Slow.FindAction("Move", throwIfNotFound: true);
-        m_Slow_Look = m_Slow.FindAction("Look", throwIfNotFound: true);
         m_Slow_Jump = m_Slow.FindAction("Jump", throwIfNotFound: true);
         m_Slow_Shoot = m_Slow.FindAction("Shoot", throwIfNotFound: true);
         m_Slow_Switch = m_Slow.FindAction("Switch", throwIfNotFound: true);
@@ -1299,11 +1299,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Slow;
     private List<ISlowActions> m_SlowActionsCallbackInterfaces = new List<ISlowActions>();
     private readonly InputAction m_Slow_MindSwap;
+    private readonly InputAction m_Slow_Look;
     private readonly InputAction m_Slow_Melee;
     private readonly InputAction m_Slow_Manipulate;
     private readonly InputAction m_Slow_Unslow;
     private readonly InputAction m_Slow_Move;
-    private readonly InputAction m_Slow_Look;
     private readonly InputAction m_Slow_Jump;
     private readonly InputAction m_Slow_Shoot;
     private readonly InputAction m_Slow_Switch;
@@ -1315,11 +1315,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         private @PlayerControls m_Wrapper;
         public SlowActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MindSwap => m_Wrapper.m_Slow_MindSwap;
+        public InputAction @Look => m_Wrapper.m_Slow_Look;
         public InputAction @Melee => m_Wrapper.m_Slow_Melee;
         public InputAction @Manipulate => m_Wrapper.m_Slow_Manipulate;
         public InputAction @Unslow => m_Wrapper.m_Slow_Unslow;
         public InputAction @Move => m_Wrapper.m_Slow_Move;
-        public InputAction @Look => m_Wrapper.m_Slow_Look;
         public InputAction @Jump => m_Wrapper.m_Slow_Jump;
         public InputAction @Shoot => m_Wrapper.m_Slow_Shoot;
         public InputAction @Switch => m_Wrapper.m_Slow_Switch;
@@ -1338,6 +1338,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MindSwap.started += instance.OnMindSwap;
             @MindSwap.performed += instance.OnMindSwap;
             @MindSwap.canceled += instance.OnMindSwap;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
             @Melee.started += instance.OnMelee;
             @Melee.performed += instance.OnMelee;
             @Melee.canceled += instance.OnMelee;
@@ -1350,9 +1353,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Look.started += instance.OnLook;
-            @Look.performed += instance.OnLook;
-            @Look.canceled += instance.OnLook;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -1378,6 +1378,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MindSwap.started -= instance.OnMindSwap;
             @MindSwap.performed -= instance.OnMindSwap;
             @MindSwap.canceled -= instance.OnMindSwap;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
             @Melee.started -= instance.OnMelee;
             @Melee.performed -= instance.OnMelee;
             @Melee.canceled -= instance.OnMelee;
@@ -1390,9 +1393,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Look.started -= instance.OnLook;
-            @Look.performed -= instance.OnLook;
-            @Look.canceled -= instance.OnLook;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -1513,11 +1513,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface ISlowActions
     {
         void OnMindSwap(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
         void OnMelee(InputAction.CallbackContext context);
         void OnManipulate(InputAction.CallbackContext context);
         void OnUnslow(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
-        void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnSwitch(InputAction.CallbackContext context);

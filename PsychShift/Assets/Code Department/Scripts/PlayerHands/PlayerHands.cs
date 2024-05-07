@@ -56,7 +56,7 @@ public class PlayerHands : MonoBehaviour
     Vector2 walkMovement;
     void Update()
     {
-        mouseMovement = InputManager.Instance.MouseDelta * moveAmount;
+        mouseMovement = InputManager.Instance.GetMouseDelta() * moveAmount;
         walkMovement = InputManager.Instance.MoveVector * moveAmount;
         CameraMoveSway();
         CameraTiltSway();

@@ -176,15 +176,14 @@ public class InputManager : MonoBehaviour
         SlowMelee.started -= PressedMelee;
     }
 
+    [HideInInspector]
     public Vector2 MoveVector;
     public Vector2 GetPlayerMovement() {
         MoveVector = MoveAction.ReadValue<Vector2>();
         return MoveVector;
     }
-    public Vector2 MouseDelta;
     public Vector2 GetMouseDelta() {
-        MouseDelta = LookAction.ReadValue<Vector2>();
-        return MouseDelta;
+        return LookAction.ReadValue<Vector2>();
     }
     private void OnJump(InputAction.CallbackContext context)
     {

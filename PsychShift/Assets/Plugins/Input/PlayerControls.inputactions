@@ -532,6 +532,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "dbe739a7-9024-4506-8933-d0cb1fed3e5a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Melee",
                     "type": "Button",
                     "id": "a3e2b643-556d-4d0f-b62b-a37690cae4d4",
@@ -562,15 +571,6 @@
                     "name": "Move",
                     "type": "Value",
                     "id": "4b33f672-c3bd-4107-9550-8a39432cd389",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Look",
-                    "type": "Value",
-                    "id": "dbe739a7-9024-4506-8933-d0cb1fed3e5a",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -766,28 +766,6 @@
                 },
                 {
                     "name": "",
-                    "id": "3866b295-c6ff-4cc4-bf0b-3c829eae0f54",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "51326d87-9593-41d7-a13d-52d7361c17de",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "ac2d4a95-dbcb-4121-bedf-8f830d362a79",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -948,6 +926,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Melee",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3866b295-c6ff-4cc4-bf0b-3c829eae0f54",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "51326d87-9593-41d7-a13d-52d7361c17de",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
