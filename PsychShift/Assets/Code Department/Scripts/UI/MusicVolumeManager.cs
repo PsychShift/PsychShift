@@ -11,9 +11,10 @@ public class MusicVolumeManager : MonoBehaviour
     public AudioSource MusicSource;
     public bool playingDialouge;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        Load();
+        ChangeVolume();
     }
 
     // Update is called once per frame
