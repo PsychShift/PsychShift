@@ -19,12 +19,6 @@ public class Checkpoints : MonoBehaviour
     // Public field to drag the spawn position object in Unity Editor
     public Transform spawnPositionObject;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        
-    }
-
     // Update is called once per frame
     private void OnTriggerEnter(Collider other) 
     {
