@@ -11,6 +11,8 @@ namespace Guns.Health
         private float _MaxHealth = 100;
         [SerializeField]
         private float _Health;
+        [HideInInspector]
+        public bool cantDie;
         //xtra var I added for enemyDialouge to stop it from playing
         [SerializeField]
 
@@ -31,8 +33,8 @@ namespace Guns.Health
 
         public void TakeDamage(float Damage, GunType gunType)
         {
-
-            if (gameObject.layer == 15) return;
+            
+            if (cantDie) return;
             float damageTaken = Mathf.Clamp(Damage, 0, CurrentHealth);
             
             CurrentHealth -= damageTaken;
