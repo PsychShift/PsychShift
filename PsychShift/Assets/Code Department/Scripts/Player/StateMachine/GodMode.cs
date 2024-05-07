@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class GodModeScript : MonoBehaviour
 {
-    public bool GodMode;
-
-
-    private static GodModeScript instance;
+        private static GodModeScript instance;
 
     public static GodModeScript Instance
     {
@@ -16,22 +13,5 @@ public class GodModeScript : MonoBehaviour
             return instance;
         }
         set { instance = value; }
-    }
-    private void Start() {
-        instance = this;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            SwitchMode();
-        }
-    }
-
-
-    public void SwitchMode()
-    {
-        GodMode = !GodMode;
     }
 }
