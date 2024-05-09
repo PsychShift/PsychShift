@@ -3,8 +3,7 @@ using Cinemachine;
 
 public class CinemachinePOVExtension : CinemachineExtension
 {
-    public static float horizontalSpeed = 10f;
-    public static float verticalSpeed = 10f;
+    public static float speed = 10f;
 
     [SerializeField]
     private float clampAngle = 80f;
@@ -22,8 +21,8 @@ public class CinemachinePOVExtension : CinemachineExtension
             if(stage == CinemachineCore.Stage.Aim)
             {
                 Vector2 deltaInput = InputManager.Instance.GetMouseDelta();
-                startingRotation.x += deltaInput.x * horizontalSpeed * Time.deltaTime;
-                startingRotation.y += deltaInput.y * verticalSpeed * Time.deltaTime;
+                startingRotation.x += deltaInput.x * speed * Time.deltaTime;
+                startingRotation.y += deltaInput.y * speed * Time.deltaTime;
                 startingRotation.y = Mathf.Clamp(startingRotation.y, -clampAngle, clampAngle);
                 state.RawOrientation = Quaternion.Euler(-startingRotation.y, startingRotation.x, 0f);
             }
@@ -43,9 +42,8 @@ public class CinemachinePOVExtension : CinemachineExtension
 
     private void Update() 
     {
-        Vector2 deltaInput = InputManager.Instance.GetMouseDelta();
-        deltaInput.x *= horizontalSpeed;
-        deltaInput.y *= verticalSpeed;
+        Vector2 deltaInput = InputManager.Instance.GetMouseDelta() * speed;
+
 
         // Calculate the rate based on deltaTime to make the interpolation frame rate independent
         float rate = -(1 / Time.deltaTime) * Mathf.Log10(0.9f); // Adjusted to use deltaTime directly
