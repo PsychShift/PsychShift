@@ -283,10 +283,10 @@ public abstract class EnemyBrain : MonoBehaviour
         CharacterInfo.enemyHealth.OnTakeDamage -= TookDamage;
         EnemyHealth.OnDeath -= Died;
     }
-    void OnDestroy()
+    /* void OnDestroy()
     {
         Destroy(characterInfo.vCam.gameObject);
-    }
+    } */
 
 
 
