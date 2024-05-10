@@ -6,14 +6,8 @@ using UnityEngine.AI;
 using System.Collections;
 using Guns.Health;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine.Events;
 using System.Linq;
-using UnityEngine.PlayerLoop;
 using Guns.Demo;
-
-
-
 
 
 #if UNITY_EDITOR
@@ -288,6 +282,10 @@ public abstract class EnemyBrain : MonoBehaviour
         CharacterInfo.agent.enabled = false;
         CharacterInfo.enemyHealth.OnTakeDamage -= TookDamage;
         EnemyHealth.OnDeath -= Died;
+    }
+    void OnDestroy()
+    {
+        Destroy(characterInfo.vCam.gameObject);
     }
 
 

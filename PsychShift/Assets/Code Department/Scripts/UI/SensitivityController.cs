@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class SensitivityController : MonoBehaviour
 {
     public Slider slider;
-    public float mouseSensitivity = 100f;
+    public float mouseSensitivity = 1f;
     //public Transform playerBody;
     float xRotation = 0f;
 
@@ -36,9 +36,9 @@ public class SensitivityController : MonoBehaviour
     {
         mouseSensitivity = PlayerPrefs.GetFloat("currentSensitivity", mouseSensitivity);
         //UpdatedSpeed?.Invoke(mouseSensitivity);
+        slider.value = mouseSensitivity;
         SensitivityProcessor.speed = mouseSensitivity;
         Debug.Log("~ " + SensitivityProcessor.speed);
-        slider.value = mouseSensitivity/10;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -57,7 +57,7 @@ public class SensitivityController : MonoBehaviour
 
     public void AdjustSpeed(float newSpeed)
     {
-        mouseSensitivity = newSpeed * 10;
+        mouseSensitivity = newSpeed;
         PlayerPrefs.SetFloat("currentSensitivity", mouseSensitivity);
         SensitivityProcessor.speed = mouseSensitivity;
         Debug.Log("~ " + SensitivityProcessor.speed);

@@ -41,7 +41,7 @@ public class CharacterInfoReference : MonoBehaviour
             }
             else
                 vCamParent = Instantiate(GameAssets.Instance.level1VCamPrefab);
-            vCamParent.transform.SetParent(transform);
+            //vCamParent.transform.SetParent(transform);
             vCam = vCamParent.GetComponent<CinemachineVirtualCamera>();
         }
         vCamParent.SetActive(false);

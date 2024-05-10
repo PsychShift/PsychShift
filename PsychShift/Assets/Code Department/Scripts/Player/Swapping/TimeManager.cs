@@ -33,7 +33,7 @@ public class TimeManager : MonoBehaviour
         CanvasReferences.Instance.SlowUI.SetActive(true);
         Time.timeScale = slowdownFactor;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
-        
+        TimeSensitivity.speed = slowdownFactor;
     }
 
     public void UndoSlowmotion()
@@ -41,6 +41,7 @@ public class TimeManager : MonoBehaviour
         CanvasReferences.Instance.SlowUI.SetActive(false);
         Time.timeScale = 1;
         Time.fixedDeltaTime = Time.timeScale* 0.02f;   
+        TimeSensitivity.speed = 1;
     }
 
     public void Pause()
