@@ -23,7 +23,6 @@ public class SensitivityProcessor : InputProcessor<Vector2>
     public static float speed = 1;
     public override Vector2 Process(Vector2 value, InputControl control)
     {
-        Debug.Log(value * speed + " " + speed);
         return value * speed;
     }
 }
