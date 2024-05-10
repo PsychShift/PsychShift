@@ -22741,7 +22741,7 @@ AudioSource:
   m_GameObject: {fileID: 1091029765}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: ec3400c78ac187c43b4993df9520ee82, type: 2}
   m_audioClip: {fileID: 8300000, guid: 5f5f4b15c22d8b9448bdba778d2d8d00, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.521
@@ -27260,6 +27260,7 @@ GameObject:
   - component: {fileID: 1326419092}
   - component: {fileID: 1326419094}
   - component: {fileID: 1326419093}
+  - component: {fileID: 1326419095}
   m_Layer: 5
   m_Name: Canvas(All)
   m_TagString: Untagged
@@ -27646,6 +27647,20 @@ MonoBehaviour:
   musicvolumeSlider: {fileID: 1625331126}
   MusicSource: {fileID: 1909143332}
   playingDialouge: 0
+--- !u!114 &1326419095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326419078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e063be390276094ab3380076517070d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 1940213856}
+  mouseSensitivity: 1
 --- !u!1 &1336401192
 GameObject:
   m_ObjectHideFlags: 0
@@ -33984,7 +33999,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.111
+  m_Value: 0.4
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -38079,7 +38094,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.505
+  m_Value: 0.2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -40355,7 +40370,7 @@ AudioSource:
   m_GameObject: {fileID: 1909143331}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 4d3d955d0219e9044aebb38bc252c00a, type: 2}
   m_audioClip: {fileID: 8300000, guid: 0acdff786589f844fa01bbff63a7f9c6, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.017
@@ -40679,7 +40694,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.532
+  m_Value: 0.4
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -40917,13 +40932,13 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.242
+  m_Value: 0.2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MouseSensitivity, Assembly-CSharp
-        m_MethodName: SetMouseSensitivity
+      - m_Target: {fileID: 1326419095}
+        m_TargetAssemblyTypeName: SensitivityController, Assembly-CSharp
+        m_MethodName: AdjustSpeed
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
