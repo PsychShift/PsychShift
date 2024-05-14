@@ -424,7 +424,7 @@ public class PuzzleKit : MonoBehaviour, IDamageable
                 {
                     DeactivateObject();
                 }
-                else if(dissolveOBJ)
+                if(dissolveOBJ)
                     StartDissolver(); 
 
                 
