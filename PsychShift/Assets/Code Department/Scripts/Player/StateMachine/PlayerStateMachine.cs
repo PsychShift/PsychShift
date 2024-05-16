@@ -453,6 +453,8 @@ namespace Player
             // Disable both the start and end object ai
             endCharacter.vCamParent.SetActive(true);
             startCharacter.vCamParent.SetActive(false);
+            startCharacter.vCamParent.GetComponent<CinemachineInputProvider>().enabled = false;
+            endCharacter.vCamParent.GetComponent<CinemachineInputProvider>().enabled = false;
             startCharacter.characterInfo.enemyBrain.enabled = false;
             endCharacter.characterInfo.enemyBrain.enabled = false;
             startCharacter.characterInfo.agent.enabled = false;
@@ -537,6 +539,10 @@ namespace Player
 
             walkSpeed = endCharacter.characterInfo.gunHandler.ActiveGun.CharacterConfig.WalkMoveSpeed;
             wallSpeed = endCharacter.characterInfo.gunHandler.ActiveGun.CharacterConfig.WallMoveSpeed;
+
+            startCharacter.vCamParent.GetComponent<CinemachineInputProvider>().enabled = true;
+            endCharacter.vCamParent.GetComponent<CinemachineInputProvider>().enabled = true;
+
             isSwapping = false;
         }
         #endregion
