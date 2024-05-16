@@ -40,8 +40,8 @@ public class Checkpoints : MonoBehaviour
         // Use the public spawn position object or fallback to respawnPoint
         Transform spawnTransform = spawnPositionObject != null ? spawnPositionObject : respawnPoint;
         Vector3 spawnPosition = spawnTransform.position;
-
-        Instantiate(checkpoint, spawnPosition - new Vector3(0, 10, 0), Quaternion.FromToRotation(Vector3.up, spawnPosition));
+        if(checkpoint!=null)
+            Instantiate(checkpoint, spawnPosition - new Vector3(0, 10, 0), Quaternion.FromToRotation(Vector3.up, spawnPosition));
     
         yield return new WaitForSeconds(2);
         checkpointUI.SetActive(false);

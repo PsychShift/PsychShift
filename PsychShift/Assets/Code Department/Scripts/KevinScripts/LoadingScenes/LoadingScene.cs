@@ -17,6 +17,17 @@ public class LoadingScene : MonoBehaviour
     public PlayerInput playerInput;
     //static int NextScene;
     // Start is called before the first frame update
+    void Update() 
+    {
+
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            SkipCutscene();
+        }
+
+
+
+    }
     public void LoadScene(int sceneId)
     {
         sceneIDRef=sceneId;
