@@ -15,12 +15,13 @@ public class LoadingScene : MonoBehaviour
     private bool cutSceneSkipped;
     private int sceneIDRef;
     public PlayerInput playerInput;
+    bool sceneIdReceived;
     //static int NextScene;
     // Start is called before the first frame update
     void Update() 
     {
 
-        if(Input.GetKeyDown(KeyCode.K))
+        if(Input.GetKeyDown(KeyCode.K) && sceneIdReceived)
         {
             SkipCutscene();
         }
@@ -68,13 +69,13 @@ public class LoadingScene : MonoBehaviour
         videoPlayer.Play();
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId);
         operation.allowSceneActivation = false;
-        
+        sceneIdReceived = true;
         
 
-        while(!operation.isDone && videoPlayer.isPlaying)
+        while(videoPlayer.isPlaying)
         {
             //float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
-            if(cutSceneSkipped && operation.isDone)
+            if(cutSceneSkipped)
             {
                 videoPlayer.Stop();
                 operation.allowSceneActivation = true;
@@ -82,11 +83,17 @@ public class LoadingScene : MonoBehaviour
             //LoadingBarFill.fillAmount = progressValue;
             yield return null;
         }
+        while(!operation.isDone)
+        {
+            yield return null;
+        }
         operation.allowSceneActivation = true;
     }
     public void SkipCutscene()
     {
-        if(videoPlayer!=null)
-            SceneManager.LoadScene(sceneIDRef);
+        /* if(videoPlayer!=null)
+            SceneManager.LoadScene(sceneIDRef); */
+        cutSceneSkipped = true;
+        
     }
 }
