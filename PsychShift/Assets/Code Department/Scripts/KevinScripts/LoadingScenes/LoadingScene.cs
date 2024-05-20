@@ -5,9 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 
-public class LoadingScene : MonoBehaviour
+public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
 {
+    private Cutscenecontrols input;
     public GameObject mainCamera;
     public GameObject LoadingScreen;
     public Image LoadingBarFill;
@@ -16,18 +18,29 @@ public class LoadingScene : MonoBehaviour
     private int sceneIDRef;
     public PlayerInput playerInput;
     bool sceneIdReceived;
+
+    public void Enable()
+    {
+        if(input == null)
+        {
+            input = new Cutscenecontrols();
+            input.Cutscene.SetCallbacks(this);
+            input.Cutscene.Enable();
+            Debug.Log("weeeeeeeeeeeeeeee");
+            i++;
+            Debug.Log($"Awakededed {i} times");
+        }
+
+    }
     //static int NextScene;
     // Start is called before the first frame update
     void Update() 
     {
 
-        if(Input.GetKeyDown(KeyCode.K) && sceneIdReceived)
+        /* if(Input.GetKeyDown(KeyCode.K) && sceneIdReceived)
         {
             SkipCutscene();
-        }
-
-
-
+        } */
     }
     public void LoadScene(int sceneId)
     {
@@ -40,11 +53,15 @@ public class LoadingScene : MonoBehaviour
         if(videoPlayer!=null)
         {
             cutSceneCanvas.SetActive(true);
+            Debug.Log("not async");
             StartCoroutine(LoadSceneVideo(sceneId));
         }
             
         else
+        {
+            Debug.Log("async");
             StartCoroutine(LoadSceneAsync(sceneId));
+        }
     }
     IEnumerator LoadSceneAsync(int sceneId)
     {
@@ -63,9 +80,10 @@ public class LoadingScene : MonoBehaviour
     public VideoPlayer videoPlayer;
     
     //public bool isCutScene;
-   
+    int i = 0;
     IEnumerator LoadSceneVideo(int sceneId)
     {
+        
         videoPlayer.Play();
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId);
         operation.allowSceneActivation = false;
@@ -74,8 +92,14 @@ public class LoadingScene : MonoBehaviour
 
         while(videoPlayer.isPlaying)
         {
+            float dPadX = Input.GetAxis("Jump");
+
+            bool skip = Mathf.Abs(dPadX) >= 0.1f || Input.anyKeyDown;
+
+            Debug.Log(skip);
+
             //float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
-            if(cutSceneSkipped)
+            if(skip)
             {
                 videoPlayer.Stop();
                 operation.allowSceneActivation = true;
@@ -83,11 +107,11 @@ public class LoadingScene : MonoBehaviour
             //LoadingBarFill.fillAmount = progressValue;
             yield return null;
         }
+        operation.allowSceneActivation = true;
         while(!operation.isDone)
         {
             yield return null;
         }
-        operation.allowSceneActivation = true;
     }
     public void SkipCutscene()
     {
@@ -95,5 +119,14 @@ public class LoadingScene : MonoBehaviour
             SceneManager.LoadScene(sceneIDRef); */
         cutSceneSkipped = true;
         
+    }
+
+    public void OnSkipCutscene(InputAction.CallbackContext context)
+    {
+            Debug.Log("Skippppyyyyyy");
+            SkipCutscene();
+        if(context.started)
+        {
+        }
     }
 }

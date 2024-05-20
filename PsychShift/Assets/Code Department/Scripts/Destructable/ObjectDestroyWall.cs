@@ -19,12 +19,7 @@ public class ObjectDestroyWall : MonoBehaviour
 
             // Destroy the bullet
             Destroy(gameObject);
+        }
 
-            Debug.Log("Bullet hit and damaged the wall!");
-        }
-        else
-        {
-            Debug.Log("Bullet hit something, but it's not damageable.");
-        }
     }
 }
