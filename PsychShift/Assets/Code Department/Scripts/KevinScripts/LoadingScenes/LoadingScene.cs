@@ -21,7 +21,7 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
 
     public void Enable()
     {
-        if(input == null)
+        if(input == null&& videoPlayer!=null)
         {
             input = new Cutscenecontrols();
             input.Cutscene.SetCallbacks(this);
@@ -34,14 +34,14 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
     }
     //static int NextScene;
     // Start is called before the first frame update
-    void Update() 
+    /* void Update() 
     {
 
-        /* if(Input.GetKeyDown(KeyCode.K) && sceneIdReceived)
+        if(Input.GetKeyDown(KeyCode.K) && sceneIdReceived)
         {
             SkipCutscene();
-        } */
-    }
+        } 
+    }  */
     public void LoadScene(int sceneId)
     {
         sceneIDRef=sceneId;
