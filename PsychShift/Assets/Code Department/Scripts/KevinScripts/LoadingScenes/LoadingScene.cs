@@ -21,7 +21,7 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
 
     public void Enable()
     {
-        if(input == null&& videoPlayer!=null)
+        if(input == null && videoPlayer!=null)
         {
             input = new Cutscenecontrols();
             input.Cutscene.SetCallbacks(this);
