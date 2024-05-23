@@ -10,7 +10,7 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        volumeSlider.value = PlayerPrefs.GetFloat("masterVolume");
+        volumeSlider.value = PlayerPrefs.GetFloat("masterVolume", 0.2f);
         AudioListener.volume = volumeSlider.value;
     }
 
