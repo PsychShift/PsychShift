@@ -97,9 +97,14 @@ public class MainMenuScript : MonoBehaviour
     [SerializeField] private bool fadeOutLevelMenu = false;
     #endregion
     #region UI Stuff
+    #region  ON OFF MENU STUFF
+    public GameObject settingsScreen; 
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
+        //Kevin added this 
+        settingsScreen.SetActive(true);
         SettingsMenu.SetActive(false);
         LoadMenu.SetActive(false);
         LevelMenu.SetActive(false);
@@ -134,6 +139,9 @@ public class MainMenuScript : MonoBehaviour
         CutSceneMenuCG.alpha = 0;
         MainMenuCG.alpha = 1;
         MainMenuCG.interactable = true;
+
+
+        settingsScreen.SetActive(false);
     }
 
     // Update is called once per frame
