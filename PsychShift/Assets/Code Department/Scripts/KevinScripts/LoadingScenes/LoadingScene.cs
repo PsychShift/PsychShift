@@ -1,11 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
 
 public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
 {
@@ -50,13 +48,11 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
         if(videoPlayer!=null)
         {
             cutSceneCanvas.SetActive(true);
-            Debug.Log("not async");
             StartCoroutine(LoadSceneVideo(sceneId));
         }
             
         else
         {
-            Debug.Log("async");
             StartCoroutine(LoadSceneAsync(sceneId));
         }
     }
@@ -92,8 +88,6 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
             float dPadX = Input.GetAxis("Jump");
 
             bool skip = Mathf.Abs(dPadX) >= 0.1f || Input.anyKeyDown;
-
-            Debug.Log(skip);
 
             //float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
             if(skip)
