@@ -59,13 +59,13 @@ public class LoadingScene : MonoBehaviour//, Cutscenecontrols.ICutsceneActions
     IEnumerator LoadSceneAsync(int sceneId)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId);
-        LoadingScreen.SetActive(true);
+        //LoadingScreen.SetActive(true);
 
         while(!operation.isDone)
         {
-            float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
+            /* float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
 
-            LoadingBarFill.fillAmount = progressValue;
+            LoadingBarFill.fillAmount = progressValue; */
             yield return null;
         }
         operation.allowSceneActivation = true;
@@ -76,7 +76,7 @@ public class LoadingScene : MonoBehaviour//, Cutscenecontrols.ICutsceneActions
     //public bool isCutScene;
     IEnumerator LoadSceneVideo(int sceneId)
     {
-        
+        Debug.Log(sceneId);
         videoPlayer.Play();
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId);
         operation.allowSceneActivation = false;
@@ -95,7 +95,7 @@ public class LoadingScene : MonoBehaviour//, Cutscenecontrols.ICutsceneActions
                 videoPlayer.Stop();
                 operation.allowSceneActivation = true;
             }
-            LoadingBarFill.fillAmount = progressValue;
+            //LoadingBarFill.fillAmount = progressValue;
             yield return null;
         }
         operation.allowSceneActivation = true;
