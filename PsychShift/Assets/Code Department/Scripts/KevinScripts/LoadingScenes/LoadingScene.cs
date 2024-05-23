@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using UnityEngine.InputSystem;
 
-public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
+public class LoadingScene : MonoBehaviour//, Cutscenecontrols.ICutsceneActions
 {
     private Cutscenecontrols input;
     public GameObject mainCamera;
@@ -14,10 +14,10 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
     public GameObject cutSceneCanvas;
     private bool cutSceneSkipped;
     private int sceneIDRef;
-    public PlayerInput playerInput;
+    //public PlayerInput playerInput;
     bool sceneIdReceived;
 
-    public void Enable()
+    /* public void Enable()
     {
         if(input == null && videoPlayer!=null)
         {
@@ -26,7 +26,7 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
             input.Cutscene.Enable();
         }
 
-    }
+    } */ 
     //static int NextScene;
     // Start is called before the first frame update
     /* void Update() 
@@ -42,7 +42,7 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
         sceneIDRef=sceneId;
         Time.timeScale = 0f;
         AudioListener.volume = 0;
-        playerInput.enabled= true;
+        //playerInput.enabled= true;
         PlayerMaster.Instance.SetCheckPoint(transform);
         PlayerMaster.Instance.isLoadingNewSceneTransition = true;
         if(videoPlayer!=null)
@@ -65,7 +65,7 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
         {
             float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
 
-            //LoadingBarFill.fillAmount = progressValue;
+            LoadingBarFill.fillAmount = progressValue;
             yield return null;
         }
         operation.allowSceneActivation = true;
@@ -89,13 +89,13 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
 
             bool skip = Mathf.Abs(dPadX) >= 0.1f || Input.anyKeyDown;
 
-            //float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
+            float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
             if(skip)
             {
                 videoPlayer.Stop();
                 operation.allowSceneActivation = true;
             }
-            //LoadingBarFill.fillAmount = progressValue;
+            LoadingBarFill.fillAmount = progressValue;
             yield return null;
         }
         operation.allowSceneActivation = true;
@@ -112,8 +112,8 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
         
     }
 
-    public void OnSkipCutscene(InputAction.CallbackContext context)
+    /* public void OnSkipCutscene(InputAction.CallbackContext context)
     {
         SkipCutscene();
-    }
+    } */
 }

@@ -18,7 +18,7 @@ public class LevelEnd : MonoBehaviour
             //cam.enabled = false;
             //other.gameObject.SetActive(false);
             Debug.Log("Loading new scene");
-            loadingScene.Enable();
+            //loadingScene.Enable();
             loadingScene.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             Debug.Log("New scene loaded");
         }
