@@ -26,9 +26,6 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
             input = new Cutscenecontrols();
             input.Cutscene.SetCallbacks(this);
             input.Cutscene.Enable();
-            Debug.Log("weeeeeeeeeeeeeeee");
-            i++;
-            Debug.Log($"Awakededed {i} times");
         }
 
     }
@@ -75,12 +72,12 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
             //LoadingBarFill.fillAmount = progressValue;
             yield return null;
         }
+        operation.allowSceneActivation = true;
     }
 
     public VideoPlayer videoPlayer;
     
     //public bool isCutScene;
-    int i = 0;
     IEnumerator LoadSceneVideo(int sceneId)
     {
         
@@ -123,10 +120,6 @@ public class LoadingScene : MonoBehaviour, Cutscenecontrols.ICutsceneActions
 
     public void OnSkipCutscene(InputAction.CallbackContext context)
     {
-            Debug.Log("Skippppyyyyyy");
-            SkipCutscene();
-        if(context.started)
-        {
-        }
+        SkipCutscene();
     }
 }
