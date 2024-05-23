@@ -8,12 +8,20 @@ public class SFXVolmumeManager : MonoBehaviour
 {
     [SerializeField] Slider SFXvolumeSlider;
     public AudioMixer AllSFX;
+    private float defaultValue = 1f;
     [HideInInspector]
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        if(PlayerPrefs.HasKey("SFXVolume"))
+        {
+            SFXvolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume");
+        }
+        else
+        {
+            SFXvolumeSlider.value = defaultValue;
+        }
     }
 
     // Update is called once per frame
@@ -21,7 +29,7 @@ public class SFXVolmumeManager : MonoBehaviour
     {
         if(!PlayerPrefs.HasKey("SFXVolume"))
         {
-            PlayerPrefs.SetFloat("SFXVolume",1);
+            PlayerPrefs.SetFloat("SFXVolume",0.2f);
             Load();
         }
         else

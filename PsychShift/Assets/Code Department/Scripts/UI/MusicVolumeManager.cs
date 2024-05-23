@@ -10,11 +10,21 @@ public class MusicVolumeManager : MonoBehaviour
     public Slider musicvolumeSlider;
     public AudioSource MusicSource;
     public bool playingDialouge;
+    private float defaultValue = 0.2f;
     // Start is called before the first frame update
     void Awake()
     {
-        Load();
-        ChangeVolume();
+        if(PlayerPrefs.HasKey("musicVolume"))
+        {
+            musicvolumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
+        }
+        else
+        {
+            musicvolumeSlider.value = defaultValue;
+            Save();
+        }
+        //Load();
+        //ChangeVolume();
     }
 
     // Update is called once per frame

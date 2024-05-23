@@ -6,12 +6,22 @@ using UnityEngine.UI;
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] Slider volumeSlider;
+    public float defaultValue = 0.2f;
 
     // Start is called before the first frame update
     void Awake()
     {
-        volumeSlider.value = PlayerPrefs.GetFloat("masterVolume", 0.2f);
+       if(PlayerPrefs.HasKey("masterVolume"))
+        {
+        volumeSlider.value = PlayerPrefs.GetFloat("masterVolume");
+        }
+       else
+       {
+        volumeSlider.value = defaultValue;
+        Save();
+       }
         AudioListener.volume = volumeSlider.value;
+
     }
 
     // Update is called once per frame
@@ -20,7 +30,7 @@ public class SoundManager : MonoBehaviour
     {
         if(!PlayerPrefs.HasKey("masterVolume"))
         {
-            PlayerPrefs.SetFloat("masterVolume",1);
+            PlayerPrefs.SetFloat("masterVolume",0.2f);
             Load();
         }
         else
